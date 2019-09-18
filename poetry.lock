@@ -576,7 +576,7 @@ radon = ">=2.4,<3.0"
 typing_extensions = ">=3.6,<4.0"
 
 [metadata]
-content-hash = "f91881c515fafd68c2b7207e9b0361e9f7f809a672b7f91f53a401c7366043ae"
+content-hash = "f758b45b7b76bb19211550a32d5cfe74f412214a6a0ba9e8face4678bdd4b3ec"
 python-versions = "^3.7"
 
 [metadata.hashes]
