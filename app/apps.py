@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AppConfig(AppConfig):
-    name = 'app'
+class MainConfig(AppConfig):
+    name = 'app'  # noqa: WPS440

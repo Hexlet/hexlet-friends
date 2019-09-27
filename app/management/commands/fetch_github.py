@@ -1,7 +1,6 @@
-from django.core.management.base import BaseCommand
-
-from app.utils import fetch_info_from_github as github
 from app.models import Profile
+from app.utils import fetch_info_from_github as github
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):

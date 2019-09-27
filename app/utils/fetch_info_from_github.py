@@ -1,7 +1,8 @@
+from collections import Counter
+from urllib.parse import parse_qs, urlparse
+
 import requests
 from django.conf import settings
-from urllib.parse import urlparse, parse_qs
-from collections import Counter
 
 
 def fetch_all_repos_for_user(user='Hexlet'):

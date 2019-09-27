@@ -1,0 +1,15 @@
+language: python
+sudo: false
+python:
+  - 3.7.4
+
+before_install:
+  - pip install poetry
+  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
+
+install:
+  - poetry install
+
+script:
+  - make lint
+  - make test
