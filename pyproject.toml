@@ -9,6 +9,7 @@ python = "^3.7"
 django = "^2.2"
 python-dotenv = "^0.10.3"
 django-bootstrap4 = "^1.0"
+requests = "^2.22"
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.12.4"
