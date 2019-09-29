@@ -20,10 +20,9 @@ def fetch_pr_for_repo(repo, user='Hexlet'):
     return fetch_from_github(url, params)
 
 
-def fetch_from_github(url, advanced_params=None):
+def fetch_from_github(url, additional_params=None):
     params = {'page': 1}
-    if advanced_params:
-        params.update(advanced_params)
+    params.update(additional_params or {})
     response = requests.get(url, headers=get_headers())
     response.raise_for_status()
 
@@ -39,23 +38,22 @@ def fetch_from_github(url, advanced_params=None):
 
 
 def get_user_by_prs(prs):
-    user_by_prs = {}
-    for pr in prs:
-        if not pr.get('user'):
-            continue
-        login = pr['user']['login']
-        user_by_prs[login] = user_by_prs[login] + 1 if user_by_prs.get(login, False) else 1
-    return user_by_prs
+    return get_user_by_characteristic(prs, 'user')
 
 
 def get_user_by_commits(commits):
-    user_by_commits = {}
-    for commit in commits:
-        if not commit.get('author'):
+    return get_user_by_characteristic(commits, 'author')
+
+
+def get_user_by_characteristic(characteristic, look_up):
+    user_by_characteristic = {}
+    for ch in characteristic:
+        user = ch.get(look_up)
+        if not user:
             continue
-        login = commit['author']['login']
-        user_by_commits[login] = user_by_commits[login] + 1 if user_by_commits.get(login, False) else 1
-    return user_by_commits
+        login = user.get('login')
+        user_by_characteristic[login] = user_by_characteristic.get(login, 0) + 1
+    return user_by_characteristic
 
 
 def get_count_pages(url):
