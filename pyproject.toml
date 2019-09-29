@@ -5,9 +5,10 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.6"
 django = "^2.2"
 python-dotenv = "^0.10.3"
+pygithub = "^1.43"
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.12.4"
