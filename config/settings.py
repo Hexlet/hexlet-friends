@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'contributors.apps.ContributorsConfig',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+APP_NAME = os.getenv('APP_NAME', 'Hexlet Friends')
