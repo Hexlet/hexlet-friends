@@ -19,7 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap4'
+    'bootstrap4',
+    'app'
 ]
 
 MIDDLEWARE = [
@@ -104,3 +105,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 APP_NAME = os.getenv('APP_NAME', 'Hexlet Friends')
+
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', 'REPLACE_ME')
