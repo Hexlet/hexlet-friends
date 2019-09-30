@@ -6,7 +6,7 @@ from contributors.models.repository import Repository
 
 
 class Contribution(models.Model):
-    """Contribution model."""
+    """Model representing a set of contributions."""
 
     repository = models.ForeignKey(
         Repository,

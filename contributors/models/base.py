@@ -5,7 +5,7 @@ NAMES_LENGTH = 30
 
 
 class CommonFields(models.Model):
-    """Base github data model."""
+    """Base model with common fields."""
 
     name = models.CharField(
         lazy('name'),
@@ -18,5 +18,5 @@ class CommonFields(models.Model):
         abstract = True
 
     def __str__(self):
-        """Model string view."""
+        """String representation."""
         return self.name

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as lazy
 
 from contributors.models.base import NAMES_LENGTH, CommonFields
@@ -7,7 +8,7 @@ from contributors.models.organization import Organization
 
 
 class Repository(CommonFields):
-    """Repository model."""
+    """Model representing a repository."""
 
     contributors = models.ManyToManyField(
         Contributor,
@@ -24,3 +25,7 @@ class Repository(CommonFields):
     class Meta(object):
         verbose_name = lazy('Repository')
         verbose_name_plural = lazy('Repositories')
+
+    def get_absolute_url(self):
+        """Returns the url of an instance."""
+        return reverse('contributors:repository_details', args=[self.pk])
