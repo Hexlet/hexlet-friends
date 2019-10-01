@@ -1,6 +1,7 @@
+from django.db import models
+
 from app.models.contributor import Contributor
 from app.models.repository import Repository
-from django.db import models
 
 
 class Contribution(models.Model):
