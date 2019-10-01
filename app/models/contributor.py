@@ -1,6 +1,5 @@
+from app.models.base import NAMES_LENGTH, CommonFields
 from django.db import models
-
-from app.models.base import CommonFields, NAMES_LENGTH
 
 
 class Contributor(CommonFields):

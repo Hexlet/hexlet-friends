@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'app.apps.AppConfig'
+    'app.apps.AppConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ if os.getenv('PROD', 'false').lower() in ['yes', '1', 'true']:
             'PASSWORD': os.getenv('DB_PASSWORD'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT'),
-        }
+        },
     }
     HOST = os.getenv('HOST')
 else:
@@ -67,7 +67,7 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+        },
     }
     HOST = 'http://127.0.0.1/'
 

@@ -1,8 +1,7 @@
-from django.db import models
-
-from app.models.base import CommonFields, NAMES_LENGTH
+from app.models.base import NAMES_LENGTH, CommonFields
 from app.models.contributor import Contributor
 from app.models.organization import Organization
+from django.db import models
 
 
 class Repository(CommonFields):
