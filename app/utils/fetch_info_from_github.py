@@ -20,6 +20,30 @@ def fetch_pr_for_repo(repo, user='Hexlet'):
     return fetch_from_github(url, params)
 
 
+def fetch_issues_for_repo(repo, user='Hexlet'):
+    """
+    GitHub's REST API v3 considers every pull request an issue,
+    but not every issue is a pull request. For this reason,
+    "Issues" endpoints may return both issues and pull requests in the response.
+    You can identify pull requests by the pull_request key.
+
+    Need filter(lambda x: x.get('pull_request', False), issues)
+    """
+    url = f'https://api.github.com/repos/{user}/{repo}/issues'
+    params = {'state': 'all'}
+    return fetch_from_github(url, params)
+
+
+def fetch_comments_for_repo_issue(repo, number_issue, user='Hexlet'):
+    url = f'https://api.github.com/repos/{user}/{repo}/issues/{number_issue}/comments'
+    return fetch_from_github(url)
+
+
+def fetch_reviews_for_repo_pr(repo, number_pr, user='Hexlet'):
+    url = f'https://api.github.com/repos/{user}/{repo}/pulls/{number_pr}/comments'
+    return fetch_from_github(url)
+
+
 def fetch_from_github(url, additional_params=None):
     params = {'page': 1}
     params.update(additional_params or {})
