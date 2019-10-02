@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'REPLACE_ME')
 
-DEBUG = os.getenv('DEBUG', 'true').lower() in ['yes', '1', 'true']
+DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
 ALLOWED_HOSTS = ['*']
 
@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'app.apps.AppConfig'
+    'app.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-if os.getenv('PROD', 'false').lower() in ['yes', '1', 'true']:
+if os.getenv('PROD', 'false').lower() in {'yes', '1', 'true'}:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -59,7 +59,7 @@ if os.getenv('PROD', 'false').lower() in ['yes', '1', 'true']:
             'PASSWORD': os.getenv('DB_PASSWORD'),
             'HOST': os.getenv('DB_HOST'),
             'PORT': os.getenv('DB_PORT'),
-        }
+        },
     }
     HOST = os.getenv('HOST')
 else:
@@ -67,22 +67,34 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+        },
     }
     HOST = 'http://127.0.0.1/'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            f'django.contrib.auth.password_validation.'
+            f'UserAttributeSimilarityValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': (
+            f'django.contrib.auth.password_validation.'
+            f'MinimumLengthValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': (
+            f'django.contrib.auth.password_validation.'
+            f'CommonPasswordValidator',
+        ),
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': (
+            f'django.contrib.auth.password_validation.'
+            f'NumericPasswordValidator',
+        ),
     },
 ]
 
