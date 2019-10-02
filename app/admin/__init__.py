@@ -1,1 +1,1 @@
-import app.admin.profile
+from app.admin import profile
