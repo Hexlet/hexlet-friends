@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="containter">
+    <div class="row">
+       <div class="col-md-10 col-lg-4 offset-md-1 offset-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3></h3>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'registration' %}" method="post" class="form">
+                        {% csrf_token %}
+{#                        {% bootstrap_form form %}#}
+                        {% language 'ru' %}
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {%  trans 'Register' %}
+                        {{ _('Register') }}
+                        {% endlanguage %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
