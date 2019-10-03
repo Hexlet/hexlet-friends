@@ -43,6 +43,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'app.context_processors.base_template_context'
             ],
         },
     },
@@ -121,3 +122,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 APP_NAME = os.getenv('APP_NAME', 'Hexlet Friends')
 
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', 'REPLACE_ME')
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
