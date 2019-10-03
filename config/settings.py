@@ -43,7 +43,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'app.context_processors.base_template_context'
+                'app.context_processors.base_template_context',
             ],
         },
     },
@@ -77,25 +77,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': (
             f'django.contrib.auth.password_validation.'
-            f'UserAttributeSimilarityValidator',
+            f'UserAttributeSimilarityValidator'
         ),
     },
     {
         'NAME': (
             f'django.contrib.auth.password_validation.'
-            f'MinimumLengthValidator',
+            f'MinimumLengthValidator'
         ),
     },
     {
         'NAME': (
             f'django.contrib.auth.password_validation.'
-            f'CommonPasswordValidator',
+            f'CommonPasswordValidator'
         ),
     },
     {
         'NAME': (
             f'django.contrib.auth.password_validation.'
-            f'NumericPasswordValidator',
+            f'NumericPasswordValidator'
         ),
     },
 ]
@@ -104,7 +104,7 @@ LANGUAGE_CODE = 'ru-ru'
 
 LANGUAGES = [
     ('en', 'English'),
-    ('ru',  'Russian'),
+    ('ru', 'Russian'),
 ]
 
 TIME_ZONE = 'Europe/Moscow'
