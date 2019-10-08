@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <ol>
+        {% for contributor in contributors_list %}
+            <li>
+                <a href="{% url 'contributors:contributor_details' contributor.id %}">
+                    {{ contributor.login }} ({{ contributor.name }})
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock content %}

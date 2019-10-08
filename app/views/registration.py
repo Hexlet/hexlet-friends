@@ -10,6 +10,6 @@ class RegistrationView(CreateView):
     """User registration view."""
 
     template_name = 'auth/registration.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('contributors:home')
     model = User
     form_class = RegistrationForm

@@ -21,7 +21,7 @@ class RegistrationPageViewTest(TestCase):
     def test(self):
         """Send get request, and check data page assertions."""
         response: TemplateResponse = self.client.get(
-            reverse_lazy('registration'),
+            reverse_lazy('contributors:registration'),
         )
         form_fields: OrderedDict = RegistrationForm.base_fields
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -84,7 +84,7 @@ class SuccessRegistrationTest(TestCase):
         fake_password: str = self.faker.password(length=10)
         user_name: str = self.faker.user_name()
         response: TemplateResponse = self.client.post(
-            reverse_lazy('registration'),
+            reverse_lazy('contributors:registration'),
             data={
                 'email': email,
                 'username': user_name,
@@ -92,5 +92,5 @@ class SuccessRegistrationTest(TestCase):
                 'password2': fake_password,
             },
         )
-        self.assertRedirects(response, reverse_lazy('index'))
+        self.assertRedirects(response, reverse_lazy('contributors:home'))
         self.assertTrue(User.objects.filter(email=email, username=user_name))

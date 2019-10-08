@@ -51,7 +51,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 if os.getenv('PROD', 'false').lower() in {'yes', '1', 'true'}:
     DATABASES = {
         'default': {
@@ -111,6 +110,6 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-APP_NAME = os.getenv('APP_NAME', 'Hexlet Friends')
+PROJECT_NAME = os.getenv('PROJECT_NAME', 'Hexlet Friends')
 
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', 'REPLACE_ME')

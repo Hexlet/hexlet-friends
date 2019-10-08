@@ -3,15 +3,17 @@
 <!doctype html>
 <html lang="{{ language_code }}">
 <head>
-    <title>{{ app_name }}</title>
+    <title>{{ PROJECT_NAME }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% load bootstrap4 %}
     {% bootstrap_css %}
 </head>
-
-<body>
-    {% block content %}{% endblock %}
-</body>
-
+    <header>
+        <h1>{{ PROJECT_NAME }}</h1>
+    </header>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
 </html>

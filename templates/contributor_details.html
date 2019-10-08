@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+    <img src="{{ contributor.avatar_url }}" alt="" width="100" height="100">
+    {{ contributor.login }}
+    {{ contributor.name }}
+    {% for org_name, repositories in organizations.items %}
+        <p>{{ org_name }}</p>
+        {% for repo_name, contributions in repositories.items %}
+            <p>{{ repo_name }}</p>
+            <ul>
+            {% for contribution in contributions %}
+                <li>Commits: {{ contribution.commits }}</li>
+                <li>Additions: {{ contribution.additions }}</li>
+                <li>Deletions: {{ contribution.deletions }}</li>
+                <li>Pull requests: {{ contribution.pull_requests }}</li>
+                <li>Issues: {{ contribution.issues }}</li>
+                <li>Comments: {{ contribution.comments }}</li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endfor %}
+{% endblock content %}
