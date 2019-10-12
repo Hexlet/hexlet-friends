@@ -3,6 +3,10 @@ import hmac
 from django.conf import settings
 
 from app.models import Contribution, Contributor, Organization, Repository
+from app.utils.fetch_info_from_github import (
+    get_commit_stats_for_contributor,
+    get_name_of_contributor,
+)
 
 
 def signatures_match(payload_body, gh_signature):
@@ -21,11 +25,13 @@ def signatures_match(payload_body, gh_signature):
     return hmac.compare_digest(signature, gh_signature)
 
 
-class GitHubEvent(object):
-    """Event representation."""
+def update_database(type_, action, sender, repository):
+    """Updates the database with an event's data."""
+    if action not in {'created', 'opened', 'submitted'}:
+        return
 
-    event_types = {
-        'commit': 'commits',  # TODO
+    type_to_field_mapping = {
+        'push': 'commits',
         'pull_request': 'pull_requests',
         'issues': 'issues',
         'commit_comment': 'comments',
@@ -34,50 +40,52 @@ class GitHubEvent(object):
         'pull_request_review_comment': 'comments',
     }
 
-    def __init__(self, type_, action, sender, repository):
-        """Initialization of an instance."""
-        self.type = self.event_types[type_]
-        self.action = action
-        self.sender = sender
-        self.repository = repository
+    organization, _ = Organization.objects.get_or_create(
+        id=repository['owner']['id'],
+        defaults={
+            'name': repository['owner']['login'],
+            'html_url': repository['owner']['html_url'],
+        },
+    )
 
-    def update_database(self):
-        """Updates the database with the event's data."""
-        if self.action not in {'created', 'opened', 'submitted'}:
-            return
+    repository, _ = Repository.objects.get_or_create(
+        id=repository['id'],
+        defaults={
+            'name': repository['name'],
+            'full_name': repository['full_name'],
+            'html_url': repository['html_url'],
+            'organization': organization,
+        },
+    )
 
-        organization, _ = Organization.objects.get_or_create(
-            id=self.repository['owner']['id'],
-            defaults={
-                'name': self.repository['owner']['login'],
-                'html_url': self.repository['owner']['html_url'],
-            },
+    contributor, _ = Contributor.objects.get_or_create(
+        id=sender['id'],
+        defaults={
+            'login': sender['login'],
+            'name': get_name_of_contributor(sender['url']),
+            'avatar_url': sender['avatar_url'],
+            'html_url': sender['html_url'],
+        },
+    )
+
+    contribution, _ = Contribution.objects.update_or_create(
+        repository=repository,
+        contributor=contributor,
+    )
+
+    # Special case for commits
+    if type_ == 'push':
+        commits_total, additions, deletions = get_commit_stats_for_contributor(
+            repository.full_name,
+            contributor.id,
         )
+        contribution.commits = commits_total
+        contribution.additions = additions
+        contribution.deletions = deletions
+    # Actions for other types of events
+    else:
+        field = type_to_field_mapping[type_]
+        current_field_value = getattr(contribution, field)
+        setattr(contribution, field, current_field_value + 1)
 
-        repository, _ = Repository.objects.get_or_create(
-            id=self.repository['id'],
-            defaults={
-                'name': self.repository['name'],
-                'full_name': self.repository['full_name'],
-                'html_url': self.repository['html_url'],
-                'organization': organization,
-            },
-        )
-
-        contributor, _ = Contributor.objects.get_or_create(
-            id=self.sender['id'],
-            defaults={
-                'login': self.sender['login'],
-                'name': self.sender.get('name'),    # TODO
-                'avatar_url': self.sender['avatar_url'],
-                'html_url': self.sender['html_url'],
-            },
-        )
-
-        contribution, _ = Contribution.objects.update_or_create(
-            repository=repository,
-            contributor=contributor,
-        )
-        current_field_value = getattr(contribution, self.type)
-        setattr(contribution, self.type, current_field_value + 1)
-        contribution.save()
+    contribution.save()

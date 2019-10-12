@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from app.utils.github_webhook import GitHubEvent, signatures_match
+from app.utils.github_webhook import signatures_match, update_database
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -21,12 +21,11 @@ class EventHandler(View):
 
         event_type = request.headers.get('X-GitHub-Event')
         payload = json.loads(request.POST.get('payload'))
-        event = GitHubEvent(
+        update_database(
             event_type,
-            payload.get('action'),
+            payload.get('action', 'created'),
             payload['sender'],
             payload['repository'],
         )
-        event.update_database()
 
         return HttpResponse("Success.")

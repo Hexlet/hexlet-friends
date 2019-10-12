@@ -125,3 +125,27 @@ def sum_dicts(*dicts):
     for current_dict in dicts:
         counter.update(current_dict)
     return counter
+
+
+def get_commit_stats_for_contributor(repo_full_name, contributor_id):
+    """Returns numbers of commits, additions, deletions for contributor."""
+    url = f'{GITHUB_API}/repos/{repo_full_name}/stats/contributors'
+    response = requests.get(url, headers=get_headers())
+    response.raise_for_status()
+
+    contributor_stats = list(filter(
+        lambda stats: stats['author']['id'] == contributor_id, response.json(),
+    ))[0]
+
+    counter = Counter()
+    for week in contributor_stats['weeks']:
+        counter.update(week)
+
+    return counter['c'], counter['a'], counter['d']
+
+
+def get_name_of_contributor(url):
+    """Returns a contributor's name."""
+    response = requests.get(url, headers=get_headers())
+    response.raise_for_status()
+    return response.json()['name']
