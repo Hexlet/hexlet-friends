@@ -113,3 +113,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 PROJECT_NAME = os.getenv('PROJECT_NAME', 'Hexlet Friends')
 
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN', 'REPLACE_ME')
+
+GITHUB_WEBHOOK_TOKEN = os.getenv('GITHUB_WEBHOOK_TOKEN')
