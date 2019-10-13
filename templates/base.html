@@ -9,11 +9,13 @@
     {% load bootstrap4 %}
     {% bootstrap_css %}
 </head>
+<body>
     <header>
-        <h1>{{ PROJECT_NAME }}</h1>
+        {% include 'components/navbar.html' %}
     </header>
-    <body>
+    <main>
         {% block content %}
         {% endblock content %}
-    </body>
+    </main>
+</body>
 </html>

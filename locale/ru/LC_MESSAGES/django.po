@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 16:10+0300\n"
+"POT-Creation-Date: 2019-10-13 15:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,18 @@ msgstr "Введите ваш e-mail"
 msgid "Registration"
 msgstr "Регистрация"
 
-#: templates/auth/registration.html:16
+#: templates/auth/registration.html:16 templates/components/navbar.html:23
 msgid "Register"
 msgstr "Зарегистрироваться"
+
+#: templates/components/navbar.html:8
+msgid "List of contributors"
+msgstr "Список контрибьюторов"
+
+#: templates/components/navbar.html:16
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/components/navbar.html:20
+msgid "Log in"
+msgstr "Войти"

@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-light">
+    <!-- logo -->
+    <a class="navbar-brand" href="{% url 'contributors:home' %}">{{ PROJECT_NAME }}</a>
+    <!-- main menu items -->
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'contributors:contributors_list' %}">
+                {{ _('List of contributors') }}
+            </a>
+        </li>
+    </ul>
+    <!-- right bar -->
+    <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="#">{{ _('Log out') }}</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="#">{{ _('Log in') }}</a>
+            </li>
+            <li>
+                <a class="nav-link" href="{% url 'contributors:registration' %}">{{ _('Register') }}</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
