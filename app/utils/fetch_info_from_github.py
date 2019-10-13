@@ -9,6 +9,18 @@ PAGE_KEY = 'page'
 GITHUB_API = 'https://api.github.com'
 
 
+class GitHubError(Exception):
+    """GitHub error."""
+
+
+class NoContributorsError(GitHubError):
+    """A repository has no contributors."""
+
+
+class ContributorNotFoundError(GitHubError):
+    """A particular contributor was not found."""
+
+
 def fetch_all_repos_for_user(user=DEFAULT_USER):
     """Fetch user repository."""
     url = f'{GITHUB_API}/users/{user}/repos'
@@ -115,15 +127,15 @@ def get_count_pages(url):  # noqa: D103
 def get_headers():
     """Return github auth header."""
     return {
-        'Authorization': f'token {settings.GITHUB_TOKEN}',
+        'Authorization': f'token {settings.GITHUB_AUTH_TOKEN}',
     }
 
 
-def sum_dicts(*dicts):
-    """Merge dicts."""
+def merge_dicts(*dicts):
+    """Merges several dictionaries into one."""
     counter = Counter()
-    for current_dict in dicts:
-        counter.update(current_dict)
+    for dict_ in dicts:
+        counter.update(dict_)
     return counter
 
 
@@ -132,16 +144,24 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     url = f'{GITHUB_API}/repos/{repo_full_name}/stats/contributors'
     response = requests.get(url, headers=get_headers())
     response.raise_for_status()
+    if response.status_code == requests.codes.no_content:
+        raise NoContributorsError(
+            "Nobody has contributed to this repository yet.",
+        )
 
-    contributor_stats = list(filter(
-        lambda stats: stats['author']['id'] == contributor_id, response.json(),
-    ))[0]
+    try:
+        contributor_stats = [
+            stats for stats in response.json()
+            if stats['author']['id'] == contributor_id
+        ][0]
+    except IndexError:
+        raise ContributorNotFoundError(
+            "No such contributor in this repository.",
+        )
 
-    counter = Counter()
-    for week in contributor_stats['weeks']:
-        counter.update(week)
+    totals = merge_dicts(*contributor_stats['weeks'])
 
-    return counter['c'], counter['a'], counter['d']
+    return totals['c'], totals['a'], totals['d']
 
 
 def get_name_of_contributor(url):
