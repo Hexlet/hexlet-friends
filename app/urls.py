@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from app.views import contributor, contributors, home, registration, webhook
 
@@ -22,3 +24,7 @@ urlpatterns = [
     ),
     path('event-handler', webhook.EventHandler.as_view()),
 ]
+
+admin.site.index_title = _('Hexlet Friends')
+admin.site.site_header = _('Site administration')
+admin.site.site_title = _('Site Administration')
