@@ -13,7 +13,7 @@ class RegistrationForm(UserCreationForm):
         help_text=_('Enter your e-mail address'),  # noqa: WPS121
     )
 
-    class Meta:  # noqa WPS306
+    class Meta(object):
         """Form meta."""
 
         model = User

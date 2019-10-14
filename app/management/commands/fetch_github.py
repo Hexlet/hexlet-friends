@@ -27,12 +27,12 @@ class Command(BaseCommand):
             repo_name = repo['name']
             self.stdout.write(repo_name)
             commits = github.fetch_commits_for_repo(repo_name, user)
-            user_by_commits = github.sum_dicts(
+            user_by_commits = github.merge_dicts(
                 user_by_commits,
                 github.get_user_by_commits(commits),
             )
             prs = github.fetch_pr_for_repo(repo_name, user)
-            user_by_prs = github.sum_dicts(
+            user_by_prs = github.merge_dicts(
                 user_by_prs,
                 github.get_user_by_prs(prs),
             )
