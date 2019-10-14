@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
     <img src="{{ contributor.avatar_url }}" alt="" width="100" height="100">
     {{ contributor.login }}
     {{ contributor.name }}
@@ -19,4 +20,5 @@
             </ul>
         {% endfor %}
     {% endfor %}
+</div>
 {% endblock content %}
