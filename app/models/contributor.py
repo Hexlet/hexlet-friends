@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as lazy
 
 from app.models.base import NAMES_LENGTH, CommonFields
 
@@ -7,12 +7,12 @@ from app.models.base import NAMES_LENGTH, CommonFields
 class Contributor(CommonFields):
     """Hexlet contributor model."""
 
-    login = models.CharField(_('Login'), max_length=NAMES_LENGTH)
-    avatar_url = models.URLField(_('avatar url'))
+    login = models.CharField(lazy('Login'), max_length=NAMES_LENGTH)
+    avatar_url = models.URLField(lazy('avatar url'))
 
     class Meta(object):
-        verbose_name = _('Profile')
-        verbose_name_plural = _('Profiles')
+        verbose_name = lazy('Profile')
+        verbose_name_plural = lazy('Profiles')
 
     def __str__(self):
         """Contributor model string view."""
