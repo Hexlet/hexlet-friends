@@ -43,3 +43,63 @@ msgstr "Выйти"
 #: templates/components/navbar.html:20
 msgid "Log in"
 msgstr "Войти"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Profiles"
+msgstr "Профили"
+
+msgid "Repository"
+msgstr "Репозиторий"
+
+msgid "Repositories"
+msgstr "Репозитории"
+
+msgid "Organization"
+msgstr "Организация"
+
+msgid "Organizations"
+msgstr "Организации"
+
+msgid "Contributor"
+msgstr "Контрибьютор"
+
+msgid "Contributors"
+msgstr "Контрибьюторы"
+
+msgid "commits"
+msgstr "коммиты"
+
+msgid "comments"
+msgstr "комментарии"
+
+msgid "additions"
+msgstr "добавления"
+
+msgid "deletions"
+msgstr "удаления"
+
+msgid "pull requests"
+msgstr "pull запросы"
+
+msgid "issues"
+msgstr "проблемы"
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "full name"
+msgstr "Полное имя"
+
+msgid "html url"
+msgstr "Ссылка"
+
+msgid "avatar url"
+msgstr "Ссылка на аватар"
+
+msgid "Contribution"
+msgstr "Вклад"
+
+msgid "Contributions"
+msgstr "Вклады"
