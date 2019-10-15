@@ -6,9 +6,19 @@
         </a>
         <!-- main menu items -->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contributors:organizations_list' %}">
+                    {{ _('Organizations') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contributors:repositories_list' %}">
+                    {{ _('Repositories') }}
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'contributors:contributors_list' %}">
-                    {{ _('List of contributors') }}
+                    {{ _('Сontributors') }}
                 </a>
             </li>
         </ul>

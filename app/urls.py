@@ -2,7 +2,17 @@ from django.contrib import admin
 from django.urls import path
 from django.utils.translation import gettext_lazy as lazy
 
-from app.views import contributor, contributors, home, registration, webhook
+from app.views import (
+    contributor,
+    contributors,
+    home,
+    organization,
+    organizations,
+    registration,
+    repositories,
+    repository,
+    webhook,
+)
 
 app_name = 'contributors'
 urlpatterns = [
@@ -11,6 +21,26 @@ urlpatterns = [
         'registration',
         registration.RegistrationView.as_view(),
         name='registration',
+    ),
+    path(
+        'organizations',
+        organizations.ListView.as_view(),
+        name='organizations_list',
+    ),
+    path(
+        'organizations/<int:pk>',
+        organization.DetailView.as_view(),
+        name='organization_details',
+    ),
+    path(
+        'repositories',
+        repositories.ListView.as_view(),
+        name='repositories_list',
+    ),
+    path(
+        'repositories/<int:pk>',
+        repository.DetailView.as_view(),
+        name='repository_details',
     ),
     path(
         'contributors',
