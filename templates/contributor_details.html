@@ -4,10 +4,10 @@
     <img src="{{ contributor.avatar_url }}" alt="" width="100" height="100">
     {{ contributor.login }}
     {{ contributor.name }}
-    {% for org_name, repositories in organizations.items %}
-        <p>{{ org_name }}</p>
-        {% for repo_name, contributions in repositories.items %}
-            <p>{{ repo_name }}</p>
+    {% for org, repositories in organizations.items %}
+        <p><a href="{% url 'contributors:organization_details' org.id %}">{{ org.name }}</a></p>
+        {% for repo, contributions in repositories.items %}
+            <p><a href="{% url 'contributors:repository_details' repo.id %}">{{ repo.name }}</a></p>
             <ul>
             {% for contribution in contributions %}
                 <li>Commits: {{ contribution.commits }}</li>
