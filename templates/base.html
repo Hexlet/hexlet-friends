@@ -9,13 +9,15 @@
     {% load bootstrap4 %}
     {% bootstrap_css %}
 </head>
-<body>
+<body class="d-flex flex-column">
+    <div class="d-flex flex-column min-vh-100">
     <header>
         {% include 'components/navbar.html' %}
     </header>
-    <main>
+    <main class="my-5">
         {% block content %}
         {% endblock content %}
     </main>
+    {% include 'components/footer.html' %}
 </body>
 </html>

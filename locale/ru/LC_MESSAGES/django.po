@@ -103,3 +103,27 @@ msgstr "Вклад"
 
 msgid "Contributions"
 msgstr "Вклады"
+
+msgid "About"
+msgstr "О проекте"
+
+msgid "Source code"
+msgstr "Исходный код"
+
+msgid "Other open source projects"
+msgstr "Другие open source проекты"
+
+msgid "Help"
+msgstr "Помощь"
+
+msgid "Knowledge base"
+msgstr "База знаний"
+
+msgid "Blog"
+msgstr "Блог"
+
+msgid "Recommended books"
+msgstr "Рекомендованные книги"
+
+msgid "Additionally"
+msgstr "Дополнительно"
