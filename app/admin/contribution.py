@@ -14,5 +14,6 @@ class ContributionAdmin(admin.ModelAdmin):
         'pull_requests',
         'comments',
         'additions',
-        'deletions')
+        'deletions'
+    )
     search_fields = ('contributor__login', 'repository__name')

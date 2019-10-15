@@ -99,8 +99,18 @@ def get_user_by_comments(issues):
     return get_user_by_characteristic(issues, 'user')
 
 
+def get_user_by_additions(stats):
+    return get_user_by_stats(stats, 'a')
+
+
+def get_user_by_deletions(stats):
+    return get_user_by_stats(stats, 'd')
+
+
+Person = namedtuple('Person', ['user_id', 'login'])
+
+
 def get_user_by_characteristic(characteristic, look_up):
-    Person = namedtuple('Person', ['user_id', 'login'])
     user_by_characteristic = {}
     for ch in characteristic:
         user = ch.get(look_up)
@@ -113,16 +123,7 @@ def get_user_by_characteristic(characteristic, look_up):
     return user_by_characteristic
 
 
-def get_user_by_additions(stats):
-    return get_user_by_stats(stats, 'a')
-
-
-def get_user_by_deletions(stats):
-    return get_user_by_stats(stats, 'd')
-
-
 def get_user_by_stats(stats, field):
-    Person = namedtuple('Person', ['user_id', 'login'])
     user_by_stats = {}
     for st in stats:
         user = st['author']

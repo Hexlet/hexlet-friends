@@ -22,7 +22,8 @@ def populate_db(user_by_field, repo, field):
             contributor=contributor,
         )
         if contribution:
-            contribution.update(**{field: user_by_field[user]})
+            contribution[field] = user_by_field[user]
+            contribution.save()
         else:
             Contribution.objects.create(
                 repository=repo,
