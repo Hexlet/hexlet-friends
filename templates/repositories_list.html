@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <ol>
+        {% for repository in repositories_list %}
+            <li>
+                <a href="{% url 'contributors:repository_details' repository.id %}">
+                    {{ repository.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+</div>
+{% endblock content %}

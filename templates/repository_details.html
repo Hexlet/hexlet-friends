@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {{ repository.name }}
+    <ol>
+    {% for contributor, contribution in contributors.items %}
+        <li>
+            <a href="{% url 'contributors:contributor_details' contributor.id %}">
+                {{ contributor.login }}
+            </a>
+            {{ contributor.name }}
+        </li>
+        <ul>
+            <li>Commits: {{ contribution.commits }}</li>
+            <li>Additions: {{ contribution.additions }}</li>
+            <li>Deletions: {{ contribution.deletions }}</li>
+            <li>Pull requests: {{ contribution.pull_requests }}</li>
+            <li>Issues: {{ contribution.issues }}</li>
+            <li>Comments: {{ contribution.comments }}</li>
+        </ul>
+    {% endfor %}
+    </ol>
+</div>
+{% endblock content %}

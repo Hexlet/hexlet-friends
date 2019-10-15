@@ -32,10 +32,6 @@ msgstr "Регистрация"
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-#: templates/components/navbar.html:8
-msgid "List of contributors"
-msgstr "Список контрибьюторов"
-
 #: templates/components/navbar.html:16
 msgid "Log out"
 msgstr "Выйти"
