@@ -2,57 +2,47 @@ from django.contrib import admin
 from django.urls import path
 from django.utils.translation import gettext_lazy as lazy
 
-from app.views import (
-    contributor,
-    contributors,
-    home,
-    organization,
-    organizations,
-    registration,
-    repositories,
-    repository,
-    webhook,
-)
+from app import views
 
 app_name = 'contributors'
 urlpatterns = [
-    path('', home.HomeView.as_view(), name='home'),
+    path('', views.home.HomeView.as_view(), name='home'),
     path(
         'registration',
-        registration.RegistrationView.as_view(),
+        views.registration.RegistrationView.as_view(),
         name='registration',
     ),
     path(
         'organizations',
-        organizations.ListView.as_view(),
+        views.organizations.ListView.as_view(),
         name='organizations_list',
     ),
     path(
         'organizations/<int:pk>',
-        organization.DetailView.as_view(),
+        views.organization.DetailView.as_view(),
         name='organization_details',
     ),
     path(
         'repositories',
-        repositories.ListView.as_view(),
+        views.repositories.ListView.as_view(),
         name='repositories_list',
     ),
     path(
         'repositories/<int:pk>',
-        repository.DetailView.as_view(),
+        views.repository.DetailView.as_view(),
         name='repository_details',
     ),
     path(
         'contributors',
-        contributors.ListView.as_view(),
+        views.contributors.ListView.as_view(),
         name='contributors_list',
     ),
     path(
         'contributors/<int:pk>',
-        contributor.DetailView.as_view(),
+        views.contributor.DetailView.as_view(),
         name='contributor_details',
     ),
-    path('event-handler', webhook.EventHandler.as_view()),
+    path('event-handler', views.webhook.EventHandler.as_view()),
 ]
 
 admin.site.index_title = lazy('Hexlet Friends')
