@@ -1,4 +1,3 @@
-{% load i18n %}
 <footer class="footer text-muted pb-5 mt-auto">
     <div class="container mt-5">
         <div class="row">
@@ -6,12 +5,12 @@
                 <div class="h4">&copy; Hexlet</div>
                 <hr>
                 <ul class="list-unstyled">
-                    <li><a target="_blank" href="/">{% trans 'About' %}</a></li>
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-friends">{% trans 'Source code' %}</a></li>
+                    <li><a href="/">{{ _('About') }}</a></li>
+                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-friends">{{ _('Source code') }}</a></li>
                 </ul>
             </div>
             <div class="col-12 col-md-4">
-                <div class="h5 mb-3">{% trans 'Other open source projects' %}</div>
+                <div class="h5 mb-3">{{ _('Other open source projects') }}</div>
                 <ul class="list-unstyled">
                     <li><a target="_blank" href="https://github.com/Hexlet/hexlet-interview">NodeJS</a></li>
                     <li><a target="_blank" href="https://github.com/Hexlet/hexlet-cv">Ruby</a></li>
@@ -20,13 +19,13 @@
                 </ul>
             </div>
             <div class="col-12 col-md-4">
-                <div class="h5 mb-3">{% trans 'Help' %}</div>
+                <div class="h5 mb-3">{{ _('Help') }}</div>
                 <ul class="list-unstyled">
-                    <li><a target="_blank" href="https://ru.hexlet.io/knowledge">{% trans 'Knowledge base' %}</a></li>
-                    <li><a target="_blank" href="https://ru.hexlet.io/blog">{% trans 'Blog' %}</a></li>
-                    <li><a target="_blank" href="https://ru.hexlet.io/pages/recommended-books">{% trans 'Recommended books' %}</a></li>
+                    <li><a target="_blank" href="https://ru.hexlet.io/knowledge">{{ _('Knowledge base') }}</a></li>
+                    <li><a target="_blank" href="https://ru.hexlet.io/blog">{{ _('Blog') }}</a></li>
+                    <li><a target="_blank" href="https://ru.hexlet.io/pages/recommended-books">{{ _('Recommended books') }}</a></li>
                 </ul>
-                <div class="h5 mb-3">{% trans 'Additionally' %}</div>
+                <div class="h5 mb-3">{{ _('Additionally') }}</div>
                 <ul class="list-unstyled">
                     <li><a target="_blank" href="https://ru.code-basics.com/">Code Basics</a></li>
                     <li><a target="_blank" href="https://codebattle.hexlet.io/">Code Battles</a></li>
