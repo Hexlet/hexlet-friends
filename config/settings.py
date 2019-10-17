@@ -1,8 +1,10 @@
 import os
 
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'REPLACE_ME')
+SECRET_KEY = os.getenv('SECRET_KEY', 'set in .env')
 
 DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
@@ -21,6 +23,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,26 +54,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-if os.getenv('PROD', 'false').lower() in {'yes', '1', 'true'}:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
-        },
-    }
-    HOST = os.getenv('HOST')
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        },
-    }
-    HOST = 'http://127.0.0.1/'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -110,8 +99,10 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-PROJECT_NAME = os.getenv('PROJECT_NAME', 'Hexlet Friends')
+PROJECT_NAME = 'Hexlet Friends'
 
-GITHUB_AUTH_TOKEN = os.getenv('GITHUB_AUTH_TOKEN', 'REPLACE_ME')
+GITHUB_AUTH_TOKEN = os.getenv('GITHUB_AUTH_TOKEN')
 
 GITHUB_WEBHOOK_TOKEN = os.getenv('GITHUB_WEBHOOK_TOKEN')
+
+DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
