@@ -2,7 +2,7 @@ import os
 
 import dj_database_url
 
-from app.utils.misc import getenv
+from contributors.utils.misc import getenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
-    'app.apps.MainConfig',
+    'contributors.apps.ContributorsConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +48,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'app.context_processors.base_template_context',
+                'contributors.context_processors.base_template_context',
             ],
         },
     },
