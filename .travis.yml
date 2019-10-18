@@ -13,3 +13,8 @@ install:
 script:
   - make lint
   - make test
+
+env:
+  - SECRET_KEY=secret
+    GITHUB_AUTH_TOKEN=secret
+    GITHUB_WEBHOOK_TOKEN=secret

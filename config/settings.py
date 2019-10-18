@@ -2,9 +2,11 @@ import os
 
 import dj_database_url
 
+from app.utils.misc import getenv
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'set in .env')
+SECRET_KEY = getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
@@ -61,6 +63,13 @@ DATABASES = {
     },
 }
 
+CONN_MAX_AGE = 500
+
+# Use the DATABASE_URL environment variable when DEBUG = False
+# https://pypi.org/project/dj-database-url/
+
+DATABASES['default'].update(dj_database_url.config(conn_max_age=CONN_MAX_AGE))
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -101,8 +110,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 PROJECT_NAME = 'Hexlet Friends'
 
-GITHUB_AUTH_TOKEN = os.getenv('GITHUB_AUTH_TOKEN')
+GITHUB_AUTH_TOKEN = getenv('GITHUB_AUTH_TOKEN')
 
-GITHUB_WEBHOOK_TOKEN = os.getenv('GITHUB_WEBHOOK_TOKEN')
-
-DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
+GITHUB_WEBHOOK_TOKEN = getenv('GITHUB_WEBHOOK_TOKEN')
