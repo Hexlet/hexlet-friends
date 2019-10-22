@@ -17,4 +17,4 @@ start: test
 	@poetry run python manage.py runserver --noreload
 
 sync:
-	@poetry run python manage.py fetch_github
+	@poetry run python manage.py fetchdata

@@ -1,6 +1,1 @@
-from contributors.admin import (
-    contribution,
-    contributor,
-    organization,
-    repository,
-)
+from contributors.admin import contribution, contributor, organization, repository

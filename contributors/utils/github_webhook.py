@@ -2,16 +2,8 @@ import hmac
 
 from django.conf import settings
 
-from contributors.models import (
-    Contribution,
-    Contributor,
-    Organization,
-    Repository,
-)
-from contributors.utils.fetch_info_from_github import (
-    get_commit_stats_for_contributor,
-    get_name_of_contributor,
-)
+from contributors.models import Contribution, Contributor, Organization, Repository
+from contributors.utils.github_lib import get_commit_stats_for_contributor, get_user_name
 
 
 def signatures_match(payload_body, gh_signature):
@@ -67,7 +59,7 @@ def update_database(type_, action, sender, repository):
         id=sender['id'],
         defaults={
             'login': sender['login'],
-            'name': get_name_of_contributor(sender['url']),
+            'name': get_user_name(sender['url']),
             'avatar_url': sender['avatar_url'],
             'html_url': sender['html_url'],
         },
