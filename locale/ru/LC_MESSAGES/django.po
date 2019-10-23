@@ -20,7 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: app/forms/registration.py:13
+#: contributors/forms/registration.py:13
 msgid "Enter your e-mail address"
 msgstr "Введите ваш e-mail"
 
