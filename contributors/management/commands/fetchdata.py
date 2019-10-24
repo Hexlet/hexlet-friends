@@ -1,7 +1,27 @@
+import logging
+import os
+import sys
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from contributors.models import Contribution, Contributor, Organization
 from contributors.utils import github_lib as github
+
+# Logging setup
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename=os.path.join(settings.BASE_DIR, 'logs/github_sync.log'),
+    filemode='w',
+    format='{asctime} - {levelname} - {message}',
+    datefmt='%H:%M:%S',
+    style='{',
+)
+
+# Simultaneous logging to file and stdout
+logger = logging.getLogger('info')
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
 def get_or_create_contributor(login):
@@ -30,8 +50,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options): # noqa WPS110
         """Logic of the command."""
-        org_name = options['org']
+        logger.info("Data collection started")
 
+        org_name = options['org']
         gh_org = github.get_org_data(org_name)
         org, _ = Organization.objects.get_or_create(
             id=gh_org['id'],
@@ -40,11 +61,9 @@ class Command(BaseCommand):
                 'html_url': gh_org['html_url'],
             },
         )
-        self.stdout.write(org.name)
+        logger.info(org.name)
 
-        gh_repos = [
-            repo for repo in github.get_org_repos(org) if not repo['fork']
-        ]
+        gh_repos = [repo for repo in github.get_org_repos(org) if not repo['fork']]
         for gh_repo in gh_repos:
             repo, _ = org.repository_set.get_or_create(
                 id=gh_repo['id'],
@@ -54,19 +73,18 @@ class Command(BaseCommand):
                     'html_url': gh_repo['html_url'],
                 },
             )
-            self.stdout.write('\t{0}'.format(repo.name))
+            logger.info("\t%s", repo.name)
 
-            self.stdout.write("\t\tProcessing pull requests")
+            logger.info("\t\tProcessing pull requests")
             prs = github.get_repo_prs(org.name, repo.name)
             total_prs_per_user = github.get_total_prs_per_user(prs)
 
-            self.stdout.write("\t\tProcessing issues")
-            issues = github.get_repo_issues(org.name, repo.name)
-            total_issues_per_user = github.get_total_issues_per_user(
-                [issue for issue in issues if 'pull_request' not in issue],
-            )
+            logger.info("\t\tProcessing issues")
+            issues_and_prs = github.get_repo_issues(org.name, repo.name)
+            issues = [issue for issue in issues_and_prs if 'pull_request' not in issue]
+            total_issues_per_user = github.get_total_issues_per_user(issues)
 
-            self.stdout.write("\t\tProcessing comments")
+            logger.info("\t\tProcessing comments")
             comments = github.get_repo_comments(org.name, repo.name)
             review_comments = github.get_repo_review_comments(org.name, repo.name)
             total_comments_per_user = github.merge_dicts(
@@ -74,12 +92,12 @@ class Command(BaseCommand):
                 github.get_total_comments_per_user(review_comments),
             )
 
-            self.stdout.write("\t\tProcessing commits")
+            logger.info("\t\tProcessing commits")
             total_commits_per_user = github.get_total_commits_per_user_excluding_merges(
                 org.name, repo.name,
             )
 
-            self.stdout.write("\t\tProcessing commit stats")
+            logger.info("\t\tProcessing commits stats")
             contributors = github.get_repo_contributors(org.name, repo.name)
             total_additions_per_user = github.get_total_additions_per_user(contributors)
             total_deletions_per_user = github.get_total_deletions_per_user(contributors)
@@ -92,11 +110,9 @@ class Command(BaseCommand):
                 'additions': total_additions_per_user,
                 'deletions': total_deletions_per_user,
             }
-            contributors_logins = [
-                contributor['author']['login'] for contributor in contributors
-            ]
+            contributors_logins = [contributor['author']['login'] for contributor in contributors]
 
-            self.stdout.write('\t\tFinishing insertions')
+            logger.info("\t\tFinishing insertions")
             for login in contributors_logins:
                 contributor = get_or_create_contributor(login)
                 Contribution.objects.update_or_create(
@@ -108,6 +124,4 @@ class Command(BaseCommand):
                     },
                 )
 
-        self.stdout.write(self.style.SUCCESS(
-            'Data fetched from GitHub and saved to the database.',
-        ))
+        logger.info(self.style.SUCCESS("Data fetched from GitHub and saved to the database."))
