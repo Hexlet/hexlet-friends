@@ -1,3 +1,4 @@
+import logging
 import os
 
 import dj_database_url
@@ -5,6 +6,16 @@ import dj_database_url
 from contributors.utils.misc import getenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Logging setup
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename=os.path.join(BASE_DIR, 'logs/events.log'),
+    filemode='w',
+    format='{asctime} - {levelname} - {message}',
+    datefmt='%H:%M:%S',
+    style='{',
+)
 
 SECRET_KEY = getenv('SECRET_KEY')
 

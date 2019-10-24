@@ -1,22 +1,10 @@
 import logging
-import os
 import sys
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from contributors.models import Contribution, Contributor, Organization
 from contributors.utils import github_lib as github
-
-# Logging setup
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename=os.path.join(settings.BASE_DIR, 'logs/github_sync.log'),
-    filemode='w',
-    format='{asctime} - {levelname} - {message}',
-    datefmt='%H:%M:%S',
-    style='{',
-)
 
 # Simultaneous logging to file and stdout
 logger = logging.getLogger('info')
@@ -73,18 +61,18 @@ class Command(BaseCommand):
                     'html_url': gh_repo['html_url'],
                 },
             )
-            logger.info("\t%s", repo.name)
+            logger.info(repo.name)
 
-            logger.info("\t\tProcessing pull requests")
+            logger.info("Processing pull requests")
             prs = github.get_repo_prs(org.name, repo.name)
             total_prs_per_user = github.get_total_prs_per_user(prs)
 
-            logger.info("\t\tProcessing issues")
+            logger.info("Processing issues")
             issues_and_prs = github.get_repo_issues(org.name, repo.name)
             issues = [issue for issue in issues_and_prs if 'pull_request' not in issue]
             total_issues_per_user = github.get_total_issues_per_user(issues)
 
-            logger.info("\t\tProcessing comments")
+            logger.info("Processing comments")
             comments = github.get_repo_comments(org.name, repo.name)
             review_comments = github.get_repo_review_comments(org.name, repo.name)
             total_comments_per_user = github.merge_dicts(
@@ -92,12 +80,12 @@ class Command(BaseCommand):
                 github.get_total_comments_per_user(review_comments),
             )
 
-            logger.info("\t\tProcessing commits")
+            logger.info("Processing commits")
             total_commits_per_user = github.get_total_commits_per_user_excluding_merges(
                 org.name, repo.name,
             )
 
-            logger.info("\t\tProcessing commits stats")
+            logger.info("Processing commits stats")
             contributors = github.get_repo_contributors(org.name, repo.name)
             total_additions_per_user = github.get_total_additions_per_user(contributors)
             total_deletions_per_user = github.get_total_deletions_per_user(contributors)
@@ -112,7 +100,7 @@ class Command(BaseCommand):
             }
             contributors_logins = [contributor['author']['login'] for contributor in contributors]
 
-            logger.info("\t\tFinishing insertions")
+            logger.info("Finishing insertions")
             for login in contributors_logins:
                 contributor = get_or_create_contributor(login)
                 Contribution.objects.update_or_create(
