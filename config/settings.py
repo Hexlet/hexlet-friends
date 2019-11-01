@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'contributors.apps.ContributorsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,8 @@ PROJECT_NAME = 'Hexlet Friends'
 GITHUB_AUTH_TOKEN = getenv('GITHUB_AUTH_TOKEN')
 
 GITHUB_WEBHOOK_TOKEN = getenv('GITHUB_WEBHOOK_TOKEN')
+
+AUTH_USER_MODEL = 'accounts.SiteUser'
+
+LOGIN_REDIRECT_URL = 'contributors:home'
+LOGOUT_REDIRECT_URL = 'contributors:home'

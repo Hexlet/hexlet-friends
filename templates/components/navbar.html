@@ -26,14 +26,14 @@
         <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="#">{{ _('Log out') }}</a>
+                <a class="nav-link" href="{% url 'logout' %}">{{ _('Log out') }}</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="#">{{ _('Log in') }}</a>
+                <a class="nav-link" href="{% url 'login' %}">{{ _('Log in') }}</a>
             </li>
             <li>
-                <a class="nav-link" href="{% url 'contributors:registration' %}">{{ _('Register') }}</a>
+                <a class="nav-link" href="{% url 'accounts:registration' %}">{{ _('Register') }}</a>
             </li>
             {% endif %}
         </ul>

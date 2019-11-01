@@ -5,4 +5,5 @@ __pycache__/
 
 .env
 .python-version
-db.sqlite3
+*.sqlite3
+*.bak

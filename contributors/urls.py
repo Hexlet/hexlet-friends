@@ -8,12 +8,7 @@ app_name = 'contributors'
 urlpatterns = [
     path('', views.home.HomeView.as_view(), name='home'),
     path(
-        'registration',
-        views.registration.RegistrationView.as_view(),
-        name='registration',
-    ),
-    path(
-        'organizations',
+        'organizations/',
         views.organizations.ListView.as_view(),
         name='organizations_list',
     ),
@@ -23,7 +18,7 @@ urlpatterns = [
         name='organization_details',
     ),
     path(
-        'repositories',
+        'repositories/',
         views.repositories.ListView.as_view(),
         name='repositories_list',
     ),
@@ -33,7 +28,7 @@ urlpatterns = [
         name='repository_details',
     ),
     path(
-        'contributors',
+        'contributors/',
         views.contributors.ListView.as_view(),
         name='contributors_list',
     ),
