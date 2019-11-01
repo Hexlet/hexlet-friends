@@ -5,7 +5,7 @@
     <ol>
     {% for contributor, contribution in contributors.items %}
         <li>
-            <a href="{% url 'contributors:contributor_details' contributor.id %}">
+            <a href="{{ contributor.get_absolute_url }}">
                 {{ contributor.login }}
             </a>
             {{ contributor.name }}

@@ -4,7 +4,7 @@
     <ol>
         {% for organization in organizations_list %}
             <li>
-                <a href="{% url 'contributors:organization_details' organization.id %}">
+                <a href="{{ organization.get_absolute_url }}">
                     {{ organization.name }}
                 </a>
             </li>
