@@ -1,14 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-    <ol>
-        {% for contributor in contributors_list %}
-            <li>
-                <a href="{% url 'contributors:contributor_details' contributor.id %}">
-                    {{ contributor.login }} ({{ contributor.name }})
-                </a>
-            </li>
-        {% endfor %}
-    </ol>
+    <div class="row">
+        <div class="col-12">
+            <h3>{{ _('List of contributors') }}</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contributor in contributors_list %}
+                    <tr>
+                        <th scope="row">{{ contributor.id }}</th>
+                        <th scope="row">
+                            <a href="{% url 'contributors:contributor_details' contributor.id %}">
+                                {{ contributor.login }} ({{ contributor.name }})
+                            </a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock content %}
