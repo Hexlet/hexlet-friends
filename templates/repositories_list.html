@@ -1,14 +1,30 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-    <ol>
-        {% for repository in repositories_list %}
-            <li>
-                <a href="{{ repository.get_absolute_url }}">
-                    {{ repository.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ol>
-</div>
-{% endblock content %}
+{% extends 'list_as_table.html' %}
+{% load i18n %}
+
+{% block header %}{% trans "Repositories" %}{% endblock %}
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">{% trans "Name" %}</th>
+    <th scope="col">{% trans "Organization" %}</th>
+    <th scope="col">{% trans "Pull requests" %}</th>
+    <th scope="col">{% trans "Issues" %}</th>
+    <th scope="col">{% trans "Contributors" %}</th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for repository in repositories_list %}
+    <tr>
+      <th scope="row"></th>
+      <td>
+        <a href="{{ repository.get_absolute_url }}">
+          {{ repository.name }}
+        </a>
+      </td>
+      <td>{{ repository.organization.name }}</td>
+      <td>{{ repository.pull_requests }}</td>
+      <td>{{ repository.issues }}</td>
+      <td>{{ repository.contributors_count }}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}

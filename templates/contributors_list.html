@@ -1,30 +1,36 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h3>{{ _('List of contributors') }}</h3>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for contributor in contributors_list %}
-                    <tr>
-                        <th scope="row">{{ contributor.id }}</th>
-                        <th scope="row">
-                            <a href="{{ contributor.get_absolute_url }}">
-                                {{ contributor.login }} ({{ contributor.name }})
-                            </a>
-                        </th>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-{% endblock content %}
+{% extends 'list_as_table.html' %}
+{% load i18n %}
+
+{% block header %}{% trans "Contributors" %}{% endblock %}
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">{% trans "Login" %}</th>
+    <th scope="col">{% trans "Name" %}</th>
+    <th scope="col">{% trans "Commits" %}</th>
+    <th scope="col">{% trans "Additions" %}</th>
+    <th scope="col">{% trans "Deletions" %}</th>
+    <th scope="col">{% trans "Pull requests" %}</th>
+    <th scope="col">{% trans "Issues" %}</th>
+    <th scope="col">{% trans "Comments" %}</th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for contributor in contributors_list %}
+    <tr>
+      <th scope="row"></th>
+      <td>
+        <a href="{{ contributor.get_absolute_url }}">
+          {{ contributor.login }}
+        </a>
+      </td>
+      <td>{% firstof contributor.name "&mdash;" %}</td>
+      <td>{{ contributor.commits }}</td>
+      <td>{{ contributor.additions }}</td>
+      <td>{{ contributor.deletions }}</td>
+      <td>{{ contributor.pull_requests }}</td>
+      <td>{{ contributor.issues }}</td>
+      <td>{{ contributor.comments }}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}
