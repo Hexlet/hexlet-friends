@@ -1,0 +1,14 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+main {
+  margin-bottom: 164px; /* Same as footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

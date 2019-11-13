@@ -5,6 +5,16 @@ install:
 	@poetry run python manage.py createsuperuser
 	@cp .env.example .env
 
+shell:
+	@poetry run python manage.py shell
+
+# Need to have GNU gettext installed
+transprepare:
+	@poetry run django-admin makemessages --add-location file
+
+transcompile:
+	@poetry run django-admin compilemessages
+
 lint:
 	@poetry run flake8
 
