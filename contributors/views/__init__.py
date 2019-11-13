@@ -4,7 +4,6 @@ from contributors.views import (
     home,
     organization,
     organizations,
-    registration,
     repositories,
     repository,
     webhook,

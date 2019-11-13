@@ -5,9 +5,9 @@
     {{ contributor.login }}
     {{ contributor.name }}
     {% for org, repositories in organizations.items %}
-        <p><a href="{% url 'contributors:organization_details' org.id %}">{{ org.name }}</a></p>
+        <p><a href="{{ org.get_absolute_url }}">{{ org.name }}</a></p>
         {% for repo, contributions in repositories.items %}
-            <p><a href="{% url 'contributors:repository_details' repo.id %}">{{ repo.name }}</a></p>
+            <p><a href="{{ repo.get_absolute_url }}">{{ repo.name }}</a></p>
             <ul>
             {% for contribution in contributions %}
                 <li>Commits: {{ contribution.commits }}</li>

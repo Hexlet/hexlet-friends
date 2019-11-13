@@ -38,8 +38,8 @@ class Migration(migrations.Migration):
                 ('avatar_url', models.URLField(verbose_name='avatar url')),
             ],
             options={
-                'verbose_name': 'Profile',
-                'verbose_name_plural': 'Profiles',
+                'verbose_name': 'Contributor',
+                'verbose_name_plural': 'Contributors',
             },
         ),
         migrations.CreateModel(

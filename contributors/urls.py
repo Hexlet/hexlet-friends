@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from django.utils.translation import gettext_lazy as lazy
+from django.utils.translation import gettext_lazy as _
 
 from contributors import views
 
@@ -8,12 +8,7 @@ app_name = 'contributors'
 urlpatterns = [
     path('', views.home.HomeView.as_view(), name='home'),
     path(
-        'registration',
-        views.registration.RegistrationView.as_view(),
-        name='registration',
-    ),
-    path(
-        'organizations',
+        'organizations/',
         views.organizations.ListView.as_view(),
         name='organizations_list',
     ),
@@ -23,7 +18,7 @@ urlpatterns = [
         name='organization_details',
     ),
     path(
-        'repositories',
+        'repositories/',
         views.repositories.ListView.as_view(),
         name='repositories_list',
     ),
@@ -33,7 +28,7 @@ urlpatterns = [
         name='repository_details',
     ),
     path(
-        'contributors',
+        'contributors/',
         views.contributors.ListView.as_view(),
         name='contributors_list',
     ),
@@ -45,6 +40,6 @@ urlpatterns = [
     path('event-handler', views.webhook.EventHandler.as_view()),
 ]
 
-admin.site.index_title = lazy('Hexlet Friends')
-admin.site.site_header = lazy('Site administration')
-admin.site.site_title = lazy('Site Administration')
+admin.site.index_title = _('Hexlet Friends')
+admin.site.site_header = _('Site administration')
+admin.site.site_title = _('Site Administration')

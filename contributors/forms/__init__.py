@@ -1,1 +1,0 @@
-from contributors.forms.registration import RegistrationForm
