@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from faker import Faker
 from faker.generator import Generator
 
-from accounts.forms import SiteUserCreationForm
-from accounts.models import SiteUser
+from auth.forms import UserCreationForm
+from auth.models import SiteUser
 
 
 class RegistrationPageViewTest(TestCase):
@@ -21,9 +21,9 @@ class RegistrationPageViewTest(TestCase):
     def test(self):
         """Send get request, and check data page assertions."""
         response: TemplateResponse = self.client.get(
-            reverse_lazy('accounts:registration'),
+            reverse_lazy('auth:registration'),
         )
-        form_fields: OrderedDict = SiteUserCreationForm.base_fields
+        form_fields: OrderedDict = UserCreationForm.base_fields
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self._assert_email(form_fields, response)
         self._assert_username(form_fields, response)
@@ -85,7 +85,7 @@ class SuccessRegistrationTest(TestCase):
         fake_password: str = self.faker.password(length=10)
         user_name: str = self.faker.user_name()
         response: TemplateResponse = self.client.post(
-            reverse_lazy('accounts:registration'),
+            reverse_lazy('auth:registration'),
             data={
                 'email': email,
                 'username': user_name,

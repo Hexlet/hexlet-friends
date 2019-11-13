@@ -7,8 +7,8 @@ class SiteUser(AbstractUser):
     """Model representing a user account."""
 
     class Meta(object):
-        verbose_name = _('User')
-        verbose_name_plural = _('Users')
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
 
     def __str__(self):
         """Represents an instance as a string."""
