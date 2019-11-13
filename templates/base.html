@@ -1,23 +1,27 @@
 {% load i18n %}
-{% get_current_language as language_code %}
+{% load static %}
+{% load bootstrap4 %}
+{% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html lang="{{ language_code }}">
-<head>
-    <title>{{ PROJECT_NAME }}</title>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% load bootstrap4 %}
     {% bootstrap_css %}
-</head>
-<body class="d-flex flex-column">
-    <div class="d-flex flex-column min-vh-100">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <title>{{ PROJECT_NAME }}</title>
+  </head>
+  <body>
     <header>
-        {% include 'components/navbar.html' %}
+      {% include 'components/navbar.html' %}
     </header>
-    <main class="my-5">
-        {% block content %}
-        {% endblock content %}
+    <main class="container py-5">
+      {% block content %}
+      {% endblock content %}
     </main>
-    {% include 'components/footer.html' %}
-</body>
+    <footer class="footer bg-light">
+      {% include 'components/footer.html' %}
+    </footer>
+    {% bootstrap_javascript jquery='slim' %}
+  </body>
 </html>
