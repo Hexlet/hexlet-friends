@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% bootstrap_css %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title>{{ PROJECT_NAME }}</title>
   </head>
@@ -23,5 +24,7 @@
       {% include 'components/footer.html' %}
     </footer>
     {% bootstrap_javascript jquery='slim' %}
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
   </body>
 </html>
