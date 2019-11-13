@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-13 15:24+0300\n"
+"POT-Creation-Date: 2019-11-10 20:04+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,106 +20,182 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: contributors/forms/registration.py:13
-msgid "Enter your e-mail address"
-msgstr "Введите ваш e-mail"
+#: auth/models.py
+msgid "User"
+msgstr "Пользователь"
 
-#: templates/auth/registration.html:10
-msgid "Registration"
-msgstr "Регистрация"
+#: auth/models.py
+msgid "Users"
+msgstr "Пользователи"
 
-#: templates/auth/registration.html:16 templates/components/navbar.html:23
-msgid "Register"
-msgstr "Зарегистрироваться"
+#: contributors/models/base.py
+#, fuzzy
+#| msgid "full name"
+msgid "name"
+msgstr "Имя"
 
-#: templates/components/navbar.html:16
-msgid "Log out"
-msgstr "Выйти"
-
-#: templates/components/navbar.html:20
-msgid "Log in"
-msgstr "Войти"
-
-msgid "Profile"
-msgstr "Профиль"
-
-msgid "Profiles"
-msgstr "Профили"
-
-msgid "Repository"
-msgstr "Репозиторий"
-
-msgid "Repositories"
-msgstr "Репозитории"
-
-msgid "Organization"
-msgstr "Организация"
-
-msgid "Organizations"
-msgstr "Организации"
-
-msgid "Contributor"
-msgstr "Контрибьютор"
-
-msgid "Contributors"
-msgstr "Контрибьюторы"
-
-msgid "commits"
-msgstr "коммиты"
-
-msgid "comments"
-msgstr "комментарии"
-
-msgid "additions"
-msgstr "добавления"
-
-msgid "deletions"
-msgstr "удаления"
-
-msgid "pull requests"
-msgstr "pull запросы"
-
-msgid "issues"
-msgstr "проблемы"
-
-msgid "Login"
-msgstr "Логин"
-
-msgid "full name"
-msgstr "Полное имя"
-
+#: contributors/models/base.py
 msgid "html url"
 msgstr "Ссылка"
 
-msgid "avatar url"
-msgstr "Ссылка на аватар"
+#: contributors/models/contribution.py contributors/models/repository.py
+msgid "Repository"
+msgstr "Репозиторий"
 
+#: contributors/models/contribution.py contributors/models/contributor.py
+msgid "Contributor"
+msgstr "Контрибьютор"
+
+#: contributors/models/contribution.py
+msgid "commits"
+msgstr "коммиты"
+
+#: contributors/models/contribution.py
+msgid "additions"
+msgstr "добавления"
+
+#: contributors/models/contribution.py
+msgid "deletions"
+msgstr "удаления"
+
+#: contributors/models/contribution.py
+msgid "pull requests"
+msgstr "pull запросы"
+
+#: contributors/models/contribution.py
+msgid "issues"
+msgstr "проблемы"
+
+#: contributors/models/contribution.py
+msgid "comments"
+msgstr "комментарии"
+
+#: contributors/models/contribution.py
 msgid "Contribution"
 msgstr "Вклад"
 
+#: contributors/models/contribution.py
 msgid "Contributions"
 msgstr "Вклады"
 
-msgid "About"
-msgstr "О проекте"
+#: contributors/models/contributor.py templates/contributors_list.html
+msgid "Login"
+msgstr "Логин"
 
+#: contributors/models/contributor.py
+msgid "avatar url"
+msgstr "Ссылка на аватар"
+
+#: contributors/models/contributor.py contributors/models/repository.py
+#: templates/components/navbar.html templates/contributors_list.html
+#: templates/repositories_list.html
+msgid "Contributors"
+msgstr "Контрибьюторы"
+
+#: contributors/models/organization.py contributors/models/repository.py
+#: templates/repositories_list.html
+msgid "Organization"
+msgstr "Организация"
+
+#: contributors/models/organization.py templates/components/navbar.html
+#: templates/organizations_list.html
+msgid "Organizations"
+msgstr "Организации"
+
+#: contributors/models/repository.py
+msgid "full name"
+msgstr "Полное имя"
+
+#: contributors/models/repository.py templates/components/navbar.html
+#: templates/organizations_list.html templates/repositories_list.html
+msgid "Repositories"
+msgstr "Репозитории"
+
+#: contributors/urls.py
+msgid "Hexlet Friends"
+msgstr ""
+
+#: contributors/urls.py
+#, fuzzy
+#| msgid "Registration"
+msgid "Site administration"
+msgstr "Администрирование"
+
+#: contributors/urls.py
+#, fuzzy
+#| msgid "Registration"
+msgid "Site Administration"
+msgstr "Администрирование"
+
+#: templates/components/footer.html
+msgid "Language"
+msgstr "Язык"
+
+#: templates/components/footer.html
 msgid "Source code"
 msgstr "Исходный код"
 
-msgid "Other open source projects"
-msgstr "Другие open source проекты"
+#: templates/components/footer.html
+msgid "Other projects"
+msgstr "Другие проекты"
 
-msgid "Help"
-msgstr "Помощь"
+#: templates/components/footer.html
+msgid "Useful resources"
+msgstr "Полезные ресурсы"
 
+#: templates/components/footer.html
 msgid "Knowledge base"
 msgstr "База знаний"
 
-msgid "Blog"
-msgstr "Блог"
-
+#: templates/components/footer.html
 msgid "Recommended books"
 msgstr "Рекомендованные книги"
 
-msgid "Additionally"
-msgstr "Дополнительно"
+#: templates/components/footer.html
+msgid "Blog"
+msgstr "Блог"
+
+#: templates/components/navbar.html
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/components/navbar.html
+msgid "Log in"
+msgstr "Войти"
+
+#: templates/components/navbar.html templates/registration/registration.html
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: templates/contributors_list.html templates/organizations_list.html
+#: templates/repositories_list.html
+msgid "Name"
+msgstr "Имя"
+
+#: templates/contributors_list.html
+msgid "Commits"
+msgstr "Коммиты"
+
+#: templates/contributors_list.html
+msgid "Additions"
+msgstr "Добавления"
+
+#: templates/contributors_list.html
+msgid "Deletions"
+msgstr "Удаления"
+
+#: templates/contributors_list.html templates/repositories_list.html
+msgid "Pull requests"
+msgstr "Запросы на слияние"
+
+#: templates/contributors_list.html templates/repositories_list.html
+msgid "Issues"
+msgstr "Проблемы"
+
+#: templates/contributors_list.html
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/registration/registration.html
+msgid "Registration"
+msgstr "Регистрация"

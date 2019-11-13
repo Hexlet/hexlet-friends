@@ -16,4 +16,4 @@ class SiteUser(AbstractUser):
 
     def get_absolute_url(self):
         """Returns the url of an instance."""
-        return reverse("account_details", args=[self.pk])
+        return reverse('account_details', args=[self.pk])
