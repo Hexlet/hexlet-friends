@@ -3,8 +3,7 @@ language: python  # 3.6 by default
 os: linux
 
 before_install:
-  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-  - source $HOME/.poetry/env
+  - pip install poetry
 
 install:
   - poetry install
