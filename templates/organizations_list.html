@@ -1,14 +1,24 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-    <ol>
-        {% for organization in organizations_list %}
-            <li>
-                <a href="{{ organization.get_absolute_url }}">
-                    {{ organization.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ol>
-</div>
-{% endblock content %}
+{% extends 'list_as_table.html' %}
+{% load i18n %}
+
+{% block header %}{% trans "Organizations" %}{% endblock %}
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">{% trans "Name" %}</th>
+    <th scope="col">{% trans "Repositories" %}</th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for organization in organizations_list %}
+    <tr>
+      <th scope="row"></th>
+      <td>
+        <a href="{{ organization.get_absolute_url }}">
+          {{ organization.name }}
+        </a>
+      </td>
+      <td>{{ organization.repository__count }}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}

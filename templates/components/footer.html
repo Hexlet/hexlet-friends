@@ -1,37 +1,54 @@
-<footer class="footer fixed-bottom text-muted pb-5 mt-auto">
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="h4">&copy; Hexlet</div>
-                <hr>
-                <ul class="list-unstyled">
-                    <li><a href="/">{{ _('About') }}</a></li>
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-friends">{{ _('Source code') }}</a></li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="h5 mb-3">{{ _('Other open source projects') }}</div>
-                <ul class="list-unstyled">
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-interview">NodeJS</a></li>
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-cv">Ruby</a></li>
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-correction">Java</a></li>
-                    <li><a target="_blank" href="https://github.com/Hexlet/hexlet-friends">Python</a></li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="h5 mb-3">{{ _('Help') }}</div>
-                <ul class="list-unstyled">
-                    <li><a target="_blank" href="https://ru.hexlet.io/knowledge">{{ _('Knowledge base') }}</a></li>
-                    <li><a target="_blank" href="https://ru.hexlet.io/blog">{{ _('Blog') }}</a></li>
-                    <li><a target="_blank" href="https://ru.hexlet.io/pages/recommended-books">{{ _('Recommended books') }}</a></li>
-                </ul>
-                <div class="h5 mb-3">{{ _('Additionally') }}</div>
-                <ul class="list-unstyled">
-                    <li><a target="_blank" href="https://ru.code-basics.com/">Code Basics</a></li>
-                    <li><a target="_blank" href="https://codebattle.hexlet.io/">Code Battles</a></li>
-                    <li><a target="_blank" href="https://guides.hexlet.io/">Hexlet Guides</a></li>
-                </ul>
-            </div>
-        </div>
+{% load i18n %}
+<div class="container my-2">
+  <div class="row">
+    <div class="col-12 col-md">
+      <ul class="list-unstyled my-0">
+        <li>
+          <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <label for="language">{% trans "Language" %}</label>
+            <select id="language" name="language" onchange="this.form.submit();">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+              {% for language in languages %}
+                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                  {{ language.name_local }} ({{ language.code }})
+                </option>
+              {% endfor %}
+            </select>
+          </form>
+        </li>
+        <li><a target="_blank" href="http://github.com/Hexlet/hexlet-friends">{% trans "Source code" %}</a></li>
+      </ul>
     </div>
-</footer>
+    <div class="col">
+      <p class="h6">{% trans "Other projects" %}</p>
+      <hr>
+      <ul class="list-unstyled my-0">
+        <div class="row">
+          <div class="col">
+            <li><a target="_blank" href="http://cv.hexlet.io">Hexlet CV</a></li>
+            <li><a target="_blank" href="http://interview.hexlet.io">Hexlet Interview</a></li>
+            <li><a target="_blank" href="http://sicp.hexlet.io">Hexlet SICP</a></li>
+          </div>
+          <div class="col">
+            <li><a target="_blank" href="http://hexlet-correction.herokuapp.com">Hexlet Correction</a></li>
+            <li><a target="_blank" href="http://codebattle.hexlet.io">Codebattle</a></li>
+            <li><a target="_blank" href="http://code-basics.com">Code Basics</a></li>
+          </div>
+        </div>
+      </ul>
+    </div>
+    <div class="col">
+      <p class="h6">{% trans "Useful resources" %}</p>
+      <hr>
+        <ul class="list-unstyled my-0">
+          <li><a target="_blank" href="http://guides.hexlet.io">Hexlet Guides</a></li>
+          <li><a target="_blank" href="http://ru.hexlet.io/knowledge">{% trans "Knowledge base" %}</a></li>
+          <li><a target="_blank" href="http://ru.hexlet.io/pages/recommended-books">{% trans "Recommended books" %}</a></li>
+          <li><a target="_blank" href="http://ru.hexlet.io/blog">{% trans "Blog" %}</a></li>
+        </ul>
+    </div>
+  </div>
+</div>
