@@ -1,3 +1,11 @@
+html {
+  overflow-y: scroll;
+}
+
+th.repo-fullname {
+  border-top: none;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
