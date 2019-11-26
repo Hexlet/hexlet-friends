@@ -1,24 +1,45 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="container">
-    {{ repository.name }}
-    <ol>
-    {% for contributor, contribution in contributors.items %}
-        <li>
-            <a href="{{ contributor.get_absolute_url }}">
-                {{ contributor.login }}
-            </a>
-            {{ contributor.name }}
-        </li>
-        <ul>
-            <li>Commits: {{ contribution.commits }}</li>
-            <li>Additions: {{ contribution.additions }}</li>
-            <li>Deletions: {{ contribution.deletions }}</li>
-            <li>Pull requests: {{ contribution.pull_requests }}</li>
-            <li>Issues: {{ contribution.issues }}</li>
-            <li>Comments: {{ contribution.comments }}</li>
-        </ul>
-    {% endfor %}
-    </ol>
-</div>
-{% endblock content %}
+{% extends 'list_as_table.html' %}
+{% load i18n %}
+
+{% block header %}{{ repository.name }}{% endblock %}
+{% block additional %}
+  <p class="h5">
+    {% trans "Organization" %}:
+    <a href="{{ repository.organization.get_absolute_url }}">{{ repository.organization }}</a>
+    <br>
+    <a href="{{ repository.html_url }}" class="badge badge-dark">GitHub</a>
+  </p>
+  <h2>{% trans "Contributors" %}</h2>
+{% endblock additional %}
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">{% trans "Login" %}</th>
+    <th scope="col">{% trans "Name" %}</th>
+    <th scope="col">{% trans "Commits" %}</th>
+    <th scope="col">{% trans "Additions" %}</th>
+    <th scope="col">{% trans "Deletions" %}</th>
+    <th scope="col">{% trans "Pull requests" %}</th>
+    <th scope="col">{% trans "Issues" %}</th>
+    <th scope="col">{% trans "Comments" %}</th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for contributor, contribution in contributors.items %}
+    <tr>
+      <th scope="row"></th>
+      <td>
+        <a href="{{ contributor.get_absolute_url }}">
+          {{ contributor.login }}
+        </a>
+      </td>
+      <td>{% firstof contributor.name "&mdash;" %}</td>
+      <td>{{ contribution.commits }}</td>
+      <td>{{ contribution.additions }}</td>
+      <td>{{ contribution.deletions }}</td>
+      <td>{{ contribution.pull_requests }}</td>
+      <td>{{ contribution.issues }}</td>
+      <td>{{ contribution.comments }}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}

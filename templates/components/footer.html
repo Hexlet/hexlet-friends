@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="container my-2">
+<div class="container my-3">
   <div class="row">
     <div class="col-12 col-md">
       <ul class="list-unstyled my-0">
@@ -8,7 +8,6 @@
             {% csrf_token %}
             <label for="language">{% trans "Language" %}</label>
             <select id="language" name="language" onchange="this.form.submit();">
-              {% get_current_language as LANGUAGE_CODE %}
               {% get_available_languages as LANGUAGES %}
               {% get_language_info_list for LANGUAGES as languages %}
               {% for language in languages %}
