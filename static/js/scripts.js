@@ -1,3 +1,8 @@
+const langURLs = {
+  "ru": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Russian.json",
+  "en": "",
+}
+
 // Make tables interactive
 $(document).ready(function () {
   const dt = $('#list').DataTable({
@@ -7,6 +12,9 @@ $(document).ready(function () {
     }],
     "pageLength": 25,
     "order": [],
+    "language": {
+      "url": langURLs[document.documentElement.lang]
+    },
   });
 
   dt.on('order', (e, settings) => {
