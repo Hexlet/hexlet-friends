@@ -13,7 +13,7 @@ html {
   min-height: 100%;
 }
 main {
-  margin-bottom: 164px; /* Same as footer height */
+  margin-bottom: 180px; /* Same as footer height */
 }
 .footer {
   position: absolute;
