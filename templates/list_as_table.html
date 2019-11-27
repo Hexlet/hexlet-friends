@@ -4,12 +4,14 @@
 {% block content %}
   <h1>{% block header %}{% endblock %}</h1>
   {% block additional %}{% endblock %}
-  <table id="list" class="table table-responsive table-hover">
-    <thead class="thead-light">
-      {% block thead %}{% endblock %}
-    </thead>
-    <tbody>
-      {% block tbody %}{% endblock %}
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table id="list" class="table table-hover">
+      <thead class="thead-light">
+        {% block thead %}{% endblock %}
+      </thead>
+      <tbody>
+        {% block tbody %}{% endblock %}
+      </tbody>
+    </table>
+  </div>
 {% endblock content %}

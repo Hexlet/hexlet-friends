@@ -3,28 +3,28 @@
 
 {% block header %}{% trans "Repositories" %}{% endblock %}
 {% block thead %}
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">{% trans "Name" %}</th>
-    <th scope="col">{% trans "Organization" %}</th>
-    <th scope="col">{% trans "Pull requests" %}</th>
-    <th scope="col">{% trans "Issues" %}</th>
-    <th scope="col">{% trans "Contributors" %}</th>
+  <tr class="d-flex">
+    <th scope="col" class="col-1">#</th>
+    <th scope="col" class="col">{% trans "Name" %}</th>
+    <th scope="col" class="col">{% trans "Organization" %}</th>
+    <th scope="col" class="col-2 text-nowrap">{% trans "Pull requests" %}</th>
+    <th scope="col" class="col-2">{% trans "Issues" %}</th>
+    <th scope="col" class="col-2">{% trans "Contributors" %}</th>
   </tr>
 {% endblock thead %}
 {% block tbody %}
   {% for repository in repositories_list %}
-    <tr>
-      <th scope="row"></th>
-      <td>
+    <tr class="d-flex">
+      <th scope="row" class="col-1"></th>
+      <td class="col">
         <a href="{{ repository.get_absolute_url }}">
           {{ repository.name }}
         </a>
       </td>
-      <td>{{ repository.organization.name }}</td>
-      <td>{{ repository.pull_requests }}</td>
-      <td>{{ repository.issues }}</td>
-      <td>{{ repository.contributors_count }}</td>
+      <td class="col">{{ repository.organization.name }}</td>
+      <td class="col-2">{{ repository.pull_requests }}</td>
+      <td class="col-2">{{ repository.issues }}</td>
+      <td class="col-2">{{ repository.contributors_count }}</td>
     </tr>
   {% endfor %}
 {% endblock tbody %}
