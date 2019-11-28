@@ -62,6 +62,9 @@ class Command(BaseCommand):
                 },
             )
             logger.info(repo.name)
+            if gh_repo['size'] == 0:
+                logger.info("Empty repository")
+                continue
 
             logger.info("Processing pull requests")
             prs = github.get_repo_prs(org.name, repo.name)
