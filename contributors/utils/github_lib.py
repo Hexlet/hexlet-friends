@@ -11,6 +11,10 @@ class GitHubError(Exception):
     """GitHub error."""
 
 
+class NoContent(GitHubError):
+    """HTTP 204 Response."""
+
+
 class NoContributorsError(GitHubError):
     """A repository has no contributors."""
 
@@ -44,6 +48,8 @@ def get_whole_response_as_json(url):
     """Returns data as given by GitHub (a batch)."""
     response = requests.get(url, headers=get_headers())
     response.raise_for_status()
+    if response.status_code == requests.codes.no_content:
+        raise NoContent("204 No Content")
     return response.json()
 
 
@@ -211,7 +217,7 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     response.raise_for_status()
     if response.status_code == requests.codes.no_content:
         raise NoContributorsError(
-            "Nobody has contributed to this repository yet.",
+            "Nobody has contributed to this repository yet",
         )
 
     try:
@@ -221,7 +227,7 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
         ][0]
     except IndexError:
         raise ContributorNotFoundError(
-            "No such contributor in this repository.",
+            "No such contributor in this repository",
         )
 
     totals = merge_dicts(*contributor_stats['weeks'])

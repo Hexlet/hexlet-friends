@@ -45,7 +45,7 @@ class Command(BaseCommand):
         org, _ = Organization.objects.get_or_create(
             id=gh_org['id'],
             defaults={
-                'name': gh_org['name'],
+                'name': gh_org['login'],
                 'html_url': gh_org['html_url'],
             },
         )
@@ -62,6 +62,9 @@ class Command(BaseCommand):
                 },
             )
             logger.info(repo.name)
+            if gh_repo['size'] == 0:
+                logger.info("Empty repository")
+                continue
 
             logger.info("Processing pull requests")
             prs = github.get_repo_prs(org.name, repo.name)
