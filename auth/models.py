@@ -11,9 +11,9 @@ class SiteUser(AbstractUser):
         verbose_name_plural = _("Users")
 
     def __str__(self):
-        """Represents an instance as a string."""
+        """Represent an instance as a string."""
         return self.username
 
     def get_absolute_url(self):
-        """Returns the url of an instance."""
+        """Return the url of an instance."""
         return reverse('account_details', args=[self.pk])

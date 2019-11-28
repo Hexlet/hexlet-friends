@@ -16,9 +16,9 @@ class Contributor(CommonFields):
         verbose_name_plural = _('Contributors')
 
     def __str__(self):
-        """Represents an instance as a string."""
+        """Represent an instance as a string."""
         return self.login
 
     def get_absolute_url(self):
-        """Returns the url of an instance."""
+        """Return the url of an instance."""
         return reverse('contributors:contributor_details', args=[self.pk])

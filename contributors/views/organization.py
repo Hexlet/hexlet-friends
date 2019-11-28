@@ -11,7 +11,7 @@ class DetailView(generic.DetailView):
     template_name = 'organization_details.html'
 
     def get_context_data(self, **kwargs):
-        """Adds additional context for the organization."""
+        """Add additional context for the organization."""
         context = super().get_context_data(**kwargs)
 
         repos_data = self.object.repository_set.annotate(

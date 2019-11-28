@@ -10,7 +10,7 @@ class DetailView(generic.DetailView):
     template_name = 'contributor_details.html'
 
     def get_context_data(self, **kwargs):
-        """Adds additional context for the contributor."""
+        """Add additional context for the contributor."""
         context = super().get_context_data(**kwargs)
 
         organizations_for_user = Organization.objects.filter(

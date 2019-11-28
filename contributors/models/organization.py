@@ -12,5 +12,5 @@ class Organization(CommonFields):
         verbose_name_plural = _('Organizations')
 
     def get_absolute_url(self):
-        """Returns the url of an instance."""
+        """Return the url of an instance."""
         return reverse('contributors:organization_details', args=[self.pk])

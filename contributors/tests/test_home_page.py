@@ -10,7 +10,7 @@ class HomePageTest(TestCase):
     """Test home page view."""
 
     def setUp(self):
-        """Setup method."""
+        """Set suite up."""
         self.client = Client()
 
     def test_home_page_view(self):

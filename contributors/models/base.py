@@ -18,5 +18,5 @@ class CommonFields(models.Model):
         abstract = True
 
     def __str__(self):
-        """Represents an instance as a string."""
+        """Represent an instance as a string."""
         return self.name

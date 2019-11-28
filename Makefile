@@ -3,7 +3,6 @@ install:
 	@poetry run python manage.py migrate
 	@echo Create a super user
 	@poetry run python manage.py createsuperuser
-	@cp .env.example .env
 
 shell:
 	@poetry run python manage.py shell

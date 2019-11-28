@@ -27,5 +27,5 @@ class Repository(CommonFields):
         verbose_name_plural = _('Repositories')
 
     def get_absolute_url(self):
-        """Returns the url of an instance."""
+        """Return the url of an instance."""
         return reverse('contributors:repository_details', args=[self.pk])

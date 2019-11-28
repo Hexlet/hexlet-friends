@@ -5,7 +5,10 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from contributors.utils.github_webhook import signatures_match, update_database
+from contributors.utils.github_webhook import (
+    signatures_match,
+    update_database,
+)
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -13,7 +16,7 @@ class EventHandler(View):
     """Handles GitHub events."""
 
     def post(self, request):
-        """Gets data from request and updates the database."""
+        """Get data from request and updates the database."""
         payload = request.body
         signature = request.headers.get('X-Hub-Signature')
         if not signature or not signatures_match(payload, signature):

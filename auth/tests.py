@@ -15,7 +15,7 @@ class RegistrationPageViewTest(TestCase):
     """Test common registration page view."""
 
     def setUp(self):
-        """Creates a test database."""
+        """Create a test database."""
         self.client: Client = Client()
 
     def test(self):
@@ -75,7 +75,7 @@ class SuccessRegistrationTest(TestCase):
     """Test user registration."""
 
     def setUp(self):
-        """Creates a test database."""
+        """Create a test database."""
         self.client: Client = Client()
         self.faker: Generator = Faker()
 
@@ -94,4 +94,6 @@ class SuccessRegistrationTest(TestCase):
             },
         )
         self.assertRedirects(response, reverse_lazy('contributors:home'))
-        self.assertTrue(SiteUser.objects.filter(email=email, username=user_name))
+        self.assertTrue(
+            SiteUser.objects.filter(email=email, username=user_name),
+        )

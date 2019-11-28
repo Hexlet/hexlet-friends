@@ -10,7 +10,7 @@ class DetailView(generic.DetailView):
     template_name = 'repository_details.html'
 
     def get_context_data(self, **kwargs):
-        """Adds additional context for the repository."""
+        """Add additional context for the repository."""
         context = super().get_context_data(**kwargs)
 
         contributors_dict = {}

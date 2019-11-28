@@ -2,12 +2,20 @@ import hmac
 
 from django.conf import settings
 
-from contributors.models import Contribution, Contributor, Organization, Repository
-from contributors.utils.github_lib import get_commit_stats_for_contributor, get_user_name
+from contributors.models import (
+    Contribution,
+    Contributor,
+    Organization,
+    Repository,
+)
+from contributors.utils.github_lib import (
+    get_commit_stats_for_contributor,
+    get_user_name,
+)
 
 
 def signatures_match(payload_body, gh_signature):
-    """Compares equality of signatures.
+    """Compare equality of signatures.
 
     The first is computed for the payload using the webhook token,
     the second comes from the request's header.
@@ -23,7 +31,7 @@ def signatures_match(payload_body, gh_signature):
 
 
 def update_database(type_, action, sender, repository):
-    """Updates the database with an event's data."""
+    """Update the database with an event's data."""
     if action not in {'created', 'opened', 'submitted'}:
         return
 
