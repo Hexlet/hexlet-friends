@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-NAME_LENGTH = 30
+NAME_LENGTH = 40
 
 
 class CommonFields(models.Model):
