@@ -16,7 +16,7 @@ class EventHandler(View):
     """Handles GitHub events."""
 
     def post(self, request):
-        """Get data from request and updates the database."""
+        """Get data from request and update the database."""
         payload = request.body
         signature = request.headers.get('X-Hub-Signature')
         if not signature or not signatures_match(payload, signature):
