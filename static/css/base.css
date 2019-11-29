@@ -6,6 +6,10 @@ th.repo-fullname {
   border-top: none;
 }
 
+table.dataTable, table.dataTable th, table.dataTable td {
+  box-sizing: border-box;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

@@ -3,22 +3,22 @@
 
 {% block header %}{% trans "Organizations" %}{% endblock %}
 {% block thead %}
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">{% trans "Name" %}</th>
-    <th scope="col">{% trans "Repositories" %}</th>
+  <tr class="d-flex">
+    <th scope="col" class="col-1">#</th>
+    <th scope="col" class="col">{% trans "Name" %}</th>
+    <th scope="col" class="col-3">{% trans "Repositories" %}</th>
   </tr>
 {% endblock thead %}
 {% block tbody %}
   {% for organization in organizations_list %}
-    <tr>
-      <th scope="row"></th>
-      <td>
+    <tr class="d-flex">
+      <th scope="row" class="col-1"></th>
+      <td class="col">
         <a href="{{ organization.get_absolute_url }}">
           {{ organization.name }}
         </a>
       </td>
-      <td>{{ organization.repository__count }}</td>
+      <td class="col-3">{{ organization.repository__count }}</td>
     </tr>
   {% endfor %}
 {% endblock tbody %}
