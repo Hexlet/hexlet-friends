@@ -9,6 +9,7 @@ class ContributorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'is_tracked',
                 'login',
             ),
         }),
@@ -20,7 +21,7 @@ class ContributorAdmin(admin.ModelAdmin):
             ),
         }),
     )
-    list_display = ('id', 'login', 'name')
+    list_display = ('id', 'login', 'name', 'is_tracked')
     search_fields = ('login', 'name')
 
 

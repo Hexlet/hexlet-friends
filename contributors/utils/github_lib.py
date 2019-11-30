@@ -75,7 +75,7 @@ def get_user_name(url):
 def get_org_repos(org):
     """Return repositories of an organization."""
     url = f'{GITHUB_API_URL}/orgs/{org}/repos'
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, {'type': 'sources'})
 
 
 def get_repo_contributors(owner, repo):

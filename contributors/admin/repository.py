@@ -16,6 +16,7 @@ class RepositoryAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'is_tracked',
                 'name',
                 'full_name',
                 'html_url',
@@ -24,7 +25,7 @@ class RepositoryAdmin(admin.ModelAdmin):
         }),
     )
     inlines = (ContributionInline,)
-    list_display = ('id', 'name', 'organization')
+    list_display = ('id', 'name', 'organization', 'is_tracked')
     list_filter = ('organization',)
     search_fields = ('name',)
 

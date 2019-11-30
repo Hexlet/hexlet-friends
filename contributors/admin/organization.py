@@ -14,7 +14,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     """Organization representation."""
 
     inlines = (RepositoryInline,)
-    list_display = ('id', 'name')
+    list_display = ('id', 'name', 'is_tracked')
     search_fields = ('name',)
 
 

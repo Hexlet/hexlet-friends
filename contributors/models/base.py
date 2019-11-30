@@ -13,6 +13,7 @@ class CommonFields(models.Model):
         null=True,
     )
     html_url = models.URLField(_('html url'))
+    is_tracked = models.BooleanField(_("tracked"), default=True)
 
     class Meta(object):
         abstract = True
