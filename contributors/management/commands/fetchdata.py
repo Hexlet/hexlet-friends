@@ -1,6 +1,7 @@
 import logging
 import sys
 
+import requests
 from django.core.management.base import BaseCommand, CommandError
 
 from contributors.models import (
@@ -12,7 +13,7 @@ from contributors.models import (
 from contributors.utils import github_lib as github
 
 # Simultaneous logging to file and stdout
-logger = logging.getLogger()
+logger = logging.getLogger('GitHub')
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
@@ -55,8 +56,9 @@ class Command(BaseCommand):
 
         logger.info("Data collection started")
 
+        session = requests.Session()
         for org_name in org_names:
-            gh_org = github.get_org_data(org_name)
+            gh_org = github.get_org_data(org_name, session)
             org, _ = Organization.objects.get_or_create(
                 id=gh_org['id'],
                 defaults={
@@ -76,7 +78,7 @@ class Command(BaseCommand):
                 if repo['name'] not in ignored_repos
             ]
             number_of_repos = len(gh_repos)
-            for i, gh_repo in enumerate(gh_repos, start=1):
+            for i, gh_repo in enumerate(gh_repos, start=1): # noqa WPS111
                 repo, _ = org.repository_set.get_or_create(
                     id=gh_repo['id'],
                     defaults={
@@ -85,27 +87,29 @@ class Command(BaseCommand):
                         'html_url': gh_repo['html_url'],
                     },
                 )
-                logger.info(f"{repo} ({i}/{number_of_repos})")
+                logger.info(f"{repo} ({i}/{number_of_repos})")  # noqa G004
                 if gh_repo['size'] == 0:
                     logger.info("Empty repository")
                     continue
 
                 logger.info("Processing pull requests")
-                prs = github.get_repo_prs(org, repo)
+                prs = github.get_repo_prs(org, repo, session)
                 total_prs_per_user = github.get_total_prs_per_user(prs)
 
                 logger.info("Processing issues")
-                issues_and_prs = github.get_repo_issues(org, repo)
+                issues_and_prs = github.get_repo_issues(org, repo, session)
                 issues = [
                     issue for issue in issues_and_prs
                     if 'pull_request' not in issue
                 ]
-                total_issues_per_user = github.get_total_issues_per_user(issues)
+                total_issues_per_user = github.get_total_issues_per_user(
+                    issues,
+                )
 
                 logger.info("Processing comments")
-                comments = github.get_repo_comments(org, repo)
+                comments = github.get_repo_comments(org, repo, session)
                 review_comments = github.get_repo_review_comments(
-                    org, repo,
+                    org, repo, session,
                 )
                 total_comments_per_user = github.merge_dicts(
                     github.get_total_comments_per_user(comments),
@@ -127,7 +131,7 @@ class Command(BaseCommand):
                 ]
                 contributors = [
                     contrib for contrib in github.get_repo_contributors(
-                        org, repo,
+                        org, repo, session,
                     ) if contrib['login'] not in ignored_contributors
                 ]
                 total_additions_per_user = github.get_total_additions_per_user(
@@ -146,8 +150,7 @@ class Command(BaseCommand):
                     'deletions': total_deletions_per_user,
                 }
                 contributors_logins = [
-                    contributor['author']['login']
-                    for contributor in contributors
+                    contributor['login'] for contributor in contributors
                 ]
 
                 logger.info("Finishing insertions")
@@ -162,6 +165,7 @@ class Command(BaseCommand):
                             contributions_to_totals_mapping.items()
                         },
                     )
+        session.close()
 
         logger.info(self.style.SUCCESS(
             "Data fetched from GitHub and saved to the database",

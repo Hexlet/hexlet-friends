@@ -28,76 +28,82 @@ def get_headers():
     return {'Authorization': f'token {settings.GITHUB_AUTH_TOKEN}'}
 
 
-def get_one_item_at_a_time(url, additional_params=None):
+def get_one_item_at_a_time(url, additional_params=None, session=None):
     """Return data from all pages (one instance at a time)."""
     query_params = {'page': 1}
     query_params.update(additional_params or {})
-    response = requests.get(url, headers=get_headers(), params=query_params)
+    req = session or requests
+    response = req.get(url, headers=get_headers(), params=query_params)
     response.raise_for_status()
     yield from response.json()
 
     pages_count = get_pages_count(response.links)
     while query_params['page'] < pages_count:
         query_params['page'] += 1
-        response = requests.get(
+        response = req.get(
             url, headers=get_headers(), params=query_params,
         )
         response.raise_for_status()
         yield from response.json()
 
 
-def get_whole_response_as_json(url):
+def get_whole_response_as_json(url, session=None):
     """Return data as given by GitHub (a batch)."""
-    response = requests.get(url, headers=get_headers())
+    req = session or requests
+    response = req.get(url, headers=get_headers())
     response.raise_for_status()
     if response.status_code == requests.codes.no_content:
         raise NoContent("204 No Content")
     return response.json()
 
 
-def get_org_data(org):
+def get_org_data(org, session=None):
     """Return an organization's data."""
     url = f'{GITHUB_API_URL}/orgs/{org}'
-    return get_whole_response_as_json(url)
+    return get_whole_response_as_json(url, session)
 
 
-def get_user_data(user):
+def get_user_data(user, session=None):
     """Return a user's data."""
     url = f'{GITHUB_API_URL}/users/{user}'
-    return get_whole_response_as_json(url)
+    return get_whole_response_as_json(url, session)
 
 
-def get_user_name(url):
+def get_user_name(url, session=None):
     """Return a user's name."""
-    return get_whole_response_as_json(url)['name']
+    return get_whole_response_as_json(url, session)['name']
 
 
-def get_org_repos(org):
+def get_org_repos(org, session=None):
     """Return repositories of an organization."""
     url = f'{GITHUB_API_URL}/orgs/{org}/repos'
-    return get_one_item_at_a_time(url, {'type': 'sources'})
+    return get_one_item_at_a_time(url, {'type': 'sources'}, session)
 
 
-def get_repo_contributors(owner, repo):
+def get_repo_contributors(owner, repo, session=None):
     """Return contributors for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/stats/contributors'
-    return get_whole_response_as_json(url)
+    contributors = []
+    for contributor in get_whole_response_as_json(url, session):
+        contributor['login'] = contributor['author']['login']
+        contributors.append(contributor)
+    return contributors
 
 
-def get_repo_commits(owner, repo):
+def get_repo_commits(owner, repo, session=None):
     """Return all commits for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/commits'
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, session)
 
 
-def get_repo_prs(owner, repo):
+def get_repo_prs(owner, repo, session=None):
     """Return all pull requests for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls'
     query_params = {'state': 'all'}
-    return get_one_item_at_a_time(url, query_params)
+    return get_one_item_at_a_time(url, query_params, session)
 
 
-def get_repo_issues(owner, repo):
+def get_repo_issues(owner, repo, session=None):
     """
     Return all issues for a repository.
 
@@ -107,33 +113,33 @@ def get_repo_issues(owner, repo):
     """
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/issues'
     query_params = {'state': 'all'}
-    return get_one_item_at_a_time(url, query_params)
+    return get_one_item_at_a_time(url, query_params, session)
 
 
-def get_comments_for_issue(owner, repo, issue_number):
+def get_comments_for_issue(owner, repo, issue_number, session=None):
     """Return all comments for an issue."""
     url = (
         f'{GITHUB_API_URL}/repos/{owner}/{repo}/issues/{issue_number}/comments'
     )
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, session=session)
 
 
-def get_repo_comments(owner, repo):
+def get_repo_comments(owner, repo, session=None):
     """Return all comments for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/issues/comments'
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, session=session)
 
 
-def get_review_comments_for_pr(owner, repo, pr_number):
+def get_review_comments_for_pr(owner, repo, pr_number, session=None):
     """Return all review comments for a pull request."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls/{pr_number}/comments'
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, session=session)
 
 
-def get_repo_review_comments(owner, repo):
+def get_repo_review_comments(owner, repo, session=None):
     """Return all review comments for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls/comments'
-    return get_one_item_at_a_time(url)
+    return get_one_item_at_a_time(url, session=session)
 
 
 def get_total_contributions_per_user(contributions, author_field_name):
@@ -154,7 +160,7 @@ def get_total_changes_per_user(contributors, change_type):
     """Return total numbers of changes of `type` made by each user."""
     total_changes_per_user = {}
     for contribution in contributors:
-        login = contribution['author']['login']
+        login = contribution['login']
         total_changes_per_user[login] = sum(
             week[change_type] for week in contribution['weeks']
         )
@@ -175,7 +181,7 @@ def get_total_commits_per_user_excluding_merges(owner, repo):
     """Return total numbers of commits per user excluding merge commits."""
     contributors = get_repo_contributors(owner, repo)
     return {
-        contributor['author']['login']: contributor['total']
+        contributor['login']: contributor['total']
         for contributor in contributors
     }
 
@@ -217,10 +223,13 @@ def merge_dicts(*dicts):
     return counter
 
 
-def get_commit_stats_for_contributor(repo_full_name, contributor_id):
+def get_commit_stats_for_contributor(
+    repo_full_name, contributor_id, session=None,
+):
     """Return numbers of commits, additions, deletions of a contributor."""
     url = f'{GITHUB_API_URL}/repos/{repo_full_name}/stats/contributors'
-    response = requests.get(url, headers=get_headers())
+    req = session or requests
+    response = req.get(url, headers=get_headers())
     response.raise_for_status()
     if response.status_code == requests.codes.no_content:
         raise NoContributorsError(
