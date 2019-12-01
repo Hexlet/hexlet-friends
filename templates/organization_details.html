@@ -26,8 +26,8 @@
           {{ repository.name }}
         </a>
       </td>
-      <td class="col-2">{{ repository.pull_requests }}</td>
-      <td class="col-2">{{ repository.issues }}</td>
+      <td class="col-2">{% firstof repository.pull_requests "0" %}</td>
+      <td class="col-2">{% firstof repository.issues "0" %}</td>
       <td class="col-2">{{ repository.contributors_count }}</td>
     </tr>
   {% endfor %}
