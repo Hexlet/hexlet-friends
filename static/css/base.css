@@ -10,6 +10,11 @@ table.dataTable, table.dataTable th, table.dataTable td {
   box-sizing: border-box;
 }
 
+.user-card {
+  position: sticky;
+  top: 48px;
+}
+
 /* Django admin styles */
 caption.app-header {
   position: relative;

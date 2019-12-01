@@ -35,7 +35,7 @@ def show_repos(request):
                     github.get_or_create_record(
                         org,
                         repo_data,
-                        {'is_tracked': False},
+                        {'is_tracked': False, 'is_visible': False},
                     )
                     repos_choices.append(
                         (repo_data['id'], repo_data['name']),
@@ -59,6 +59,7 @@ def collect_data(request):
         repos = Repository.objects.filter(id__in=repo_ids)
         for repo in repos:
             repo.is_tracked = True
+            repo.is_visible = True
             repo.save()
         subprocess.Popen(['make', 'sync'])  # noqa S603 S607
         return TemplateResponse(request, 'admin/data_collection.html', context)

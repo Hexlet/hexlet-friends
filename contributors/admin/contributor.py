@@ -1,16 +1,16 @@
-from django.contrib import admin
-
+from contributors.admin import base
 from contributors.admin.custom import site
 from contributors.models import Contributor
 
 
-class ContributorAdmin(admin.ModelAdmin):
+class ContributorAdmin(base.ModelAdmin):
     """Contributor representation."""
 
     fieldsets = (
         (None, {
             'fields': (
                 'is_tracked',
+                'is_visible',
                 'login',
             ),
         }),
@@ -22,8 +22,9 @@ class ContributorAdmin(admin.ModelAdmin):
             ),
         }),
     )
-    list_display = ('id', 'login', 'name', 'is_tracked')
+    list_display = ('id', 'login', 'name', 'is_tracked', 'is_visible')
     search_fields = ('login', 'name')
+    actions = ['change_visibility']
 
 
 site.register(Contributor, ContributorAdmin)

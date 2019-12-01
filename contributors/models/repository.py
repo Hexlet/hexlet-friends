@@ -13,18 +13,19 @@ class Repository(CommonFields):
     contributors = models.ManyToManyField(
         Contributor,
         through='Contribution',
-        verbose_name=_('Contributors'),
+        verbose_name=_("contributors"),
     )
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
-        verbose_name=_('Organization'),
+        verbose_name=_("organization"),
     )
-    full_name = models.CharField(_('full name'), max_length=NAME_LENGTH)
+    full_name = models.CharField(_("full name"), max_length=NAME_LENGTH)
+    is_visible = models.BooleanField(_("visible"), default=True)
 
     class Meta(object):
-        verbose_name = _('Repository')
-        verbose_name_plural = _('Repositories')
+        verbose_name = _("repository")
+        verbose_name_plural = _("repositories")
 
     def get_absolute_url(self):
         """Return the url of an instance."""

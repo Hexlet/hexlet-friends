@@ -8,8 +8,8 @@ class Organization(CommonFields):
     """Model representing an organization."""
 
     class Meta(object):
-        verbose_name = _('Organization')
-        verbose_name_plural = _('Organizations')
+        verbose_name = _("organization")
+        verbose_name_plural = _("organizations")
 
     def get_absolute_url(self):
         """Return the url of an instance."""

@@ -14,10 +14,12 @@ class DetailView(generic.DetailView):
         """Add additional context for the organization."""
         context = super().get_context_data(**kwargs)
 
-        repos_data = self.object.repository_set.annotate(
-            pull_requests=Sum('contribution__pull_requests'),
-            issues=Sum('contribution__issues'),
-            contributors_count=Count('contribution'),
+        repos_data = (
+            self.object.repository_set.filter(is_visible=True).annotate(
+                pull_requests=Sum('contribution__pull_requests'),
+                issues=Sum('contribution__issues'),
+                contributors_count=Count('contribution'),
+            )
         )
 
         context['repositories'] = repos_data
