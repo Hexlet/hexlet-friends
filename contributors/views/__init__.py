@@ -1,4 +1,5 @@
 from contributors.views import (
+    config,
     contributor,
     contributors,
     home,

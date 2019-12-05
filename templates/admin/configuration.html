@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <p>{{ form_orgs.organizations.label_tag }}</p>
+  <p>{{ form_orgs.organizations }}</p>
+  <p>{{ form_orgs.organizations.errors }}</p>
+  <p class="help">{{ form_orgs.organizations.help_text }}</p>
+  <input type="submit" value="Get repositories">
+</form>
+{% if form_repos %}
+  <br>
+  <form action="collect_data" method="post">
+    {% csrf_token %}
+    <p>{{ form_repos.repositories.label_tag }}</p>
+    <p class="help">{{ form_repos.repositories.help_text }}</p>
+    <ul class="repo-list">
+      {% for id, name in form_repos.repositories.field.choices %}
+        <li>
+          <label for="repo-{{ forloop.counter }}">
+            <input type="checkbox" name="repositories" value="{{ id }}" id="repo-{{ forloop.counter }}" checked>
+            {{ name }}
+          </label>
+        </li>
+      {% endfor %}
+    </ul>
+    <input type="submit" value="Gather data">
+  </form>
+{% endif %}
+{% endblock content %}
