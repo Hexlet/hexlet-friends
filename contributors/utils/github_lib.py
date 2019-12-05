@@ -3,6 +3,7 @@ from urllib.parse import parse_qs, urlparse
 
 import requests
 from django.conf import settings
+from django.db import models
 
 GITHUB_API_URL = 'https://api.github.com'
 
@@ -60,6 +61,12 @@ def get_whole_response_as_json(url, session=None):
 def get_org_data(org, session=None):
     """Return an organization's data."""
     url = f'{GITHUB_API_URL}/orgs/{org}'
+    return get_whole_response_as_json(url, session)
+
+
+def get_repo_data(repo, session=None):
+    """Return a repository's data."""
+    url = f'{GITHUB_API_URL}/repos/{repo}'
     return get_whole_response_as_json(url, session)
 
 
@@ -249,3 +256,39 @@ def get_commit_stats_for_contributor(
     totals = merge_dicts(*contributor_stats['weeks'])
 
     return totals['c'], totals['a'], totals['d']
+
+
+def get_or_create_record(obj, github_resp, additional_fields=None):   # noqa WPS110
+    """
+    Get or create a database record based on GitHub JSON object.
+
+    Args:
+        obj -- model or instance of a model
+        github_resp -- GitHub data as a JSON object decoded to dict
+        additional_fields -- fields to override
+    """
+    model_fields = {
+        'Organization': {'name': github_resp.get('login')},
+        'Repository': {'full_name': github_resp.get('full_name')},
+        'Contributor': {
+            'login': github_resp.get('login'),
+            'avatar_url': github_resp.get('avatar_url'),
+        },
+    }
+    defaults = {
+        'name': github_resp.get('name'),
+        'html_url': github_resp.get('html_url'),
+    }
+    if isinstance(obj, models.Model):
+        class_name = obj.repository_set.model.__name__
+        manager = obj.repository_set
+    else:
+        class_name = obj.__name__
+        manager = obj.objects
+
+    defaults.update(model_fields[class_name])
+    defaults.update(additional_fields or {})
+    return manager.get_or_create(
+        id=github_resp['id'],
+        defaults=defaults,
+    )

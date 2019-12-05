@@ -21,15 +21,7 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 def get_or_create_contributor(login):
     """Return a contributor object."""
     user_data = github.get_user_data(login)
-    contributor, _ = Contributor.objects.get_or_create(
-        id=user_data['id'],
-        defaults={
-            'login': login,
-            'name': user_data['name'],
-            'html_url': user_data['html_url'],
-            'avatar_url': user_data['avatar_url'],
-        },
-    )
+    contributor, _ = github.get_or_create_record(Contributor, user_data)
     return contributor
 
 
@@ -59,13 +51,7 @@ class Command(BaseCommand):
         session = requests.Session()
         for org_name in org_names:
             gh_org = github.get_org_data(org_name, session)
-            org, _ = Organization.objects.get_or_create(
-                id=gh_org['id'],
-                defaults={
-                    'name': gh_org['login'],
-                    'html_url': gh_org['html_url'],
-                },
-            )
+            org, _ = github.get_or_create_record(Organization, gh_org)
             logger.info(org)
 
             ignored_repos = [
@@ -79,14 +65,7 @@ class Command(BaseCommand):
             ]
             number_of_repos = len(gh_repos)
             for i, gh_repo in enumerate(gh_repos, start=1): # noqa WPS111
-                repo, _ = org.repository_set.get_or_create(
-                    id=gh_repo['id'],
-                    defaults={
-                        'name': gh_repo['name'],
-                        'full_name': gh_repo['full_name'],
-                        'html_url': gh_repo['html_url'],
-                    },
-                )
+                repo, _ = github.get_or_create_record(org, gh_repo)
                 logger.info(f"{repo} ({i}/{number_of_repos})")  # noqa G004
                 if gh_repo['size'] == 0:
                     logger.info("Empty repository")
