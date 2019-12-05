@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Contribution, Repository
 
 
@@ -30,4 +31,4 @@ class RepositoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-admin.site.register(Repository, RepositoryAdmin)
+site.register(Repository, RepositoryAdmin)

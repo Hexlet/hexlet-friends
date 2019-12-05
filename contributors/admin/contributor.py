@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Contributor
 
 
@@ -25,4 +26,4 @@ class ContributorAdmin(admin.ModelAdmin):
     search_fields = ('login', 'name')
 
 
-admin.site.register(Contributor, ContributorAdmin)
+site.register(Contributor, ContributorAdmin)

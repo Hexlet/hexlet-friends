@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Contribution
 
 
@@ -20,4 +21,4 @@ class ContributionAdmin(admin.ModelAdmin):
     list_filter = ('repository__organization', 'repository', 'contributor')
 
 
-admin.site.register(Contribution, ContributionAdmin)
+site.register(Contribution, ContributionAdmin)

@@ -24,7 +24,7 @@ DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'contributors.apps.CustomAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

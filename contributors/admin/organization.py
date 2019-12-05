@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Organization, Repository
 
 
@@ -18,4 +19,4 @@ class OrganizationAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 
-admin.site.register(Organization, OrganizationAdmin)
+site.register(Organization, OrganizationAdmin)
