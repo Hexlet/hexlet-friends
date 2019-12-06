@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Contribution, Repository
 
 
@@ -16,6 +17,7 @@ class RepositoryAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'is_tracked',
                 'name',
                 'full_name',
                 'html_url',
@@ -24,9 +26,9 @@ class RepositoryAdmin(admin.ModelAdmin):
         }),
     )
     inlines = (ContributionInline,)
-    list_display = ('id', 'name', 'organization')
+    list_display = ('id', 'name', 'organization', 'is_tracked')
     list_filter = ('organization',)
     search_fields = ('name',)
 
 
-admin.site.register(Repository, RepositoryAdmin)
+site.register(Repository, RepositoryAdmin)

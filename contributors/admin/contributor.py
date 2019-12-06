@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from contributors.admin.custom import site
 from contributors.models import Contributor
 
 
@@ -9,6 +10,7 @@ class ContributorAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
+                'is_tracked',
                 'login',
             ),
         }),
@@ -20,8 +22,8 @@ class ContributorAdmin(admin.ModelAdmin):
             ),
         }),
     )
-    list_display = ('id', 'login', 'name')
+    list_display = ('id', 'login', 'name', 'is_tracked')
     search_fields = ('login', 'name')
 
 
-admin.site.register(Contributor, ContributorAdmin)
+site.register(Contributor, ContributorAdmin)

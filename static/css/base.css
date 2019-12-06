@@ -2,7 +2,7 @@ html {
   overflow-y: scroll;
 }
 
-th.repo-fullname {
+th.repo-full-name {
   border-top: none;
 }
 
@@ -10,8 +10,29 @@ table.dataTable, table.dataTable th, table.dataTable td {
   box-sizing: border-box;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+/* Django admin styles */
+caption.app-header {
+  position: relative;
+}
+
+#config-button {
+  background-color: greenyellow;
+  margin-top: -8px;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+}
+
+.repo-list {
+  padding-left: 0;
+  columns: 100px 2;
+}
+
+.repo-list li {
+  list-style-type: none;
+}
+
+/* Sticky footer styles */
 html {
   position: relative;
   min-height: 100%;
