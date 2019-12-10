@@ -24,7 +24,7 @@ class ContributorAdmin(base.ModelAdmin):
     )
     list_display = ('id', 'login', 'name', 'is_tracked', 'is_visible')
     search_fields = ('login', 'name')
-    actions = ['change_visibility']
+    actions = ['change_tracking', 'change_visibility']
 
 
 site.register(Contributor, ContributorAdmin)

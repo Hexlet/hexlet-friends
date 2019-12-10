@@ -32,7 +32,7 @@ class RepositoryAdmin(base.ModelAdmin):
     list_display = ('id', 'name', 'organization', 'is_tracked', 'is_visible')
     list_filter = ('organization',)
     search_fields = ('name',)
-    actions = ['change_visibility']
+    actions = ['change_tracking', 'change_visibility']
 
 
 site.register(Repository, RepositoryAdmin)
