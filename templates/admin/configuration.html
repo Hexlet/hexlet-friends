@@ -20,6 +20,7 @@
     {% csrf_token %}
     <p>{{ form_repos.repositories.label_tag }}</p>
     <p class="help">{{ form_repos.repositories.help_text }}</p>
+    <a href="javascript:void(0)" onclick="invertSelection()">{% trans "Invert selection" %}</a>
     <ul class="repo-list">
       {% for id, name in form_repos.repositories.field.choices %}
         <li>
@@ -34,3 +35,13 @@
   </form>
 {% endif %}
 {% endblock content %}
+{% block footer %}
+{{ block.super }}
+<script>
+  // Invert checkboxes selection
+  function invertSelection() {
+    checkboxes = document.querySelectorAll('input[name="repositories"]');
+    checkboxes.forEach(checkbox => checkbox.click());
+  }
+</script>
+{% endblock %}

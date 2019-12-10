@@ -21,6 +21,7 @@ class DetailView(generic.DetailView):
             orgs_dict[organization] = {}
             org_repositories_for_user = organization.repository_set.filter(
                 contribution__contributor=self.object,
+                is_visible=True,
             )
             for repo in org_repositories_for_user:
                 orgs_dict[organization][repo] = {}

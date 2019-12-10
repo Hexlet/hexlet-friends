@@ -7,7 +7,7 @@ from contributors.models.contributor import Contributor
 class ListView(generic.ListView):
     """A view for a list of contributors."""
 
-    queryset = Contributor.objects.annotate(
+    queryset = Contributor.objects.filter(is_visible=True).annotate(
         commits=Sum('contribution__commits'),
         additions=Sum('contribution__additions'),
         deletions=Sum('contribution__deletions'),
