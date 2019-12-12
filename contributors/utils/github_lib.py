@@ -233,7 +233,7 @@ def get_commit_stats_for_contributor(
     if response.status_code == requests.codes.no_content:
         raise NoContributorsError(
             "Nobody has contributed to this repository yet",
-        )
+        ) from None
 
     try:
         contributor_stats = [
@@ -243,15 +243,17 @@ def get_commit_stats_for_contributor(
     except IndexError:
         raise ContributorNotFoundError(
             "No such contributor in this repository",
-        )
+        ) from None
 
     totals = merge_dicts(*contributor_stats['weeks'])
 
     return totals['c'], totals['a'], totals['d']
 
 
-def get_data_of_orgs_and_repos(org_names=None, repo_full_names=None):
+def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa: C901,R701,E501
     """Return data of organizations and their repositories from GitHub."""
+    if not (org_names or repo_full_names):
+        raise ValueError("Neither org_names nor repo_full_names is provided")
     data_of_orgs_and_repos = {}
     with requests.Session() as session:
         if org_names:

@@ -23,14 +23,15 @@ def merge_dicts(*dicts):
     return counter
 
 
-def get_or_create_record(obj, github_resp, additional_fields=None):   # noqa WPS110
+def get_or_create_record(model, github_resp, additional_fields=None):
     """
     Get or create a database record based on GitHub JSON object.
 
     Args:
-        obj -- model or instance of a model
+        model -- a model or instance of a model
         github_resp -- GitHub data as a JSON object decoded to dict
         additional_fields -- fields to override
+
     """
     model_fields = {
         'Organization': {'name': github_resp.get('login')},
@@ -44,12 +45,14 @@ def get_or_create_record(obj, github_resp, additional_fields=None):   # noqa WPS
         'name': github_resp.get('name'),
         'html_url': github_resp.get('html_url'),
     }
-    if isinstance(obj, models.Model):
-        class_name = obj.repository_set.model.__name__
-        manager = obj.repository_set
+    if isinstance(model, models.Model):
+        class_name = model.repository_set.model.__name__
+        manager = model.repository_set
+    elif issubclass(model, models.Model):
+        class_name = model.__name__
+        manager = model.objects
     else:
-        class_name = obj.__name__
-        manager = obj.objects
+        raise TypeError("Improper type of model")
 
     defaults.update(model_fields[class_name])
     defaults.update(additional_fields or {})
