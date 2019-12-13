@@ -3,24 +3,41 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/dedb9f8ad241a9152fd0/test_coverage)](https://codeclimate.com/github/Hexlet/hexlet-friends/test_coverage)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 
-# hexlet-friends
+# Hexlet Friends
+Сервис для отслеживания вклада участников сообщества Хекслет в его open-source проекты на GitHub.
 
-Сервис отслеживающий и анализирующий open-source проекты хекслета на github по
-таким параметрам как количество коммитов, pull-реквестов, issues. В результате
-строится leaderboard участников с различными ачивками для мотивации. Сервис
-работает автоматизированно.
+Вклад &mdash; issues, pull requests, commits, comments.
 
-# Как развернуть проект
+## Установка и настройка
 
-```shell script
+### 0. Убедиться, что в системе установлены **poetry** и **make**.
+
+### 1. Выполнить команды:
+
+```
 git clone https://github.com/Hexlet/hexlet-friends
 cd hexlet-friends
-poetry install
-python manage.py migrate
+make install
 ```
 
-```shell script
-python manage.py runserver
-```
+### 2. Задать значения переменным окружения в _.env_:
 
-Проект использует переменные окружения, пример в _.env.example_
+`GITHUB_AUTH_TOKEN` &mdash; Personal access token из [настроек GitHub](https://github.com/settings/tokens).
+
+Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey`.
+
+`DEBUG=True`
+
+### 3. Выполнить команду `make setup`.
+
+## Запуск сервера для разработки
+
+Выполнить `make start`.
+
+## Локализация текста
+
+Требуется утилита **gettext**.
+
+1. `make transprepare` &mdash; подготовить файл **locale/ru/LC_MESSAGES/django.po**.
+2. Внести изменения в этот файл.
+3. Выполнить `make transcompile`.
