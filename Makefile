@@ -20,10 +20,15 @@ lint:
 test:
 	@poetry run python manage.py test
 
-check: lint test
+check: lint test requirements.txt
 
 start: test
 	@poetry run python manage.py runserver --noreload
 
 sync:
 	@poetry run python manage.py fetchdata
+
+requirements.txt: poetry.lock
+	@poetry export --format requirements.txt --output requirements.txt
+
+.PHONY: install shell transprepare transcompile lint test check start sync
