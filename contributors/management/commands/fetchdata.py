@@ -2,7 +2,7 @@ import logging
 import sys
 
 import requests
-from django.core.management.base import BaseCommand, CommandError
+from django.core import management
 
 from contributors.models import (
     Contribution,
@@ -29,10 +29,15 @@ def get_or_create_contributor(login):
 organizations = Organization.objects.filter(is_tracked=True)
 
 
-class Command(BaseCommand):
+class Command(management.base.BaseCommand):
     """A management command for syncing with GitHub."""
 
     help = "Saves data from GitHub to database"  # noqa: A003
+
+    def __init__(self, *args, **kwargs):
+        """Command initialization."""
+        super().__init__(*args, **kwargs)
+        self.repos_to_rehandle = []
 
     def add_arguments(self, parser):
         """Add arguments for the command."""
@@ -59,7 +64,7 @@ class Command(BaseCommand):
                 org_names=options['org'],
             )
         else:
-            raise CommandError(
+            raise management.base.CommandError(
                 "Provide a list of organizations or repositories",
             )
 
@@ -112,24 +117,29 @@ class Command(BaseCommand):
                     github.get_total_comments_per_user(review_comments),
                 )
 
-                logger.info("Processing commits")
-                total_commits_per_user = (
-                    github.get_total_commits_per_user_excluding_merges(
-                        org, repo,
-                    )
-                )
-
-                logger.info("Processing commits stats")
                 ignored_contributors = [
                     contrib.login for contrib in Contributor.objects.filter(
                         is_tracked=False,
                     )
                 ]
-                contributors = [
-                    contrib for contrib in github.get_repo_contributors(
-                        org, repo, session,
-                    ) if contrib['login'] not in ignored_contributors
-                ]
+                try:
+                    contributors = [
+                        contrib for contrib in github.get_repo_contributors(
+                            org, repo, session,
+                        ) if contrib['login'] not in ignored_contributors
+                    ]
+                except github.Accepted:
+                    logger.info("Data is not ready. Will retry")
+                    self.repos_to_rehandle.append(repo.full_name)
+                    continue
+
+                logger.info("Processing commits")
+                total_commits_per_user = {
+                    contributor['login']: contributor['total']
+                    for contributor in contributors
+                }
+
+                logger.info("Processing commits stats")
                 total_additions_per_user = github.get_total_additions_per_user(
                     contributors,
                 )
@@ -163,6 +173,10 @@ class Command(BaseCommand):
                     )
         session.close()
 
-        logger.info(self.style.SUCCESS(
-            "Data fetched from GitHub and saved to the database",
-        ))
+        if self.repos_to_rehandle:
+            logger.info("Rehandling some repositories")
+            management.call_command('fetchdata', repo=self.repos_to_rehandle)
+        else:
+            logger.info(self.style.SUCCESS(
+                "Data fetched from GitHub and saved to the database",
+            ))

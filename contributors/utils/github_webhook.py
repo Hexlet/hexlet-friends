@@ -1,4 +1,5 @@
 import hmac
+import time
 
 from django.conf import settings
 
@@ -9,6 +10,7 @@ from contributors.models import (
     Repository,
 )
 from contributors.utils.github_lib import (
+    Accepted,
     get_commit_stats_for_contributor,
     get_user_name,
 )
@@ -80,10 +82,18 @@ def update_database(type_, action, sender, repository):
 
     # Special case for commits
     if type_ == 'push':
-        commits_total, additions, deletions = get_commit_stats_for_contributor(
-            repository.full_name,
-            contributor.id,
-        )
+        while True:
+            try:
+                commits_total, additions, deletions = (
+                    get_commit_stats_for_contributor(
+                        repository.full_name,
+                        contributor.id,
+                    )
+                )
+            except Accepted:
+                time.sleep(5)
+            else:
+                break
         contribution.commits = commits_total
         contribution.additions = additions
         contribution.deletions = deletions
