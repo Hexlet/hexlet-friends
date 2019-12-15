@@ -11,6 +11,7 @@ from contributors.models import (
     Repository,
 )
 from contributors.utils import github_lib as github
+from contributors.utils import misc
 
 # Simultaneous logging to file and stdout
 logger = logging.getLogger('GitHub')
@@ -21,7 +22,7 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 def get_or_create_contributor(login):
     """Return a contributor object."""
     user_data = github.get_user_data(login)
-    contributor, _ = github.get_or_create_record(Contributor, user_data)
+    contributor, _ = misc.get_or_create_record(Contributor, user_data)
     return contributor
 
 
@@ -31,27 +32,43 @@ organizations = Organization.objects.filter(is_tracked=True)
 class Command(BaseCommand):
     """A management command for syncing with GitHub."""
 
-    help = "Saves data from GitHub to database" # noqa A003
+    help = "Saves data from GitHub to database"  # noqa: A003
 
     def add_arguments(self, parser):
         """Add arguments for the command."""
-        parser.add_argument('orgs', nargs='?', default=organizations)
+        parser.add_argument(
+            'org',
+            nargs='*',
+            default=organizations,
+            help='a list of organization names',
+        )
+        parser.add_argument(
+            '--repo', nargs='*', help='a list of repository full names',
+        )
 
-    def handle(self, *args, **options): # noqa WPS110
+    def handle(self, *args, **options):  # noqa: WPS
         """Collect data from GitHub."""
-
-        org_names = options['orgs']
-        if not org_names:
-            raise CommandError("Provide a list of organizations")
-        if isinstance(org_names, str):
-            org_names = org_names.split()
-
         logger.info("Data collection started")
 
+        if options['repo']:
+            data_of_orgs_and_repos = github.get_data_of_orgs_and_repos(
+                repo_full_names=options['repo'],
+            )
+        elif options['org']:
+            data_of_orgs_and_repos = github.get_data_of_orgs_and_repos(
+                org_names=options['org'],
+            )
+        else:
+            raise CommandError(
+                "Provide a list of organizations or repositories",
+            )
+
         session = requests.Session()
-        for org_name in org_names:
-            gh_org = github.get_org_data(org_name, session)
-            org, _ = github.get_or_create_record(Organization, gh_org)
+
+        for org_data in data_of_orgs_and_repos.values():
+            org, _ = misc.get_or_create_record(
+                Organization, org_data['details'],
+            )
             logger.info(org)
 
             ignored_repos = [
@@ -59,15 +76,15 @@ class Command(BaseCommand):
                     is_tracked=False,
                 )
             ]
-            gh_repos = [
-                repo for repo in github.get_org_repos(org)
+            repos_to_process = [
+                repo for repo in org_data['repos']
                 if repo['name'] not in ignored_repos
             ]
-            number_of_repos = len(gh_repos)
-            for i, gh_repo in enumerate(gh_repos, start=1): # noqa WPS111
-                repo, _ = github.get_or_create_record(org, gh_repo)
-                logger.info(f"{repo} ({i}/{number_of_repos})")  # noqa G004
-                if gh_repo['size'] == 0:
+            number_of_repos = len(repos_to_process)
+            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
+                repo, _ = misc.get_or_create_record(org, repo_data)
+                logger.info(f"{repo} ({i}/{number_of_repos})")  # noqa: G004
+                if repo_data['size'] == 0:
                     logger.info("Empty repository")
                     continue
 
@@ -90,7 +107,7 @@ class Command(BaseCommand):
                 review_comments = github.get_repo_review_comments(
                     org, repo, session,
                 )
-                total_comments_per_user = github.merge_dicts(
+                total_comments_per_user = misc.merge_dicts(
                     github.get_total_comments_per_user(comments),
                     github.get_total_comments_per_user(review_comments),
                 )

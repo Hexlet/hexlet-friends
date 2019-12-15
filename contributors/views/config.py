@@ -1,4 +1,4 @@
-import subprocess   # noqa S404
+import subprocess  # noqa: S404
 
 import requests
 from django.http import HttpResponseForbidden
@@ -8,6 +8,7 @@ from contributors.admin import custom
 from contributors.forms import OrgNamesForm, RepoNamesForm
 from contributors.models import Organization, Repository
 from contributors.utils import github_lib as github
+from contributors.utils import misc
 
 
 def set_up_context(request):
@@ -27,12 +28,12 @@ def show_repos(request):
             repos_choices = []
             for org_name in form_orgs.cleaned_data['organizations'].split():
                 org_data = github.get_org_data(org_name, session)
-                org, _ = github.get_or_create_record(Organization, org_data)
+                org, _ = misc.get_or_create_record(Organization, org_data)
                 repos_data = [
                     repo for repo in github.get_org_repos(org_name, session)
                 ]
                 for repo_data in repos_data:
-                    github.get_or_create_record(
+                    misc.get_or_create_record(
                         org,
                         repo_data,
                         {'is_tracked': False, 'is_visible': False},
@@ -61,6 +62,13 @@ def collect_data(request):
             repo.is_tracked = True
             repo.is_visible = True
             repo.save()
-        subprocess.Popen(['make', 'sync'])  # noqa S603 S607
+        subprocess.Popen([  # noqa: S603 S607
+            'poetry',
+            'run',
+            './manage.py',
+            'fetchdata',
+            '--repos',
+            ' '.join([repo.full_name for repo in repos]),  # noqa: WPS441
+        ])
         return TemplateResponse(request, 'admin/data_collection.html', context)
     return HttpResponseForbidden("Forbidden.")

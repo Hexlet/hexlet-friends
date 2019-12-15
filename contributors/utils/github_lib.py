@@ -1,9 +1,9 @@
-from collections import Counter
 from urllib.parse import parse_qs, urlparse
 
 import requests
 from django.conf import settings
-from django.db import models
+
+from contributors.utils.misc import merge_dicts
 
 GITHUB_API_URL = 'https://api.github.com'
 
@@ -222,14 +222,6 @@ def get_pages_count(link_headers):
     return 1
 
 
-def merge_dicts(*dicts):
-    """Merge several dictionaries into one."""
-    counter = Counter()
-    for dict_ in dicts:
-        counter.update(dict_)
-    return counter
-
-
 def get_commit_stats_for_contributor(
     repo_full_name, contributor_id, session=None,
 ):
@@ -241,7 +233,7 @@ def get_commit_stats_for_contributor(
     if response.status_code == requests.codes.no_content:
         raise NoContributorsError(
             "Nobody has contributed to this repository yet",
-        )
+        ) from None
 
     try:
         contributor_stats = [
@@ -251,44 +243,45 @@ def get_commit_stats_for_contributor(
     except IndexError:
         raise ContributorNotFoundError(
             "No such contributor in this repository",
-        )
+        ) from None
 
     totals = merge_dicts(*contributor_stats['weeks'])
 
     return totals['c'], totals['a'], totals['d']
 
 
-def get_or_create_record(obj, github_resp, additional_fields=None):   # noqa WPS110
-    """
-    Get or create a database record based on GitHub JSON object.
+def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa: C901,R701,E501
+    """Return data of organizations and their repositories from GitHub."""
+    if not (org_names or repo_full_names):
+        raise ValueError("Neither org_names nor repo_full_names is provided")
+    data_of_orgs_and_repos = {}
+    with requests.Session() as session:
+        if org_names:
+            for org_name in org_names:
+                data_of_orgs_and_repos[org_name] = {
+                    'details': get_org_data(org_name, session),
+                    'repos': [
+                        repo for repo in get_org_repos(
+                            org_name, session,
+                        )
+                    ],
+                }
+        elif repo_full_names:
+            # Construct a dictionary of names {org: [repo, repo, ...]}
+            names_of_orgs_and_repos = {}
+            for repo_full_name in repo_full_names:
+                org_name, repo_name = repo_full_name.split('/')
+                repos_of_org = names_of_orgs_and_repos.setdefault(org_name, [])
+                repos_of_org.append(repo_name)
 
-    Args:
-        obj -- model or instance of a model
-        github_resp -- GitHub data as a JSON object decoded to dict
-        additional_fields -- fields to override
-    """
-    model_fields = {
-        'Organization': {'name': github_resp.get('login')},
-        'Repository': {'full_name': github_resp.get('full_name')},
-        'Contributor': {
-            'login': github_resp.get('login'),
-            'avatar_url': github_resp.get('avatar_url'),
-        },
-    }
-    defaults = {
-        'name': github_resp.get('name'),
-        'html_url': github_resp.get('html_url'),
-    }
-    if isinstance(obj, models.Model):
-        class_name = obj.repository_set.model.__name__
-        manager = obj.repository_set
-    else:
-        class_name = obj.__name__
-        manager = obj.objects
-
-    defaults.update(model_fields[class_name])
-    defaults.update(additional_fields or {})
-    return manager.get_or_create(
-        id=github_resp['id'],
-        defaults=defaults,
-    )
+            for org_name, repo_names in names_of_orgs_and_repos.items():
+                data_of_orgs_and_repos[org_name] = {
+                    'details': get_org_data(org_name, session),
+                    'repos': [
+                        repo for repo in get_org_repos(
+                            org_name, session,
+                        )
+                        if repo['name'] in repo_names
+                    ],
+                }
+    return data_of_orgs_and_repos

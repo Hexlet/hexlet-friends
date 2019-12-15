@@ -1,5 +1,10 @@
-install:
+install: .env
 	@poetry install
+
+.env:
+	@test ! -f .env && cp .env.example .env
+
+setup:
 	@poetry run python manage.py migrate
 	@echo Create a super user
 	@poetry run python manage.py createsuperuser
@@ -28,7 +33,11 @@ start: test
 sync:
 	@poetry run python manage.py fetchdata
 
+secretkey:
+	@poetry run python -c 'from django.utils.crypto import get_random_string; print(get_random_string(40))'
+
 requirements.txt: poetry.lock
 	@poetry export --format requirements.txt --output requirements.txt
 
 .PHONY: install shell transprepare transcompile lint test check start sync
+.PHONY: secretkey
