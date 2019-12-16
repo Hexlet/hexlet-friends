@@ -162,3 +162,6 @@ AUTH_USER_MODEL = 'custom_auth.SiteUser'
 
 LOGIN_REDIRECT_URL = 'contributors:home'
 LOGOUT_REDIRECT_URL = 'contributors:home'
+
+GTM_ID = os.environ['GTM_ID']
+YANDEX_VERIFICATION = os.environ['YANDEX_VERIFICATION']
