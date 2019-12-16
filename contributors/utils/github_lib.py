@@ -12,6 +12,10 @@ class GitHubError(Exception):
     """GitHub error."""
 
 
+class Accepted(GitHubError):
+    """HTTP 202 Response."""
+
+
 class NoContent(GitHubError):
     """HTTP 204 Response."""
 
@@ -55,6 +59,8 @@ def get_whole_response_as_json(url, session=None):
     response.raise_for_status()
     if response.status_code == requests.codes.no_content:
         raise NoContent("204 No Content")
+    elif response.status_code == requests.codes.accepted:
+        raise Accepted("202 Accepted. No cached data. Retry.")
     return response.json()
 
 
@@ -184,9 +190,9 @@ def get_total_commits_per_user(commits):
     return get_total_contributions_per_user(commits, 'author')
 
 
-def get_total_commits_per_user_excluding_merges(owner, repo):
+def get_total_commits_per_user_excluding_merges(owner, repo, session):
     """Return total numbers of commits per user excluding merge commits."""
-    contributors = get_repo_contributors(owner, repo)
+    contributors = get_repo_contributors(owner, repo, session)
     return {
         contributor['login']: contributor['total']
         for contributor in contributors
@@ -222,22 +228,19 @@ def get_pages_count(link_headers):
     return 1
 
 
-def get_commit_stats_for_contributor(
-    repo_full_name, contributor_id, session=None,
-):
+def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     """Return numbers of commits, additions, deletions of a contributor."""
-    url = f'{GITHUB_API_URL}/repos/{repo_full_name}/stats/contributors'
-    req = session or requests
-    response = req.get(url, headers=get_headers())
-    response.raise_for_status()
-    if response.status_code == requests.codes.no_content:
+    org_name, repo_name = repo_full_name.split('/')
+    try:
+        contributors = get_repo_contributors(org_name, repo_name)
+    except NoContent:
         raise NoContributorsError(
             "Nobody has contributed to this repository yet",
         ) from None
 
     try:
         contributor_stats = [
-            stats for stats in response.json()
+            stats for stats in contributors
             if stats['author']['id'] == contributor_id
         ][0]
     except IndexError:
