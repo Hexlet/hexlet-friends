@@ -31,7 +31,7 @@ start: test
 	@poetry run python manage.py runserver --noreload
 
 sync:
-	@poetry run python manage.py fetchdata
+	@poetry run python manage.py fetchdata $(ARGS)
 
 secretkey:
 	@poetry run python -c 'from django.utils.crypto import get_random_string; print(get_random_string(40))'
@@ -39,5 +39,5 @@ secretkey:
 requirements.txt: poetry.lock
 	@poetry export --format requirements.txt --output requirements.txt
 
-.PHONY: install shell transprepare transcompile lint test check start sync
-.PHONY: secretkey
+.PHONY: install setup shell transprepare transcompile lint test check start
+.PHONY: sync secretkey
