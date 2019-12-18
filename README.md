@@ -38,7 +38,7 @@ make install
 make sync ARGS='ORG [ORG ...]'
 ```
 
-По __полным__ именам репозиториев (org_name/repo_full_name):
+По __полным__ именам репозиториев (org_name/repo_name):
 
 ```
 make sync ARGS='--repo REPO [REPO ...]'
