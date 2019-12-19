@@ -129,6 +129,12 @@ def get_repo_issues(owner, repo, session=None):
     return get_one_item_at_a_time(url, query_params, session)
 
 
+def get_repo_comments(owner, repo, session=None):
+    """Return all comments for a repository."""
+    url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/comments'
+    return get_one_item_at_a_time(url, session=session)
+
+
 def get_comments_for_issue(owner, repo, issue_number, session=None):
     """Return all comments for an issue."""
     url = (
@@ -137,8 +143,8 @@ def get_comments_for_issue(owner, repo, issue_number, session=None):
     return get_one_item_at_a_time(url, session=session)
 
 
-def get_repo_comments(owner, repo, session=None):
-    """Return all comments for a repository."""
+def get_repo_issue_comments(owner, repo, session=None):
+    """Return all issue comments for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/issues/comments'
     return get_one_item_at_a_time(url, session=session)
 

@@ -109,11 +109,15 @@ class Command(management.base.BaseCommand):
 
                 logger.info("Processing comments")
                 comments = github.get_repo_comments(org, repo, session)
+                issue_comments = github.get_repo_issue_comments(
+                    org, repo, session,
+                )
                 review_comments = github.get_repo_review_comments(
                     org, repo, session,
                 )
                 total_comments_per_user = misc.merge_dicts(
                     github.get_total_comments_per_user(comments),
+                    github.get_total_comments_per_user(issue_comments),
                     github.get_total_comments_per_user(review_comments),
                 )
 
