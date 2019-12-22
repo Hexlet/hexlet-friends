@@ -1,10 +1,14 @@
 import logging
 import sys
+from contextlib import suppress
 
 import requests
 from django.core import management
+from django.db import IntegrityError
+from django.utils import dateparse
 
 from contributors.models import (
+    CommitStats,
     Contribution,
     Contributor,
     Organization,
@@ -19,14 +23,49 @@ logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
+ORGANIZATIONS = Organization.objects.filter(is_tracked=True)
+IGNORED_CONTRIBUTORS = tuple(
+    contrib.login for contrib in Contributor.objects.filter(
+        is_tracked=False,
+    )
+)
+session = requests.Session()
+
+
 def get_or_create_contributor(login):
     """Return a contributor object."""
-    user_data = github.get_user_data(login)
+    user_data = github.get_user_data(login, session)
     contributor, _ = misc.get_or_create_record(Contributor, user_data)
     return contributor
 
 
-organizations = Organization.objects.filter(is_tracked=True)
+def create_contributions(
+    repo, contrib_data, user_field=None, id_=None, type_=None,
+):
+    """Create a contribution record."""
+    for contrib in contrib_data:
+        if contrib[user_field] is None or contrib[user_field]['type'] == 'Bot':
+            continue
+        if contrib[user_field]['login'] in IGNORED_CONTRIBUTORS:
+            continue
+        if not type_:
+            pr_or_iss = 'pr' if 'pull_request' in contrib else 'iss'
+        if type_ == 'cit':
+            datetime = contrib['commit']['author']['date']
+        else:
+            datetime = contrib['created_at']
+
+        with suppress(IntegrityError):
+            Contribution.objects.create(
+                repository=repo,
+                contributor=get_or_create_contributor(
+                    contrib[user_field]['login'],
+                ),
+                id=contrib[id_],
+                type=type_ or pr_or_iss,
+                html_url=contrib['html_url'],
+                created_at=dateparse.parse_datetime(datetime),
+            )
 
 
 class Command(management.base.BaseCommand):
@@ -34,17 +73,12 @@ class Command(management.base.BaseCommand):
 
     help = "Saves data from GitHub to database"  # noqa: A003
 
-    def __init__(self, *args, **kwargs):
-        """Command initialization."""
-        super().__init__(*args, **kwargs)
-        self.repos_to_rehandle = []
-
     def add_arguments(self, parser):
         """Add arguments for the command."""
         parser.add_argument(
             'org',
             nargs='*',
-            default=organizations,
+            default=ORGANIZATIONS,
             help='a list of organization names',
         )
         parser.add_argument(
@@ -67,8 +101,6 @@ class Command(management.base.BaseCommand):
             raise management.base.CommandError(
                 "Provide a list of organizations or repositories",
             )
-
-        session = requests.Session()
 
         for org_data in data_of_orgs_and_repos.values():
             org, _ = misc.get_or_create_record(
@@ -93,94 +125,50 @@ class Command(management.base.BaseCommand):
                     logger.info("Empty repository")
                     continue
 
-                logger.info("Processing pull requests")
-                prs = github.get_repo_prs(org, repo, session)
-                total_prs_per_user = github.get_total_prs_per_user(prs)
-
-                logger.info("Processing issues")
-                issues_and_prs = github.get_repo_issues(org, repo, session)
-                issues = [
-                    issue for issue in issues_and_prs
-                    if 'pull_request' not in issue
-                ]
-                total_issues_per_user = github.get_total_issues_per_user(
-                    issues,
+                logger.info("Processing issues and pull requests")
+                create_contributions(
+                    repo,
+                    github.get_repo_issues(org, repo, session),
+                    user_field='user',
+                    id_='id',
                 )
-
-                logger.info("Processing comments")
-                comments = github.get_repo_comments(org, repo, session)
-                issue_comments = github.get_repo_issue_comments(
-                    org, repo, session,
-                )
-                review_comments = github.get_repo_review_comments(
-                    org, repo, session,
-                )
-                total_comments_per_user = misc.merge_dicts(
-                    github.get_total_comments_per_user(comments),
-                    github.get_total_comments_per_user(issue_comments),
-                    github.get_total_comments_per_user(review_comments),
-                )
-
-                ignored_contributors = [
-                    contrib.login for contrib in Contributor.objects.filter(
-                        is_tracked=False,
-                    )
-                ]
-                try:
-                    contributors = [
-                        contrib for contrib in github.get_repo_contributors(
-                            org, repo, session,
-                        ) if contrib['login'] not in ignored_contributors
-                    ]
-                except github.Accepted:
-                    logger.info("Data is not ready. Will retry")
-                    self.repos_to_rehandle.append(repo.full_name)
-                    continue
 
                 logger.info("Processing commits")
-                total_commits_per_user = {
-                    contributor['login']: contributor['total']
-                    for contributor in contributors
-                }
+                create_contributions(
+                    repo,
+                    github.get_repo_commits_except_merges(
+                        org, repo, session=session,
+                    ),
+                    user_field='author',
+                    id_='sha',
+                    type_='cit',
+                )
 
                 logger.info("Processing commits stats")
-                total_additions_per_user = github.get_total_additions_per_user(
-                    contributors,
-                )
-                total_deletions_per_user = github.get_total_deletions_per_user(
-                    contributors,
-                )
-
-                contributions_to_totals_mapping = {
-                    'commits': total_commits_per_user,
-                    'pull_requests': total_prs_per_user,
-                    'issues': total_issues_per_user,
-                    'comments': total_comments_per_user,
-                    'additions': total_additions_per_user,
-                    'deletions': total_deletions_per_user,
-                }
-                contributors_logins = [
-                    contributor['login'] for contributor in contributors
-                ]
-
-                logger.info("Finishing insertions")
-                for login in contributors_logins:
-                    contributor = get_or_create_contributor(login)
-                    Contribution.objects.update_or_create(
-                        repository=repo,
-                        contributor=contributor,
-                        defaults={
-                            contrib_type: totals.get(login, 0)
-                            for contrib_type, totals in
-                            contributions_to_totals_mapping.items()
-                        },
+                for commit in Contribution.objects.filter(
+                    repository=repo, type='cit',
+                ):
+                    gh_data = github.get_commit_data(
+                        org, repo, commit.id, session,
                     )
+                    with suppress(IntegrityError):
+                        CommitStats.objects.create(  # noqa: WPS220
+                            commit=commit,
+                            additions=gh_data['stats']['additions'],
+                            deletions=gh_data['stats']['deletions'],
+                        )
+
+                logger.info("Processing comments")
+                create_contributions(
+                    repo,
+                    github.get_all_types_of_comments(org, repo, session),
+                    user_field='user',
+                    id_='id',
+                    type_='cnt',
+                )
+
         session.close()
 
-        if self.repos_to_rehandle:
-            logger.info("Rehandling some repositories")
-            management.call_command('fetchdata', repo=self.repos_to_rehandle)
-        else:
-            logger.info(self.style.SUCCESS(
-                "Data fetched from GitHub and saved to the database",
-            ))
+        logger.info(self.style.SUCCESS(
+            "Data fetched from GitHub and saved to the database",
+        ))
