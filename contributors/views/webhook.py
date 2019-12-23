@@ -24,11 +24,6 @@ class EventHandler(View):
 
         event_type = request.headers.get('X-GitHub-Event')
         payload = json.loads(request.POST.get('payload'))
-        update_database(
-            event_type,
-            payload.get('action', 'created'),
-            payload['sender'],
-            payload['repository'],
-        )
+        update_database(event_type, payload)
 
         return HttpResponse("Success.")
