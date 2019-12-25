@@ -14,36 +14,32 @@
     </div>
   </div>
   <div class="col">
-    {% for org, repositories in organizations.items %}
-      {% for repo, contributions in repositories.items %}
-        <table class="contrib-details table table-sm">
-          <thead>
-            <tr>
-              <th scope="col" colspan="6" class="repo-full-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
-            </tr>
-            <tr>
-              <th scope="col">{% trans "Commits" %}</th>
-              <th scope="col">{% trans "Additions" %}</th>
-              <th scope="col">{% trans "Deletions" %}</th>
-              <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
-              <th scope="col">{% trans "Issues" %}</th>
-              <th scope="col">{% trans "Comments" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {% for contribution in contributions %}
-                <td>{{ contribution.commits }}</td>
-                <td>{{ contribution.additions }}</td>
-                <td>{{ contribution.deletions }}</td>
-                <td>{{ contribution.pull_requests }}</td>
-                <td>{{ contribution.issues }}</td>
-                <td>{{ contribution.comments }}</td>
-              {% endfor %}
-            </tr>
-          </tbody>
-        </table>
-      {% endfor %}
+    {% for repo in repositories %}
+      <table class="contrib-details table table-sm">
+        <thead>
+          <tr>
+            <th scope="col" colspan="6" class="repo-full-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
+          </tr>
+          <tr>
+            <th scope="col">{% trans "Commits" %}</th>
+            <th scope="col">{% trans "Additions" %}</th>
+            <th scope="col">{% trans "Deletions" %}</th>
+            <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
+            <th scope="col">{% trans "Issues" %}</th>
+            <th scope="col">{% trans "Comments" %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ repo.commits }}</td>
+            <td>{{ repo.additions }}</td>
+            <td>{{ repo.deletions }}</td>
+            <td>{{ repo.pull_requests }}</td>
+            <td>{{ repo.issues }}</td>
+            <td>{{ repo.comments }}</td>
+          </tr>
+        </tbody>
+      </table>
     {% endfor %}
   </div>
 </div>
