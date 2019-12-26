@@ -62,13 +62,8 @@ def collect_data(request):
             repo.is_tracked = True
             repo.is_visible = True
             repo.save()
-        subprocess.Popen([  # noqa: S603 S607
-            'poetry',
-            'run',
-            './manage.py',
-            'fetchdata',
-            '--repos',
-            ' '.join([repo.full_name for repo in repos]),  # noqa: WPS441
-        ])
+        fetch_command = ['poetry', 'run', './manage.py', 'fetchdata', '--repo']
+        fetch_command.extend([repo.full_name for repo in repos])  # noqa: WPS441,E501
+        subprocess.Popen(fetch_command)  # noqa: S603
         return TemplateResponse(request, 'admin/data_collection.html', context)
     return HttpResponseForbidden("Forbidden.")

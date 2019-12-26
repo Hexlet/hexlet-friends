@@ -103,10 +103,27 @@ def get_repo_contributors(owner, repo, session=None):
     return contributors
 
 
-def get_repo_commits(owner, repo, session=None):
+def get_commit_data(owner, repo, ref, session=None):
+    """Return data for a commit."""
+    url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/commits/{ref}'
+    return get_whole_response_as_json(url, session)
+
+
+def get_repo_commits(owner, repo, query_params=None, session=None):
     """Return all commits for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/commits'
-    return get_one_item_at_a_time(url, session)
+    return get_one_item_at_a_time(url, query_params, session)
+
+
+def get_repo_commits_except_merges(
+    owner, repo, query_params=None, session=None,
+):
+    """Return all commits for a repository except for merge commits."""
+    return (
+        commit for commit in get_repo_commits(
+            owner, repo, query_params, session,
+        ) if len(commit['parents']) < 2
+    )
 
 
 def get_repo_prs(owner, repo, session=None):
@@ -159,6 +176,24 @@ def get_repo_review_comments(owner, repo, session=None):
     """Return all review comments for a repository."""
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls/comments'
     return get_one_item_at_a_time(url, session=session)
+
+
+def get_all_types_of_comments(owner, repo, session=None):
+    """Return all types of comments for a repository."""
+    commit_comments = [
+        comment for comment in get_repo_comments(owner, repo, session)
+    ]
+    issue_comments = [
+        comment for comment in get_repo_issue_comments(owner, repo, session)
+    ]
+    review_comments = [
+        comment for comment in get_repo_review_comments(owner, repo, session)
+    ]
+    comments = []
+    comments.extend(commit_comments)
+    comments.extend(issue_comments)
+    comments.extend(review_comments)
+    yield from comments
 
 
 def get_total_contributions_per_user(contributions, author_field_name):

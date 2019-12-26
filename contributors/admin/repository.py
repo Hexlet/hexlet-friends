@@ -1,16 +1,7 @@
 
-from django.contrib import admin
-
 from contributors.admin import base
 from contributors.admin.custom import site
-from contributors.models import Contribution, Repository
-
-
-class ContributionInline(admin.TabularInline):
-    """Contributions of repository."""
-
-    model = Contribution
-    extra = 0
+from contributors.models import Repository
 
 
 class RepositoryAdmin(base.ModelAdmin):
@@ -28,7 +19,6 @@ class RepositoryAdmin(base.ModelAdmin):
             ),
         }),
     )
-    inlines = (ContributionInline,)
     list_display = ('id', 'name', 'organization', 'is_tracked', 'is_visible')
     list_filter = ('organization',)
     search_fields = ('name',)

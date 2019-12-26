@@ -1,19 +1,16 @@
 import hmac
-import time
 
 from django.conf import settings
+from django.utils import dateparse, timezone
 
 from contributors.models import (
+    CommitStats,
     Contribution,
     Contributor,
     Organization,
     Repository,
 )
-from contributors.utils.github_lib import (
-    Accepted,
-    get_commit_stats_for_contributor,
-    get_user_name,
-)
+from contributors.utils import github_lib as github
 
 
 def signatures_match(payload_body, gh_signature):
@@ -32,35 +29,30 @@ def signatures_match(payload_body, gh_signature):
     return hmac.compare_digest(signature, gh_signature)
 
 
-def update_database(type_, action, sender, repository):
+def update_database(event_type, payload):   # noqa: WPS210
     """Update the database with an event's data."""
-    if action not in {'created', 'opened', 'submitted'}:
+    action = payload.get('action', 'created')
+    if action not in {'created', 'opened'}:
         return
-
-    type_to_field_mapping = {
-        'push': 'commits',
-        'pull_request': 'pull_requests',
-        'issues': 'issues',
-        'commit_comment': 'comments',
-        'issue_comment': 'comments',
-        'pull_request_review': 'comments',
-        'pull_request_review_comment': 'comments',
-    }
+    sender = payload['sender']
+    if sender['type'] == 'Bot':
+        return
+    repo_data = payload['repository']
 
     organization, _ = Organization.objects.get_or_create(
-        id=repository['owner']['id'],
+        id=repo_data['owner']['id'],
         defaults={
-            'name': repository['owner']['login'],
-            'html_url': repository['owner']['html_url'],
+            'name': repo_data['owner']['login'],
+            'html_url': repo_data['owner']['html_url'],
         },
     )
 
     repository, _ = Repository.objects.get_or_create(
-        id=repository['id'],
+        id=repo_data['id'],
         defaults={
-            'name': repository['name'],
-            'full_name': repository['full_name'],
-            'html_url': repository['html_url'],
+            'name': repo_data['name'],
+            'full_name': repo_data['full_name'],
+            'html_url': repo_data['html_url'],
             'organization': organization,
         },
     )
@@ -69,38 +61,72 @@ def update_database(type_, action, sender, repository):
         id=sender['id'],
         defaults={
             'login': sender['login'],
-            'name': get_user_name(sender['url']),
+            'name': github.get_user_name(sender['url']),
             'avatar_url': sender['avatar_url'],
             'html_url': sender['html_url'],
         },
     )
 
-    contribution, _ = Contribution.objects.update_or_create(
-        repository=repository,
-        contributor=contributor,
-    )
+    event_type_to_data_field_mapping = {
+        'push': 'commits',
+        'pull_request': 'pull_request',
+        'issues': 'issue',
+        'commit_comment': 'comment',
+        'issue_comment': 'comment',
+        'pull_request_review_comment': 'comment',
+    }
+
+    event_type_to_db_type_mapping = {
+        'push': 'cit',
+        'pull_request': 'pr',
+        'issues': 'iss',
+        'commit_comment': 'cnt',
+        'issue_comment': 'cnt',
+        'pull_request_review_comment': 'cnt',
+    }
+
+    contrib_data = payload[event_type_to_data_field_mapping[event_type]]
+    contrib_type = event_type_to_db_type_mapping[event_type]
 
     # Special case for commits
-    if type_ == 'push':
-        while True:
-            try:
-                commits_total, additions, deletions = (
-                    get_commit_stats_for_contributor(
-                        repository.full_name,
-                        contributor.id,
-                    )
-                )
-            except Accepted:
-                time.sleep(5)
-            else:
-                break
-        contribution.commits = commits_total
-        contribution.additions = additions
-        contribution.deletions = deletions
-    # Actions for other types of events
+    # push event
+    commit_created_at = timezone.localtime(
+        dateparse.parse_datetime(
+            payload['commits'][0]['timestamp'],
+        ),
+        timezone.utc,
+    ).strftime('%Y-%m-%dT%H:%M:%SZ')
+    if event_type == 'push':
+        for gh_commit in github.get_repo_commits_except_merges(
+            organization, repository, {'since': commit_created_at},
+        ):
+            commit = Contribution.objects.create(
+                repository=repository,
+                contributor=contributor,
+                id=gh_commit['sha'],
+                type=contrib_type,
+                html_url=gh_commit['html_url'],
+                created_at=dateparse.parse_datetime(
+                    gh_commit['commit']['author']['date'],
+                ),
+            )
+            commit_extra_data = github.get_commit_data(
+                organization, repository, commit.id,
+            )
+            CommitStats.objects.create(
+                commit=commit,
+                additions=commit_extra_data['stats']['additions'],
+                deletions=commit_extra_data['stats']['deletions'],
+            )
+    # Actions for other types of events:
+    # commit_comment, issue_comment, pull_request_review_comment
+    # issues, pull_request
     else:
-        field = type_to_field_mapping[type_]
-        current_field_value = getattr(contribution, field)
-        setattr(contribution, field, current_field_value + 1)
-
-    contribution.save()
+        Contribution.objects.create(
+            repository=repository,
+            contributor=contributor,
+            id=contrib_data['id'],
+            type=contrib_type,
+            html_url=contrib_data['html_url'],
+            created_at=dateparse.parse_datetime(contrib_data['created_at']),
+        )

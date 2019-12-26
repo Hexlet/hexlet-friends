@@ -25,7 +25,7 @@
   </tr>
 {% endblock thead %}
 {% block tbody %}
-  {% for contributor, contribution in contributors.items %}
+  {% for contributor in contributors %}
     <tr>
       <th scope="row"></th>
       <td>
@@ -34,12 +34,12 @@
         </a>
       </td>
       <td>{% firstof contributor.name "&mdash;" %}</td>
-      <td>{{ contribution.commits }}</td>
-      <td>{{ contribution.additions }}</td>
-      <td>{{ contribution.deletions }}</td>
-      <td>{{ contribution.pull_requests }}</td>
-      <td>{{ contribution.issues }}</td>
-      <td>{{ contribution.comments }}</td>
+      <td>{{ contributor.commits }}</td>
+      <td>{{ contributor.additions }}</td>
+      <td>{{ contributor.deletions }}</td>
+      <td>{{ contributor.pull_requests }}</td>
+      <td>{{ contributor.issues }}</td>
+      <td>{{ contributor.comments }}</td>
     </tr>
   {% endfor %}
 {% endblock tbody %}

@@ -1,4 +1,4 @@
-from django.db.models import Count, Sum
+from django.db.models import Count, Q
 from django.views import generic
 
 from contributors.models import Repository
@@ -12,9 +12,15 @@ class ListView(generic.ListView):
             is_visible=True,
             contribution__contributor__is_visible=True,
         ).annotate(
-            pull_requests=Sum('contribution__pull_requests'),
-            issues=Sum('contribution__issues'),
-            contributors_count=Count('contribution'),
+            pull_requests=Count(
+                'contribution', filter=Q(contribution__type='pr'),
+            ),
+            issues=Count(
+                'contribution', filter=Q(contribution__type='iss'),
+            ),
+            contributors_count=Count(
+                'contribution__contributor', distinct=True,
+            ),
         )
     )
     template_name = 'repositories_list.html'

@@ -1,3 +1,5 @@
+from django.db.models import Count, Q, Sum  # noqa: WPS226
+from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models import Repository
@@ -13,11 +15,24 @@ class DetailView(generic.DetailView):
         """Add additional context for the repository."""
         context = super().get_context_data(**kwargs)
 
-        contributors_dict = {}
-        for contributor in self.object.contributors.filter(is_visible=True):
-            contributors_dict[contributor] = (
-                contributor.contribution_set.filter(repository=self.object)[0]
-            )
+        contributors = self.object.contributors.filter(
+            is_visible=True,
+        ).annotate(
+            pull_requests=Count(
+                'contribution', filter=Q(contribution__type='pr'),
+            ),
+            issues=Count(
+                'contribution', filter=Q(contribution__type='iss'),
+            ),
+            comments=Count(
+                'contribution', filter=Q(contribution__type='cnt'),
+            ),
+            commits=Count(
+                'contribution', filter=Q(contribution__type='cit'),
+            ),
+            additions=Coalesce(Sum('contribution__stats__additions'), 0),
+            deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
+        )
 
-        context['contributors'] = contributors_dict
+        context['contributors'] = contributors
         return context

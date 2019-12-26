@@ -1,6 +1,8 @@
+from django.db.models import Count, Q, Sum
+from django.db.models.functions import Coalesce
 from django.views import generic
 
-from contributors.models import Contributor, Organization
+from contributors.models import Contributor, Repository
 
 
 class DetailView(generic.DetailView):
@@ -13,24 +15,21 @@ class DetailView(generic.DetailView):
         """Add additional context for the contributor."""
         context = super().get_context_data(**kwargs)
 
-        organizations_for_user = Organization.objects.filter(
-            repository__contribution__contributor=self.object,
-        ).distinct()
-        orgs_dict = {}
-        for organization in organizations_for_user:
-            orgs_dict[organization] = {}
-            org_repositories_for_user = organization.repository_set.filter(
-                contribution__contributor=self.object,
-                is_visible=True,
-            )
-            for repo in org_repositories_for_user:
-                orgs_dict[organization][repo] = {}
-                repo_contributions_for_user = repo.contribution_set.filter(
-                    contributor=self.object,
-                )
-                orgs_dict[organization][repo] = (
-                    repo_contributions_for_user
-                )
+        repositories = Repository.objects.select_related(
+            'organization',
+        ).filter(
+            is_visible=True,
+            contribution__contributor=self.object,
+        ).annotate(
+            commits=Count('id', filter=Q(contribution__type='cit')),
+            additions=Coalesce(Sum('contribution__stats__additions'), 0),
+            deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
+            pull_requests=Count(
+                'contribution', filter=Q(contribution__type='pr'),
+            ),
+            issues=Count('contribution', filter=Q(contribution__type='iss')),
+            comments=Count('contribution', filter=Q(contribution__type='cnt')),
+        ).order_by('organization', 'name')
 
-        context['organizations'] = orgs_dict
+        context['repositories'] = repositories
         return context

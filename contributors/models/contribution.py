@@ -8,6 +8,16 @@ from contributors.models.repository import Repository
 class Contribution(models.Model):
     """Model representing a set of contributions."""
 
+    ID_LENGTH = 40   # noqa: WPS115
+    TYPE_LENGTH = 3  # noqa: WPS115
+
+    TYPES = (   # noqa: WPS115
+        ('cit', _("commit")),
+        ('iss', _("issue")),
+        ('pr', _("pull request")),
+        ('cnt', _("comment")),
+    )
+
     repository = models.ForeignKey(
         Repository,
         on_delete=models.CASCADE,
@@ -18,12 +28,10 @@ class Contribution(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("contributor"),
     )
-    commits = models.IntegerField(_("commits"), default=0)
-    additions = models.IntegerField(_("additions"), default=0)
-    deletions = models.IntegerField(_("deletions"), default=0)
-    pull_requests = models.IntegerField(_("pull requests"), default=0)
-    issues = models.IntegerField(_("issues"), default=0)
-    comments = models.IntegerField(_("comments"), default=0)
+    id = models.CharField(primary_key=True, max_length=ID_LENGTH)  # noqa: A003
+    type = models.CharField(_("type"), choices=TYPES, max_length=TYPE_LENGTH)  # noqa: A003,E501
+    html_url = models.URLField(_("URL"))
+    created_at = models.DateTimeField(_("creation date"))
 
     class Meta(object):
         verbose_name = _("contribution")
