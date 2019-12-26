@@ -34,9 +34,12 @@ session = requests.Session()
 
 def get_or_create_contributor(login):
     """Return a contributor object."""
-    user_data = github.get_user_data(login, session)
-    contributor, _ = misc.get_or_create_record(Contributor, user_data)
-    return contributor
+    try:
+        return Contributor.objects.get(login=login)
+    except Contributor.DoesNotExist:
+        user_data = github.get_user_data(login, session)
+        contributor, _ = misc.get_or_create_record(Contributor, user_data)
+        return contributor
 
 
 def create_contributions(
@@ -44,9 +47,11 @@ def create_contributions(
 ):
     """Create a contribution record."""
     for contrib in contrib_data:
-        if contrib[user_field] is None or contrib[user_field]['type'] == 'Bot':
+        contrib_author = contrib[user_field]
+        contrib_author_login = contrib_author['login']
+        if contrib_author is None or contrib_author['type'] == 'Bot':
             continue
-        if contrib[user_field]['login'] in IGNORED_CONTRIBUTORS:
+        if contrib_author_login in IGNORED_CONTRIBUTORS:
             continue
         if not type_:
             pr_or_iss = 'pr' if 'pull_request' in contrib else 'iss'
@@ -59,7 +64,7 @@ def create_contributions(
             Contribution.objects.create(
                 repository=repo,
                 contributor=get_or_create_contributor(
-                    contrib[user_field]['login'],
+                    contrib_author_login,
                 ),
                 id=contrib[id_],
                 type=type_ or pr_or_iss,
