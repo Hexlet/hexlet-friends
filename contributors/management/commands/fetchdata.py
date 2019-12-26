@@ -48,9 +48,9 @@ def create_contributions(
     """Create a contribution record."""
     for contrib in contrib_data:
         contrib_author = contrib[user_field]
-        contrib_author_login = contrib_author['login']
         if contrib_author is None or contrib_author['type'] == 'Bot':
             continue
+        contrib_author_login = contrib_author['login']
         if contrib_author_login in IGNORED_CONTRIBUTORS:
             continue
         if not type_:
