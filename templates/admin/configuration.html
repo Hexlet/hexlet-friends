@@ -12,7 +12,7 @@
   <p>{{ form_orgs.organizations }}</p>
   <p>{{ form_orgs.organizations.errors }}</p>
   <p class="help">{{ form_orgs.organizations.help_text }}</p>
-  <input type="submit" value="Get repositories">
+  <input type="submit" value="{% trans 'Get repositories' %}">
 </form>
 {% if form_repos %}
   <br>
