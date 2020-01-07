@@ -29,7 +29,7 @@ def get_or_create_record(model, github_resp, additional_fields=None):
 
     Args:
         model -- a model or instance of a model
-        github_resp -- GitHub data as a JSON object decoded to dict
+        github_resp -- GitHub data as a JSON object decoded to dictionary
         additional_fields -- fields to override
 
     """

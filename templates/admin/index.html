@@ -23,7 +23,7 @@
       <a href="{{ app.app_url }}" class="section" title="{% blocktrans with name=app.name %}Models in the {{ name }} application{% endblocktrans %}">{{ app.name }}</a>
       {# CUSTOM PART #}
       {% if app.app_label == 'contributors' %}
-        <a id="config-button" href="{% url 'admin:config' %}">Configure</a>
+        <a id="config-button" href="{% url 'admin:config' %}">{% trans "Configure" %}</a>
       {% endif %}
       {# END OF CUSTOM PART #}
     </caption>

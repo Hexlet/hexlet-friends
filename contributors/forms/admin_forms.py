@@ -9,6 +9,7 @@ class OrgNamesForm(forms.Form):
     """A form for organization names."""
 
     organizations = forms.CharField(
+        label=_("Organizations"),
         widget=forms.Textarea({'cols': 30, 'rows': 5}),
         help_text=_(
             "Enter organization names separated by a space or newline.",
@@ -23,7 +24,7 @@ class OrgNamesForm(forms.Form):
                 get_org_data(name)
             except HTTPError:
                 raise forms.ValidationError(
-                    _(f"Invalid name: {name}"),
+                    _("Invalid name: ") + name,
                     code='invalid',
                     params={'name': name},
                 )

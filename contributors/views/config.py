@@ -3,6 +3,7 @@ import subprocess  # noqa: S404
 import requests
 from django.http import HttpResponseForbidden
 from django.template.response import TemplateResponse
+from django.utils.translation import gettext_lazy as _
 
 from contributors.admin import custom
 from contributors.forms import OrgNamesForm, RepoNamesForm
@@ -14,7 +15,7 @@ from contributors.utils import misc
 def set_up_context(request):
     """Set up admin site context."""
     context = custom.site.each_context(request)
-    context['title'] = "Processing configuration"
+    context['title'] = _("Processing configuration")
     return context
 
 

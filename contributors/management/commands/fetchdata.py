@@ -24,6 +24,11 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 
 
 ORGANIZATIONS = Organization.objects.filter(is_tracked=True)
+IGNORED_REPOSITORIES = tuple(
+    repo.name for repo in Repository.objects.filter(
+        is_tracked=False,
+    )
+)
 IGNORED_CONTRIBUTORS = tuple(
     contrib.login for contrib in Contributor.objects.filter(
         is_tracked=False,
@@ -42,8 +47,8 @@ def get_or_create_contributor(login):
         return contributor
 
 
-def create_contributions(
-    repo, contrib_data, user_field=None, id_=None, type_=None,
+def create_contributions(   # noqa: C901,R701
+    repo, contrib_data, user_field=None, id_field=None, type_=None,
 ):
     """Create a contribution record."""
     for contrib in contrib_data:
@@ -61,16 +66,25 @@ def create_contributions(
             datetime = contrib['created_at']
 
         with suppress(IntegrityError):
-            Contribution.objects.create(
+            contribution = Contribution.objects.create(
                 repository=repo,
                 contributor=get_or_create_contributor(
                     contrib_author_login,
                 ),
-                id=contrib[id_],
+                id=contrib[id_field],
                 type=type_ or pr_or_iss,
                 html_url=contrib['html_url'],
                 created_at=dateparse.parse_datetime(datetime),
             )
+            if type_ == 'cit':
+                commit_data = github.get_commit_data(
+                    repo.organization, repo, contribution.id, session,
+                )
+                CommitStats.objects.create(
+                    commit=contribution,
+                    additions=commit_data['stats']['additions'],
+                    deletions=commit_data['stats']['deletions'],
+                )
 
 
 class Command(management.base.BaseCommand):
@@ -90,7 +104,7 @@ class Command(management.base.BaseCommand):
             '--repo', nargs='*', help='a list of repository full names',
         )
 
-    def handle(self, *args, **options):  # noqa: WPS
+    def handle(self, *args, **options):  # noqa: WPS110,WPS213
         """Collect data from GitHub."""
         logger.info("Data collection started")
 
@@ -113,14 +127,9 @@ class Command(management.base.BaseCommand):
             )
             logger.info(org)
 
-            ignored_repos = [
-                repo.name for repo in Repository.objects.filter(
-                    is_tracked=False,
-                )
-            ]
             repos_to_process = [
                 repo for repo in org_data['repos']
-                if repo['name'] not in ignored_repos
+                if repo['name'] not in IGNORED_REPOSITORIES
             ]
             number_of_repos = len(repos_to_process)
             for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
@@ -135,7 +144,7 @@ class Command(management.base.BaseCommand):
                     repo,
                     github.get_repo_issues(org, repo, session),
                     user_field='user',
-                    id_='id',
+                    id_field='id',
                 )
 
                 logger.info("Processing commits")
@@ -145,30 +154,16 @@ class Command(management.base.BaseCommand):
                         org, repo, session=session,
                     ),
                     user_field='author',
-                    id_='sha',
+                    id_field='sha',
                     type_='cit',
                 )
-
-                logger.info("Processing commits stats")
-                for commit in Contribution.objects.filter(
-                    repository=repo, type='cit',
-                ):
-                    gh_data = github.get_commit_data(
-                        org, repo, commit.id, session,
-                    )
-                    with suppress(IntegrityError):
-                        CommitStats.objects.create(  # noqa: WPS220
-                            commit=commit,
-                            additions=gh_data['stats']['additions'],
-                            deletions=gh_data['stats']['deletions'],
-                        )
 
                 logger.info("Processing comments")
                 create_contributions(
                     repo,
                     github.get_all_types_of_comments(org, repo, session),
                     user_field='user',
-                    id_='id',
+                    id_field='id',
                     type_='cnt',
                 )
 
