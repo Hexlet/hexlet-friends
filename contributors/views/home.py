@@ -34,4 +34,5 @@ class HomeView(TemplateView):
         )
 
         context['contributors'] = recent_contributors
+        context['since_datetime'] = dt_days_ago
         return context

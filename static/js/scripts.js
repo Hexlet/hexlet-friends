@@ -23,3 +23,8 @@ $(document).ready(function () {
     });
   }).draw();
 });
+
+// Activate Bootstrap tooltips
+$(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});

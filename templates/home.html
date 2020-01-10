@@ -2,6 +2,13 @@
 {% load i18n %}
 
 {% block header %}{% trans "Recently active contributors" %}{% endblock %}
+{% block additional %}
+  <a id="note" href="javascript:void(0)"
+      data-toggle="tooltip" data-placement="right"
+      title="{% trans 'since' %} {{ since_datetime|date:'DATE_FORMAT' }}">
+    {% trans "for the past month" %}
+  </a>
+{% endblock %}
 {% block thead %}
   <tr>
     <th scope="col">#</th>
