@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 14:28+0500\n"
+"POT-Creation-Date: 2020-01-10 16:26+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,7 +255,7 @@ msgstr "Администрирование"
 msgid "Log out"
 msgstr "Выйти"
 
-#: templates/components/navbar.html
+#: templates/components/navbar.html templates/registration/login.html
 msgid "Log in"
 msgstr "Войти"
 
@@ -309,6 +309,14 @@ msgstr "Имя"
 #: templates/home.html
 msgid "Recently active contributors"
 msgstr "Недавно активные участники"
+
+#: templates/home.html
+msgid "since"
+msgstr "с"
+
+#: templates/home.html
+msgid "for the past month"
+msgstr "за прошедший месяц"
 
 #: templates/registration/registration.html
 msgid "Registration"

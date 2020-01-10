@@ -35,7 +35,7 @@ def get_headers():
 
 def get_one_item_at_a_time(url, additional_params=None, session=None):
     """Return data from all pages (one instance at a time)."""
-    query_params = {'page': 1}
+    query_params = {'page': 1, 'per_page': 100}
     query_params.update(additional_params or {})
     req = session or requests
     response = req.get(url, headers=get_headers(), params=query_params)
