@@ -21,7 +21,17 @@ SECRET_KEY = getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
-ALLOWED_HOSTS = ['*']
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    '.herokuapp.com',
+    '.hexlet.io',
+]
 
 INSTALLED_APPS = [
     'contributors.apps.CustomAdminConfig',
