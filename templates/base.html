@@ -21,7 +21,7 @@
     {% if YANDEX_VERIFICATION %}
     <meta name="yandex-verification" content="{{ YANDEX_VERIFICATION }}" />
     {% endif %}
-    <title>{{ PROJECT_NAME }}</title>
+    <title>{% block title %}{{ PROJECT_NAME }}{% endblock %}</title>
   </head>
   <body>
     <header>

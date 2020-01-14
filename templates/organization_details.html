@@ -1,6 +1,7 @@
 {% extends 'list_as_table.html' %}
 {% load i18n %}
 
+{% block title %}{{ organization.name }}{% endblock %}
 {% block header %}{{ organization.name }}{% endblock %}
 {% block additional %}
   <p class="h5">
