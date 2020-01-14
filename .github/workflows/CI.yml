@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install poetry
-          make install
+          poetry install
       - name: Run checks
         run: make check
         env:
