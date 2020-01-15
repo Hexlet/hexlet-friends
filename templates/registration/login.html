@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% load i18n bootstrap4 %}
+
+{% block title %}{% trans "Login" context "logon" %}{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-lg-6 offset-md-1 offset-lg-3">
       <div class="card">
         <div class="card-header">
-          <h3>{{ _('Log in') }}</h3>
+          <h3>{% trans "Login" context "logon" %}</h3>
         </div>
         <div class="card-body">
           <form action="{% url 'login' %}" method="post" class="form">
