@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.views.generic.base import TemplateView
 
 from contributors.models import Repository
@@ -16,7 +17,9 @@ class ListView(TemplateView):
             is_visible=True,
             contribution__type='iss',
             contribution__info__is_open=True,
-        ).distinct()
+        ).distinct().annotate(
+            Count('contribution'),
+        ).order_by('-contribution__count')
 
         repos_with_issues = {}
         for repo in repositories:
@@ -25,11 +28,5 @@ class ListView(TemplateView):
                 info__is_open=True,
             )
 
-        context['repos_with_issues'] = {
-            repo: issues for repo, issues in sorted(    # noqa: WPS441
-                repos_with_issues.items(),
-                key=lambda item: len(item[1]),  # noqa: WPS110
-                reverse=True,
-            )
-        }
+        context['repos_with_issues'] = repos_with_issues
         return context
