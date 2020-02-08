@@ -3,6 +3,7 @@ from contributors.views import (
     contributor,
     contributors,
     home,
+    issues,
     organization,
     organizations,
     repositories,

@@ -35,5 +35,10 @@ urlpatterns = [
         views.contributor.DetailView.as_view(),
         name='contributor_details',
     ),
+    path(
+        "issues/",
+        views.issues.ListView.as_view(),
+        name="open_issues_list",
+    ),
     path('event-handler', views.webhook.EventHandler.as_view()),
 ]
