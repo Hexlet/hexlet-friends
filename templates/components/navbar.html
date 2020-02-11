@@ -42,12 +42,14 @@
             </div>
           </li>
         {% else %}
+          {% comment %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">{% trans "Log in" %}</a>
           </li>
           <li>
             <a class="nav-link" href="{% url 'auth:registration' %}">{% trans "Register" %}</a>
           </li>
+          {% endcomment %}
         {% endif %}
       </ul>
     </div>
