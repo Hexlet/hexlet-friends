@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from contributors.admin.custom import site
-from contributors.models import CommitStats, Contribution
+from contributors.models import CommitStats, Contribution, IssueInfo
 
 
 class CommitStatsInline(admin.StackedInline):
@@ -11,10 +11,17 @@ class CommitStatsInline(admin.StackedInline):
     extra = 0
 
 
+class IssueInfoInline(admin.StackedInline):
+    """Issue or pull request additional info."""
+
+    model = IssueInfo
+    extra = 0
+
+
 class ContributionAdmin(admin.ModelAdmin):
     """Contribution representation."""
 
-    inlines = (CommitStatsInline,)
+    inlines = (CommitStatsInline, IssueInfoInline)
     list_display = (
         'id',
         'repository',

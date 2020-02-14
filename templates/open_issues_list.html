@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Open Issues" %}{% endblock %}
+{% block content %}
+  <h1>{% block header %}{% trans "Open Issues" %}{% endblock %}</h1>
+  <ul style="list-style-type: none;">
+  {% for repo, issues in repos_with_issues.items %}
+    <li><a href="{{ repo.get_absolute_url }}"><b>{{ repo.full_name }}</b></a></li>
+    <ul>
+    {% for issue in issues %}
+      <li><a href="{{ issue.html_url }}">{{ issue.info.title }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endfor %}
+  </ul>
+{% endblock content %}

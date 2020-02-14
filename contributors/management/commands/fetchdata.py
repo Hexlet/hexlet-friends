@@ -4,13 +4,13 @@ from contextlib import suppress
 
 import requests
 from django.core import management
-from django.db import IntegrityError
 from django.utils import dateparse
 
 from contributors.models import (
     CommitStats,
     Contribution,
     Contributor,
+    IssueInfo,
     Organization,
     Repository,
 )
@@ -65,25 +65,35 @@ def create_contributions(   # noqa: C901,R701
         else:
             datetime = contrib['created_at']
 
-        with suppress(IntegrityError):
-            contribution = Contribution.objects.create(
-                repository=repo,
-                contributor=get_or_create_contributor(
+        contribution, created = Contribution.objects.get_or_create(
+            id=contrib[id_field],
+            defaults={
+                'repository': repo,
+                'contributor': get_or_create_contributor(
                     contrib_author_login,
                 ),
-                id=contrib[id_field],
-                type=type_ or pr_or_iss,
-                html_url=contrib['html_url'],
-                created_at=dateparse.parse_datetime(datetime),
+                'type': type_ or pr_or_iss,
+                'html_url': contrib['html_url'],
+                'created_at': dateparse.parse_datetime(datetime),
+            },
+        )
+        if created and type_ == 'cit':
+            commit_data = github.get_commit_data(
+                repo.organization, repo, contribution.id, session,
             )
-            if type_ == 'cit':
-                commit_data = github.get_commit_data(
-                    repo.organization, repo, contribution.id, session,
-                )
-                CommitStats.objects.create(
-                    commit=contribution,
-                    additions=commit_data['stats']['additions'],
-                    deletions=commit_data['stats']['deletions'],
+            CommitStats.objects.create(
+                commit=contribution,
+                additions=commit_data['stats']['additions'],
+                deletions=commit_data['stats']['deletions'],
+            )
+        with suppress(NameError):
+            if pr_or_iss:
+                IssueInfo.objects.update_or_create(
+                    issue=contribution,
+                    defaults={
+                        'title': contrib['title'],
+                        'is_open': contrib['state'] == 'open',
+                    },
                 )
 
 

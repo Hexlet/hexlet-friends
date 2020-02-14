@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-14 20:26+0500\n"
+"POT-Creation-Date: 2020-02-08 12:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -85,7 +85,7 @@ msgstr "удаления"
 msgid "commit stats"
 msgstr "данные коммита"
 
-#: contributors/models/contribution.py
+#: contributors/models/contribution.py contributors/models/issue_info.py
 msgid "issue"
 msgstr "проблема"
 
@@ -138,6 +138,18 @@ msgstr "отображается"
 #: contributors/models/contributor.py contributors/models/repository.py
 msgid "contributors"
 msgstr "контрибьюторы"
+
+#: contributors/models/issue_info.py
+msgid "title"
+msgstr "заголовок"
+
+#: contributors/models/issue_info.py
+msgid "open"
+msgstr "открыто"
+
+#: contributors/models/issue_info.py
+msgid "issue info"
+msgstr "доп. данные"
 
 #: contributors/models/organization.py contributors/models/repository.py
 msgid "organization"
@@ -246,6 +258,10 @@ msgstr "Репозитории"
 #: templates/repository_details.html
 msgid "Contributors"
 msgstr "Контрибьюторы"
+
+#: templates/components/navbar.html templates/open_issues_list.html
+msgid "Open Issues"
+msgstr "Проблемы"
 
 #: templates/components/navbar.html
 msgid "Admin"
