@@ -15,9 +15,9 @@ class DetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
 
         repositories = (
-            self.object.repository_set.filter(
-                is_visible=True,
-                contribution__contributor__is_visible=True,
+            self.object.repository_set.filter(is_visible=True).filter(
+                Q(contribution__contributor__is_visible=True)
+                | Q(contributors__isnull=True),
             ).annotate(
                 pull_requests=Count(
                     'contribution', filter=Q(contribution__type='pr'),
