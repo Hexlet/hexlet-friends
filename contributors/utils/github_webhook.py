@@ -7,6 +7,7 @@ from contributors.models import (
     CommitStats,
     Contribution,
     Contributor,
+    IssueInfo,
     Organization,
     Repository,
 )
@@ -32,27 +33,28 @@ def signatures_match(payload_body, gh_signature):
 def update_database(event_type, payload):   # noqa: WPS210
     """Update the database with an event's data."""
     action = payload.get('action', 'created')
-    if action not in {'created', 'opened'}:
+    if action not in {'created', 'opened', 'edited', 'closed', 'reopened'}:
         return
     sender = payload['sender']
     if sender['type'] == 'Bot':
         return
-    repo_data = payload['repository']
+    repo = payload['repository']
+    org = repo['owner']
 
     organization, _ = Organization.objects.get_or_create(
-        id=repo_data['owner']['id'],
+        id=org['id'],
         defaults={
-            'name': repo_data['owner']['login'],
-            'html_url': repo_data['owner']['html_url'],
+            'name': org['login'],
+            'html_url': org['html_url'],
         },
     )
 
     repository, _ = Repository.objects.get_or_create(
-        id=repo_data['id'],
+        id=repo['id'],
         defaults={
-            'name': repo_data['name'],
-            'full_name': repo_data['full_name'],
-            'html_url': repo_data['html_url'],
+            'name': repo['name'],
+            'full_name': repo['full_name'],
+            'html_url': repo['html_url'],
             'organization': organization,
         },
     )
@@ -113,20 +115,33 @@ def update_database(event_type, payload):   # noqa: WPS210
             commit_extra_data = github.get_commit_data(
                 organization, repository, commit.id,
             )
+            commit_stats = commit_extra_data['stats']
             CommitStats.objects.create(
                 commit=commit,
-                additions=commit_extra_data['stats']['additions'],
-                deletions=commit_extra_data['stats']['deletions'],
+                additions=commit_stats['additions'],
+                deletions=commit_stats['deletions'],
             )
     # Actions for other types of events:
     # commit_comment, issue_comment, pull_request_review_comment
     # issues, pull_request
     else:
-        Contribution.objects.create(
-            repository=repository,
-            contributor=contributor,
+        contrib, _ = Contribution.objects.get_or_create(
             id=contrib_data['id'],
-            type=contrib_type,
-            html_url=contrib_data['html_url'],
-            created_at=dateparse.parse_datetime(contrib_data['created_at']),
+            defaults={
+                'repository': repository,
+                'contributor': contributor,
+                'type': contrib_type,
+                'html_url': contrib_data['html_url'],
+                'created_at': dateparse.parse_datetime(
+                    contrib_data['created_at'],
+                ),
+            },
         )
+        if contrib.type == 'iss':
+            IssueInfo.objects.update_or_create(
+                issue=contrib,
+                defaults={
+                    'title': contrib_data['title'],
+                    'is_open': contrib_data['state'] == 'open',
+                },
+            )
