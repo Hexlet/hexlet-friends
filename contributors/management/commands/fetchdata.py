@@ -81,10 +81,11 @@ def create_contributions(   # noqa: C901,R701
             commit_data = github.get_commit_data(
                 repo.organization, repo, contribution.id, session,
             )
+            commit_stats = commit_data['stats']
             CommitStats.objects.create(
                 commit=contribution,
-                additions=commit_data['stats']['additions'],
-                deletions=commit_data['stats']['deletions'],
+                additions=commit_stats['additions'],
+                deletions=commit_stats['deletions'],
             )
         with suppress(NameError):
             if pr_or_iss:
