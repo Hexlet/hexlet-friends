@@ -1,4 +1,4 @@
-{% extends 'list_as_table.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 
 {% block title %}{{ repository.full_name }}{% endblock %}
@@ -12,35 +12,6 @@
   </p>
   <h2>{% trans "Contributors" %}</h2>
 {% endblock additional %}
-{% block thead %}
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">{% trans "Login" %}</th>
-    <th scope="col">{% trans "Name" %}</th>
-    <th scope="col">{% trans "Commits" %}</th>
-    <th scope="col">{% trans "Additions" %}</th>
-    <th scope="col">{% trans "Deletions" %}</th>
-    <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
-    <th scope="col">{% trans "Issues" %}</th>
-    <th scope="col">{% trans "Comments" %}</th>
-  </tr>
-{% endblock thead %}
-{% block tbody %}
-  {% for contributor in contributors %}
-    <tr>
-      <th scope="row"></th>
-      <td>
-        <a href="{{ contributor.get_absolute_url }}">
-          {{ contributor.login }}
-        </a>
-      </td>
-      <td>{% firstof contributor.name "&mdash;" %}</td>
-      <td>{{ contributor.commits }}</td>
-      <td>{{ contributor.additions }}</td>
-      <td>{{ contributor.deletions }}</td>
-      <td>{{ contributor.pull_requests }}</td>
-      <td>{{ contributor.issues }}</td>
-      <td>{{ contributor.comments }}</td>
-    </tr>
-  {% endfor %}
-{% endblock tbody %}
+{% block content %}
+  {% include 'components/tables/repository_details.html' %}
+{% endblock content %}
