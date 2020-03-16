@@ -1,4 +1,4 @@
-from django.db.models import Count, Q
+from django.db.models import Count, Q  # noqa: WPS347
 from django.views import generic
 
 from contributors.models import Organization

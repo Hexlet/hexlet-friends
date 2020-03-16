@@ -47,7 +47,7 @@ def get_or_create_contributor(login):
         return contributor
 
 
-def create_contributions(   # noqa: C901,R701
+def create_contributions(   # noqa: C901,R701,WPS231
     repo, contrib_data, user_field=None, id_field=None, type_=None,
 ):
     """Create a contribution record."""
