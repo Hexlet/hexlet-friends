@@ -7,16 +7,17 @@ authors = ["Your Name <you@example.com>"]
 [tool.poetry.dependencies]
 python = "^3.6"
 django = "^2.2"
-python-dotenv = "^0.10.3"
+python-dotenv = "^0.12"
 django-bootstrap4 = "^1.0"
 requests = "^2.22"
 gunicorn = "^19.9"
 dj-database-url = "^0.5.0"
 psycopg2-binary = "^2.8"
 whitenoise = "^4.1"
+python-dateutil = "^2.8"
 
 [tool.poetry.dev-dependencies]
-wemake-python-styleguide = "^0.12.4"
+wemake-python-styleguide = "^0.13"
 faker = "^2.0"
 
 [build-system]
