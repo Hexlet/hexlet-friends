@@ -30,9 +30,7 @@ def show_repos(request):
             for org_name in form_orgs.cleaned_data['organizations'].split():
                 org_data = github.get_org_data(org_name, session)
                 org, _ = misc.get_or_create_record(Organization, org_data)
-                repos_data = [
-                    repo for repo in github.get_org_repos(org_name, session)
-                ]
+                repos_data = list(github.get_org_repos(org_name, session))
                 for repo_data in repos_data:
                     misc.get_or_create_record(
                         org,

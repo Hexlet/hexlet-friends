@@ -1,25 +1,8 @@
-{% extends 'list_as_table.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Organizations" %}{% endblock %}
 {% block header %}{% trans "Organizations" %}{% endblock %}
-{% block thead %}
-  <tr class="d-flex">
-    <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col">{% trans "Name" %}</th>
-    <th scope="col" class="col-3">{% trans "Repositories" %}</th>
-  </tr>
-{% endblock thead %}
-{% block tbody %}
-  {% for organization in organizations_list %}
-    <tr class="d-flex">
-      <th scope="row" class="col-1"></th>
-      <td class="col">
-        <a href="{{ organization.get_absolute_url }}">
-          {{ organization.name }}
-        </a>
-      </td>
-      <td class="col-3">{{ organization.repository_count }}</td>
-    </tr>
-  {% endfor %}
-{% endblock tbody %}
+{% block content %}
+  {% include 'components/tables/organizations_list.html' %}
+{% endblock content %}

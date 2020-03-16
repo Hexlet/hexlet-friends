@@ -28,8 +28,9 @@
       {% include 'components/navbar.html' %}
     </header>
     <main class="container py-5">
-      {% block content %}
-      {% endblock content %}
+      <h1>{% block header %}{% endblock %}</h1>
+      {% block additional %}{% endblock %}
+      {% block content %}{% endblock %}
     </main>
     <footer class="footer bg-light">
       {% include 'components/footer.html' %}

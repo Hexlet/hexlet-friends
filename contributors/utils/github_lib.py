@@ -180,15 +180,9 @@ def get_repo_review_comments(owner, repo, session=None):
 
 def get_all_types_of_comments(owner, repo, session=None):
     """Return all types of comments for a repository."""
-    commit_comments = [
-        comment for comment in get_repo_comments(owner, repo, session)
-    ]
-    issue_comments = [
-        comment for comment in get_repo_issue_comments(owner, repo, session)
-    ]
-    review_comments = [
-        comment for comment in get_repo_review_comments(owner, repo, session)
-    ]
+    commit_comments = list(get_repo_comments(owner, repo, session))
+    issue_comments = list(get_repo_issue_comments(owner, repo, session))
+    review_comments = list(get_repo_review_comments(owner, repo, session))
     comments = []
     comments.extend(commit_comments)
     comments.extend(issue_comments)
@@ -262,10 +256,9 @@ def get_total_deletions_per_user(contributors):
 
 def get_pages_count(link_headers):
     """Return a number of pages for a resource."""
-    if 'last' in link_headers:
-        return int(
-            parse_qs(urlparse(link_headers['last']['url']).query)['page'][0],
-        )
+    last_header = link_headers.get('last')
+    if last_header:
+        return int(parse_qs(urlparse(last_header['url']).query)['page'][0])
     return 1
 
 
@@ -294,7 +287,7 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     return totals['c'], totals['a'], totals['d']
 
 
-def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa: C901,R701,E501
+def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa: C901,R701,E501,WPS231
     """Return data of organizations and their repositories from GitHub."""
     if not (org_names or repo_full_names):
         raise ValueError("Neither org_names nor repo_full_names is provided")
@@ -304,11 +297,7 @@ def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa
             for org_name in org_names:
                 data_of_orgs_and_repos[org_name] = {
                     'details': get_org_data(org_name, session),
-                    'repos': [
-                        repo for repo in get_org_repos(
-                            org_name, session,
-                        )
-                    ],
+                    'repos': list(get_org_repos(org_name, session)),
                 }
         elif repo_full_names:
             # Construct a dictionary of names {org: [repo, repo, ...]}

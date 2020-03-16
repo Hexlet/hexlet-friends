@@ -99,7 +99,7 @@ def update_database(event_type, payload):   # noqa: WPS210
         timezone.utc,
     ).strftime('%Y-%m-%dT%H:%M:%SZ')
     if event_type == 'push':
-        for gh_commit in github.get_repo_commits_except_merges(
+        for gh_commit in github.get_repo_commits_except_merges(  # noqa: WPS352
             organization, repository, {'since': commit_created_at},
         ):
             commit = Contribution.objects.create(

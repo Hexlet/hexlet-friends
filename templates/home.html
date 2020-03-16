@@ -1,42 +1,15 @@
-{% extends 'list_as_table.html' %}
+{% extends 'base.html' %}
 {% load i18n %}
 
-{% block header %}{% trans "Recently active contributors" %}{% endblock %}
-{% block additional %}
+{% block header %}{% endblock %}
+{% block content %}
+  <h2>{% trans "Past year activity" %}</h2>
+  {% include 'components/year_activity_chart.html' %}
+  <h2>{% trans "Recently active contributors" %}</h2>
   <a id="note" href="javascript:void(0)"
       data-toggle="tooltip" data-placement="right"
       title="{% trans 'since' %} {{ since_datetime|date:'DATE_FORMAT' }}">
     {% trans "for the past month" %}
   </a>
-{% endblock %}
-{% block thead %}
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">{% trans "Login" %}</th>
-    <th scope="col">{% trans "Name" %}</th>
-    <th scope="col">{% trans "Commits" %}</th>
-    <th scope="col">{% trans "Additions" %}</th>
-    <th scope="col">{% trans "Deletions" %}</th>
-    <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
-    <th scope="col">{% trans "Issues" %}</th>
-    <th scope="col">{% trans "Comments" %}</th>
-  </tr>
-{% endblock thead %}
-{% block tbody %}
-  {% for contributor in contributors %}
-    <tr>
-      <th scope="row"></th>
-      <td>
-        <a href="{{ contributor.get_absolute_url }}">
-          {{ contributor.login }}
-        </a>
-      </td>
-      <td>{% firstof contributor.name "&mdash;" %}</td>
-      <td>{{ contributor.commits }}</td>
-      <td>{{ contributor.additions }}</td>
-      <td>{{ contributor.deletions }}</td>
-      <td>{{ contributor.pull_requests }}</td>
-      <td>{{ contributor.issues }}</td>
-      <td>{{ contributor.comments }}</td>
-  {% endfor %}
-{% endblock tbody %}
+  {% include 'components/tables/recent_contributors.html' %}
+{% endblock content %}
