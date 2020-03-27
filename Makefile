@@ -15,6 +15,7 @@ shell:
 # Need to have GNU gettext installed
 transprepare:
 	@poetry run django-admin makemessages --add-location file
+	@poetry run django-admin makemessages --add-location file --domain djangojs
 
 transcompile:
 	@poetry run django-admin compilemessages
