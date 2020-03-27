@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <script src="{% url 'javascript_catalog' %}"></script>
+    {% block head_scripts %}{% endblock %}
     {% if GTM_ID %}
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -44,5 +46,6 @@
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     {% endif %}
+    {% block body_end_scripts %}{% endblock %}
   </body>
 </html>
