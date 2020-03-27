@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-08 12:00+0500\n"
+"POT-Creation-Date: 2020-03-27 17:10+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -248,14 +248,16 @@ msgstr "Рекомендованные книги"
 msgid "Blog"
 msgstr "Блог"
 
-#: templates/components/navbar.html templates/organization_details.html
-#: templates/organizations_list.html templates/repositories_list.html
+#: templates/components/navbar.html
+#: templates/components/tables/organizations_list.html
+#: templates/organization_details.html templates/repositories_list.html
 msgid "Repositories"
 msgstr "Репозитории"
 
-#: templates/components/navbar.html templates/contributors_list.html
-#: templates/organization_details.html templates/repositories_list.html
-#: templates/repository_details.html
+#: templates/components/navbar.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributors_list.html templates/repository_details.html
 msgid "Contributors"
 msgstr "Контрибьюторы"
 
@@ -271,56 +273,75 @@ msgstr "Администрирование"
 msgid "Log out"
 msgstr "Выйти"
 
-#: templates/components/navbar.html templates/registration/login.html
-msgid "Log in"
-msgstr "Войти"
-
-#: templates/components/navbar.html templates/registration/registration.html
-msgid "Register"
-msgstr "Зарегистрироваться"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/repository_details.html
-msgid "Commits"
-msgstr "Коммиты"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/repository_details.html
-msgid "Additions"
-msgstr "Добавления"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/repository_details.html
-msgid "Deletions"
-msgstr "Удаления"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/organization_details.html
-#: templates/repositories_list.html templates/repository_details.html
-msgid "Pull requests"
-msgstr "Запросы на включение"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/organization_details.html
-#: templates/repositories_list.html templates/repository_details.html
-msgid "Issues"
-msgstr "Проблемы"
-
-#: templates/contributor_details.html templates/contributors_list.html
-#: templates/home.html templates/repository_details.html
-msgid "Comments"
-msgstr "Комментарии"
-
-#: templates/contributors_list.html templates/home.html
-#: templates/repository_details.html
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
 msgid "Login"
 msgstr "Логин"
 
-#: templates/contributors_list.html templates/home.html
-#: templates/organization_details.html templates/organizations_list.html
-#: templates/repositories_list.html templates/repository_details.html
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/organizations_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
 msgid "Name"
 msgstr "Имя"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Commits"
+msgstr "Коммиты"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Additions"
+msgstr "Добавления"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Deletions"
+msgstr "Удаления"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Pull requests"
+msgstr "Запросы на включение"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Issues"
+msgstr "Проблемы"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/components/tables/repositories_list.html
+#: templates/repository_details.html
+msgid "Organization"
+msgstr "Организация"
+
+#: templates/home.html
+msgid "Past year activity"
+msgstr "Активность за год"
 
 #: templates/home.html
 msgid "Recently active contributors"
@@ -339,10 +360,14 @@ msgctxt "logon"
 msgid "Login"
 msgstr "Вход"
 
+#: templates/registration/login.html
+msgid "Log in"
+msgstr "Войти"
+
 #: templates/registration/registration.html
 msgid "Registration"
 msgstr "Регистрация"
 
-#: templates/repositories_list.html templates/repository_details.html
-msgid "Organization"
-msgstr "Организация"
+#: templates/registration/registration.html
+msgid "Register"
+msgstr "Зарегистрироваться"
