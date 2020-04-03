@@ -8,5 +8,7 @@ from contributors.views import (
     organizations,
     repositories,
     repository,
+    projects,
+    project,
     webhook,
 )

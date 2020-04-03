@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Projects" %}{% endblock %}
+{% block header %}{% trans "Projects" %}{% endblock %}
+{% block content %}
+{% for project in projects_list %}
+    <a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a><br>
+    url: <a href="{{ project.html_url }}" taret="_blank">{{ project.html_url }}</a><br>
+    {{ project.description }}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">{% trans "Pull requests" %}: {{ project.pull_requests }}</div>
+            <div class="col-sm">{% trans "Issues" %}: {{ project.issues }}</div>
+            <div class="col-sm">{% trans "Contributors" %}:{{ project.contributors_count }} </div>
+        </div>
+    </div>
+    <br><br>
+{% endfor %}
+{% endblock content %}

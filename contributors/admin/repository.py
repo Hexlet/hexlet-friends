@@ -16,6 +16,7 @@ class RepositoryAdmin(base.ModelAdmin):
                 'full_name',
                 'html_url',
                 'organization',
+                'project',
             ),
         }),
     )

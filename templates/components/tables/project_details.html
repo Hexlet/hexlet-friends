@@ -6,7 +6,6 @@
     <th scope="col" class="col-1">#</th>
     <th scope="col" class="col">{% trans "Name" %}</th>
     <th scope="col" class="col">{% trans "Organization" %}</th>
-    <th scope="col" class="col">{% trans "Project" %}</th>
     <th scope="col" class="col-2 text-nowrap">{% trans "Pull requests" %}</th>
     <th scope="col" class="col-2">{% trans "Issues" %}</th>
     <th scope="col" class="col-2">{% trans "Contributors" %}</th>
@@ -22,11 +21,6 @@
         </a>
       </td>
       <td class="col">{{ repository.organization.name }}</td>
-      <td class="col">
-        <a href="{{ repository.project.get_absolute_url }}">
-          {{ repository.project.full_name }}
-        </a>
-      </td>
       <td class="col-2">{{ repository.pull_requests }}</td>
       <td class="col-2">{{ repository.issues }}</td>
       <td class="col-2">{{ repository.contributors_count }}</td>
