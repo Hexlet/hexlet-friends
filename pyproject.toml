@@ -10,9 +10,9 @@ django = "^3.0.4"
 python-dotenv = "^0.12"
 django-bootstrap4 = "^1.0"
 requests = "^2.22"
-gunicorn = "^19.9"
-dj-database-url = "^0.5.0"
-psycopg2-binary = "^2.8"
+gunicorn = "^20"
+dj-database-url = "^0.5"
+psycopg2 = "^2.8"
 whitenoise = "^4.1"
 python-dateutil = "^2.8"
 
@@ -21,5 +21,5 @@ wemake-python-styleguide = "^0.13"
 faker = "^2.0"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.0.5"]
 build-backend = "poetry.masonry.api"
