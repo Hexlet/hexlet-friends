@@ -4,8 +4,10 @@ install: .env
 .env:
 	@test ! -f .env && cp .env.example .env
 
-setup:
+migrate:
 	@poetry run python manage.py migrate
+
+setup: migrate
 	@echo Create a super user
 	@poetry run python manage.py createsuperuser
 
@@ -20,6 +22,9 @@ transprepare:
 transcompile:
 	@poetry run django-admin compilemessages
 
+collectstatic:
+	@poetry run python manage.py collectstatic --no-input
+
 lint:
 	@poetry run flake8
 
@@ -28,8 +33,8 @@ test:
 
 check: lint test requirements.txt
 
-start: test
-	@poetry run python manage.py runserver --noreload
+start: migrate transcompile
+	@poetry run python manage.py runserver 0.0.0.0:8000
 
 sync:
 	@poetry run python manage.py fetchdata $(ARGS)
@@ -40,5 +45,4 @@ secretkey:
 requirements.txt: poetry.lock
 	@poetry export --format requirements.txt --output requirements.txt
 
-.PHONY: install setup shell transprepare transcompile lint test check start
-.PHONY: sync secretkey
+.PHONY: install setup shell lint test check start sync secretkey
