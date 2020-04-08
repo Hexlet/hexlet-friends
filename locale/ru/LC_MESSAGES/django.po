@@ -1,0 +1,402 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-08 13:27+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: auth/apps.py
+msgid "Custom Authentication and Authorization"
+msgstr "Аутентификация и авторизация"
+
+#: auth/models.py
+msgid "User"
+msgstr "Пользователь"
+
+#: auth/models.py
+msgid "Users"
+msgstr "Пользователи"
+
+#: contributors/admin/base.py
+msgid "Change tracking to the opposite value"
+msgstr "Инвертировать значение отслеживания"
+
+#: contributors/admin/base.py
+msgid "Change visibility to the opposite value"
+msgstr "Инвертировать значение отображения"
+
+#: contributors/forms/admin_forms.py templates/components/navbar.html
+#: templates/organizations_list.html
+msgid "Organizations"
+msgstr "Организации"
+
+#: contributors/forms/admin_forms.py
+msgid "Enter organization names separated by a space or newline."
+msgstr "Введите имена организаций, разделённые пробелом или переносом строки."
+
+#: contributors/forms/admin_forms.py
+msgid "Invalid name: "
+msgstr "Неверное имя: "
+
+#: contributors/forms/admin_forms.py
+msgid "Uncheck those you wish to skip."
+msgstr "Снимите выбор тех, что нужно пропустить."
+
+#: contributors/models/base.py
+msgid "name"
+msgstr "Имя"
+
+#: contributors/models/base.py contributors/models/contribution.py
+msgid "URL"
+msgstr ""
+
+#: contributors/models/base.py
+msgid "tracked"
+msgstr "отслеживается"
+
+#: contributors/models/commit_stats.py contributors/models/contribution.py
+msgid "commit"
+msgstr "коммит"
+
+#: contributors/models/commit_stats.py
+msgid "additions"
+msgstr "добавления"
+
+#: contributors/models/commit_stats.py
+msgid "deletions"
+msgstr "удаления"
+
+#: contributors/models/commit_stats.py
+msgid "commit stats"
+msgstr "данные коммита"
+
+#: contributors/models/contribution.py contributors/models/issue_info.py
+msgid "issue"
+msgstr "проблема"
+
+#: contributors/models/contribution.py
+msgid "pull request"
+msgstr "запрос на включение"
+
+#: contributors/models/contribution.py
+msgid "comment"
+msgstr "комментарий"
+
+#: contributors/models/contribution.py contributors/models/repository.py
+msgid "repository"
+msgstr "репозиторий"
+
+#: contributors/models/contribution.py contributors/models/contributor.py
+msgid "contributor"
+msgstr "контрибьютор"
+
+#: contributors/models/contribution.py
+msgid "type"
+msgstr "тип"
+
+#: contributors/models/contribution.py
+msgid "creation date"
+msgstr "дата создания"
+
+#: contributors/models/contribution.py
+msgid "contribution"
+msgstr "контрибуция"
+
+#: contributors/models/contribution.py
+msgid "contributions"
+msgstr "контрибуции"
+
+#: contributors/models/contributor.py
+msgid "login"
+msgstr "логин"
+
+#: contributors/models/contributor.py
+msgid "avatar URL"
+msgstr "URL аватара"
+
+#: contributors/models/contributor.py contributors/models/repository.py
+msgid "visible"
+msgstr "отображается"
+
+#: contributors/models/contributor.py contributors/models/repository.py
+msgid "contributors"
+msgstr "контрибьюторы"
+
+#: contributors/models/issue_info.py
+msgid "title"
+msgstr "заголовок"
+
+#: contributors/models/issue_info.py
+msgid "open"
+msgstr "открыто"
+
+#: contributors/models/issue_info.py
+msgid "issue info"
+msgstr "доп. данные"
+
+#: contributors/models/organization.py contributors/models/repository.py
+msgid "organization"
+msgstr "организация"
+
+#: contributors/models/organization.py
+msgid "organizations"
+msgstr "организации"
+
+#: contributors/models/project.py
+msgid "description"
+msgstr "описание"
+
+#: contributors/models/project.py contributors/models/repository.py
+msgid "project"
+msgstr "проект"
+
+#: contributors/models/project.py
+msgid "projects"
+msgstr "проекты"
+
+#: contributors/models/repository.py
+msgid "full name"
+msgstr "полное имя"
+
+#: contributors/models/repository.py
+msgid "repositories"
+msgstr "репозитории"
+
+#: contributors/views/config.py
+msgid "Processing configuration"
+msgstr "Конфигурирование сбора данных"
+
+#: templates/admin/configuration.html
+msgid "Get repositories"
+msgstr "Получить репозитории"
+
+#: templates/admin/configuration.html
+msgid "Invert selection"
+msgstr "Инвертировать выбор"
+
+#: templates/admin/index.html
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "Configure"
+msgstr "Сбор данных"
+
+#: templates/admin/index.html
+msgid "Add"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "View"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "Change"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "You don't have permission to view or edit anything."
+msgstr ""
+
+#: templates/admin/index.html
+msgid "Recent actions"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "My actions"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "None available"
+msgstr ""
+
+#: templates/admin/index.html
+msgid "Unknown content"
+msgstr ""
+
+#: templates/components/footer.html
+msgid "Language"
+msgstr "Язык"
+
+#: templates/components/footer.html
+msgid "Source code"
+msgstr "Исходный код"
+
+#: templates/components/footer.html
+msgid "Other projects"
+msgstr "Другие проекты"
+
+#: templates/components/footer.html
+msgid "Useful resources"
+msgstr "Полезные ресурсы"
+
+#: templates/components/footer.html
+msgid "Knowledge base"
+msgstr "База знаний"
+
+#: templates/components/footer.html
+msgid "Recommended books"
+msgstr "Рекомендованные книги"
+
+#: templates/components/footer.html
+msgid "Blog"
+msgstr "Блог"
+
+#: templates/components/navbar.html templates/projects_list.html
+msgid "Projects"
+msgstr "Проекты"
+
+#: templates/components/navbar.html
+#: templates/components/tables/organizations_list.html
+#: templates/organization_details.html templates/repositories_list.html
+msgid "Repositories"
+msgstr "Репозитории"
+
+#: templates/components/navbar.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/project_details.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributors_list.html templates/projects_list.html
+#: templates/repository_details.html
+msgid "Contributors"
+msgstr "Контрибьюторы"
+
+#: templates/components/navbar.html templates/open_issues_list.html
+msgid "Open Issues"
+msgstr "Проблемы"
+
+#: templates/components/navbar.html
+msgid "Admin"
+msgstr "Администрирование"
+
+#: templates/components/navbar.html
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+msgid "Login"
+msgstr "Логин"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/organizations_list.html
+#: templates/components/tables/project_details.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
+msgid "Name"
+msgstr "Имя"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Commits"
+msgstr "Коммиты"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Additions"
+msgstr "Добавления"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Deletions"
+msgstr "Удаления"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/project_details.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html templates/projects_list.html
+msgid "Pull requests"
+msgstr "Запросы на включение"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organization_details.html
+#: templates/components/tables/project_details.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html templates/projects_list.html
+msgid "Issues"
+msgstr "Проблемы"
+
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repository_details.html
+#: templates/contributor_details.html
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/components/tables/project_details.html
+#: templates/components/tables/repositories_list.html
+#: templates/repository_details.html
+msgid "Organization"
+msgstr "Организация"
+
+#: templates/components/tables/repositories_list.html
+#: templates/project_details.html templates/repository_details.html
+msgid "Project"
+msgstr ""
+
+#: templates/home.html
+msgid "Past year activity"
+msgstr "Активность за год"
+
+#: templates/home.html
+msgid "Recently active contributors"
+msgstr "Недавно активные участники"
+
+#: templates/home.html
+msgid "since"
+msgstr "с"
+
+#: templates/home.html
+msgid "for the past month"
+msgstr "за прошедший месяц"
+
+#: templates/project_details.html
+msgid "Project related repositories"
+msgstr "Связанные с проектом репозитории"
+
+#: templates/registration/login.html
+msgctxt "logon"
+msgid "Login"
+msgstr "Вход"
+
+#: templates/registration/login.html
+msgid "Log in"
+msgstr "Войти"
+
+#: templates/registration/registration.html
+msgid "Registration"
+msgstr "Регистрация"
+
+#: templates/registration/registration.html
+msgid "Register"
+msgstr "Зарегистрироваться"

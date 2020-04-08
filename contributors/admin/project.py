@@ -10,17 +10,15 @@ class ProjectAdmin(base.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (
-                'is_visible',
-                'full_name',
+                'name',
                 'description',
                 'html_url',
             ),
         }),
     )
 
-    list_display = ('id', 'full_name', 'is_visible',)
-    search_fields = ('full_name',)
-    actions = ['change_visibility',]
+    list_display = ('id', 'name')
+    search_fields = ('name',)
 
 
 site.register(Project, ProjectAdmin)

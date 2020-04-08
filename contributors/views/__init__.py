@@ -6,9 +6,9 @@ from contributors.views import (
     issues,
     organization,
     organizations,
+    project,
+    projects,
     repositories,
     repository,
-    projects,
-    project,
     webhook,
 )

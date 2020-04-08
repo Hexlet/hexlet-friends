@@ -20,7 +20,14 @@ class RepositoryAdmin(base.ModelAdmin):
             ),
         }),
     )
-    list_display = ('id', 'name', 'organization', 'is_tracked', 'is_visible')
+    list_display = (
+        'id',
+        'name',
+        'organization',
+        'project',
+        'is_tracked',
+        'is_visible',
+    )
     list_filter = ('organization',)
     search_fields = ('name',)
     actions = ['change_tracking', 'change_visibility']

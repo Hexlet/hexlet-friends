@@ -1,5 +1,4 @@
-from django.db.models import Count, Q, Sum  # noqa: WPS347
-from django.db.models.functions import Coalesce
+from django.db.models import Count, Q  # noqa: WPS347
 from django.views import generic
 
 from contributors.models import Project, Repository
@@ -22,7 +21,7 @@ class DetailView(generic.DetailView):
                 'contribution', filter=Q(contribution__type='pr'),
             ),
             issues=Count(
-                'contribution', filter=Q(contribution__type='iss')
+                'contribution', filter=Q(contribution__type='iss'),
             ),
             contributors_count=Count(
                 'contribution__contributor', distinct=True,

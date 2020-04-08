@@ -5,7 +5,7 @@
 {% block header %}{% trans "Projects" %}{% endblock %}
 {% block content %}
 {% for project in projects_list %}
-    <a href="{{ project.get_absolute_url }}">{{ project.full_name }}</a><br>
+    <a href="{{ project.get_absolute_url }}">{{ project.name }}</a><br>
     url: <a href="{{ project.html_url }}" taret="_blank">{{ project.html_url }}</a><br>
     {{ project.description }}
     <div class="container">

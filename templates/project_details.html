@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{{ project.full_name }}{% endblock %}
+{% block title %}{{ project.name }}{% endblock %}
 {% block additional %}
-  <h2>{% trans "Project" %} {{ project.full_name }}</h2>
+  <h2>{% trans "Project" %} {{ project.name }}</h2>
     <p>
     {{ project.description }}
     </p>

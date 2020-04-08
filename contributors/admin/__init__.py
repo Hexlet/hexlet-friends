@@ -5,6 +5,6 @@ from contributors.admin import (
     contributor,
     custom,
     organization,
-    repository,
     project,
+    repository,
 )
