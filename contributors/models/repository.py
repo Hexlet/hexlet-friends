@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from contributors.models.base import NAME_LENGTH, CommonFields
 from contributors.models.contributor import Contributor
 from contributors.models.organization import Organization
+from contributors.models.project import Project
 
 
 class Repository(CommonFields):
@@ -19,6 +20,12 @@ class Repository(CommonFields):
         Organization,
         on_delete=models.CASCADE,
         verbose_name=_("organization"),
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.SET_NULL,
+        verbose_name=_("project"),
+        null=True,
     )
     full_name = models.CharField(_("full name"), max_length=NAME_LENGTH)
     is_visible = models.BooleanField(_("visible"), default=True)

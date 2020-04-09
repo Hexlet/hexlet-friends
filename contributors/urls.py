@@ -36,6 +36,16 @@ urlpatterns = [
         name='contributor_details',
     ),
     path(
+        'projects/',
+        views.projects.ListView.as_view(),
+        name='projects_list',
+    ),
+    path(
+        'projects/<int:pk>',
+        views.project.DetailView.as_view(),
+        name='project_details',
+    ),
+    path(
         "issues/",
         views.issues.ListView.as_view(),
         name="open_issues_list",

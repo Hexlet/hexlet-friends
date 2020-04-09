@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{{ project.name }}{% endblock %}
+{% block additional %}
+  <h2>{% trans "Project" %} {{ project.name }}</h2>
+    <p>
+    {{ project.description }}
+    </p>
+    <p>
+    <a href='{{ project.html_url }}' target="_blank">{{ project.html_url }}</a>
+    </p>
+{% endblock additional %}
+{% block content %}
+     <p class="h5">
+    {% trans "Project related repositories" %}:
+     </p>
+  {% include 'components/tables/project_details.html' %}
+{% endblock content %}
