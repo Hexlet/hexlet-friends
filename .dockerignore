@@ -1,12 +1,13 @@
 .venv/
 .idea/
 .vscode/
+.github/
 .devcontainer/
-__pycache__/
+**/__pycache__/
 staticfiles/
 
 .env
 .python-version
 *.sqlite3
 *.bak
-*.mo
+**/*.mo

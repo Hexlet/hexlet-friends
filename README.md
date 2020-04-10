@@ -8,29 +8,60 @@
 
 Вклад &mdash; issues, pull requests, commits, comments.
 
-## Установка и настройка
+## Установка
 
-### 0. Убедиться, что в системе установлены **poetry** и **make**.
+Установить make.
+Для работы с Poetry (без Docker) установить Poetry.
+Для работы с Docker установить Docker Engine и Docker Compose.
 
-### 1. Выполнить команды:
+### 1. Склонировать репозиторий
 
 ```
 git clone https://github.com/Hexlet/hexlet-friends
 cd hexlet-friends
+```
+
+### 2. Установить зависимости
+
+### Poetry
+
+```
 make install
 ```
 
-### 2. Задать значения переменным окружения в _.env_:
+### Docker
+
+```
+make .env
+docker-compose build
+```
+
+### 3. Задать значения переменным окружения в *.env*
 
 `GITHUB_AUTH_TOKEN` &mdash; Personal access token из [настроек GitHub](https://github.com/settings/tokens).
 
-Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey`.
+Значения для `GITHUB_WEBHOOK_TOKEN` и `DJANGO_SECRET_KEY` можно сгенерировать командой `make secretkey` или придумать.
 
-`DEBUG=True`
+При работе с Poetry можно использовать SQLite, добавив `DB_ENGINE=SQLite`.
+Если установлена PostgreSQL, задать значения соответствующим переменным `POSTGRES`.
 
-### 3. Выполнить команду `make setup`.
+### 4. Завершить настройку
+
+### Poetry
+
+```
+make setup
+```
+
+### Docker
+
+```
+docker-compose run --rm django make setup
+```
 
 ## Наполнение базы данных
+
+Получить данные можно через интерфейс панели администрирования либо выполнив описанные команды. Для Docker перед этими командами надо добавить `docker-compose run --rm django`.
 
 По именам организаций:
 
@@ -38,27 +69,35 @@ make install
 make sync ARGS='ORG [ORG ...]'
 ```
 
-По __полным__ именам репозиториев (org_name/repo_name):
+По **полным** именам репозиториев (*org_name/repo_name*):
 
 ```
 make sync ARGS='--repo REPO [REPO ...]'
 ```
 
 Последующее обновление данных:
+
 ```
 make sync
 ```
 
 ## Запуск сервера для разработки
 
+### Poetry
+
 ```
 make start
 ```
 
+### Docker
+
+```
+docker-compose up
+```
+
 ## Локализация текста
 
-Требуется утилита **gettext**.
+Установить **gettext** (при работе с Poetry).
 
-1. `make transprepare` &mdash; подготовить файл **locale/ru/LC_MESSAGES/django.po**.
-2. Внести изменения в этот файл.
-3. Выполнить `make transcompile`.
+1. Выполнить `make transprepare` &mdash; подготовка файлов ***.po** в директории **locale/ru/LC_MESSAGES**.
+2. Внести изменения в эти файлы.

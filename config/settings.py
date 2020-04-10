@@ -3,7 +3,7 @@ import os
 
 import dj_database_url
 
-from contributors.utils.misc import getenv
+from contributors.utils import misc
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,7 +17,7 @@ logging.basicConfig(
     style='{',
 )
 
-SECRET_KEY = getenv('SECRET_KEY')
+SECRET_KEY = misc.getenv('SECRET_KEY')
 
 DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
@@ -84,17 +84,30 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'postgres'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     },
 }
 
+SQLITE_SETTINGS = {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
+
+if os.getenv('DB_ENGINE') == 'SQLite':
+    DATABASES['default'] = SQLITE_SETTINGS
+
 CONN_MAX_AGE = 500
 
-# Use the DATABASE_URL environment variable when DEBUG = False
+# Use the DATABASE_URL environment variable
 # https://pypi.org/project/dj-database-url/
 
-DATABASES['default'].update(dj_database_url.config(conn_max_age=CONN_MAX_AGE))
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=CONN_MAX_AGE)
 
 
 # Password validation
@@ -165,8 +178,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 PROJECT_NAME = 'Hexlet Friends'
 
-GITHUB_AUTH_TOKEN = getenv('GITHUB_AUTH_TOKEN')
-GITHUB_WEBHOOK_TOKEN = getenv('GITHUB_WEBHOOK_TOKEN')
+GITHUB_AUTH_TOKEN = misc.getenv('GITHUB_AUTH_TOKEN')
+GITHUB_WEBHOOK_TOKEN = misc.getenv('GITHUB_WEBHOOK_TOKEN')
 
 AUTH_USER_MODEL = 'custom_auth.SiteUser'
 

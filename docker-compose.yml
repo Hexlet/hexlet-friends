@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+
+  postgres:
+    image: postgres:12-alpine
+    env_file:
+      - .env
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+
+  django:
+    build:
+      context: .
+      args:
+        - DJANGO_ENV=development
+    environment:
+      - DEBUG=True
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/local/src/hexlet-friends
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_volume:
