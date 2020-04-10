@@ -13,7 +13,7 @@ requests = "^2.22"
 gunicorn = "^20"
 dj-database-url = "^0.5"
 psycopg2 = "^2.8"
-whitenoise = "^4.1"
+whitenoise = "^5.0"
 python-dateutil = "^2.8"
 
 [tool.poetry.dev-dependencies]
