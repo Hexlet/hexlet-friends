@@ -40,7 +40,7 @@ docker-compose build
 
 `GITHUB_AUTH_TOKEN` &mdash; Personal access token из [настроек GitHub](https://github.com/settings/tokens).
 
-Значения для `GITHUB_WEBHOOK_TOKEN` и `DJANGO_SECRET_KEY` можно сгенерировать командой `make secretkey` или придумать.
+Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` или придумать.
 
 При работе с Poetry можно использовать SQLite, добавив `DB_ENGINE=SQLite`.
 Если установлена PostgreSQL, задать значения соответствующим переменным `POSTGRES`.
