@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
-{% load i18n bootstrap4 %}
+{% load i18n crispy_forms_tags %}
 
 {% block title %}{% trans "Login" context "logon" %}{% endblock %}
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-10 col-lg-6 offset-md-1 offset-lg-3">
-      <div class="card">
-        <div class="card-header">
-          <h3>{% trans "Login" context "logon" %}</h3>
-        </div>
-        <div class="card-body">
-          <form action="{% url 'login' %}" method="post" class="form">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            {% bootstrap_button _('Log in') %}
-          </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-6 offset-md-1 offset-lg-3">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="h3">{% trans "Login" context "logon" %}</h1>
+          </div>
+          <div class="card-body">
+            <form action="" method="post" class="form">
+              {% csrf_token %}
+              {{ form|crispy }}
+              <button class="btn btn-primary">{% trans "Log in" %}</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {% endblock content %}
