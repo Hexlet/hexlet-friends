@@ -2,26 +2,83 @@ html {
   overflow-y: scroll;
 }
 
-th.repo-full-name {
-  border-top: none;
-}
-
 table.dataTable, table.dataTable th, table.dataTable td {
   box-sizing: border-box;
+}
+
+a#note {
+  display: inline-block;
+  cursor: default;
+  text-decoration: none;
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
+  margin-bottom: 8px;
+}
+
+/* Contributor's details */
+#contrib-details td {
+  text-align: center;
+}
+
+#contrib-details td:first-child {
+  text-align: left;
+}
+
+#contrib-details th:first-child {
+  width: 46%;
+}
+
+#contrib-details th {
+  border-top: none;
+  cursor: pointer;
+  user-select: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  width: 9%;
+}
+
+#contrib-details [data-sorting]::after {
+  position: absolute;
+  top: 0.3em;
+  right: 0.5em;
+}
+
+#contrib-details [data-sorting="desc"]::after {
+  content: "\2193";
+}
+
+#contrib-details [data-sorting="asc"]::after {
+  content: "\2191";
+}
+
+#contrib-details #cit {
+  background-image: url("../images/github_icons/git-commit.svg");
+}
+
+#contrib-details #cit-add {
+  background-image: url("../images/github_icons/diff-added.svg");
+}
+
+#contrib-details #cit-del {
+  background-image: url("../images/github_icons/diff-removed.svg");
+}
+
+#contrib-details #pr {
+  background-image: url("../images/github_icons/git-pull-request.svg");
+}
+
+#contrib-details #iss {
+  background-image: url("../images/github_icons/issue-opened.svg");
+}
+
+#contrib-details #cnt {
+  background-image: url("../images/github_icons/comment.svg");
 }
 
 .user-card {
   position: sticky;
   top: 48px;
-}
-
-a#note {
-  display: inline-block;
-  cursor:default;
-  text-decoration: none;
-  border-bottom-style: dotted;
-  border-bottom-width: 1px;
-  margin-bottom: 8px;
 }
 
 /* Django admin styles */
