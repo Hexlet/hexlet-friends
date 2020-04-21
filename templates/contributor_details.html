@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
+{% block head_scripts %}
+  {% include 'components/activity_chart/scripts.html' %}
+{% endblock head_scripts %}
 {% block title %}{{ contributor.login }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -16,6 +19,8 @@
   </div>
   <div class="col">
     <h2>{% trans "Past year activity" %}</h2>
+    {% include 'components/activity_chart/chart.html' %}
+
     <h2>{% trans "All-time contributions" %}</h2>
     <input type="text" name="repo-name" id="repo-search-field" class="form-control col-3" placeholder="{% trans "Filter by name" %}">
     <table id="contrib-details" class="table table-sm">
