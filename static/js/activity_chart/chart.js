@@ -10,7 +10,7 @@ function generateMonths() {
 const contributions = JSON.parse(document.getElementById('contributions').textContent);
 
 const ctx = document.getElementById('yearActivityChart').getContext('2d');
-const yearActivityChart = new Chart(ctx, {
+const config = {
   type: 'bar',
   data: {
     labels: generateMonths(),
@@ -54,4 +54,5 @@ const yearActivityChart = new Chart(ctx, {
       }],
     },
   },
-});
+};
+const yearActivityChart = new Chart(ctx, config);

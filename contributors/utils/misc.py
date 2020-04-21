@@ -1,8 +1,11 @@
+import datetime
 import os
-from collections import Counter
+from collections import Counter, deque
 
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
+
+NUM_OF_MONTHS_IN_A_YEAR = 12
 
 
 def getenv(env_variable):
@@ -60,3 +63,65 @@ def get_or_create_record(model, github_resp, additional_fields=None):
         id=github_resp['id'],
         defaults=defaults,
     )
+
+
+def group_contribs_by_months(months_with_contrib_sums):
+    """
+    Group a list of contributions by month.
+
+    Take a list of dictionaries {type: <name>, month: <num>, count: <num>}.
+    Return a 12-length dictionary where each key refers to a dictionary of
+    contribution sums for the corresponding month.
+
+    >>> months_with_contrib_sums = [
+    ...     {'type': 'cit', 'month': 1, 'count': 10},
+    ...     {'type': 'cit', 'month': 2, 'count': 20},
+    ...     {'type': 'cnt', 'month': 1, 'count': 10},
+    ... ]
+    >>> group_contribs_by_months(months_with_contrib_sums)
+    {1: {'cit': 10, 'cnt': 10}, 2: {'cit': 20}}
+    """
+    monthly_sums_of_contribs = {}
+    for contrib in months_with_contrib_sums:
+        month = monthly_sums_of_contribs.setdefault(contrib['month'], {})
+        month[contrib['type']] = contrib['count']
+    return monthly_sums_of_contribs
+
+
+def get_and_rotate_sums_for_contrib(monthly_sums_of_contribs, contrib_type):
+    """
+    Return an array of 12 sums of contributions of the given type.
+
+    Each position corresponds to a month.
+    The collection is left-shifted by the numeric value of the current month.
+    """
+    month_numbers = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
+    current_month_number = datetime.date.today().month
+    array = deque([
+        monthly_sums_of_contribs.get(month_number, {}).get(contrib_type, 0)
+        for month_number in month_numbers
+    ])
+    array.rotate(-current_month_number)
+    return list(array)
+
+
+def contrib_sums_distributed_over_months(monthly_sums_of_contribs):
+    """
+    Return shifted monthly sums for each contribution type.
+
+    The values end with the current month.
+    """
+    return {
+        'commits': get_and_rotate_sums_for_contrib(
+            monthly_sums_of_contribs, 'cit',
+        ),
+        'pull_requests': get_and_rotate_sums_for_contrib(
+            monthly_sums_of_contribs, 'pr',
+        ),
+        'issues': get_and_rotate_sums_for_contrib(
+            monthly_sums_of_contribs, 'iss',
+        ),
+        'comments': get_and_rotate_sums_for_contrib(
+            monthly_sums_of_contribs, 'cnt',
+        ),
+    }
