@@ -1,6 +1,7 @@
 import datetime
 import os
 from collections import Counter, deque
+from functools import partial
 
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
@@ -81,14 +82,14 @@ def group_contribs_by_months(months_with_contrib_sums):
     >>> group_contribs_by_months(months_with_contrib_sums)
     {1: {'cit': 10, 'cnt': 10}, 2: {'cit': 20}}
     """
-    monthly_sums_of_contribs = {}
+    sums_of_contribs_by_months = {}
     for contrib in months_with_contrib_sums:
-        month = monthly_sums_of_contribs.setdefault(contrib['month'], {})
+        month = sums_of_contribs_by_months.setdefault(contrib['month'], {})
         month[contrib['type']] = contrib['count']
-    return monthly_sums_of_contribs
+    return sums_of_contribs_by_months
 
 
-def get_and_rotate_sums_for_contrib(monthly_sums_of_contribs, contrib_type):
+def get_rotated_sums_for_contrib(sums_of_contribs_by_months, contrib_type):
     """
     Return an array of 12 sums of contributions of the given type.
 
@@ -98,30 +99,25 @@ def get_and_rotate_sums_for_contrib(monthly_sums_of_contribs, contrib_type):
     month_numbers = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
     current_month_number = datetime.date.today().month
     array = deque([
-        monthly_sums_of_contribs.get(month_number, {}).get(contrib_type, 0)
+        sums_of_contribs_by_months.get(month_number, {}).get(contrib_type, 0)
         for month_number in month_numbers
     ])
     array.rotate(-current_month_number)
     return list(array)
 
 
-def contrib_sums_distributed_over_months(monthly_sums_of_contribs):
+def get_contrib_sums_distributed_over_months(sums_of_contribs_by_months):
     """
     Return shifted monthly sums for each contribution type.
 
-    The values end with the current month.
+    The collections end with the current month.
     """
+    rotated_sums_by_months = partial(
+        get_rotated_sums_for_contrib, sums_of_contribs_by_months,
+    )
     return {
-        'commits': get_and_rotate_sums_for_contrib(
-            monthly_sums_of_contribs, 'cit',
-        ),
-        'pull_requests': get_and_rotate_sums_for_contrib(
-            monthly_sums_of_contribs, 'pr',
-        ),
-        'issues': get_and_rotate_sums_for_contrib(
-            monthly_sums_of_contribs, 'iss',
-        ),
-        'comments': get_and_rotate_sums_for_contrib(
-            monthly_sums_of_contribs, 'cnt',
-        ),
+        'commits': rotated_sums_by_months('cit'),
+        'pull_requests': rotated_sums_by_months('pr'),
+        'issues': rotated_sums_by_months('iss'),
+        'comments': rotated_sums_by_months('cnt'),
     }

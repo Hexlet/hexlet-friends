@@ -22,11 +22,11 @@
     {% include 'components/activity_chart/chart.html' %}
 
     <h2>{% trans "All-time contributions" %}</h2>
-    <input type="text" name="repo-name" id="repo-search-field" class="form-control col-3" placeholder="{% trans "Filter by name" %}">
+    <input type="text" name="name" id="repo-search-field" class="form-control col-3" placeholder="{% trans "Filter by name" %}">
     <table id="contrib-details" class="table table-sm">
       <thead>
         <tr>
-          <th scope="col" id="repo-name" data-sorting="asc">{% trans "Repository" %}</th>
+          <th scope="col" id="name" data-sorting="asc">{% trans "Repository" %}</th>
           <th scope="col" id="cit" data-sorting="" title="{% trans 'Commits' %}"></th>
           <th scope="col" id="cit-add" data-sorting="" title="{% trans 'Additions' %}"></th>
           <th scope="col" id="cit-del" data-sorting="" title="{% trans 'Deletions' %}"></th>
@@ -38,7 +38,7 @@
       <tbody>
         {% for repo in repositories %}
           <tr class="repo-contributions">
-            <td data-field="repo-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
+            <td data-field="name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
             <td data-field="cit">{{ repo.commits }}</td>
             <td data-field="cit-add">{{ repo.additions }}</td>
             <td data-field="cit-del">{{ repo.deletions }}</td>

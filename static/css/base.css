@@ -24,10 +24,6 @@ a#note {
   text-align: left;
 }
 
-#contrib-details th:first-child {
-  width: 46%;
-}
-
 #contrib-details th {
   border-top: none;
   cursor: pointer;
@@ -36,6 +32,10 @@ a#note {
   background-position: center;
   position: relative;
   width: 9%;
+}
+
+#contrib-details th:first-child {
+  width: 46%;
 }
 
 #contrib-details [data-sorting]::after {

@@ -43,12 +43,12 @@ class HomeView(TemplateView):
             month=ExtractMonth('created_at'),
         ).values('month', 'type').annotate(count=Count('id'))
 
-        monthly_sums_of_contribs = misc.group_contribs_by_months(
+        sums_of_contribs_by_months = misc.group_contribs_by_months(
             months_with_contrib_sums,
         )
 
-        contributions = misc.contrib_sums_distributed_over_months(
-            monthly_sums_of_contribs,
+        contributions = misc.get_contrib_sums_distributed_over_months(
+            sums_of_contribs_by_months,
         )
 
         context['contributors'] = contributors_for_month
