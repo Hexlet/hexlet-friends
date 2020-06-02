@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-27 19:11+0500\n"
+"POT-Creation-Date: 2020-04-21 15:28+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,18 +20,18 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: static/js/yearActivityChart.js
+#: static/js/activity_chart/chart.js
 msgid "Commits"
 msgstr "Коммиты"
 
-#: static/js/yearActivityChart.js
+#: static/js/activity_chart/chart.js
 msgid "Pull requests"
 msgstr "Запросы на включение"
 
-#: static/js/yearActivityChart.js
+#: static/js/activity_chart/chart.js
 msgid "Issues"
 msgstr "Проблемы"
 
-#: static/js/yearActivityChart.js
+#: static/js/activity_chart/chart.js
 msgid "Comments"
 msgstr "Комментарии"

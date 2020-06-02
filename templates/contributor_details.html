@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
+{% block head_scripts %}
+  {% include 'components/activity_chart/scripts.html' %}
+{% endblock head_scripts %}
 {% block title %}{{ contributor.login }}{% endblock %}
 {% block content %}
 <div class="row">
@@ -10,38 +13,45 @@
       <div class="card-body">
         {% if contributor.name %}<h1 class="h4 card-title">{{ contributor.name }}</h1>{% endif %}
         <h2 class="h5 card-subtitle font-weight-light">{{ contributor.login }}</h2>
-        <a href="{{ contributor.html_url }}" class="card-link">GitHub</a>
+        <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
       </div>
     </div>
   </div>
   <div class="col">
-    {% for repo in repositories %}
-      <table class="contrib-details table table-sm">
-        <thead>
-          <tr>
-            <th scope="col" colspan="6" class="repo-full-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
+    <h2>{% trans "Past year activity" %}</h2>
+    {% include 'components/activity_chart/chart.html' %}
+
+    <h2>{% trans "All-time contributions" %}</h2>
+    <input type="text" name="name" id="repo-search-field" class="form-control col-3" placeholder="{% trans "Filter by name" %}">
+    <table id="contrib-details" class="table table-sm">
+      <thead>
+        <tr>
+          <th scope="col" id="name" data-sorting="asc">{% trans "Repository" %}</th>
+          <th scope="col" id="cit" data-sorting="" title="{% trans 'Commits' %}"></th>
+          <th scope="col" id="cit-add" data-sorting="" title="{% trans 'Additions' %}"></th>
+          <th scope="col" id="cit-del" data-sorting="" title="{% trans 'Deletions' %}"></th>
+          <th scope="col" id="pr" data-sorting="" title="{% trans 'Pull requests' %}"></th>
+          <th scope="col" id="iss" data-sorting="" title="{% trans 'Issues' %}"></th>
+          <th scope="col" id="cnt" data-sorting="" title="{% trans 'Comments' %}"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for repo in repositories %}
+          <tr class="repo-contributions">
+            <td data-field="name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
+            <td data-field="cit">{{ repo.commits }}</td>
+            <td data-field="cit-add">{{ repo.additions }}</td>
+            <td data-field="cit-del">{{ repo.deletions }}</td>
+            <td data-field="pr">{{ repo.pull_requests }}</td>
+            <td data-field="iss">{{ repo.issues }}</td>
+            <td data-field="cnt">{{ repo.comments }}</td>
           </tr>
-          <tr>
-            <th scope="col">{% trans "Commits" %}</th>
-            <th scope="col">{% trans "Additions" %}</th>
-            <th scope="col">{% trans "Deletions" %}</th>
-            <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
-            <th scope="col">{% trans "Issues" %}</th>
-            <th scope="col">{% trans "Comments" %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ repo.commits }}</td>
-            <td>{{ repo.additions }}</td>
-            <td>{{ repo.deletions }}</td>
-            <td>{{ repo.pull_requests }}</td>
-            <td>{{ repo.issues }}</td>
-            <td>{{ repo.comments }}</td>
-          </tr>
-        </tbody>
-      </table>
-    {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock content %}
+{% block body_end_scripts %}
+  <script src="{% static 'js/contribDataSortAndSearch.js' %}"></script>
+{% endblock %}

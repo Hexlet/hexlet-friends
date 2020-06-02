@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block head_scripts %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-  {{ contributions|json_script:'contributions' }}
+  {% include 'components/activity_chart/scripts.html' %}
 {% endblock head_scripts %}
 {% block header %}{% endblock %}
 {% block content %}
   <h2>{% trans "Past year activity" %}</h2>
-  {% include 'components/year_activity_chart.html' %}
+  {% include 'components/activity_chart/chart.html' %}
   <h2>{% trans "Recently active contributors" %}</h2>
   <a id="note" href="javascript:void(0)"
       data-toggle="tooltip" data-placement="right"

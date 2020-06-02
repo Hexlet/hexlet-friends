@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-08 13:27+0300\n"
+"POT-Creation-Date: 2020-04-21 15:28+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -362,11 +362,23 @@ msgstr "Организация"
 #: templates/components/tables/repositories_list.html
 #: templates/project_details.html templates/repository_details.html
 msgid "Project"
-msgstr ""
+msgstr "Проект"
 
-#: templates/home.html
+#: templates/contributor_details.html templates/home.html
 msgid "Past year activity"
 msgstr "Активность за год"
+
+#: templates/contributor_details.html
+msgid "All-time contributions"
+msgstr "Вклад за всё время"
+
+#: templates/contributor_details.html
+msgid "Filter by name"
+msgstr "Фильтр по имени"
+
+#: templates/contributor_details.html
+msgid "Repository"
+msgstr "Репозиторий"
 
 #: templates/home.html
 msgid "Recently active contributors"

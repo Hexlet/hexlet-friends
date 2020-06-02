@@ -1,6 +1,3 @@
-import datetime
-from collections import deque
-
 from dateutil import relativedelta
 from django.db.models import Count, Q, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce, ExtractMonth
@@ -8,22 +5,7 @@ from django.utils import timezone
 from django.views.generic.base import TemplateView
 
 from contributors.models import Contribution, Contributor
-
-
-def get_array_of_numbers(contribs_per_month, contrib_type):
-    """
-    Return an array of 12 elements for contributions of the given type.
-
-    Each position corresponds to a month ending with the current month.
-    """
-    month_numbers = range(1, 13)    # noqa: WPS432
-    current_month_number = datetime.date.today().month
-    array = deque([
-        contribs_per_month.get(month_number, {}).get(contrib_type, 0)
-        for month_number in month_numbers
-    ])
-    array.rotate(-current_month_number)
-    return list(array)
+from contributors.utils import misc
 
 
 class HomeView(TemplateView):
@@ -37,9 +19,9 @@ class HomeView(TemplateView):
 
         dt_now = timezone.now()
         dt_month_ago = dt_now - relativedelta.relativedelta(months=1)
-        dt11months_ago = dt_now - relativedelta.relativedelta(
-            years=1, months=-1, day=1, hour=0, minute=0, second=0, microsecond=0,   # noqa: E501
-        )
+        eleven_months_ago = (dt_now - relativedelta.relativedelta(
+            months=11, day=1,   # noqa: WPS432
+        )).date()
 
         contributors_for_month = Contributor.objects.filter(
             is_visible=True,
@@ -54,24 +36,20 @@ class HomeView(TemplateView):
             issues=Count('contribution', filter=Q(contribution__type='iss')),
             comments=Count('contribution', filter=Q(contribution__type='cnt')),
         )
-        contrib_counts_with_months = Contribution.objects.filter(
+        months_with_contrib_sums = Contribution.objects.filter(
             contributor__is_visible=True,
-            created_at__gte=dt11months_ago,
+            created_at__gte=eleven_months_ago,
         ).annotate(
             month=ExtractMonth('created_at'),
         ).values('month', 'type').annotate(count=Count('id'))
 
-        contribs_per_month = {}
-        for contrib in contrib_counts_with_months:
-            month = contribs_per_month.setdefault(contrib['month'], {})
-            month[contrib['type']] = contrib['count']
+        sums_of_contribs_by_months = misc.group_contribs_by_months(
+            months_with_contrib_sums,
+        )
 
-        contributions = {
-            'commits': get_array_of_numbers(contribs_per_month, 'cit'),
-            'pull_requests': get_array_of_numbers(contribs_per_month, 'pr'),
-            'issues': get_array_of_numbers(contribs_per_month, 'iss'),
-            'comments': get_array_of_numbers(contribs_per_month, 'cnt'),
-        }
+        contributions = misc.get_contrib_sums_distributed_over_months(
+            sums_of_contribs_by_months,
+        )
 
         context['contributors'] = contributors_for_month
         context['since_datetime'] = dt_month_ago
