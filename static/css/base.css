@@ -2,6 +2,15 @@ html {
   overflow-y: scroll;
 }
 
+body {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main {
+  flex-grow: 1;
+}
+
 table.dataTable, table.dataTable th, table.dataTable td {
   box-sizing: border-box;
 }
@@ -101,18 +110,4 @@ caption.app-header {
 
 .repo-list li {
   list-style-type: none;
-}
-
-/* Sticky footer styles */
-html {
-  position: relative;
-  min-height: 100%;
-}
-main {
-  margin-bottom: 180px; /* Same as footer height */
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
