@@ -1,0 +1,12 @@
+{% load contrib_extras %}
+
+<ul class="list-group list-group-flush {{ class }} {% if contrib_type != 'commits' %}d-none{% endif %}">
+  {% for contributor in contributors %}
+    <li class="list-group-item">
+      <span class="top-list-number">{{ forloop.counter }}. </span>
+      <a href="{{ contributor.get_absolute_url }}">{{ contributor }}</a>
+      <span class="text-muted">{% if contributor.name %} | {{ contributor.name }}{% endif %}</span>
+      <span class="badge badge-pill badge-secondary">{{ contributor|get:contrib_type }}</span>
+    </li>
+  {% endfor %}
+</ul>
