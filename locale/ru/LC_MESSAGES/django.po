@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-21 15:28+0500\n"
+"POT-Creation-Date: 2020-06-04 17:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -381,8 +381,8 @@ msgid "Repository"
 msgstr "Репозиторий"
 
 #: templates/home.html
-msgid "Recently active contributors"
-msgstr "Недавно активные участники"
+msgid "Top 10 contributors"
+msgstr "Топ 10 контрибьюторов"
 
 #: templates/home.html
 msgid "since"
@@ -391,6 +391,22 @@ msgstr "с"
 #: templates/home.html
 msgid "for the past month"
 msgstr "за прошедший месяц"
+
+#: templates/home.html
+msgid "by commits"
+msgstr "по коммитам"
+
+#: templates/home.html
+msgid "by pull requests"
+msgstr "по PR"
+
+#: templates/home.html
+msgid "by issues"
+msgstr "по проблемам"
+
+#: templates/home.html
+msgid "by comments"
+msgstr "по комментариям"
 
 #: templates/project_details.html
 msgid "Project related repositories"
@@ -412,3 +428,6 @@ msgstr "Регистрация"
 #: templates/registration/registration.html
 msgid "Register"
 msgstr "Зарегистрироваться"
+
+#~ msgid "Recently active contributors"
+#~ msgstr "Недавно активные участники"
