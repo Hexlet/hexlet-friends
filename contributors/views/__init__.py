@@ -2,6 +2,7 @@ from contributors.views import (
     config,
     contributor,
     contributors,
+    contributors_for_month,
     home,
     issues,
     organization,

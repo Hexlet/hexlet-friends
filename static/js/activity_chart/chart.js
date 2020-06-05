@@ -38,6 +38,7 @@ const config = {
     ],
   },
   options: {
+    maintainAspectRatio: false,
     tooltips: {
       mode: 'index',
       intersect: false,

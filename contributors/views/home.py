@@ -1,6 +1,6 @@
 from dateutil import relativedelta
-from django.db.models import Count, Q, Sum  # noqa: WPS347
-from django.db.models.functions import Coalesce, ExtractMonth
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth
 from django.utils import timezone
 from django.views.generic.base import TemplateView
 
@@ -23,23 +23,12 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         dt_now = timezone.now()
-        dt_month_ago = dt_now - relativedelta.relativedelta(months=1)
         eleven_months_ago = (dt_now - relativedelta.relativedelta(
             months=11, day=1,   # noqa: WPS432
         )).date()
 
-        contributors_for_month = Contributor.objects.filter(
-            is_visible=True,
-            contribution__created_at__gte=dt_month_ago,
-        ).annotate(
-            commits=Count('id', filter=Q(contribution__type='cit')),
-            additions=Coalesce(Sum('contribution__stats__additions'), 0),
-            deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
-            pull_requests=Count(
-                'contribution', filter=Q(contribution__type='pr'),
-            ),
-            issues=Count('contribution', filter=Q(contribution__type='iss')),
-            comments=Count('contribution', filter=Q(contribution__type='cnt')),
+        contributors_for_month = (
+            Contributor.objects.visible().for_month().with_contributions()
         )
 
         top10_committers = get_top10(contributors_for_month, 'commits')
@@ -68,7 +57,7 @@ class HomeView(TemplateView):
             'top10_requesters': top10_requesters,
             'top10_reporters': top10_reporters,
             'top10_commentators': top10_commentators,
-            'dt_month_ago': dt_month_ago,
+            'dt_month_ago': misc.datetime_month_ago(),
             'contributions_for_year': contributions_for_year,
         })
 

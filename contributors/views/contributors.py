@@ -1,20 +1,11 @@
-from django.db.models import Count, Q, Sum  # noqa: WPS347
-from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models.contributor import Contributor
 
 
 class ListView(generic.ListView):
-    """A view for a list of contributors."""
+    """A list of contributors with contributions."""
 
-    queryset = Contributor.objects.filter(is_visible=True).annotate(
-        commits=Count('contribution', filter=Q(contribution__type='cit')),
-        additions=Coalesce(Sum('contribution__stats__additions'), 0),
-        deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
-        pull_requests=Count('contribution', filter=Q(contribution__type='pr')),
-        issues=Count('contribution', filter=Q(contribution__type='iss')),
-        comments=Count('contribution', filter=Q(contribution__type='cnt')),
-    )
+    queryset = Contributor.objects.visible().with_contributions()
     template_name = 'contributors_list.html'
     context_object_name = 'contributors_list'

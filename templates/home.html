@@ -9,12 +9,8 @@
   <h2>{% trans "Past year activity" %}</h2>
   {% include 'components/activity_chart/chart.html' %}
   <h2>{% trans "Top 10 contributors" %}</h2>
-  <a class="time-note" href="javascript:void(0)"
-      data-toggle="tooltip" data-placement="right"
-      title="{% trans 'since' %} {{ dt_month_ago|date:'DATE_FORMAT' }}">
-    {% trans "for the past month" %}
-  </a>
-  <div class="card top-10" style="width: 50%;">
+  {% include 'components/time_note.html' %}
+  <div class="card top-10">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
