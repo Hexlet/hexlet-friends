@@ -48,10 +48,10 @@ class DetailView(generic.DetailView):
             months_with_contrib_sums,
         )
 
-        contributions = misc.get_contrib_sums_distributed_over_months(
+        contributions_for_year = misc.get_contrib_sums_distributed_over_months(
             sums_of_contribs_by_months,
         )
 
         context['repositories'] = repositories
-        context['contributions'] = contributions
+        context['contributions_for_year'] = contributions_for_year
         return context

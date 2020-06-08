@@ -33,7 +33,7 @@ table.dataTable, table.dataTable th, table.dataTable td {
 }
 
 .top-10 .list-group .list-group-item:first-child {
-	border-top: 0;
+  border-top: 0;
 }
 
 .top-list-number {
@@ -41,11 +41,11 @@ table.dataTable, table.dataTable th, table.dataTable td {
 }
 
 .top-list-number::before {
-	content: "0";
+  content: "0";
 }
 
 .list-group-item:nth-child(n+10) .top-list-number::before {
-	content: "";
+  content: "";
 }
 
 .card .list-group-item .badge {
@@ -56,8 +56,8 @@ table.dataTable, table.dataTable th, table.dataTable td {
 }
 
 .chart-container {
-	height: 350px;
-	position: relative;
+  height: 350px;
+  position: relative;
 }
 
 /* Contributor's details */

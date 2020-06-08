@@ -97,7 +97,7 @@ def update_database(event_type, payload):   # noqa: WPS210
             payload['commits'][0]['timestamp'],
         ),
         timezone.utc,
-    ).strftime('%Y-%m-%dT%H:%M:%SZ')
+    ).strftime('%Y-%m-%dT%H:%M:%SZ')    # noqa: WPS323
     if event_type == 'push':
         for gh_commit in github.get_repo_commits_except_merges(  # noqa: WPS352
             organization, repository, {'since': commit_created_at},
