@@ -31,6 +31,11 @@ urlpatterns = [
         name='contributors_list',
     ),
     path(
+        'contributors/for-month',
+        views.contributors_for_month.ListView.as_view(),
+        name='contributors_for_month',
+    ),
+    path(
         'contributors/<int:pk>',
         views.contributor.DetailView.as_view(),
         name='contributor_details',
@@ -46,7 +51,7 @@ urlpatterns = [
         name='project_details',
     ),
     path(
-        "issues/",
+        "issues",
         views.issues.ListView.as_view(),
         name="open_issues_list",
     ),

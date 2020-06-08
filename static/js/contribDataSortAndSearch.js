@@ -21,8 +21,8 @@ function getComparer(type) {
   };
   return (direction) => {
     const directionsToFunctions = {
-      asc: (field) => (repo1, repo2) => typesToFunctions[type](repo1[field], repo2[field]),
-      desc: (field) => (repo1, repo2) => typesToFunctions[type](repo2[field], repo1[field]),
+      asc: (field) => (obj1, obj2) => typesToFunctions[type](obj1[field], obj2[field]),
+      desc: (field) => (obj1, obj2) => typesToFunctions[type](obj2[field], obj1[field]),
     };
     return directionsToFunctions[direction];
   };
@@ -31,15 +31,17 @@ function getComparer(type) {
 function renderTableRow(repo) {
   const tr = document.createElement('tr');
   tr.classList.add('repo-contributions');
-  tr.innerHTML =`<tr class="repo-contributions">
-      <td data-field="name"><a href="${repo['url']}">${repo['name']}</a></th>
+  tr.innerHTML = (
+    `<tr class="repo-contributions">
+      <td data-field="repo-name"><a href="${repo['url']}">${repo['repo-name']}</a></th>
       <td data-field="cit">${repo['cit']}</td>
       <td data-field="cit-add">${repo['cit-add']}</td>
       <td data-field="cit-del">${repo['cit-del']}</td>
       <td data-field="pr">${repo['pr']}</td>
       <td data-field="iss">${repo['iss']}</td>
       <td data-field="cnt">${repo['cnt']}</td>
-    </tr>`;
+    </tr>`
+  );
   return tr;
 }
 
@@ -49,7 +51,7 @@ function renderRepos(tbody, state) {
   sortedColumn.dataset.sorting = '';
   const newSortedColumn = document.getElementById(state.order.by);
   newSortedColumn.dataset.sorting = state.order.direction;
-  state.data.forEach((repo) => tbody.appendChild(renderTableRow(repo)));
+  state.filter.repos.forEach((repo) => tbody.appendChild(renderTableRow(repo)));
 }
 
 function renderFilteredRepos(tbody, state) {
@@ -73,15 +75,16 @@ function getData() {
 }
 
 function start() {
+  const data = getData();
   const state = {
-    data: getData(),
+    data,
     order: {
-      by: 'name',
+      by: 'repo-name',
       direction: 'asc',
     },
     filter: {
       value: '',
-      repos: [],
+      repos: data,
     },
   };
 
@@ -94,16 +97,16 @@ function start() {
       direction: inverseOrderNames[currentTarget.dataset.sorting],
     };
     const { by, direction } = state.order;
-    const type = (by === 'name') ? 'str' : 'num';
+    const type = (by === 'repo-name') ? 'str' : 'num';
     const comparer = getComparer(type)(direction)(by);
-    state.data.sort(comparer);
+    state.filter.repos.sort(comparer);
     renderRepos(tbody, state);
   }));
 
   const searchField = document.getElementById('repo-search-field');
   searchField.addEventListener('input', ({ target }) => {
     state.filter.value = target.value;
-    state.filter.repos = state.data.filter((repo) => repo.name.includes(state.filter.value));
+    state.filter.repos = state.data.filter((repo) => repo['repo-name'].includes(state.filter.value));
     renderFilteredRepos(tbody, state);
   });
 }

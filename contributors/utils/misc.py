@@ -3,8 +3,10 @@ import os
 from collections import Counter, deque
 from functools import partial
 
+from dateutil import relativedelta
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
+from django.utils import timezone
 
 NUM_OF_MONTHS_IN_A_YEAR = 12
 
@@ -121,3 +123,9 @@ def get_contrib_sums_distributed_over_months(sums_of_contribs_by_months):
         'issues': rotated_sums_by_months('iss'),
         'comments': rotated_sums_by_months('cnt'),
     }
+
+
+def datetime_month_ago():
+    """Return datetime 1 month ago from now."""
+    dt_now = timezone.now()
+    return dt_now - relativedelta.relativedelta(months=1)

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Contributors for month" %}{% endblock %}
+{% block header %}{% trans "Contributors" %}{% endblock %}
+{% block additional %}
+  {% include 'components/time_note.html' %}
+{% endblock %}
+{% block content %}
+  {% include 'components/tables/contributors_list.html' %}
+{% endblock content %}

@@ -7,7 +7,7 @@ function generateMonths() {
   return months;
 }
 
-const contributions = JSON.parse(document.getElementById('contributions').textContent);
+const contributions = JSON.parse(document.getElementById('contributions_for_year').textContent);
 
 const ctx = document.getElementById('yearActivityChart').getContext('2d');
 const config = {
@@ -38,6 +38,7 @@ const config = {
     ],
   },
   options: {
+    maintainAspectRatio: false,
     tooltips: {
       mode: 'index',
       intersect: false,

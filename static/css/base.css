@@ -2,17 +2,62 @@ html {
   overflow-y: scroll;
 }
 
+body {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+main {
+  flex-grow: 1;
+}
+
 table.dataTable, table.dataTable th, table.dataTable td {
   box-sizing: border-box;
 }
 
-a#note {
+.time-note {
   display: inline-block;
   cursor: default;
-  text-decoration: none;
   border-bottom-style: dotted;
   border-bottom-width: 1px;
   margin-bottom: 8px;
+}
+
+.time-note:hover {
+  text-decoration: none;
+}
+
+.top-10 {
+  width: 50%;
+  min-width: 320px;
+}
+
+.top-10 .list-group .list-group-item:first-child {
+	border-top: 0;
+}
+
+.top-list-number {
+  margin-right: 1em;
+}
+
+.top-list-number::before {
+	content: "0";
+}
+
+.list-group-item:nth-child(n+10) .top-list-number::before {
+	content: "";
+}
+
+.card .list-group-item .badge {
+  position: absolute;
+  right: 0;
+  margin-top: 0.35em;
+  margin-right: 1.7em;
+}
+
+.chart-container {
+	height: 350px;
+	position: relative;
 }
 
 /* Contributor's details */
@@ -101,18 +146,4 @@ caption.app-header {
 
 .repo-list li {
   list-style-type: none;
-}
-
-/* Sticky footer styles */
-html {
-  position: relative;
-  min-height: 100%;
-}
-main {
-  margin-bottom: 180px; /* Same as footer height */
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
