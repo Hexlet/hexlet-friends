@@ -39,15 +39,15 @@
       </ul>
       <ul class="navbar-nav ml-auto btn-group">
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a href="#" class="nav-link dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               {{ user.username }}
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <div class="dropdown-menu dropdown-menu-right">
               {% if user.is_staff %}
-              <a class="nav-link dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+              <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
               {% endif %}
-              <a class="nav-link dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
             </div>
           </li>
         {% else %}

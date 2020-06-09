@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap4',
     'contributors.apps.ContributorsConfig',
     'auth.apps.AuthConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -188,3 +188,5 @@ LOGOUT_REDIRECT_URL = 'contributors:home'
 
 GTM_ID = os.environ.get('GTM_ID')
 YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

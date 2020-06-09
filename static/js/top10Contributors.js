@@ -9,8 +9,8 @@ function start() {
     activeList.classList.add('d-none');
 
     const newActiveTab = e.target;
-    newActiveTab.classList.add('active');
     const newActiveList = tops.querySelector(`.list-group.${newActiveTab.name}`);
+    newActiveTab.classList.add('active');
     newActiveList.classList.remove('d-none');
   }));
 }

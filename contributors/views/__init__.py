@@ -1,4 +1,4 @@
-from contributors.views import (
+from contributors.views import (  # noqa: WPS235
     config,
     contributor,
     contributors,

@@ -101,7 +101,7 @@ def create_contributions(   # noqa: C901,R701,WPS231
 class Command(management.base.BaseCommand):
     """A management command for syncing with GitHub."""
 
-    help = "Saves data from GitHub to database"  # noqa: A003
+    help = "Saves data from GitHub to database"  # noqa: A003,WPS125
 
     def add_arguments(self, parser):
         """Add arguments for the command."""
@@ -115,7 +115,7 @@ class Command(management.base.BaseCommand):
             '--repo', nargs='*', help='a list of repository full names',
         )
 
-    def handle(self, *args, **options):  # noqa: WPS110,WPS213
+    def handle(self, *args, **options):  # noqa: WPS110,WPS213,WPS231
         """Collect data from GitHub."""
         logger.info("Data collection started")
 

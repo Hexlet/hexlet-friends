@@ -9,7 +9,7 @@ from contributors.utils.misc import datetime_month_ago
 
 
 class ContributorQuerySet(models.QuerySet):
-    """Custom contributor manager."""
+    """Custom contributor QuerySet."""
 
     def visible(self):
         """Return only visible contributors."""
