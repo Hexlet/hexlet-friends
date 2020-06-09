@@ -26,6 +26,7 @@ class Repository(CommonFields):
         on_delete=models.SET_NULL,
         verbose_name=_("project"),
         null=True,
+        blank=True,
     )
     full_name = models.CharField(_("full name"), max_length=NAME_LENGTH)
     is_visible = models.BooleanField(_("visible"), default=True)
