@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-05 12:29+0500\n"
+"POT-Creation-Date: 2020-06-11 01:46+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,6 +419,10 @@ msgstr "по проблемам"
 #: templates/home.html
 msgid "by comments"
 msgstr "по комментариям"
+
+#: templates/home.html
+msgid "New PRs and issues"
+msgstr "Новые PR и проблемы"
 
 #: templates/project_details.html
 msgid "Project related repositories"

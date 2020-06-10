@@ -28,12 +28,20 @@ table.dataTable, table.dataTable th, table.dataTable td {
 }
 
 .top-10 {
-  width: 50%;
-  min-width: 320px;
+  min-width: 340px;
+}
+
+.top-10 .card-header {
+  padding-top: 0.45rem;
 }
 
 .top-10 .list-group .list-group-item:first-child {
   border-top: 0;
+}
+
+.top-10 .list-group {
+  border-top: initial;
+  border-bottom: initial;
 }
 
 .top-list-number {
@@ -53,6 +61,17 @@ table.dataTable, table.dataTable th, table.dataTable td {
   right: 0;
   margin-top: 0.35em;
   margin-right: 1.7em;
+}
+
+.latest-issues-heading {
+  margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .latest-issues-heading {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .chart-container {
