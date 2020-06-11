@@ -51,6 +51,10 @@ class HomeView(TemplateView):
             sums_of_contribs_by_months,
         )
 
+        latest_issues = Contribution.objects.filter(
+            type__in=['pr', 'iss'],
+        ).order_by('-created_at')[:10]
+
         context.update({
             'contributors_for_month': contributors_for_month,
             'top10_committers': top10_committers,
@@ -59,6 +63,7 @@ class HomeView(TemplateView):
             'top10_commentators': top10_commentators,
             'dt_month_ago': misc.datetime_month_ago(),
             'contributions_for_year': contributions_for_year,
+            'latest_issues': latest_issues,
         })
 
         return context

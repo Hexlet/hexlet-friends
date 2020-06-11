@@ -8,31 +8,53 @@
 {% block content %}
   <h2>{% trans "Past year activity" %}</h2>
   {% include 'components/activity_chart/chart.html' %}
-  <h2>{% trans "Top 10 contributors" %}</h2>
-  {% include 'components/time_note.html' %}
-  <div class="card top-10">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" name="top-committers" href="#">{% trans 'by commits' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" name="top-requesters" href="#">{% trans 'by pull requests' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" name="top-reporters" href="#">{% trans 'by issues' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" name="top-commentators" href="#">{% trans 'by comments' %}</a>
-        </li>
-      </ul>
+  <div class="row">
+    <div class="col-md">
+      <h2 class="top-10-heading">{% trans "Top 10 contributors" %}</h2>
+      {% include 'components/time_note.html' %}
+      <div class="card top-10">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" name="top-committers" href="#">{% trans 'by commits' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" name="top-requesters" href="#">{% trans 'by pull requests' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" name="top-reporters" href="#">{% trans 'by issues' %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" name="top-commentators" href="#">{% trans 'by comments' %}</a>
+            </li>
+          </ul>
+        </div>
+        {% with top10='components/top_contributors.html' %}
+          {% include top10 with contributors=top10_committers contrib_type='commits' class='top-committers'%}
+          {% include top10 with contributors=top10_requesters contrib_type='pull_requests' class='top-requesters' %}
+          {% include top10 with contributors=top10_reporters contrib_type='issues' class='top-reporters' %}
+          {% include top10 with contributors=top10_commentators contrib_type='comments' class='top-commentators' %}
+        {% endwith %}
+      </div>
     </div>
-    {% with top10='components/top_contributors.html' %}
-      {% include top10 with contributors=top10_committers contrib_type='commits' class='top-committers'%}
-      {% include top10 with contributors=top10_requesters contrib_type='pull_requests' class='top-requesters' %}
-      {% include top10 with contributors=top10_reporters contrib_type='issues' class='top-reporters' %}
-      {% include top10 with contributors=top10_commentators contrib_type='comments' class='top-commentators' %}
-    {% endwith %}
+    <div class="col-md">
+      <h2 class="latest-issues-heading">{% trans "New PRs and issues" %}</h2>
+      <div class="card latest-issues">
+        <ul class="list-group list-group-flush">
+          {% for issue in latest_issues %}
+            <li class="list-group-item text-truncate">
+              {% if issue.type == 'iss' %}
+                <img src="{% static 'images/github_icons/issue-opened.svg' %}" alt="Issue">
+              {% elif issue.type == 'pr' %}
+                <img src="{% static 'images/github_icons/git-pull-request.svg' %}" alt="PR">
+              {% endif %}
+              <a href="{{ issue.repository.get_absolute_url }}">{{ issue.repository }}</a>:
+              <a href="{{ issue.html_url }}" target="_blank">{{ issue.info.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
 {% endblock content %}
 {% block body_end_scripts %}
