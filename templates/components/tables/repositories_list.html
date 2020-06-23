@@ -5,7 +5,9 @@
   <tr class="d-flex">
     <th scope="col" class="col-1">#</th>
     <th scope="col" class="col">{% trans "Name" %}</th>
-    <th scope="col" class="col">{% trans "Organization" %}</th>
+    {% if not organization %}
+      <th scope="col" class="col">{% trans "Organization" %}</th>
+    {% endif %}
     <th scope="col" class="col">{% trans "Project" %}</th>
     <th scope="col" class="col-2 text-nowrap">{% trans "Pull requests" %}</th>
     <th scope="col" class="col-2">{% trans "Issues" %}</th>
@@ -13,23 +15,31 @@
   </tr>
 {% endblock thead %}
 {% block tbody %}
-  {% for repository in repositories_list %}
+  {% for repository in page_obj %}
     <tr class="d-flex">
-      <th scope="row" class="col-1"></th>
+      <th scope="row" class="col-1">{{ forloop.counter0|add:page_obj.start_index }}</th>
       <td class="col">
         <a href="{{ repository.get_absolute_url }}">
           {{ repository.name }}
         </a>
       </td>
-      <td class="col">{{ repository.organization.name }}</td>
+      {% if not organization %}
+        <td class="col">{{ repository.organization.name }}</td>
+      {% endif %}
       <td class="col">
-        <a href="{{ repository.project.get_absolute_url }}">
-          {{ repository.project.name }}
-        </a>
+        {% if repository.project %}
+          <a href="{{ repository.project.get_absolute_url }}">
+            {{ repository.project.name }}
+          </a>
+        {% else %}
+          &mdash;
+        {% endif %}
       </td>
       <td class="col-2">{{ repository.pull_requests }}</td>
       <td class="col-2">{{ repository.issues }}</td>
       <td class="col-2">{{ repository.contributors_count }}</td>
     </tr>
+  {% empty %}
+    <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>
   {% endfor %}
 {% endblock tbody %}

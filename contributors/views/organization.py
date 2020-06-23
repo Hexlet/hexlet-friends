@@ -1,35 +1,28 @@
-from django.db.models import Count, Q  # noqa: WPS347
-from django.views import generic
+from django.utils.translation import gettext_lazy as _
 
 from contributors.models import Organization
+from contributors.views import repositories
 
 
-class DetailView(generic.DetailView):
-    """Organization's details."""
+class OrgRepositoryList(repositories.ListView):
+    """An organization's details."""
 
-    model = Organization
     template_name = 'organization_details.html'
+    sortable_fields = (  # noqa: WPS317
+        'name',
+        ('project__name', _("Project")),
+        'pull_requests',
+        'issues',
+        ('contributors_count', _("Contributors")),
+    )
+
+    def get_queryset(self):
+        """Get a dataset."""
+        self.organization = Organization.objects.get(pk=self.kwargs['pk'])
+        return super().get_queryset().filter(organization=self.organization)
 
     def get_context_data(self, **kwargs):
-        """Add additional context for the organization."""
+        """Add context."""
         context = super().get_context_data(**kwargs)
-
-        repositories = (
-            self.object.repository_set.filter(is_visible=True).filter(
-                Q(contribution__contributor__is_visible=True)
-                | Q(contributors__isnull=True),
-            ).annotate(
-                pull_requests=Count(
-                    'contribution', filter=Q(contribution__type='pr'),
-                ),
-                issues=Count(
-                    'contribution', filter=Q(contribution__type='iss'),
-                ),
-                contributors_count=Count(
-                    'contribution__contributor', distinct=True,
-                ),
-            )
-        )
-
-        context['repositories'] = repositories
+        context['organization'] = self.organization
         return context

@@ -9,9 +9,9 @@
   </tr>
 {% endblock thead %}
 {% block tbody %}
-  {% for organization in organizations_list %}
+  {% for organization in page_obj %}
     <tr class="d-flex">
-      <th scope="row" class="col-1"></th>
+      <th scope="row" class="col-1">{{ forloop.counter0|add:page_obj.start_index }}</th>
       <td class="col">
         <a href="{{ organization.get_absolute_url }}">
           {{ organization.name }}
@@ -19,5 +19,7 @@
       </td>
       <td class="col-3">{{ organization.repository_count }}</td>
     </tr>
+  {% empty %}
+    <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>
   {% endfor %}
 {% endblock tbody %}

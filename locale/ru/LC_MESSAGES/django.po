@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-11 01:46+0500\n"
+"POT-Creation-Date: 2020-06-23 12:06+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,6 +56,22 @@ msgstr "Неверное имя: "
 #: contributors/forms/admin_forms.py
 msgid "Uncheck those you wish to skip."
 msgstr "Снимите выбор тех, что нужно пропустить."
+
+#: contributors/forms/forms.py
+msgid "Sort by"
+msgstr "Сортировка по"
+
+#: contributors/forms/forms.py
+msgid "Descending"
+msgstr "По убыванию"
+
+#: contributors/forms/forms.py
+msgid "Search"
+msgstr "Поиск"
+
+#: contributors/forms/forms.py
+msgid "Apply"
+msgstr "Применить"
 
 #: contributors/models/base.py
 msgid "name"
@@ -181,6 +197,34 @@ msgstr "репозитории"
 msgid "Processing configuration"
 msgstr "Конфигурирование сбора данных"
 
+#: contributors/views/organization.py contributors/views/repositories.py
+#: templates/components/navbar.html
+#: templates/components/tables/project_details.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributors_for_month.html templates/contributors_list.html
+#: templates/projects_list.html templates/repository_details.html
+msgid "Contributors"
+msgstr "Контрибьюторы"
+
+#: contributors/views/organizations.py templates/components/navbar.html
+#: templates/components/tables/organizations_list.html
+#: templates/organization_details.html templates/repositories_list.html
+msgid "Repositories"
+msgstr "Репозитории"
+
+#: contributors/views/repositories.py
+#: templates/components/tables/project_details.html
+#: templates/components/tables/repositories_list.html
+#: templates/repository_details.html
+msgid "Organization"
+msgstr "Организация"
+
+#: contributors/views/repositories.py
+#: templates/components/tables/repositories_list.html
+#: templates/project_details.html templates/repository_details.html
+msgid "Project"
+msgstr "Проект"
+
 #: templates/admin/configuration.html
 msgid "Get repositories"
 msgstr "Получить репозитории"
@@ -263,21 +307,6 @@ msgid "Projects"
 msgstr "Проекты"
 
 #: templates/components/navbar.html
-#: templates/components/tables/organizations_list.html
-#: templates/organization_details.html templates/repositories_list.html
-msgid "Repositories"
-msgstr "Репозитории"
-
-#: templates/components/navbar.html
-#: templates/components/tables/organization_details.html
-#: templates/components/tables/project_details.html
-#: templates/components/tables/repositories_list.html
-#: templates/contributors_for_month.html templates/contributors_list.html
-#: templates/projects_list.html templates/repository_details.html
-msgid "Contributors"
-msgstr "Контрибьюторы"
-
-#: templates/components/navbar.html
 msgid "For month"
 msgstr "За месяц"
 
@@ -297,80 +326,72 @@ msgstr "Администрирование"
 msgid "Log out"
 msgstr "Выйти"
 
+#: templates/components/pagination.html
+msgid "Previous"
+msgstr "Назад"
+
+#: templates/components/pagination.html
+msgid "Next"
+msgstr "Далее"
+
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/components/tables/repository_details.html
 msgid "Login"
 msgstr "Логин"
 
 #: templates/components/tables/contributors_list.html
-#: templates/components/tables/organization_details.html
 #: templates/components/tables/organizations_list.html
 #: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
-#: templates/components/tables/repository_details.html
 msgid "Name"
 msgstr "Имя"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html
 msgid "Commits"
 msgstr "Коммиты"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html
 msgid "Additions"
 msgstr "Добавления"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html
 msgid "Deletions"
 msgstr "Удаления"
 
 #: templates/components/tables/contributors_list.html
-#: templates/components/tables/organization_details.html
 #: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html templates/projects_list.html
 msgid "Pull requests"
 msgstr "Запросы на включение"
 
 #: templates/components/tables/contributors_list.html
-#: templates/components/tables/organization_details.html
 #: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html templates/projects_list.html
 msgid "Issues"
 msgstr "Проблемы"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/components/tables/repository_details.html
 #: templates/contributor_details.html
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/components/tables/project_details.html
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organizations_list.html
 #: templates/components/tables/repositories_list.html
-#: templates/repository_details.html
-msgid "Organization"
-msgstr "Организация"
-
-#: templates/components/tables/repositories_list.html
-#: templates/project_details.html templates/repository_details.html
-msgid "Project"
-msgstr "Проект"
+msgid "Nothing found"
+msgstr "Ничего не найдено"
 
 #: templates/components/time_note.html
 msgid "since"

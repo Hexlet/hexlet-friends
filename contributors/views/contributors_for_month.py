@@ -1,10 +1,9 @@
-from django.views import generic
-
-from contributors.models.contributor import Contributor
+from contributors.models import Contributor
 from contributors.utils import misc
+from contributors.views import contributors
 
 
-class ListView(generic.ListView):
+class ListView(contributors.ListView):
     """A list of contributors with monthly contributions."""
 
     template_name = 'contributors_for_month.html'
