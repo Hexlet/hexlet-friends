@@ -11,10 +11,6 @@ main {
   flex-grow: 1;
 }
 
-table.dataTable, table.dataTable th, table.dataTable td {
-  box-sizing: border-box;
-}
-
 .time-note {
   display: inline-block;
   cursor: default;
@@ -25,6 +21,10 @@ table.dataTable, table.dataTable th, table.dataTable td {
 
 .time-note:hover {
   text-decoration: none;
+}
+
+.form-inline .form-group {
+  margin-right: 1rem;
 }
 
 .top-10 {

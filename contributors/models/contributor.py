@@ -9,11 +9,14 @@ from contributors.utils.misc import datetime_month_ago
 
 
 class ContributorQuerySet(models.QuerySet):
-    """Custom contributor QuerySet."""
+    """A custom contributor QuerySet."""
 
     def visible(self):
         """Return only visible contributors."""
-        return self.filter(is_visible=True)
+        return self.filter(
+            is_visible=True,
+            contribution__repository__is_visible=True,
+        )
 
     def with_contributions(self):
         """Return a list of contributors annotated with contributions."""
@@ -36,7 +39,7 @@ class ContributorQuerySet(models.QuerySet):
 
 
 class Contributor(CommonFields):
-    """Model representing a contributor."""
+    """A model representing a contributor."""
 
     login = models.CharField(_("login"), max_length=NAME_LENGTH)
     avatar_url = models.URLField(_("avatar URL"))

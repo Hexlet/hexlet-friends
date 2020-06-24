@@ -4,5 +4,7 @@
 {% block title %}{% trans "Contributors" %}{% endblock %}
 {% block header %}{% trans "Contributors" %}{% endblock %}
 {% block content %}
+  {% include 'components/sort_and_search_form.html' %}
   {% include 'components/tables/contributors_list.html' %}
+  {% include 'components/pagination.html' %}
 {% endblock content %}

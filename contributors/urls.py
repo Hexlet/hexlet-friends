@@ -12,7 +12,7 @@ urlpatterns = [
     ),
     path(
         'organizations/<int:pk>',
-        views.organization.DetailView.as_view(),
+        views.organization.OrgRepositoryList.as_view(),
         name='organization_details',
     ),
     path(
@@ -22,7 +22,7 @@ urlpatterns = [
     ),
     path(
         'repositories/<int:pk>',
-        views.repository.DetailView.as_view(),
+        views.repository.RepoContributorList.as_view(),
         name='repository_details',
     ),
     path(

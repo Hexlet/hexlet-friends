@@ -7,6 +7,7 @@ from dateutil import relativedelta
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as trans
 
 NUM_OF_MONTHS_IN_A_YEAR = 12
 
@@ -129,3 +130,18 @@ def datetime_month_ago():
     """Return datetime 1 month ago from now."""
     dt_now = timezone.now()
     return dt_now - relativedelta.relativedelta(months=1)
+
+
+def prepare_choices(collection):
+    """Return a collection of 2-tuples to use as choices."""
+    normalized_items = []
+    for col_item in collection:
+        if isinstance(col_item, str):
+            normalized_items.append(
+                (col_item, trans(col_item.replace('_', ' ').capitalize())),
+            )
+        elif isinstance(col_item, tuple):
+            normalized_items.append(col_item)
+        else:
+            raise TypeError("Unknown item type")
+    return normalized_items

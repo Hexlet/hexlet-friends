@@ -10,5 +10,7 @@
   <h2>{% trans "Repositories" %}</h2>
 {% endblock additional %}
 {% block content %}
-  {% include 'components/tables/organization_details.html' %}
+  {% include 'components/sort_and_search_form.html' %}
+  {% include 'components/tables/repositories_list.html' %}
+  {% include 'components/pagination.html' %}
 {% endblock content %}

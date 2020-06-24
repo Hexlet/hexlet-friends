@@ -4,5 +4,7 @@
 {% block title %}{% trans "Organizations" %}{% endblock %}
 {% block header %}{% trans "Organizations" %}{% endblock %}
 {% block content %}
+  {% include 'components/sort_and_search_form.html' %}
   {% include 'components/tables/organizations_list.html' %}
+  {% include 'components/pagination.html' %}
 {% endblock content %}
