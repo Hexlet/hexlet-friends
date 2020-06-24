@@ -30,10 +30,25 @@ def get_page_range(page_obj):
     return page_obj.paginator.page_range[start_index:end_index]
 
 
-class FilteringAndPaginationMixin(MultipleObjectMixin):
-    """A mixin for filtering and pagination."""
+class PaginationMixin(MultipleObjectMixin):
+    """A mixin for pagination."""
 
     paginate_by = 25
+
+    def get_context_data(self, **kwargs):
+        """Add context."""
+        context = super().get_context_data(**kwargs)
+
+        paginator = Paginator(self.get_adjusted_queryset(), self.paginate_by)
+        page_obj = paginator.get_page(self.request.GET.get('page'))
+
+        context['page_obj'] = page_obj
+        context['page_range'] = get_page_range(page_obj)
+        return context
+
+
+class TableControlsMixin(object):
+    """A mixin for table controls."""
 
     def get_adjusted_queryset(self):
         """Return a sorted and filtered QuerySet."""
@@ -53,17 +68,15 @@ class FilteringAndPaginationMixin(MultipleObjectMixin):
         """Add context."""
         context = super().get_context_data(**kwargs)
 
-        paginator = Paginator(self.get_adjusted_queryset(), self.paginate_by)
-        page_obj = paginator.get_page(self.request.GET.get('page'))
-
         form = ListSortAndSearchForm(self.sortable_fields, self.request.GET)
-
         get_params = self.request.GET.copy()
         with suppress(KeyError):
             get_params.pop('page')
 
-        context['page_obj'] = page_obj
-        context['page_range'] = get_page_range(page_obj)
         context['form'] = form
         context['get_params'] = get_params.urlencode()
         return context
+
+
+class TableControlsAndPaginationMixin(TableControlsMixin, PaginationMixin):
+    """Combine mixins for table controls and pagination."""

@@ -1,10 +1,10 @@
 from django.views import generic
 
 from contributors.models import Contributor
-from contributors.utils.mixins import FilteringAndPaginationMixin
+from contributors.utils.mixins import TableControlsAndPaginationMixin
 
 
-class ListView(FilteringAndPaginationMixin, generic.ListView):
+class ListView(TableControlsAndPaginationMixin, generic.ListView):
     """A list of contributors with contributions."""
 
     queryset = Contributor.objects.visible().with_contributions()

@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Repository
-from contributors.utils.mixins import FilteringAndPaginationMixin
+from contributors.utils.mixins import TableControlsAndPaginationMixin
 
 
-class ListView(FilteringAndPaginationMixin, generic.ListView):
+class ListView(TableControlsAndPaginationMixin, generic.ListView):
     """A list of repositories."""
 
     queryset = (
