@@ -8,7 +8,7 @@ class ListView(contributors.ListView):
 
     template_name = 'contributors_for_month.html'
     context_object_name = 'contributors_list'
-    queryset = Contributor.objects.visible().for_month().with_contributions()
+    queryset = Contributor.objects.visible_with_monthly_stats()
 
     def get_context_data(self, **kwargs):
         """Add context."""

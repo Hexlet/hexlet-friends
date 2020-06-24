@@ -28,7 +28,7 @@ class HomeView(TemplateView):
         )).date()
 
         contributors_for_month = (
-            Contributor.objects.visible().for_month().with_contributions()
+            Contributor.objects.visible_with_monthly_stats()
         )
 
         top10_committers = get_top10(contributors_for_month, 'commits')
