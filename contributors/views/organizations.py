@@ -11,7 +11,7 @@ class ListView(TableControlsAndPaginationMixin, generic.ListView):
 
     queryset = Organization.objects.filter(
         repository__is_visible=True,
-    ).annotate(repository_count=Count('repository'))
+    ).distinct().annotate(repository_count=Count('repository'))
     template_name = 'organizations_list.html'
     sortable_fields = (
         'name',
