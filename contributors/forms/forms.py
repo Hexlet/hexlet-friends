@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import HTML, ButtonHolder, Field, Layout, Submit
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -25,4 +25,15 @@ class ListSortAndSearchForm(forms.Form):
         self.helper = FormHelper()
         self.helper.form_method = 'get'
         self.helper.form_class = 'form-inline my-3'
-        self.helper.add_input(Submit('', _("Apply")))
+        self.helper.layout = Layout(
+            Field('sort', 'descending', 'search'),
+            ButtonHolder(
+                Submit('', _("Apply")),
+                HTML(
+                    """
+                    <a class="btn btn-light"
+                    href="{0}" role="button">{1}</a>
+                    """.format('{{ request.path }}', _("Reset")),
+                ),
+            ),
+        )

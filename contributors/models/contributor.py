@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Count, Q, Sum  # noqa: WPS347
+from django.db.models import Count, OuterRef, Q, Subquery, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -16,7 +16,7 @@ class ContributorQuerySet(models.QuerySet):
         return self.filter(
             is_visible=True,
             contribution__repository__is_visible=True,
-        )
+        ).distinct()
 
     def with_contributions(self):
         """Return a list of contributors annotated with contributions."""
@@ -35,7 +35,14 @@ class ContributorQuerySet(models.QuerySet):
         """Return monthly results."""
         return self.filter(
             contribution__created_at__gte=datetime_month_ago(),
-        )
+        ).distinct()
+
+    def visible_with_monthly_stats(self):
+        """Get contribution stats for visible contributors."""
+        visible_contributors = self.visible().filter(id=OuterRef('id'))
+        return self.for_month().filter(
+            id__in=Subquery(visible_contributors.values('id')),
+        ).with_contributions()
 
 
 class Contributor(CommonFields):

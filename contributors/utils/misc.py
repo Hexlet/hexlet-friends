@@ -7,7 +7,7 @@ from dateutil import relativedelta
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as trans
+from django.utils.translation import gettext_lazy as _
 
 NUM_OF_MONTHS_IN_A_YEAR = 12
 
@@ -138,7 +138,7 @@ def prepare_choices(collection):
     for col_item in collection:
         if isinstance(col_item, str):
             normalized_items.append(
-                (col_item, trans(col_item.replace('_', ' ').capitalize())),
+                (col_item, _(col_item.replace('_', ' ').capitalize())),
             )
         elif isinstance(col_item, tuple):
             normalized_items.append(col_item)
