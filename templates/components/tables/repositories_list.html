@@ -8,7 +8,9 @@
     {% if not organization %}
       <th scope="col" class="col">{% trans "Organization" %}</th>
     {% endif %}
-    <th scope="col" class="col">{% trans "Project" %}</th>
+    {% if not project %}
+      <th scope="col" class="col">{% trans "Project" %}</th>
+    {% endif %}
     <th scope="col" class="col-2 text-nowrap">{% trans "Pull requests" %}</th>
     <th scope="col" class="col-2">{% trans "Issues" %}</th>
     <th scope="col" class="col-2">{% trans "Contributors" %}</th>
@@ -26,15 +28,17 @@
       {% if not organization %}
         <td class="col">{{ repository.organization.name }}</td>
       {% endif %}
-      <td class="col">
-        {% if repository.project %}
-          <a href="{{ repository.project.get_absolute_url }}">
-            {{ repository.project.name }}
-          </a>
-        {% else %}
-          &mdash;
-        {% endif %}
-      </td>
+      {% if not project %}
+        <td class="col">
+          {% if repository.project %}
+            <a href="{{ repository.project.get_absolute_url }}">
+              {{ repository.project.name }}
+            </a>
+          {% else %}
+            &mdash;
+          {% endif %}
+        </td>
+      {% endif %}
       <td class="col-2">{{ repository.pull_requests }}</td>
       <td class="col-2">{{ repository.issues }}</td>
       <td class="col-2">{{ repository.contributors_count }}</td>

@@ -47,7 +47,7 @@ urlpatterns = [
     ),
     path(
         'projects/<int:pk>',
-        views.project.DetailView.as_view(),
+        views.project.ProjectRepositoryList.as_view(),
         name='project_details',
     ),
     path(
