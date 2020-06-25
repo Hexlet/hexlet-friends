@@ -1,7 +1,7 @@
 from django.views import generic
 
 from contributors.models import Contributor
-from contributors.utils.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableControlsAndPaginationMixin
 
 
 class ListView(TableControlsAndPaginationMixin, generic.ListView):

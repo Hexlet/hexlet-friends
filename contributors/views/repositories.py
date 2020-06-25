@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Repository
-from contributors.utils.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableControlsAndPaginationMixin
 
 
 class ListView(TableControlsAndPaginationMixin, generic.ListView):
