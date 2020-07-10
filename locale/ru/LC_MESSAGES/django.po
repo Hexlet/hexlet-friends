@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-25 09:24+0500\n"
+"POT-Creation-Date: 2020-07-13 16:30+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -209,7 +209,6 @@ msgstr "Проект"
 
 #: contributors/views/organization.py contributors/views/repositories.py
 #: templates/components/navbar.html
-#: templates/components/tables/project_details.html
 #: templates/components/tables/repositories_list.html
 #: templates/contributors_for_month.html templates/contributors_list.html
 #: templates/projects_list.html templates/repository_details.html
@@ -223,7 +222,6 @@ msgid "Repositories"
 msgstr "Репозитории"
 
 #: contributors/views/repositories.py
-#: templates/components/tables/project_details.html
 #: templates/components/tables/repositories_list.html
 #: templates/repository_details.html
 msgid "Organization"
@@ -327,8 +325,16 @@ msgid "Admin"
 msgstr "Администрирование"
 
 #: templates/components/navbar.html
+msgid "My statistics"
+msgstr "Моя статистика"
+
+#: templates/components/navbar.html
 msgid "Log out"
 msgstr "Выйти"
+
+#: templates/components/navbar.html
+msgid "Log in with GitHub"
+msgstr "Войти через GitHub"
 
 #: templates/components/pagination.html
 msgid "Previous"
@@ -345,7 +351,6 @@ msgstr "Логин"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/organizations_list.html
-#: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
 msgid "Name"
@@ -370,7 +375,6 @@ msgid "Deletions"
 msgstr "Удаления"
 
 #: templates/components/tables/contributors_list.html
-#: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
 #: templates/contributor_details.html templates/projects_list.html
@@ -378,7 +382,6 @@ msgid "Pull requests"
 msgstr "Запросы на включение"
 
 #: templates/components/tables/contributors_list.html
-#: templates/components/tables/project_details.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
 #: templates/contributor_details.html templates/projects_list.html

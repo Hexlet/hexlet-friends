@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="{% url 'contributors:home' %}">{{ PROJECT_NAME }}</a>
@@ -45,20 +45,21 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
               {% if user.is_staff %}
-              <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+                <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin" %}</a>
+              {% endif %}
+              {% if user.contributor %}
+                <a class="dropdown-item" href="{{ user.contributor.get_absolute_url }}">{% trans "My statistics" %}</a>
               {% endif %}
               <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
             </div>
           </li>
         {% else %}
-          {% comment %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">{% trans "Log in" %}</a>
+            <a class="nav-link" href="{% url 'auth:github' %}">
+              <img src="{% static 'images/github_icons/mark-github.svg' %}" alt="GitHub">
+              {% trans "Log in" %}
+            </a>
           </li>
-          <li>
-            <a class="nav-link" href="{% url 'auth:registration' %}">{% trans "Register" %}</a>
-          </li>
-          {% endcomment %}
         {% endif %}
       </ul>
     </div>

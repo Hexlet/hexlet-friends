@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Count, OuterRef, Q, Subquery, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce
@@ -48,6 +49,12 @@ class ContributorQuerySet(models.QuerySet):
 class Contributor(CommonFields):
     """A model representing a contributor."""
 
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     login = models.CharField(_("login"), max_length=NAME_LENGTH)
     avatar_url = models.URLField(_("avatar URL"))
     is_visible = models.BooleanField(_("visible"), default=True)

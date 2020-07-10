@@ -93,7 +93,7 @@ class SuccessRegistrationTest(TestCase):
                 'password2': fake_password,
             },
         )
-        self.assertRedirects(response, reverse_lazy('contributors:home'))
+        self.assertRedirects(response, reverse_lazy('login'))
         self.assertTrue(
             SiteUser.objects.filter(email=email, username=user_name),
         )

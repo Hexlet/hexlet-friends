@@ -33,7 +33,7 @@ def show_repos(request):
                 repos_data = list(github.get_org_repos(org_name, session))
                 for repo_data in repos_data:
                     misc.get_or_create_record(
-                        org,
+                        Repository,
                         repo_data,
                         {'is_tracked': False, 'is_visible': False},
                     )
