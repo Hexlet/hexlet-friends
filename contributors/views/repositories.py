@@ -3,26 +3,29 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Repository
-from contributors.utils.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableControlsAndPaginationMixin
 
 
 class ListView(TableControlsAndPaginationMixin, generic.ListView):
     """A list of repositories."""
 
+    for_visible_contributor = Q(contribution__contributor__is_visible=True)
     queryset = (
         Repository.objects.select_related('organization').filter(
-            Q(contribution__contributor__is_visible=True)
-            | Q(contributors__isnull=True),
             is_visible=True,
-        ).annotate(
+        ).distinct().annotate(
             pull_requests=Count(
-                'contribution', filter=Q(contribution__type='pr'),
+                'contribution',
+                filter=Q(contribution__type='pr') & for_visible_contributor,
             ),
             issues=Count(
-                'contribution', filter=Q(contribution__type='iss'),
+                'contribution',
+                filter=Q(contribution__type='iss') & for_visible_contributor,
             ),
             contributors_count=Count(
-                'contribution__contributor', distinct=True,
+                'contribution__contributor',
+                filter=for_visible_contributor,
+                distinct=True,
             ),
         )
     )

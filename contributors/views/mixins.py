@@ -35,6 +35,20 @@ class PaginationMixin(MultipleObjectMixin):
 
     paginate_by = 25
 
+    def get_adjusted_queryset(self):
+        """Return a sorted and filtered QuerySet."""
+        self.ordering = self.request.GET.get('sort', self.get_ordering())
+        filter_value = self.request.GET.get('search', '').strip()
+        lookups = {}
+        for field in self.searchable_fields:
+            key = '{0}__icontains'.format(field)
+            lookups[key] = filter_value
+        expressions = [Q(**{key: value}) for key, value in lookups.items()]  # noqa: WPS110,E501
+        direction = '-' if self.request.GET.get('descending', False) else ''
+        return self.get_queryset().filter(
+            reduce(__or__, expressions),
+        ).order_by('{0}{1}'.format(direction, self.get_ordering()))
+
     def get_context_data(self, **kwargs):
         """Add context."""
         context = super().get_context_data(**kwargs)
@@ -49,20 +63,6 @@ class PaginationMixin(MultipleObjectMixin):
 
 class TableControlsMixin(object):
     """A mixin for table controls."""
-
-    def get_adjusted_queryset(self):
-        """Return a sorted and filtered QuerySet."""
-        self.ordering = self.request.GET.get('sort', self.get_ordering())
-        filter_value = self.request.GET.get('search', '').strip()
-        lookups = {}
-        for field in self.searchable_fields:
-            key = '{0}{1}'.format(field, '__icontains')
-            lookups[key] = filter_value
-        expressions = [Q(**{key: value}) for key, value in lookups.items()]  # noqa: WPS110,E501
-        direction = '-' if self.request.GET.get('descending', False) else ''
-        return self.get_queryset().filter(
-            reduce(__or__, expressions),
-        ).order_by('{0}{1}'.format(direction, self.get_ordering()))
 
     def get_context_data(self, **kwargs):
         """Add context."""
