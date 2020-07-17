@@ -70,13 +70,26 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'contributors.context_processors.base_template_context',
+                'contributors.context_processors.general_context',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+# Authentication
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'auth.backends.GitHubBackend',
+]
+
+AUTH_USER_MODEL = 'custom_auth.SiteUser'
+
+LOGIN_REDIRECT_URL = 'contributors:home'
+
+LOGOUT_REDIRECT_URL = 'contributors:home'
 
 
 # Database
@@ -179,12 +192,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 PROJECT_NAME = 'Hexlet Friends'
 
 GITHUB_AUTH_TOKEN = misc.getenv('GITHUB_AUTH_TOKEN')
+GITHUB_AUTH_CLIENT_ID = os.getenv('GITHUB_AUTH_CLIENT_ID')
+GITHUB_AUTH_CLIENT_SECRET = os.getenv('GITHUB_AUTH_CLIENT_SECRET')
 GITHUB_WEBHOOK_TOKEN = misc.getenv('GITHUB_WEBHOOK_TOKEN')
-
-AUTH_USER_MODEL = 'custom_auth.SiteUser'
-
-LOGIN_REDIRECT_URL = 'contributors:home'
-LOGOUT_REDIRECT_URL = 'contributors:home'
 
 GTM_ID = os.environ.get('GTM_ID')
 YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION')

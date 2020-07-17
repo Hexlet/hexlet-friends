@@ -1,19 +1,21 @@
 import datetime
 import os
-from collections import Counter, deque
+from collections import deque
 from functools import partial
 
 from dateutil import relativedelta
+from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
-from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+from contributors.utils import github_lib as github
 
 NUM_OF_MONTHS_IN_A_YEAR = 12
 
 
 def getenv(env_variable):
-    """Return an environment variable or raises an exception."""
+    """Return an environment variable or raise an exception."""
     try:
         return os.environ[env_variable]
     except KeyError:
@@ -22,51 +24,54 @@ def getenv(env_variable):
         )
 
 
-def merge_dicts(*dicts):
-    """Merge several dictionaries into one."""
-    counter = Counter()
-    for dict_ in dicts:
-        counter.update(dict_)
-    return counter
-
-
-def get_or_create_record(model, github_resp, additional_fields=None):
+def get_or_create_record(cls, github_resp, additional_fields=None):
     """
     Get or create a database record based on GitHub JSON object.
 
     Args:
-        model -- a model or instance of a model
+        cls -- a class
         github_resp -- GitHub data as a JSON object decoded to dictionary
-        additional_fields -- fields to override
+        additional_fields -- fields to override or add
 
     """
-    model_fields = {
-        'Organization': {'name': github_resp.get('login')},
-        'Repository': {'full_name': github_resp.get('full_name')},
-        'Contributor': {
-            'login': github_resp.get('login'),
-            'avatar_url': github_resp.get('avatar_url'),
+    cls_fields = {
+        'Organization': lambda: {'name': github_resp['login']},
+        'Repository': lambda: {
+            'organization_id': github_resp['owner']['id'],
+            'full_name': github_resp['full_name'],
+        },
+        'Contributor': lambda: {
+            'login': github_resp['login'],
+            'avatar_url': github_resp['avatar_url'],
         },
     }
     defaults = {
         'name': github_resp.get('name'),
-        'html_url': github_resp.get('html_url'),
+        'html_url': github_resp['html_url'],
     }
-    if isinstance(model, models.Model):
-        class_name = model.repository_set.model.__name__
-        manager = model.repository_set
-    elif issubclass(model, models.Model):
-        class_name = model.__name__
-        manager = model.objects
-    else:
-        raise TypeError("Improper type of model")
 
-    defaults.update(model_fields[class_name])
+    defaults.update(cls_fields[cls.__name__]())
     defaults.update(additional_fields or {})
-    return manager.get_or_create(
+    return cls.objects.get_or_create(
         id=github_resp['id'],
         defaults=defaults,
     )
+
+
+def get_contributor_data(login, session=None):
+    """Get contributor data from database or GitHub."""
+    Contributor = apps.get_model('contributors.Contributor')    # noqa: N806
+    try:
+        user = Contributor.objects.get(login=login)
+    except Contributor.DoesNotExist:
+        return github.get_user_data(login, session)
+    return {
+        'id': user.id,
+        'name': user.name,
+        'html_url': user.html_url,
+        'login': user.login,
+        'avatar_url': user.avatar_url,
+    }
 
 
 def group_contribs_by_months(months_with_contrib_sums):
@@ -145,3 +150,13 @@ def prepare_choices(collection):
         else:
             raise TypeError("Unknown item type")
     return normalized_items
+
+
+def split_full_name(name):
+    """Split a full name into parts."""
+    if not name:
+        return ('', '')
+    name_parts = name.split()
+    first_name = name_parts[0]
+    last_name = name_parts[-1] if len(name_parts) > 1 else ''
+    return (first_name, last_name)

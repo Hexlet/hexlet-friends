@@ -1,11 +1,19 @@
+from collections import Counter
 from urllib.parse import parse_qs, urlparse
 
 import requests
 from django.conf import settings
 
-from contributors.utils.misc import merge_dicts
-
 GITHUB_API_URL = 'https://api.github.com'
+GITHUB_TOKEN_PROVIDER_URL = 'https://github.com/login/oauth/access_token'
+
+
+def merge_dicts(*dicts):
+    """Merge several dictionaries into one."""
+    counter = Counter()
+    for dict_ in dicts:
+        counter.update(dict_)
+    return counter
 
 
 class GitHubError(Exception):
@@ -318,3 +326,33 @@ def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa
                     ],
                 }
     return data_of_orgs_and_repos
+
+
+def get_access_token(code, **kwargs):
+    """Get an access token for a user."""
+    query_params = {
+        'client_id': settings.GITHUB_AUTH_CLIENT_ID,
+        'client_secret': settings.GITHUB_AUTH_CLIENT_SECRET,
+        'code': code,
+    }
+    query_params.update(kwargs)
+    response = requests.post(
+        GITHUB_TOKEN_PROVIDER_URL,
+        headers={'Accept': 'application/json'},
+        data=query_params,
+    )
+    response.raise_for_status()
+    return response.json().get('access_token')
+
+
+def get_data_of_token_holder(token):
+    """Get data of a user owning the token."""
+    response = requests.get(
+        f'{GITHUB_API_URL}/user',
+        headers={
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': f'token {token}',
+        },
+    )
+    response.raise_for_status()
+    return response.json()

@@ -25,29 +25,15 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 
 ORGANIZATIONS = Organization.objects.filter(is_tracked=True)
 IGNORED_REPOSITORIES = tuple(
-    repo.name for repo in Repository.objects.filter(
-        is_tracked=False,
-    )
+    repo.name for repo in Repository.objects.filter(is_tracked=False)
 )
 IGNORED_CONTRIBUTORS = tuple(
-    contrib.login for contrib in Contributor.objects.filter(
-        is_tracked=False,
-    )
+    contrib.login for contrib in Contributor.objects.filter(is_tracked=False)
 )
 session = requests.Session()
 
 
-def get_or_create_contributor(login):
-    """Return a contributor object."""
-    try:
-        return Contributor.objects.get(login=login)
-    except Contributor.DoesNotExist:
-        user_data = github.get_user_data(login, session)
-        contributor, _ = misc.get_or_create_record(Contributor, user_data)
-        return contributor
-
-
-def create_contributions(   # noqa: C901,R701,WPS231
+def create_contributions(   # noqa: C901,WPS231
     repo, contrib_data, user_field=None, id_field=None, type_=None,
 ):
     """Create a contribution record."""
@@ -69,9 +55,11 @@ def create_contributions(   # noqa: C901,R701,WPS231
             id=contrib[id_field],
             defaults={
                 'repository': repo,
-                'contributor': get_or_create_contributor(
-                    contrib_author_login,
-                ),
+                'contributor': misc.get_or_create_record(
+                    Contributor, misc.get_contributor_data(
+                        contrib_author_login, session,
+                    ),
+                )[0],
                 'type': type_ or pr_or_iss,
                 'html_url': contrib['html_url'],
                 'created_at': dateparse.parse_datetime(datetime),
@@ -101,7 +89,7 @@ def create_contributions(   # noqa: C901,R701,WPS231
 class Command(management.base.BaseCommand):
     """A management command for syncing with GitHub."""
 
-    help = "Saves data from GitHub to database"  # noqa: A003,WPS125
+    help = "Saves data from GitHub to database"  # noqa: WPS125
 
     def add_arguments(self, parser):
         """Add arguments for the command."""
@@ -144,8 +132,8 @@ class Command(management.base.BaseCommand):
             ]
             number_of_repos = len(repos_to_process)
             for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
-                repo, _ = misc.get_or_create_record(org, repo_data)
-                logger.info(f"{repo} ({i}/{number_of_repos})")  # noqa: G004
+                repo, _ = misc.get_or_create_record(Repository, repo_data)
+                logger.info(f"{repo} ({i}/{number_of_repos})")
                 if repo_data['size'] == 0:
                     logger.info("Empty repository")
                     continue
