@@ -74,7 +74,9 @@ class TableControlsMixin(object):
             get_params.pop('page')
 
         context['form'] = form
-        context['get_params'] = get_params.urlencode()
+        context['get_params'] = (
+            '&{0}'.format(get_params.urlencode()) if get_params else ''
+        )
         return context
 
 
