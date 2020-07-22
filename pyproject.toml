@@ -20,6 +20,7 @@ django-crispy-forms = "^1.9.1"
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.14"
 faker = "^4.1"
+coverage = "^5.2"
 
 [build-system]
 requires = ["poetry>=1.0.5"]
