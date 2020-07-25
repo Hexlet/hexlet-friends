@@ -3,18 +3,35 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+
   test:
     if: "!startsWith(github.event.head_commit.message, 'Merge pull request')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build image
-        run: docker build --tag hexlet_friends --build-arg DJANGO_ENV=development .
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.8.x
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
       - name: Run checks
-        run: >-
-          docker run --rm --entrypoint make
-          --env SECRET_KEY=secret
-          --env GITHUB_AUTH_TOKEN=secret
-          --env GITHUB_WEBHOOK_TOKEN=secret
-          --env DB_ENGINE=SQLite
-          hexlet_friends check
+        run: make check
+        env:
+          SECRET_KEY: secret
+          GITHUB_AUTH_TOKEN: secret
+          GITHUB_WEBHOOK_TOKEN: secret
+          DB_ENGINE: SQLite
+      - name: Publish code coverage report
+        uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageCommand: make test-coverage-report-xml

@@ -29,7 +29,14 @@ lint:
 	@poetry run flake8
 
 test:
-	@poetry run python manage.py test
+	@poetry run coverage run --source='.' manage.py test
+
+test-coverage-report: test
+	@poetry run coverage report -m $(ARGS)
+	@poetry run coverage erase
+
+test-coverage-report-xml:
+	@poetry run coverage xml
 
 check: lint test requirements.txt
 
