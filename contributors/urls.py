@@ -11,7 +11,7 @@ urlpatterns = [
         name='organizations_list',
     ),
     path(
-        'organizations/<int:pk>',
+        'organizations/<slug:slug>',
         views.organization.OrgRepositoryList.as_view(),
         name='organization_details',
     ),
@@ -21,7 +21,7 @@ urlpatterns = [
         name='repositories_list',
     ),
     path(
-        'repositories/<int:pk>',
+        'repositories/<path:slug>',
         views.repository.RepoContributorList.as_view(),
         name='repository_details',
     ),
@@ -36,7 +36,7 @@ urlpatterns = [
         name='contributors_for_month',
     ),
     path(
-        'contributors/<int:pk>',
+        'contributors/<slug:slug>',
         views.contributor.DetailView.as_view(),
         name='contributor_details',
     ),

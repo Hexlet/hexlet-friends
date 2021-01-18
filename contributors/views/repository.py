@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from contributors.models import Repository
 from contributors.views import contributors
 
@@ -9,7 +11,7 @@ class RepoContributorList(contributors.ListView):
 
     def get_queryset(self):
         """Get a dataset."""
-        self.repository = Repository.objects.get(pk=self.kwargs['pk'])
+        self.repository = get_object_or_404(Repository, full_name=self.kwargs['slug'])
         return self.repository.contributors.visible().with_contributions()
 
     def get_context_data(self, **kwargs):

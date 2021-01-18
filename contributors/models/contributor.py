@@ -71,4 +71,4 @@ class Contributor(CommonFields):
 
     def get_absolute_url(self):
         """Return the url of an instance."""
-        return reverse('contributors:contributor_details', args=[self.pk])
+        return reverse('contributors:contributor_details', args=[self.login])

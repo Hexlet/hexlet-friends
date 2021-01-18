@@ -13,4 +13,4 @@ class Organization(CommonFields):
 
     def get_absolute_url(self):
         """Return the url of an instance."""
-        return reverse('contributors:organization_details', args=[self.pk])
+        return reverse('contributors:organization_details', args=[self.name])
