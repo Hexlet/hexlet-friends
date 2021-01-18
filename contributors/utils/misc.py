@@ -24,9 +24,9 @@ def getenv(env_variable):
         )
 
 
-def get_or_create_record(cls, github_resp, additional_fields=None):
+def update_or_create_record(cls, github_resp, additional_fields=None):
     """
-    Get or create a database record based on GitHub JSON object.
+    Update or create a database record based on a GitHub JSON object.
 
     Args:
         cls -- a class
@@ -52,7 +52,7 @@ def get_or_create_record(cls, github_resp, additional_fields=None):
 
     defaults.update(cls_fields[cls.__name__]())
     defaults.update(additional_fields or {})
-    return cls.objects.get_or_create(
+    return cls.objects.update_or_create(
         id=github_resp['id'],
         defaults=defaults,
     )

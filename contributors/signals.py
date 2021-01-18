@@ -12,7 +12,7 @@ def handle_user_post_save(sender, **kwargs):
         return
 
     if kwargs['created']:
-        contributor, _ = misc.get_or_create_record(
+        contributor, _ = misc.update_or_create_record(
             apps.get_model('contributors.Contributor'),
             misc.get_contributor_data(site_user.username),
         )
