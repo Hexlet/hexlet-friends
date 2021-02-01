@@ -9,7 +9,7 @@
         <li class="page-item disabled"><span class="page-link">{% trans "Previous" %}</span></li>
       {% endif %}
 
-      {% if page_obj.number >= 5 and paginator.num_pages > 5 %}
+      {% if page_obj.number > 4 and paginator.num_pages > 7 %}
         <li class="page-item"><a class="page-link" href="?page=1{{ get_params }}">1</a></li>
         <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
       {% endif %}
@@ -22,7 +22,7 @@
         {% endif %}
       {% endfor %}
 
-      {% if page_obj.number <= paginator.num_pages|add:-4 and paginator.num_pages > 5 %}
+      {% if page_obj.number <= paginator.num_pages|add:-4 and paginator.num_pages > 7 %}
         <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
         <li class="page-item"><a class="page-link" href="?page={{ paginator.num_pages }}{{ get_params }}">{{ paginator.num_pages }}</a></li>
       {% endif %}
