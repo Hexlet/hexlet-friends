@@ -13,21 +13,26 @@ def get_page_range(page_obj):
     """
     Return a range of page numbers to display.
 
-    The first and last 5 pages are visible when the current page is among them.
-    3 page numbers are displayed in other cases.
+    If the number of pages is less than 8, return all.
+    Else the first and last 5 pages are returned when the current page
+    is among them. 3 inner pages are returned in other cases.
     """
-    index = page_obj.number - 1
-    max_index = page_obj.paginator.num_pages
-    if index < 4:
+    last_page = page_obj.paginator.num_pages
+    if last_page < 8:
+        return range(1, last_page + 1)
+    current_page = page_obj.number
+    VISIBLE_AT_BOUNDARY = 5  # noqa: N806
+    if current_page < VISIBLE_AT_BOUNDARY:
         start_index = 0
-        end_index = 5
-    elif index <= max_index - 5:
-        start_index = index - 1
-        end_index = index + 2
+        end_index = VISIBLE_AT_BOUNDARY
+    elif current_page < last_page - 3:
+        current_page_index = current_page - 1
+        start_index = current_page_index - 1
+        end_index = current_page_index + 1
     else:
-        start_index = max_index - 5
-        end_index = max_index
-    return page_obj.paginator.page_range[start_index:end_index]
+        start_index = last_page - VISIBLE_AT_BOUNDARY
+        end_index = last_page
+    return page_obj.paginator.page_range[start_index:end_index + 1]
 
 
 class PaginationMixin(MultipleObjectMixin):
