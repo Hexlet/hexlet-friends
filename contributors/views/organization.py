@@ -19,7 +19,9 @@ class OrgRepositoryList(repositories.ListView):
 
     def get_queryset(self):
         """Get a dataset."""
-        self.organization = get_object_or_404(Organization, name=self.kwargs['slug'])
+        self.organization = get_object_or_404(
+            Organization, name=self.kwargs['slug'],
+        )
         return super().get_queryset().filter(organization=self.organization)
 
     def get_context_data(self, **kwargs):
