@@ -8,37 +8,47 @@ from django.views.generic.list import MultipleObjectMixin
 
 from contributors.forms import ListSortAndSearchForm
 
+MAX_PAGES_WITHOUT_SHRINKING = 8
+PAGES_VISIBLE_AT_BOUNDARY = 5
+INNER_VISIBLE_PAGES = 3
 
-def get_page_range(page_obj):
+
+def get_page_slice(
+    current_page,
+    num_pages,
+    max_pages_without_shrinking=MAX_PAGES_WITHOUT_SHRINKING,
+    pages_visible_at_boundary=PAGES_VISIBLE_AT_BOUNDARY,
+    inner_visible_pages=INNER_VISIBLE_PAGES,
+):
     """
     Return a range of page numbers to display.
 
-    If the number of pages is less than 8, return all.
-    Else the first and last 5 pages are returned when the current page
-    is among them. 3 inner pages are returned in other cases.
+    If the number of pages is less than MAX, return all.
+    Else the first or last pages WITHIN LIMIT are returned when the current
+    page is among the limit - 1. Some INNER pages are returned in other cases.
     """
-    last_page = page_obj.paginator.num_pages
-    if last_page < 8:
-        return range(1, last_page + 1)
-    current_page = page_obj.number
-    VISIBLE_AT_BOUNDARY = 5  # noqa: N806
-    if current_page < VISIBLE_AT_BOUNDARY:
+    if num_pages <= max_pages_without_shrinking:
+        return slice(0, num_pages)
+    if current_page < pages_visible_at_boundary:
         start_index = 0
-        end_index = VISIBLE_AT_BOUNDARY
-    elif current_page < last_page - 3:
+        end_index = pages_visible_at_boundary
+    elif current_page <= num_pages - pages_visible_at_boundary + 1:
         current_page_index = current_page - 1
-        start_index = current_page_index - 1
-        end_index = current_page_index + 1
+        start_index = current_page_index - inner_visible_pages // 2
+        end_index = start_index + inner_visible_pages
     else:
-        start_index = last_page - VISIBLE_AT_BOUNDARY
-        end_index = last_page
-    return page_obj.paginator.page_range[start_index:end_index + 1]
+        start_index = num_pages - pages_visible_at_boundary
+        end_index = num_pages
+    return slice(start_index, end_index)
 
 
 class PaginationMixin(MultipleObjectMixin):
     """A mixin for pagination."""
 
     paginate_by = 25
+    max_pages_without_shrinking = MAX_PAGES_WITHOUT_SHRINKING
+    pages_visible_at_boundary = PAGES_VISIBLE_AT_BOUNDARY
+    inner_visible_pages = INNER_VISIBLE_PAGES
 
     def get_adjusted_queryset(self):
         """Return a sorted and filtered QuerySet."""
@@ -59,10 +69,26 @@ class PaginationMixin(MultipleObjectMixin):
         context = super().get_context_data(**kwargs)
 
         paginator = Paginator(self.get_adjusted_queryset(), self.paginate_by)
-        page_obj = paginator.get_page(self.request.GET.get('page'))
+        page = paginator.get_page(self.request.GET.get('page'))
 
-        context['page_obj'] = page_obj
-        context['page_range'] = get_page_range(page_obj)
+        page_slice = get_page_slice(
+            page.number,
+            paginator.num_pages,
+            self.max_pages_without_shrinking,
+            self.pages_visible_at_boundary,
+            self.inner_visible_pages,
+        )
+
+        context.update({
+            'page': page,
+            'page_range': paginator.page_range[page_slice],
+            'first_boundary_last_page': self.pages_visible_at_boundary,
+            'last_boundary_first_page': (
+                paginator.num_pages - self.pages_visible_at_boundary + 1
+            ),
+            'max_pages_without_shrinking': self.max_pages_without_shrinking,
+        })
+
         return context
 
 
