@@ -5,7 +5,7 @@ import requests
 from django.conf import settings
 
 GITHUB_API_URL = 'https://api.github.com'
-GITHUB_TOKEN_PROVIDER_URL = 'https://github.com/login/oauth/access_token'
+GITHUB_TOKEN_PROVIDER_URL = 'https://github.com/login/oauth/access_token'  # noqa: E501,S105
 
 
 def merge_dicts(*dicts):
