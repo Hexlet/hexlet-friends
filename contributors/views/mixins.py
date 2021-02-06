@@ -3,8 +3,10 @@ from functools import reduce
 from operator import __or__
 
 from django.core.paginator import Paginator
-from django.db.models import Q  # noqa: WPS347
+from django.db.models import F, Q, Window  # noqa: WPS347
+from django.db.models.functions import RowNumber
 from django.views.generic.list import MultipleObjectMixin
+from django_cte import With
 
 from contributors.forms import ListSortAndSearchForm
 
@@ -58,11 +60,25 @@ class PaginationMixin(MultipleObjectMixin):
         for field in self.searchable_fields:
             key = '{0}__icontains'.format(field)
             lookups[key] = filter_value
-        expressions = [Q(**{key: value}) for key, value in lookups.items()]  # noqa: WPS110,E501
-        direction = '-' if self.request.GET.get('descending', False) else ''
-        return self.get_queryset().filter(
+        expressions = [
+            Q(**{key: value})
+            for key, value in lookups.items()  # noqa: WPS110
+        ]
+        direction = 'desc' if self.request.GET.get('descending') else 'asc'
+        ordering = getattr(F(self.get_ordering()), direction)
+
+        # Can be simplified when filtering on windows gets implemented
+        # https://code.djangoproject.com/ticket/28333
+        queryset = self.get_queryset().order_by(ordering())
+        ids_nums = With(queryset.annotate(
+            num=Window(RowNumber(), order_by=ordering()),
+        ).values('id', 'num'),
+        )
+        return ids_nums.join(
+            queryset, id=ids_nums.col.id,
+        ).with_cte(ids_nums).annotate(num=ids_nums.col.num).filter(
             reduce(__or__, expressions),
-        ).order_by('{0}{1}'.format(direction, self.get_ordering()))
+        )
 
     def get_context_data(self, **kwargs):
         """Add context."""
