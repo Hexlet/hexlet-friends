@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_cte import CTEManager
 
 NAME_LENGTH = 50
 
@@ -14,6 +15,8 @@ class CommonFields(models.Model):
     )
     html_url = models.URLField(_("URL"))
     is_tracked = models.BooleanField(_("tracked"), default=True)
+
+    objects = CTEManager()  # noqa: WPS110
 
     class Meta(object):
         abstract = True
