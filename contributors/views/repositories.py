@@ -32,8 +32,8 @@ class ListView(TableControlsAndPaginationMixin, generic.ListView):
     template_name = 'repositories_list.html'
     sortable_fields = (  # noqa: WPS317
         'name',
-        ('organization__name', _("Organization")),
-        ('project__name', _("Project")),
+        'organization',
+        'project',
         'pull_requests',
         'issues',
         ('contributors_count', _("Contributors")),

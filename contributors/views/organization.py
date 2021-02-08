@@ -10,7 +10,7 @@ class OrgRepositoryList(repositories.ListView):
     template_name = 'organization_details.html'
     sortable_fields = (  # noqa: WPS317
         'name',
-        ('project__name', _("Project")),
+        'project',
         'pull_requests',
         'issues',
         ('contributors_count', _("Contributors")),

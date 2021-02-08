@@ -1,19 +1,31 @@
 {% extends './list_as_table.html' %}
-{% load i18n %}
+{% load i18n contrib_extras %}
 
 {% block thead %}
   <tr class="d-flex">
     <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col">{% trans "Name" %}</th>
+    <th scope="col" class="col{% get_ordering_direction 'name' %}">
+      <a href="{% get_query_string 'name' %}">{% trans "Name" %}</a>
+    </th>
     {% if not organization %}
-      <th scope="col" class="col">{% trans "Organization" %}</th>
+      <th scope="col" class="col{% get_ordering_direction 'organization' %}">
+        <a href="{% get_query_string 'organization' %}">{% trans "Organization" %}</a>
+      </th>
     {% endif %}
     {% if not project %}
-      <th scope="col" class="col">{% trans "Project" %}</th>
+      <th scope="col" class="col{% get_ordering_direction 'project' %}">
+        <a href="{% get_query_string 'project' %}">{% trans "Project" %}</a>
+      </th>
     {% endif %}
-    <th scope="col" class="col-2 text-nowrap">{% trans "Pull requests" %}</th>
-    <th scope="col" class="col-2">{% trans "Issues" %}</th>
-    <th scope="col" class="col-2">{% trans "Contributors" %}</th>
+    <th scope="col" class="col-2 text-nowrap{% get_ordering_direction 'pull_requests' %}">
+      <a href="{% get_query_string 'pull_requests' %}">{% trans "Pull requests" %}</a>
+    </th>
+    <th scope="col" class="col-2{% get_ordering_direction 'issues' %}">
+      <a href="{% get_query_string 'issues' %}">{% trans "Issues" %}</a>
+    </th>
+    <th scope="col" class="col-2{% get_ordering_direction 'contributors_count' %}">
+      <a href="{% get_query_string 'contributors_count' %}">{% trans "Contributors" %}</a>
+    </th>
   </tr>
 {% endblock thead %}
 {% block tbody %}

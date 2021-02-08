@@ -1,17 +1,33 @@
 {% extends './list_as_table.html' %}
-{% load i18n %}
+{% load i18n contrib_extras %}
 
 {% block thead %}
   <tr>
     <th scope="col">#</th>
-    <th scope="col">{% trans "Login" %}</th>
-    <th scope="col">{% trans "Name" %}</th>
-    <th scope="col">{% trans "Commits" %}</th>
-    <th scope="col">{% trans "Additions" %}</th>
-    <th scope="col">{% trans "Deletions" %}</th>
-    <th scope="col" class="text-nowrap">{% trans "Pull requests" %}</th>
-    <th scope="col">{% trans "Issues" %}</th>
-    <th scope="col">{% trans "Comments" %}</th>
+    <th scope="col" class="{% get_ordering_direction 'login' %}">
+      <a href="{% get_query_string 'login' %}">{% trans "Login" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'name' %}">
+      <a href="{% get_query_string 'name' %}">{% trans "Name" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'commits' %}">
+      <a href="{% get_query_string 'commits' %}">{% trans "Commits" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'additions' %}">
+      <a href="{% get_query_string 'additions' %}">{% trans "Additions" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'deletions' %}">
+      <a href="{% get_query_string 'deletions' %}">{% trans "Deletions" %}</a>
+    </th>
+    <th scope="col" class="text-nowrap{% get_ordering_direction 'pull_requests' %}">
+      <a href="{% get_query_string 'pull_requests' %}">{% trans "Pull requests" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'issues' %}">
+      <a href="{% get_query_string 'issues' %}">{% trans "Issues" %}</a>
+    </th>
+    <th scope="col" class="{% get_ordering_direction 'comments' %}">
+      <a href="{% get_query_string 'comments' %}">{% trans "Comments" %}</a>
+    </th>
   </tr>
 {% endblock thead %}
 {% block tbody %}

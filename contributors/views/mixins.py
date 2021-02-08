@@ -15,6 +15,13 @@ PAGES_VISIBLE_AT_BOUNDARY = 5
 INNER_VISIBLE_PAGES = 3
 
 
+def normalize_ordering(ordering):
+    """Return a tuple of ordering direction and field name."""
+    if ordering.startswith('-'):
+        return ('desc', ordering[1:])
+    return ('asc', ordering)
+
+
 def get_page_slice(
     current_page,
     num_pages,
@@ -52,9 +59,34 @@ class PaginationMixin(MultipleObjectMixin):
     pages_visible_at_boundary = PAGES_VISIBLE_AT_BOUNDARY
     inner_visible_pages = INNER_VISIBLE_PAGES
 
+    def set_ordering(self, ordering=None):
+        """Set ordering."""
+        if ordering is None:
+            self.ordering = self.get_ordering()
+            self.ordering_direction = 'asc'
+            return
+        sortable_fields = []
+        for field in self.sortable_fields:
+            if isinstance(field, str):
+                sortable_fields.append(field)
+            elif isinstance(field, (list, tuple)):
+                sortable_fields.append(field[0])
+            else:
+                raise TypeError("Unknown item type")
+        direction, field_name = normalize_ordering(ordering)
+        if field_name not in sortable_fields:
+            self.ordering = self.get_ordering()
+            self.ordering_direction = 'asc'
+            return
+        self.ordering = field_name
+        self.ordering_direction = direction
+
+    def get_ordering_direction(self):
+        """Return ordering direction as `asc` or `desc`."""
+        return self.ordering_direction
+
     def get_adjusted_queryset(self):
         """Return a sorted and filtered QuerySet."""
-        self.ordering = self.request.GET.get('sort', self.get_ordering())
         filter_value = self.request.GET.get('search', '').strip()
         lookups = {}
         for field in self.searchable_fields:
@@ -64,9 +96,12 @@ class PaginationMixin(MultipleObjectMixin):
             Q(**{key: value})
             for key, value in lookups.items()  # noqa: WPS110
         ]
-        direction = 'desc' if self.request.GET.get('descending') else 'asc'
-        ordering = getattr(F(self.get_ordering()), direction)
 
+        self.set_ordering(self.request.GET.get('sort'))
+        ordering = getattr(
+            F(self.get_ordering()),
+            self.get_ordering_direction(),
+        )
         # Can be simplified when filtering on windows gets implemented
         # https://code.djangoproject.com/ticket/28333
         queryset = self.get_queryset().order_by(ordering())
@@ -74,11 +109,13 @@ class PaginationMixin(MultipleObjectMixin):
             num=Window(RowNumber(), order_by=ordering()),
         ).values('id', 'num'),
         )
-        return ids_nums.join(
+        numbered_queryset = ids_nums.join(
             queryset, id=ids_nums.col.id,
-        ).with_cte(ids_nums).annotate(num=ids_nums.col.num).filter(
-            reduce(__or__, expressions),
-        )
+        ).with_cte(ids_nums).annotate(num=ids_nums.col.num)
+
+        if filter_value:
+            return numbered_queryset.filter(reduce(__or__, expressions))
+        return numbered_queryset
 
     def get_context_data(self, **kwargs):
         """Add context."""
