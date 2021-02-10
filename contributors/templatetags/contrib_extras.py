@@ -1,7 +1,10 @@
+from contextlib import suppress
 from types import MappingProxyType
 
 from django import template
 from django.conf import settings
+
+from contributors.utils.misc import DIRECTION_TRANSLATIONS, split_ordering
 
 register = template.Library()
 
@@ -13,38 +16,38 @@ def get(object_, attr):
 
 
 @register.simple_tag(takes_context=True)
-def get_ordering_direction(context, field_name):
+def get_ordering_direction(context, passed_field_name):
     """Get ordering direction for the field name."""
     view = context['view']
-    if field_name == view.get_ordering():
-        return view.get_ordering_direction()
+    direction, field_name = split_ordering(view.get_ordering())
+    if passed_field_name == field_name:
+        return DIRECTION_TRANSLATIONS[direction]
     return ''
 
 
 OPPOSITE_DIRECTIONS = MappingProxyType({
-    'asc': '-',
-    'desc': '',
+    '': '-',
+    '-': '',
 })
 
 
 @register.simple_tag(takes_context=True)
-def get_query_string(context, field_name):
+def get_query_string(context, passed_field_name):
     """Get query string."""
     view = context['view']
-    page = context['page']
-    current_direction = view.get_ordering_direction()
-    if field_name == view.get_ordering():
-        new_direction = OPPOSITE_DIRECTIONS[current_direction]
-    elif field_name in settings.TEXT_COLUMNS:
-        new_direction = ''
-    else:
-        new_direction = '-'
-    search_value = view.request.GET.get('search')
-    qs = '?page={number}&sort={direction}{field}'.format(
-        number=page.number,
-        direction=new_direction,
-        field=field_name,
-    )
-    if search_value:
-        return '{0}&search={1}'.format(qs, search_value)
-    return qs
+    get_params = view.request.GET.copy()
+    ordering = view.get_ordering()
+    if ordering:
+        direction, field_name = split_ordering(ordering)
+        if passed_field_name == field_name:
+            new_ordering = ''.join(
+                (OPPOSITE_DIRECTIONS[direction], passed_field_name),
+            )
+        elif passed_field_name in settings.TEXT_COLUMNS:
+            new_ordering = passed_field_name
+        else:
+            new_ordering = ''.join(('-', passed_field_name))
+        with suppress(KeyError):
+            get_params.pop('sort')
+        get_params.update({'sort': new_ordering})
+    return '?{0}'.format(get_params.urlencode()) if get_params else ''

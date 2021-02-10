@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Organization
-from contributors.views.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
 
-class ListView(TableControlsAndPaginationMixin, generic.ListView):
+class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     """A list of organizations."""
 
     queryset = Organization.objects.filter(

@@ -2,12 +2,12 @@ import datetime
 import os
 from collections import deque
 from functools import partial
+from types import MappingProxyType
 
 from dateutil import relativedelta
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 from contributors.utils import github_lib as github
 
@@ -137,21 +137,6 @@ def datetime_month_ago():
     return dt_now - relativedelta.relativedelta(months=1)
 
 
-def prepare_choices(collection):
-    """Return a collection of 2-tuples to use as choices."""
-    normalized_items = []
-    for col_item in collection:
-        if isinstance(col_item, str):
-            normalized_items.append(
-                (col_item, _(col_item.replace('_', ' ').capitalize())),
-            )
-        elif isinstance(col_item, tuple):
-            normalized_items.append(col_item)
-        else:
-            raise TypeError("Unknown item type")
-    return normalized_items
-
-
 def split_full_name(name):
     """Split a full name into parts."""
     if not name:
@@ -160,3 +145,16 @@ def split_full_name(name):
     first_name = name_parts[0]
     last_name = name_parts[-1] if len(name_parts) > 1 else ''
     return (first_name, last_name)
+
+
+def split_ordering(ordering):
+    """Return a tuple of ordering direction and field name."""
+    if ordering.startswith('-'):
+        return ('-', ordering[1:])
+    return ('', ordering)
+
+
+DIRECTION_TRANSLATIONS = MappingProxyType({
+    '': 'asc',
+    '-': 'desc',
+})

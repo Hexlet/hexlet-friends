@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Repository
-from contributors.views.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
 
-class ListView(TableControlsAndPaginationMixin, generic.ListView):
+class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     """A list of repositories."""
 
     for_visible_contributor = Q(contribution__contributor__is_visible=True)
