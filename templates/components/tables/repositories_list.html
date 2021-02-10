@@ -4,27 +4,27 @@
 {% block thead %}
   <tr class="d-flex">
     <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col sortable{% get_ordering_direction 'name' %}">
-      <a href="{% get_query_string 'name' %}">{% trans "Name" %}</a>
+    <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'name' %}">
+      <a href="{% get_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
     {% if not organization %}
-      <th scope="col" class="col sortable{% get_ordering_direction 'organization' %}">
-        <a href="{% get_query_string 'organization' %}">{% trans "Organization" %}</a>
+      <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'organization' %}">
+        <a href="{% get_query_string 'organization' %}" class="stretched-link text-reset text-decoration-none">{% trans "Organization" %}</a>
       </th>
     {% endif %}
     {% if not project %}
-      <th scope="col" class="col sortable{% get_ordering_direction 'project' %}">
-        <a href="{% get_query_string 'project' %}">{% trans "Project" %}</a>
+      <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'project' %}">
+        <a href="{% get_query_string 'project' %}" class="stretched-link text-reset text-decoration-none">{% trans "Project" %}</a>
       </th>
     {% endif %}
-    <th scope="col" class="col-2 text-nowrap sortable{% get_ordering_direction 'pull_requests' %}">
-      <a href="{% get_query_string 'pull_requests' %}">{% trans "Pull requests" %}</a>
+    <th scope="col" class="col-2 text-nowrap sortable" data-sorting="{% get_ordering_direction 'pull_requests' %}">
+      <a href="{% get_query_string 'pull_requests' %}" class="stretched-link text-reset text-decoration-none">{% trans "Pull requests" %}</a>
     </th>
-    <th scope="col" class="col-2 sortable{% get_ordering_direction 'issues' %}">
-      <a href="{% get_query_string 'issues' %}">{% trans "Issues" %}</a>
+    <th scope="col" class="col-2 sortable" data-sorting="{% get_ordering_direction 'issues' %}">
+      <a href="{% get_query_string 'issues' %}" class="stretched-link text-reset text-decoration-none">{% trans "Issues" %}</a>
     </th>
-    <th scope="col" class="col-2 sortable{% get_ordering_direction 'contributors_count' %}">
-      <a href="{% get_query_string 'contributors_count' %}">{% trans "Contributors" %}</a>
+    <th scope="col" class="col-2 sortable" data-sorting="{% get_ordering_direction 'contributors_count' %}">
+      <a href="{% get_query_string 'contributors_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Contributors" %}</a>
     </th>
   </tr>
 {% endblock thead %}

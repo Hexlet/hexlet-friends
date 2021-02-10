@@ -4,11 +4,11 @@
 {% block thead %}
   <tr class="d-flex">
     <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col sortable{% get_ordering_direction 'name' %}">
-      <a href="{% get_query_string 'name' %}">{% trans "Name" %}</a>
+    <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'name' %}">
+      <a href="{% get_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
-    <th scope="col" class="col-3 sortable{% get_ordering_direction 'repository_count' %}">
-      <a href="{% get_query_string 'repository_count' %}">{% trans "Repositories" %}</a>
+    <th scope="col" class="col-3 sortable" data-sorting="{% get_ordering_direction 'repository_count' %}">
+      <a href="{% get_query_string 'repository_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Repositories" %}</a>
     </th>
   </tr>
 {% endblock thead %}
