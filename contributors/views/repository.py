@@ -10,7 +10,10 @@ class RepoContributorList(contributors.ListView):
     def get_queryset(self):
         """Get a dataset."""
         self.repository = Repository.objects.get(pk=self.kwargs['pk'])
-        return self.repository.contributors.visible().with_contributions()
+        self.queryset = (
+            self.repository.contributors.visible().with_contributions()
+        )
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         """Add context."""
