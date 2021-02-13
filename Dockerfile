@@ -25,10 +25,14 @@ WORKDIR /usr/local/src/hexlet-friends
 
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install $(if [[ "$DJANGO_ENV" != "development" ]]; then \
-        echo "--no-dev"; \
-        rm -rf ~/.cache/pypoetry; \
-    fi)
+RUN poetry install $( \
+        if [[ "$DJANGO_ENV" == "production" ]]; then \
+            echo "--no-dev --extras psycopg2"; \
+        else \
+            echo "--extras psycopg2-binary"; \
+        fi \
+    ) \
+    && rm -rf ~/.cache/pypoetry
 
 COPY . ./
 
