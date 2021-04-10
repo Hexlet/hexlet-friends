@@ -20,7 +20,7 @@
   {% for repository in page %}
     <tr class="d-flex">
       <th scope="row" class="col-1">{{ repository.num }}</th>
-      <td class="col">
+      <td class="col text-truncate" title="{{ repository.name }}">
         <a href="{{ repository.get_absolute_url }}">
           {{ repository.name }}
         </a>
