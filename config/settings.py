@@ -114,6 +114,8 @@ SQLITE_SETTINGS = {
 if os.getenv('DB_ENGINE') == 'SQLite':
     DATABASES['default'] = SQLITE_SETTINGS
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 CONN_MAX_AGE = 500
 
 # Use the DATABASE_URL environment variable
