@@ -1,4 +1,3 @@
-import datetime
 import os
 from collections import deque
 from functools import partial
@@ -97,31 +96,36 @@ def group_contribs_by_months(months_with_contrib_sums):
     return sums_of_contribs_by_months
 
 
-def get_rotated_sums_for_contrib(sums_of_contribs_by_months, contrib_type):
+def get_rotated_sums_for_contrib(
+    current_month: int, sums_of_contribs_by_months, contrib_type,
+):
     """
     Return an array of 12 sums of contributions of the given type.
 
     Each position corresponds to a month.
     The collection is left-shifted by the numeric value of the current month.
     """
-    month_numbers = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
-    current_month_number = datetime.date.today().month
+    months = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
     array = deque([
-        sums_of_contribs_by_months.get(month_number, {}).get(contrib_type, 0)
-        for month_number in month_numbers
+        sums_of_contribs_by_months.get(month, {}).get(contrib_type, 0)
+        for month in months
     ])
-    array.rotate(-current_month_number)
+    array.rotate(-current_month)
     return list(array)
 
 
-def get_contrib_sums_distributed_over_months(sums_of_contribs_by_months):
+def get_contrib_sums_distributed_over_months(
+    current_month: int, sums_of_contribs_by_months,
+):
     """
     Return shifted monthly sums for each contribution type.
 
     The collections end with the current month.
     """
     rotated_sums_by_months = partial(
-        get_rotated_sums_for_contrib, sums_of_contribs_by_months,
+        get_rotated_sums_for_contrib,
+        current_month,
+        sums_of_contribs_by_months,
     )
     return {
         'commits': rotated_sums_by_months('cit'),
