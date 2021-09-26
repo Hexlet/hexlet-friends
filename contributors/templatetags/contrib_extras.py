@@ -25,23 +25,18 @@ def get_ordering_direction(context, passed_field_name):
     return ''
 
 
-OPPOSITE_DIRECTIONS = MappingProxyType({
-    '': '-',
-    '-': '',
-})
-
-
 @register.simple_tag(takes_context=True)
-def get_query_string(context, passed_field_name):
-    """Get query string."""
+def get_table_column_query_string(context, passed_field_name):
+    """Get table column query string."""
     view = context['view']
     get_params = view.request.GET.copy()
     ordering = view.get_ordering()
     if ordering:
-        direction, field_name = split_ordering(ordering)
+        _, field_name = split_ordering(ordering)
         if passed_field_name == field_name:
-            new_ordering = ''.join(
-                (OPPOSITE_DIRECTIONS[direction], passed_field_name),
+            new_ordering = (
+                ordering[1:] if ordering.startswith('-')
+                else '-{0}'.format(ordering)
             )
         elif passed_field_name in settings.TEXT_COLUMNS:
             new_ordering = passed_field_name
@@ -49,5 +44,16 @@ def get_query_string(context, passed_field_name):
             new_ordering = ''.join(('-', passed_field_name))
         with suppress(KeyError):
             get_params.pop('sort')
-        get_params.update({'sort': new_ordering})
+        get_params['sort'] = new_ordering
+    return '?{0}'.format(get_params.urlencode()) if get_params else ''
+
+
+@register.simple_tag(takes_context=True)
+def get_pagination_query_string(context, page_num):
+    """Get pagination query string."""
+    view = context['view']
+    get_params = view.request.GET.copy()
+    with suppress(KeyError):
+        get_params.pop('page')
+    get_params['page'] = page_num
     return '?{0}'.format(get_params.urlencode()) if get_params else ''

@@ -1,6 +1,6 @@
+import operator
 from contextlib import suppress
 from functools import reduce
-from operator import __or__
 
 from django.core.paginator import Paginator
 from django.db.models import F, Q, Window  # noqa: WPS347
@@ -113,9 +113,10 @@ class TableSortSearchMixin(MultipleObjectMixin):
         # Can be simplified when filtering on windows gets implemented
         # https://code.djangoproject.com/ticket/28333
         queryset = self.queryset.order_by(ordering())
-        ids_nums = With(queryset.annotate(
-            num=Window(RowNumber(), order_by=ordering()),
-        ).values('id', 'num'),
+        ids_nums = With(
+            queryset.annotate(
+                num=Window(RowNumber(), order_by=ordering()),
+            ).values('id', 'num'),
         )
         numbered_queryset = ids_nums.join(
             queryset, id=ids_nums.col.id,
@@ -131,21 +132,15 @@ class TableSortSearchMixin(MultipleObjectMixin):
             for key, value in lookups.items()  # noqa: WPS110
         ]
         if filter_value:
-            return numbered_queryset.filter(reduce(__or__, expressions))
+            return numbered_queryset.filter(reduce(operator.or_, expressions))
         return numbered_queryset
 
     def get_context_data(self, **kwargs):
         """Add context."""
         form = TableSortSearchForm(self.request.GET)
-        get_params = self.request.GET.copy()
-        with suppress(KeyError):
-            get_params.pop('page')
 
         context = super().get_context_data(**kwargs)
         context['form'] = form
-        context['get_params'] = (
-            '&{0}'.format(get_params.urlencode()) if get_params else ''
-        )
         return context
 
 
