@@ -1,5 +1,4 @@
 import operator
-from contextlib import suppress
 from functools import reduce
 
 from django.core.paginator import Paginator

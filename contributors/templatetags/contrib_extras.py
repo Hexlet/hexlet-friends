@@ -1,5 +1,4 @@
 from contextlib import suppress
-from types import MappingProxyType
 
 from django import template
 from django.conf import settings
@@ -25,35 +24,40 @@ def get_ordering_direction(context, passed_field_name):
     return ''
 
 
-@register.simple_tag(takes_context=True)
-def get_table_column_query_string(context, passed_field_name):
-    """Get table column query string."""
+def get_query_string(context, qs_param, qs_param_value):
+    """Get query string."""
     view = context['view']
     get_params = view.request.GET.copy()
-    ordering = view.get_ordering()
-    if ordering:
-        _, field_name = split_ordering(ordering)
-        if passed_field_name == field_name:
+    previous_value = get_params.get(qs_param)
+    with suppress(KeyError):
+        get_params.pop(qs_param)
+    get_params[qs_param] = (
+        qs_param_value(previous_value)
+        if callable(qs_param_value) else qs_param_value
+    )
+    return '?{0}'.format(get_params.urlencode()) if get_params else ''
+
+
+@register.simple_tag(takes_context=True)
+def get_sort_query_string(context, passed_sort_field):
+    """Get table column query string."""
+    def prepare_sort_param_value(ordering):  # noqa: WPS430
+        current_sort_field = split_ordering(ordering)[1] if ordering else None
+        if passed_sort_field == current_sort_field:
             new_ordering = (
                 ordering[1:] if ordering.startswith('-')
                 else '-{0}'.format(ordering)
             )
-        elif passed_field_name in settings.TEXT_COLUMNS:
-            new_ordering = passed_field_name
+        elif passed_sort_field in settings.TEXT_COLUMNS:
+            new_ordering = passed_sort_field
         else:
-            new_ordering = ''.join(('-', passed_field_name))
-        with suppress(KeyError):
-            get_params.pop('sort')
-        get_params['sort'] = new_ordering
-    return '?{0}'.format(get_params.urlencode()) if get_params else ''
+            new_ordering = ''.join(('-', passed_sort_field))
+        return new_ordering
+
+    return get_query_string(context, 'sort', prepare_sort_param_value)
 
 
 @register.simple_tag(takes_context=True)
 def get_pagination_query_string(context, page_num):
     """Get pagination query string."""
-    view = context['view']
-    get_params = view.request.GET.copy()
-    with suppress(KeyError):
-        get_params.pop('page')
-    get_params['page'] = page_num
-    return '?{0}'.format(get_params.urlencode()) if get_params else ''
+    return get_query_string(context, 'page', page_num)
