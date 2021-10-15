@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 
 from contributors.models import Organization
@@ -18,7 +19,9 @@ class OrgRepositoryList(repositories.ListView):
 
     def get_queryset(self):
         """Get a dataset."""
-        self.organization = Organization.objects.get(pk=self.kwargs['pk'])
+        self.organization = get_object_or_404(
+            Organization, name=self.kwargs['slug'],
+        )
         self.queryset = self.queryset.filter(organization=self.organization)
         return super().get_queryset()
 

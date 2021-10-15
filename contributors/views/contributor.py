@@ -13,6 +13,7 @@ class DetailView(generic.DetailView):
 
     model = Contributor
     template_name = 'contributor_details.html'
+    slug_field = 'login'
 
     def get_context_data(self, **kwargs):
         """Add additional context for the contributor."""

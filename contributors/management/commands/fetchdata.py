@@ -55,7 +55,7 @@ def create_contributions(   # noqa: C901,WPS231
             id=contrib[id_field],
             defaults={
                 'repository': repo,
-                'contributor': misc.get_or_create_record(
+                'contributor': misc.update_or_create_record(
                     Contributor, misc.get_contributor_data(
                         contrib_author_login, session,
                     ),
@@ -121,7 +121,7 @@ class Command(management.base.BaseCommand):
             )
 
         for org_data in data_of_orgs_and_repos.values():
-            org, _ = misc.get_or_create_record(
+            org, _ = misc.update_or_create_record(
                 Organization, org_data['details'],
             )
             logger.info(org)
@@ -132,7 +132,7 @@ class Command(management.base.BaseCommand):
             ]
             number_of_repos = len(repos_to_process)
             for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
-                repo, _ = misc.get_or_create_record(Repository, repo_data)
+                repo, _ = misc.update_or_create_record(Repository, repo_data)
                 logger.info(f"{repo} ({i}/{number_of_repos})")
                 if repo_data['size'] == 0:
                     logger.info("Empty repository")

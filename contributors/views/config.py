@@ -29,10 +29,10 @@ def show_repos(request):
             repos_choices = []
             for org_name in form_orgs.cleaned_data['organizations'].split():
                 org_data = github.get_org_data(org_name, session)
-                org, _ = misc.get_or_create_record(Organization, org_data)
+                org, _ = misc.update_or_create_record(Organization, org_data)
                 repos_data = list(github.get_org_repos(org_name, session))
                 for repo_data in repos_data:
-                    misc.get_or_create_record(
+                    misc.update_or_create_record(
                         Repository,
                         repo_data,
                         {'is_tracked': False, 'is_visible': False},

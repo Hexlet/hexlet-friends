@@ -37,4 +37,7 @@ class Repository(CommonFields):
 
     def get_absolute_url(self):
         """Return the url of an instance."""
-        return reverse('contributors:repository_details', args=[self.pk])
+        return reverse(
+            'contributors:repository_details',
+            args=[self.full_name],
+        )
