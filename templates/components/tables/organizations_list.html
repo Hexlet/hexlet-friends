@@ -1,11 +1,15 @@
 {% extends './list_as_table.html' %}
-{% load i18n %}
+{% load i18n contrib_extras %}
 
 {% block thead %}
   <tr class="d-flex">
     <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col">{% trans "Name" %}</th>
-    <th scope="col" class="col-3">{% trans "Repositories" %}</th>
+    <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'name' %}">
+      <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
+    </th>
+    <th scope="col" class="col-3 sortable" data-sorting="{% get_ordering_direction 'repository_count' %}">
+      <a href="{% get_sort_query_string 'repository_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Repositories" %}</a>
+    </th>
   </tr>
 {% endblock thead %}
 {% block tbody %}

@@ -10,7 +10,7 @@ class OrgRepositoryList(repositories.ListView):
     template_name = 'organization_details.html'
     sortable_fields = (  # noqa: WPS317
         'name',
-        ('project__name', _("Project")),
+        'project',
         'pull_requests',
         'issues',
         ('contributors_count', _("Contributors")),
@@ -19,7 +19,8 @@ class OrgRepositoryList(repositories.ListView):
     def get_queryset(self):
         """Get a dataset."""
         self.organization = Organization.objects.get(pk=self.kwargs['pk'])
-        return super().get_queryset().filter(organization=self.organization)
+        self.queryset = self.queryset.filter(organization=self.organization)
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         """Add context."""

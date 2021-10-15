@@ -3,10 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Repository
-from contributors.views.mixins import TableControlsAndPaginationMixin
+from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
 
-class ListView(TableControlsAndPaginationMixin, generic.ListView):
+class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     """A list of repositories."""
 
     for_visible_contributor = Q(contribution__contributor__is_visible=True)
@@ -32,8 +32,8 @@ class ListView(TableControlsAndPaginationMixin, generic.ListView):
     template_name = 'repositories_list.html'
     sortable_fields = (  # noqa: WPS317
         'name',
-        ('organization__name', _("Organization")),
-        ('project__name', _("Project")),
+        'organization',
+        'project',
         'pull_requests',
         'issues',
         ('contributors_count', _("Contributors")),

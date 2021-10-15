@@ -1,6 +1,5 @@
-from contextlib import suppress
+import operator
 from functools import reduce
-from operator import __or__
 
 from django.core.paginator import Paginator
 from django.db.models import F, Q, Window  # noqa: WPS347
@@ -8,7 +7,8 @@ from django.db.models.functions import RowNumber
 from django.views.generic.list import MultipleObjectMixin
 from django_cte import With
 
-from contributors.forms import ListSortAndSearchForm
+from contributors.forms import TableSortSearchForm
+from contributors.utils.misc import DIRECTION_TRANSLATIONS, split_ordering
 
 MAX_PAGES_WITHOUT_SHRINKING = 8
 PAGES_VISIBLE_AT_BOUNDARY = 5
@@ -52,39 +52,9 @@ class PaginationMixin(MultipleObjectMixin):
     pages_visible_at_boundary = PAGES_VISIBLE_AT_BOUNDARY
     inner_visible_pages = INNER_VISIBLE_PAGES
 
-    def get_adjusted_queryset(self):
-        """Return a sorted and filtered QuerySet."""
-        self.ordering = self.request.GET.get('sort', self.get_ordering())
-        filter_value = self.request.GET.get('search', '').strip()
-        lookups = {}
-        for field in self.searchable_fields:
-            key = '{0}__icontains'.format(field)
-            lookups[key] = filter_value
-        expressions = [
-            Q(**{key: value})
-            for key, value in lookups.items()  # noqa: WPS110
-        ]
-        direction = 'desc' if self.request.GET.get('descending') else 'asc'
-        ordering = getattr(F(self.get_ordering()), direction)
-
-        # Can be simplified when filtering on windows gets implemented
-        # https://code.djangoproject.com/ticket/28333
-        queryset = self.get_queryset().order_by(ordering())
-        ids_nums = With(queryset.annotate(
-            num=Window(RowNumber(), order_by=ordering()),
-        ).values('id', 'num'),
-        )
-        return ids_nums.join(
-            queryset, id=ids_nums.col.id,
-        ).with_cte(ids_nums).annotate(num=ids_nums.col.num).filter(
-            reduce(__or__, expressions),
-        )
-
     def get_context_data(self, **kwargs):
         """Add context."""
-        context = super().get_context_data(**kwargs)
-
-        paginator = Paginator(self.get_adjusted_queryset(), self.paginate_by)
+        paginator = Paginator(self.get_queryset(), self.paginate_by)
         page = paginator.get_page(self.request.GET.get('page'))
 
         page_slice = get_page_slice(
@@ -95,6 +65,7 @@ class PaginationMixin(MultipleObjectMixin):
             self.inner_visible_pages,
         )
 
+        context = super().get_context_data(**kwargs)
         context.update({
             'page': page,
             'page_range': paginator.page_range[page_slice],
@@ -108,24 +79,69 @@ class PaginationMixin(MultipleObjectMixin):
         return context
 
 
-class TableControlsMixin(object):
-    """A mixin for table controls."""
+class TableSortSearchMixin(MultipleObjectMixin):
+    """A mixin for table sort and search."""
+
+    def set_ordering(self, ordering=None):
+        """Set ordering."""
+        sortable_fields = []
+        for field in self.sortable_fields:
+            if isinstance(field, str):
+                sortable_fields.append(field)
+            elif isinstance(field, (list, tuple)):
+                sortable_fields.append(field[0])
+            else:
+                raise TypeError("Unknown item type")
+        if ordering is None:
+            self.ordering = sortable_fields[0]
+            return
+        direction, field_name = split_ordering(ordering)
+        if field_name not in sortable_fields:
+            self.ordering = sortable_fields[0]
+            return
+        self.ordering = ''.join((direction, field_name))
+
+    def get_queryset(self):  # noqa: WPS210
+        """Return an ordered and filtered QuerySet."""
+        self.set_ordering(self.request.GET.get('sort'))
+        direction, field_name = split_ordering(self.get_ordering())
+        ordering = getattr(
+            F(field_name),
+            DIRECTION_TRANSLATIONS[direction],
+        )
+        # Can be simplified when filtering on windows gets implemented
+        # https://code.djangoproject.com/ticket/28333
+        queryset = self.queryset.order_by(ordering())
+        ids_nums = With(
+            queryset.annotate(
+                num=Window(RowNumber(), order_by=ordering()),
+            ).values('id', 'num'),
+        )
+        numbered_queryset = ids_nums.join(
+            queryset, id=ids_nums.col.id,
+        ).with_cte(ids_nums).annotate(num=ids_nums.col.num)
+
+        filter_value = self.request.GET.get('search', '').strip()
+        lookups = {}
+        for field in self.searchable_fields:
+            key = '{0}__icontains'.format(field)
+            lookups[key] = filter_value
+        expressions = [
+            Q(**{key: value})
+            for key, value in lookups.items()  # noqa: WPS110
+        ]
+        if filter_value:
+            return numbered_queryset.filter(reduce(operator.or_, expressions))
+        return numbered_queryset
 
     def get_context_data(self, **kwargs):
         """Add context."""
+        form = TableSortSearchForm(self.request.GET)
+
         context = super().get_context_data(**kwargs)
-
-        form = ListSortAndSearchForm(self.sortable_fields, self.request.GET)
-        get_params = self.request.GET.copy()
-        with suppress(KeyError):
-            get_params.pop('page')
-
         context['form'] = form
-        context['get_params'] = (
-            '&{0}'.format(get_params.urlencode()) if get_params else ''
-        )
         return context
 
 
-class TableControlsAndPaginationMixin(TableControlsMixin, PaginationMixin):
-    """Combine mixins for table controls and pagination."""
+class TableSortSearchAndPaginationMixin(TableSortSearchMixin, PaginationMixin):
+    """A mixin for table sort, search and pagination."""
