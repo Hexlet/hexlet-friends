@@ -114,6 +114,8 @@ SQLITE_SETTINGS = {
 if os.getenv('DB_ENGINE') == 'SQLite':
     DATABASES['default'] = SQLITE_SETTINGS
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 CONN_MAX_AGE = 500
 
 # Use the DATABASE_URL environment variable
@@ -200,3 +202,5 @@ GTM_ID = os.environ.get('GTM_ID')
 YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+TEXT_COLUMNS = ('name', 'organization', 'project', 'login')

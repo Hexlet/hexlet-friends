@@ -4,12 +4,13 @@ from django.db.models import Count, OuterRef, Q, Subquery, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_cte import CTEQuerySet
 
 from contributors.models.base import NAME_LENGTH, CommonFields
 from contributors.utils.misc import datetime_month_ago
 
 
-class ContributorQuerySet(models.QuerySet):
+class ContributorQuerySet(CTEQuerySet):
     """A custom contributor QuerySet."""
 
     def visible(self):

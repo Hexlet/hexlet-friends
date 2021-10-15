@@ -48,6 +48,7 @@ class HomeView(TemplateView):
         )
 
         contributions_for_year = misc.get_contrib_sums_distributed_over_months(
+            timezone.now().month,
             sums_of_contribs_by_months,
         )
 

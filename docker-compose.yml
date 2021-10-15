@@ -13,8 +13,6 @@ services:
   django:
     build:
       context: .
-      args:
-        - DJANGO_ENV=development
     environment:
       - DEBUG=True
     env_file:

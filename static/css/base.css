@@ -79,6 +79,24 @@ main {
   position: relative;
 }
 
+th.sortable {
+  position: relative;
+}
+
+th.sortable::after {
+  position: absolute;
+  top: 0.8em;
+  right: 0.8em;
+}
+
+th.sortable[data-sorting="desc"]::after {
+  content: "\25bc";
+}
+
+th.sortable[data-sorting="asc"]::after {
+  content: "\25b2";
+}
+
 /* Contributor's details */
 #contrib-details td {
   text-align: center;

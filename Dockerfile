@@ -1,40 +1,49 @@
-FROM python:3.8-alpine
+FROM python:3.8-alpine as builder
 
-ARG DJANGO_ENV
+ENV VIRTUAL_ENV=/opt/venv \
+    PATH=/root/.poetry/bin:$PATH
+
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    postgresql-dev
+
+RUN wget https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -O - | python > /dev/null
+
+RUN python -m venv $VIRTUAL_ENV
+
+WORKDIR /project/
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --extras psycopg2-binary
+
+FROM python:3.8-alpine
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=false \
-    POETRY_VERSION=1.0.5 \
-    POETRY_VIRTUALENVS_CREATE=false
+    VIRTUAL_ENV=/opt/venv \
+    PATH=/home/user/.poetry/bin:$PATH
 
 RUN apk add --no-cache \
-    make \
     gettext \
     git \
-    gcc \
-    musl-dev \
-    python3-dev \
-    libffi-dev \
-    openssl-dev \
-    postgresql-dev \
-    && pip install poetry==$POETRY_VERSION
+    make \
+    postgresql-dev
 
 WORKDIR /usr/local/src/hexlet-friends
 
-COPY pyproject.toml poetry.lock ./
-
-RUN poetry install $(if [[ "$DJANGO_ENV" != "development" ]]; then \
-        echo "--no-dev"; \
-        rm -rf ~/.cache/pypoetry; \
-    fi)
-
-COPY . ./
-
 RUN adduser -D user \
-    && chown -R user:user .
+    && chown -R user:user ./
 
 USER user
+
+COPY --from=builder --chown=user:user /root/.poetry/ /home/user/.poetry/
+
+COPY --from=builder --chown=user:user $VIRTUAL_ENV $VIRTUAL_ENV
+
+COPY --chown=user:user ./ ./
 
 CMD ["make", "start"]

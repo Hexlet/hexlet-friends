@@ -14,7 +14,10 @@ class RepoContributorList(contributors.ListView):
         self.repository = get_object_or_404(
             Repository, full_name=self.kwargs['slug'],
         )
-        return self.repository.contributors.visible().with_contributions()
+        self.queryset = (
+            self.repository.contributors.visible().with_contributions()
+        )
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         """Add context."""

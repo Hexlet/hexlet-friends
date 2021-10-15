@@ -6,21 +6,27 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-django = "^3.0.7"
+django = "^3.2.5"
 python-dotenv = "^0.13"
 requests = "^2.22"
 gunicorn = "^20"
 dj-database-url = "^0.5"
-psycopg2 = "^2.8"
 whitenoise = "^5.1"
 python-dateutil = "^2.8"
 apscheduler = "^3.6.3"
 django-crispy-forms = "^1.9.1"
+django-cte = "^1.1.5"
+psycopg2 = { version = "^2.8", optional = true }
+psycopg2-binary = { version = "^2.8.6", optional = true }
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.14"
 faker = "^4.1"
 coverage = "^5.2"
+
+[tool.poetry.extras]
+psycopg2 = ["psycopg2"]
+psycopg2-binary = ["psycopg2-binary"]
 
 [build-system]
 requires = ["poetry>=1.0.5"]

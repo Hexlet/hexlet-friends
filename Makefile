@@ -1,5 +1,5 @@
 install: .env
-	@poetry install
+	@poetry install --extras psycopg2-binary
 
 .env:
 	@test ! -f .env && cp .env.example .env
@@ -50,6 +50,6 @@ secretkey:
 	@poetry run python -c 'from django.utils.crypto import get_random_string; print(get_random_string(40))'
 
 requirements.txt: poetry.lock
-	@poetry export --format requirements.txt --output requirements.txt
+	@poetry export --format requirements.txt --output requirements.txt --extras psycopg2
 
 .PHONY: install setup shell lint test check start sync secretkey

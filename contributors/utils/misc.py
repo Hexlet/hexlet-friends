@@ -1,13 +1,12 @@
-import datetime
 import os
 from collections import deque
 from functools import partial
+from types import MappingProxyType
 
 from dateutil import relativedelta
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 
 from contributors.utils import github_lib as github
 
@@ -97,31 +96,36 @@ def group_contribs_by_months(months_with_contrib_sums):
     return sums_of_contribs_by_months
 
 
-def get_rotated_sums_for_contrib(sums_of_contribs_by_months, contrib_type):
+def get_rotated_sums_for_contrib(
+    current_month: int, sums_of_contribs_by_months, contrib_type,
+):
     """
     Return an array of 12 sums of contributions of the given type.
 
     Each position corresponds to a month.
     The collection is left-shifted by the numeric value of the current month.
     """
-    month_numbers = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
-    current_month_number = datetime.date.today().month
+    months = range(1, NUM_OF_MONTHS_IN_A_YEAR + 1)
     array = deque([
-        sums_of_contribs_by_months.get(month_number, {}).get(contrib_type, 0)
-        for month_number in month_numbers
+        sums_of_contribs_by_months.get(month, {}).get(contrib_type, 0)
+        for month in months
     ])
-    array.rotate(-current_month_number)
+    array.rotate(-current_month)
     return list(array)
 
 
-def get_contrib_sums_distributed_over_months(sums_of_contribs_by_months):
+def get_contrib_sums_distributed_over_months(
+    current_month: int, sums_of_contribs_by_months,
+):
     """
     Return shifted monthly sums for each contribution type.
 
     The collections end with the current month.
     """
     rotated_sums_by_months = partial(
-        get_rotated_sums_for_contrib, sums_of_contribs_by_months,
+        get_rotated_sums_for_contrib,
+        current_month,
+        sums_of_contribs_by_months,
     )
     return {
         'commits': rotated_sums_by_months('cit'),
@@ -137,21 +141,6 @@ def datetime_month_ago():
     return dt_now - relativedelta.relativedelta(months=1)
 
 
-def prepare_choices(collection):
-    """Return a collection of 2-tuples to use as choices."""
-    normalized_items = []
-    for col_item in collection:
-        if isinstance(col_item, str):
-            normalized_items.append(
-                (col_item, _(col_item.replace('_', ' ').capitalize())),
-            )
-        elif isinstance(col_item, tuple):
-            normalized_items.append(col_item)
-        else:
-            raise TypeError("Unknown item type")
-    return normalized_items
-
-
 def split_full_name(name):
     """Split a full name into parts."""
     if not name:
@@ -160,3 +149,16 @@ def split_full_name(name):
     first_name = name_parts[0]
     last_name = name_parts[-1] if len(name_parts) > 1 else ''
     return (first_name, last_name)
+
+
+def split_ordering(ordering):
+    """Return a tuple of ordering direction and field name."""
+    if ordering.startswith('-'):
+        return ('-', ordering[1:])
+    return ('', ordering)
+
+
+DIRECTION_TRANSLATIONS = MappingProxyType({
+    '': 'asc',
+    '-': 'desc',
+})
