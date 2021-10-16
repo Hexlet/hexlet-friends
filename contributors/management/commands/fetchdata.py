@@ -11,6 +11,7 @@ from contributors.models import (
     Contribution,
     Contributor,
     IssueInfo,
+    Label,
     Organization,
     Repository,
 )
@@ -103,7 +104,7 @@ class Command(management.base.BaseCommand):
             '--repo', nargs='*', help='a list of repository full names',
         )
 
-    def handle(self, *args, **options):  # noqa: WPS110,WPS213,WPS231
+    def handle(self, *args, **options):  # noqa: C901,WPS110,WPS213,WPS231
         """Collect data from GitHub."""
         logger.info("Data collection started")
 
@@ -137,6 +138,11 @@ class Command(management.base.BaseCommand):
                 if repo_data['size'] == 0:
                     logger.info("Empty repository")
                     continue
+
+                language = repo_data['language']
+                if language:
+                    label, _ = Label.objects.get_or_create(name=language)
+                    repo.labels.add(label)
 
                 logger.info("Processing issues and pull requests")
                 create_contributions(
