@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from contributors.models.base import NAME_LENGTH, CommonFields
 from contributors.models.contributor import Contributor
+from contributors.models.label import Label
 from contributors.models.organization import Organization
 from contributors.models.project import Project
 
@@ -30,6 +31,10 @@ class Repository(CommonFields):
     )
     full_name = models.CharField(_("full name"), max_length=NAME_LENGTH)
     is_visible = models.BooleanField(_("visible"), default=True)
+    labels = models.ManyToManyField(
+        Label,
+        verbose_name=_("labels"),
+    )
 
     class Meta(object):
         verbose_name = _("repository")
