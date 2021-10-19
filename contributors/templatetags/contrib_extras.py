@@ -42,7 +42,8 @@ def get_query_string(context, qs_param, qs_param_value):
 def get_sort_query_string(context, passed_sort_field):
     """Get table column query string."""
     def prepare_sort_param_value(ordering):  # noqa: WPS430
-        current_sort_field = split_ordering(ordering)[1] if ordering else None
+        ordering = ordering or context['view'].get_ordering()
+        current_sort_field = split_ordering(ordering)[1]
         if passed_sort_field == current_sort_field:
             new_ordering = (
                 ordering[1:] if ordering.startswith('-')
