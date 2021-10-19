@@ -61,3 +61,18 @@ def get_sort_query_string(context, passed_sort_field):
 def get_pagination_query_string(context, page_num):
     """Get pagination query string."""
     return get_query_string(context, 'page', page_num)
+
+
+@register.simple_tag(takes_context=True)
+def get_label_query_string(context, passed_label):
+    """Get labels query string."""
+    def prepare_labels_param_value(labels_param):  # noqa: WPS430
+        delimiter = '.'
+        labels = labels_param.split(delimiter) if labels_param else []
+        if passed_label in labels:
+            labels.remove(passed_label)
+        else:
+            labels.append(passed_label)
+        return delimiter.join(labels)
+
+    return get_query_string(context, 'labels', prepare_labels_param_value)

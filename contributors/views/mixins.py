@@ -145,3 +145,17 @@ class TableSortSearchMixin(MultipleObjectMixin):
 
 class TableSortSearchAndPaginationMixin(TableSortSearchMixin, PaginationMixin):
     """A mixin for table sort, search and pagination."""
+
+
+class LabelsMixin(object):
+    """A mixin for labels."""
+
+    def get_queryset(self):
+        """Get a dataset."""
+        labels_param = self.request.GET.get('labels')
+        if labels_param:
+            for label in labels_param.split('.'):
+                self.queryset = self.queryset.filter(
+                    labels__name__iexact=label,
+                )
+        return super().get_queryset()

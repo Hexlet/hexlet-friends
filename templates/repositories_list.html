@@ -5,6 +5,7 @@
 {% block header %}{% trans "Repositories" %}{% endblock %}
 {% block content %}
   {% include 'components/sort_and_search_form.html' %}
+  {% include 'components/repo_tags_list.html' %}
   {% include 'components/tables/repositories_list.html' %}
   {% include 'components/pagination.html' %}
 {% endblock content %}

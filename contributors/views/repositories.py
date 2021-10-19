@@ -2,11 +2,18 @@ from django.db.models import Count, Q  # noqa: WPS347
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
-from contributors.models import Repository
-from contributors.views.mixins import TableSortSearchAndPaginationMixin
+from contributors.models import Label, Repository
+from contributors.views.mixins import (
+    LabelsMixin,
+    TableSortSearchAndPaginationMixin,
+)
 
 
-class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
+class ListView(
+    LabelsMixin,
+    TableSortSearchAndPaginationMixin,
+    generic.ListView,
+):
     """A list of repositories."""
 
     for_visible_contributor = Q(contribution__contributor__is_visible=True)
@@ -40,3 +47,13 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     )
     searchable_fields = ('name', 'organization__name', 'project__name')
     ordering = sortable_fields[0]
+
+    def get_context_data(self, **kwargs):
+        """Add context."""
+        labels = Label.objects.filter(
+            repository__id__in=self.get_queryset(),
+        ).distinct()
+
+        context = super().get_context_data(**kwargs)
+        context['labels'] = labels
+        return context

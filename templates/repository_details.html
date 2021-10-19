@@ -14,6 +14,7 @@
       <br>
     {% endif %}
     <a href="{{ repository.html_url }}" class="badge badge-dark">GitHub</a>
+    {% include 'components/repo_tags_list.html' %}
   </p>
   <h2>{% trans "Contributors" %}</h2>
 {% endblock additional %}

@@ -23,4 +23,5 @@ class RepoContributorList(contributors.ListView):
         """Add context."""
         context = super().get_context_data(**kwargs)
         context['repository'] = self.repository
+        context['labels'] = self.repository.labels.all()
         return context
