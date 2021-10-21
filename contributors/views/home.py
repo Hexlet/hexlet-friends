@@ -37,6 +37,7 @@ class HomeView(TemplateView):
         top10_commentators = get_top10(contributors_for_month, 'comments')
 
         months_with_contrib_sums = Contribution.objects.filter(
+            repository__is_visible=True,
             contributor__is_visible=True,
             created_at__gte=eleven_months_ago,
         ).annotate(
@@ -53,6 +54,7 @@ class HomeView(TemplateView):
         )
 
         latest_issues = Contribution.objects.filter(
+            repository__is_visible=True,
             type__in=['pr', 'iss'],
         ).order_by('-created_at')[:10]
 

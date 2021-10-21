@@ -40,6 +40,7 @@ class DetailView(generic.DetailView):
         )).date()
 
         months_with_contrib_sums = self.object.contribution_set.filter(
+            repository__is_visible=True,
             created_at__gte=eleven_months_ago,
         ).annotate(
             month=ExtractMonth('created_at'),
