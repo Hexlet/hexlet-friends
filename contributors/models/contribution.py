@@ -15,7 +15,8 @@ class ContributionManager(models.Manager):
 
     def for_year(self):
         """Return yearly results."""
-        date_eleven_months_ago = (timezone.now() - relativedelta.relativedelta(
+        datetime_now = timezone.now()
+        date_eleven_months_ago = (datetime_now - relativedelta.relativedelta(
             months=11, day=1,   # noqa: WPS432
         )).date()
 
@@ -32,7 +33,7 @@ class ContributionManager(models.Manager):
         )
 
         return misc.get_contrib_sums_distributed_over_months(
-            timezone.now().month,
+            datetime_now.month,
             sums_of_contribs_by_months,
         )
 
