@@ -1,11 +1,8 @@
-from dateutil import relativedelta
 from django.db.models import Count, Q, Sum  # noqa: WPS347
-from django.db.models.functions import Coalesce, ExtractMonth
-from django.utils import timezone
+from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models import Contributor, Repository
-from contributors.utils import misc
 
 
 class DetailView(generic.DetailView):
@@ -35,25 +32,8 @@ class DetailView(generic.DetailView):
             comments=Count('contribution', filter=Q(contribution__type='cnt')),
         ).order_by('organization', 'name')
 
-        eleven_months_ago = (timezone.now() - relativedelta.relativedelta(
-            months=11, day=1,   # noqa: WPS432
-        )).date()
-
-        months_with_contrib_sums = self.object.contribution_set.filter(
-            created_at__gte=eleven_months_ago,
-        ).annotate(
-            month=ExtractMonth('created_at'),
-        ).values('month', 'type').annotate(count=Count('id'))
-
-        sums_of_contribs_by_months = misc.group_contribs_by_months(
-            months_with_contrib_sums,
-        )
-
-        contributions_for_year = misc.get_contrib_sums_distributed_over_months(
-            timezone.now().month,
-            sums_of_contribs_by_months,
-        )
-
         context['repositories'] = repositories
-        context['contributions_for_year'] = contributions_for_year
+        context['contributions_for_year'] = (
+            self.object.contribution_set.for_year()
+        )
         return context
