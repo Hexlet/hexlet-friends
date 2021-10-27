@@ -26,7 +26,7 @@ class ListView(TemplateView):
             repos_with_issues[repo] = repo.contribution_set.filter(
                 type='iss',
                 info__is_open=True,
-            )
+            ).order_by('-created_at')
 
         context['repos_with_issues'] = repos_with_issues
         return context

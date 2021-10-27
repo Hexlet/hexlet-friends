@@ -184,3 +184,8 @@ caption.app-header {
 .repo-list li {
   list-style-type: none;
 }
+
+.accordion .card-header
+{
+  cursor: pointer;
+}
