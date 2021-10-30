@@ -12,6 +12,9 @@ class TableSortSearchForm(forms.Form):
     sort = forms.CharField(
         label=False, widget=forms.HiddenInput(), required=False,
     )
+    labels = forms.CharField(
+        label=False, widget=forms.HiddenInput(), required=False,
+    )
 
     @property
     def helper(self):
@@ -21,6 +24,7 @@ class TableSortSearchForm(forms.Form):
         helper.form_class = 'form-inline my-3'
         helper.layout = Layout(
             Field('sort'),
+            Field('labels'),
             FieldWithButtons(
                 Field('search', placeholder=_("Filter by name")),
                 StrictButton(
