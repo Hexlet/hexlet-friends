@@ -30,6 +30,9 @@ def get_query_string(context, qs_param, qs_param_value):
     get_params = view.request.GET.copy()
     previous_value = get_params.get(qs_param)
     with suppress(KeyError):
+        if qs_param == 'labels':
+            get_params.pop('page')
+    with suppress(KeyError):
         get_params.pop(qs_param)
     get_params[qs_param] = (
         qs_param_value(previous_value)
