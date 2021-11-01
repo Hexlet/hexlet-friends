@@ -124,13 +124,11 @@ DATABASES: Dict[str, Dict[str, Any]] = {
     },
 }
 
-SQLITE_SETTINGS = {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': BASE_DIR / 'db.sqlite3',
-}
-
 if os.getenv('DB_ENGINE') == 'SQLite':
-    DATABASES['default'] = SQLITE_SETTINGS
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
 # Use the DATABASE_URL environment variable
 # https://pypi.org/project/dj-database-url/
