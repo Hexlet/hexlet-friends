@@ -12,3 +12,5 @@ htmlcov/
 *.bak
 *.mo
 .coverage
+*.local.py
+local.py
