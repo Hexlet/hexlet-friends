@@ -20,6 +20,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dependencies
         run: |
+          apt-get install python3-setuptools
           pip install poetry
           poetry install
       - name: Run checks
