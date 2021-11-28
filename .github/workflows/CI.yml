@@ -20,7 +20,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dependencies
         run: |
-          pip install setuptools poetry
+          pip install poetry
           poetry install
       - name: Run checks
         run: make check
