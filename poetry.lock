@@ -155,7 +155,7 @@ python-versions = "*"
 
 [[package]]
 name = "django"
-version = "3.2.5"
+version = "3.2.11"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
@@ -766,7 +766,7 @@ psycopg2-binary = ["psycopg2-binary"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "cbfaef0fe90065a20851ad3a0ff12ea01f266191712f18ff60e61ffa5d58c78d"
+content-hash = "bd6005671951538cf2ae28a12f430d86bf7e9fd704badecb89da162666fe0ede"
 
 [metadata.files]
 apscheduler = [
@@ -938,8 +938,8 @@ dj-database-url = [
     {file = "dj_database_url-0.5.0-py2.py3-none-any.whl", hash = "sha256:851785365761ebe4994a921b433062309eb882fedd318e1b0fcecc607ed02da9"},
 ]
 django = [
-    {file = "Django-3.2.5-py3-none-any.whl", hash = "sha256:c58b5f19c5ae0afe6d75cbdd7df561e6eb929339985dbbda2565e1cabb19a62e"},
-    {file = "Django-3.2.5.tar.gz", hash = "sha256:3da05fea54fdec2315b54a563d5b59f3b4e2b1e69c3a5841dda35019c01855cd"},
+    {file = "Django-3.2.11-py3-none-any.whl", hash = "sha256:0a0a37f0b93aef30c4bf3a839c187e1175bcdeb7e177341da0cb7b8194416891"},
+    {file = "Django-3.2.11.tar.gz", hash = "sha256:69c94abe5d6b1b088bf475e09b7b74403f943e34da107e798465d2045da27e75"},
 ]
 django-crispy-forms = [
     {file = "django-crispy-forms-1.11.2.tar.gz", hash = "sha256:88efa857ce6111bd696cc4f74057539a3456102fe9c3a3ece8868e1e4579e70a"},
