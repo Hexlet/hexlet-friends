@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from contributors.models.base import NAME_LENGTH, CommonFields
+from contributors.models.base import CommonFields
 from contributors.models.contributor import Contributor
 from contributors.models.label import Label
 from contributors.models.organization import Organization
@@ -11,6 +11,8 @@ from contributors.models.project import Project
 
 class Repository(CommonFields):
     """Model representing a repository."""
+
+    FULL_NAME_LENGTH = 100  # noqa: WPS115
 
     contributors = models.ManyToManyField(
         Contributor,
@@ -29,7 +31,7 @@ class Repository(CommonFields):
         null=True,
         blank=True,
     )
-    full_name = models.CharField(_("full name"), max_length=NAME_LENGTH)
+    full_name = models.CharField(_("full name"), max_length=FULL_NAME_LENGTH)
     is_visible = models.BooleanField(_("visible"), default=True)
     labels = models.ManyToManyField(
         Label,
