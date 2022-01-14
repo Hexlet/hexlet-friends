@@ -6,7 +6,10 @@ ENV VIRTUAL_ENV=/opt/venv \
 RUN apk add --no-cache \
     gcc \
     musl-dev \
-    postgresql-dev
+    postgresql-dev \
+    libffi-dev \
+    openssl-dev \
+    cargo
 
 RUN wget https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -O - | python > /dev/null
 

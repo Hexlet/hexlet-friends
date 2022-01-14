@@ -1,6 +1,8 @@
+import time
 from collections import Counter
 from urllib.parse import parse_qs, urlparse
 
+import jwt
 import requests
 from django.conf import settings
 
@@ -36,9 +38,61 @@ class ContributorNotFoundError(GitHubError):
     """A particular contributor was not found."""
 
 
+def encode_jwt():
+    """Generate and return JWT token."""
+    payload = {
+        'iat': int(time.time()),
+        'exp': int(time.time()) + (10 * 60),
+        'iss': settings.GITHUB_APP_ID,
+    }
+
+    return jwt.encode(
+        payload,
+        settings.GITHUB_APP_PRIVATE_KEY,
+        algorithm='RS256',
+    )
+
+
+def get_installation_id(jwt_token):
+    """Return the installation id of the github application."""
+    org = settings.GITHUB_APP_ORG_OWNER
+
+    response = requests.get(
+        f'{GITHUB_API_URL}/orgs/{org}/installation',
+        headers={
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': f'Bearer {jwt_token}',
+        },
+    )
+    response.raise_for_status()
+
+    return response.json().get('id')
+
+
+def get_installation_token():
+    """Return the installation token of the github application."""
+    jwt_token = encode_jwt()
+    installation_id = get_installation_id(jwt_token)
+
+    response = requests.post(
+        f'{GITHUB_API_URL}/app/installations/{installation_id}/access_tokens',
+        headers={
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': f'Bearer {jwt_token}',
+        },
+    )
+    response.raise_for_status()
+
+    return response.json().get('token')
+
+
 def get_headers():
     """Return headers to use in a request."""
-    return {'Authorization': f'token {settings.GITHUB_AUTH_TOKEN}'}
+    token = settings.GITHUB_AUTH_TOKEN
+    if not token:
+        token = get_installation_token()
+
+    return {'Authorization': f'token {token}'}
 
 
 def get_one_item_at_a_time(url, additional_params=None, session=None):
