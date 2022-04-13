@@ -23,6 +23,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         """
         contributor = Contributor.objects.get(login=self.kwargs.get('slug'))
         return IssueInfo.objects.filter(
-            issue__type='iss',
+            issue__type='pr',
             issue__contributor=contributor,
         )
