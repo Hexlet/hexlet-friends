@@ -1,0 +1,25 @@
+{% extends './list_as_table.html' %}
+{% load i18n contrib_extras %}
+
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'title' %}">
+      <a href="{% get_sort_query_string 'title' %}" class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'is_open' %}">
+      <a href="{% get_sort_query_string 'is_open' %}" class="stretched-link text-reset text-decoration-none">{% trans "Is open" %}</a>
+    </th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for pr in page %}
+    <tr>
+      <th scope="row">{{ pr.id }}</th>
+      <td>{{ pr.title }}</td>
+      <td>{{ pr.is_open }}</td>
+    </tr>
+  {% empty %}
+    <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>
+  {% endfor %}
+{% endblock tbody %}

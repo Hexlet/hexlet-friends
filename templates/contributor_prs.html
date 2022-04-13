@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Pull requests" %}{% endblock %}
+{% block header %}{% trans "Pull requests" %}{% endblock %}
+{% block content %}
+  {% include 'components/sort_and_search_form.html' %}
+  {% include 'components/tables/contributor_prs.html' %}
+  {% include 'components/pagination.html' %}
+{% endblock content %}

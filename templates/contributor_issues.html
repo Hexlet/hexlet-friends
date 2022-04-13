@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Issues" %}{% endblock %}
+{% block header %}{% trans "Issues" %}{% endblock %}
+{% block content %}
+  {% include 'components/sort_and_search_form.html' %}
+  {% include 'components/tables/contributor_issues.html' %}
+  {% include 'components/pagination.html' %}
+{% endblock content %}
