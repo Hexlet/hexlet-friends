@@ -10,8 +10,16 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     template_name = 'contributor_prs.html'
     sortable_fields = (
         'info__title',
+        'repository__full_name',
+        'created_at',
+        'html_url',
     )
-    searchable_fields = ('info__title',)
+    searchable_fields = (
+        'info__title',
+        'repository__full_name',
+        'created_at',
+        'html_url',
+    )
     ordering = sortable_fields[0]
 
     def get_queryset(self):
