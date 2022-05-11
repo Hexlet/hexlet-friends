@@ -4,13 +4,14 @@ from django.db.models import Count
 from django.db.models.functions import ExtractMonth
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django_cte import CTEManager
 
 from contributors.models.contributor import Contributor
 from contributors.models.repository import Repository
 from contributors.utils import misc
 
 
-class ContributionManager(models.Manager):
+class ContributionManager(CTEManager):
     """A custom contribution manager."""
 
     def for_year(self):
