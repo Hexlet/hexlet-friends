@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-
 {% block head_scripts %}
   {% include 'components/activity_chart/scripts.html' %}
 {% endblock head_scripts %}
@@ -16,25 +15,23 @@
           <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
         </div>
       </div>
+    <nav class="navbar navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link"
+       href="{% url 'contributors:contributor_pullrequests' contributor.login %}">{% trans 'Pull requests' %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+       href="{% url 'contributors:contributor_issues' contributor.login %}">{% trans 'Issues' %}</a>
+        </li>
+      </ul>
+    </nav>
     </div>
     <div class="col">
       <h2>{% trans "Past year activity" %}</h2>
       {% include 'components/activity_chart/chart.html' %}
-
-
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <ul class="navbar-nav ml-5">
-          <li class="nav-item">
-            <h2 class="mr-5">{% trans "All-time contributions" %}</h2>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contributors:contributor_issues' contributor.login %}">{% trans 'Issues' %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'contributors:contributor_pullrequests' contributor.login %}">{% trans 'Pull requests' %}</a>
-          </li>
-        </ul>
-      </nav>
+      <h2 class="mr-5">{% trans "All-time contributions" %}</h2>
       <input type="text" name="name" id="repo-search-field" class="form-control col-3"
              placeholder="{% trans "Filter by name" %}">
       <table id="contrib-details" class="table table-sm">
@@ -52,8 +49,7 @@
         <tbody>
         {% for repo in repositories %}
           <tr class="repo-contributions">
-            <td data-field="repo-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a>
-            </th>
+            <td data-field="repo-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></td>
             <td data-field="cit">{{ repo.commits }}</td>
             <td data-field="cit-add">{{ repo.additions }}</td>
             <td data-field="cit-del">{{ repo.deletions }}</td>
