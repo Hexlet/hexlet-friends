@@ -52,4 +52,7 @@ secretkey:
 requirements.txt: poetry.lock
 	@poetry export --format requirements.txt --output requirements.txt --extras psycopg2
 
+deploy:
+	git push heroku
+
 .PHONY: install setup shell lint test check start sync secretkey
