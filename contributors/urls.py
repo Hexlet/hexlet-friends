@@ -41,6 +41,16 @@ urlpatterns = [
         name='contributor_details',
     ),
     path(
+        'contributors/<slug:slug>/issues/',
+        views.contributor_issues.ListView.as_view(),
+        name='contributor_issues',
+    ),
+    path(
+        'contributors/<slug:slug>/pullrequests/',
+        views.contributor_prs.ListView.as_view(),
+        name='contributor_pullrequests',
+    ),
+    path(
         'projects/',
         views.projects.ListView.as_view(),
         name='projects_list',

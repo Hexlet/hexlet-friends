@@ -1,30 +1,41 @@
 {% extends 'base.html' %}
 {% load i18n static %}
-
 {% block head_scripts %}
   {% include 'components/activity_chart/scripts.html' %}
 {% endblock head_scripts %}
 {% block title %}{{ contributor.login }}{% endblock %}
 {% block content %}
-<div class="row">
-  <div class="col-md-4">
-    <div class="card user-card" style="width: 270px;">
-      <img src="{{ contributor.avatar_url }}" class="card-img-top" alt="">
-      <div class="card-body">
-        {% if contributor.name %}<h1 class="h4 card-title">{{ contributor.name }}</h1>{% endif %}
-        <h2 class="h5 card-subtitle font-weight-light">{{ contributor.login }}</h2>
-        <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card user-card" style="width: 270px;">
+        <img src="{{ contributor.avatar_url }}" class="card-img-top" alt="">
+        <div class="card-body">
+          {% if contributor.name %}<h1 class="h4 card-title">{{ contributor.name }}</h1>{% endif %}
+          <h2 class="h5 card-subtitle font-weight-light">{{ contributor.login }}</h2>
+          <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
+        </div>
       </div>
+    <nav class="navbar navbar-light bg-light">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link"
+       href="{% url 'contributors:contributor_pullrequests' contributor.login %}">{% trans 'Pull requests' %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+       href="{% url 'contributors:contributor_issues' contributor.login %}">{% trans 'Issues' %}</a>
+        </li>
+      </ul>
+    </nav>
     </div>
-  </div>
-  <div class="col">
-    <h2>{% trans "Past year activity" %}</h2>
-    {% include 'components/activity_chart/chart.html' %}
-
-    <h2>{% trans "All-time contributions" %}</h2>
-    <input type="text" name="name" id="repo-search-field" class="form-control col-3" placeholder="{% trans "Filter by name" %}">
-    <table id="contrib-details" class="table table-sm">
-      <thead>
+    <div class="col">
+      <h2>{% trans "Past year activity" %}</h2>
+      {% include 'components/activity_chart/chart.html' %}
+      <h2 class="mr-5">{% trans "All-time contributions" %}</h2>
+      <input type="text" name="name" id="repo-search-field" class="form-control col-3"
+             placeholder="{% trans "Filter by name" %}">
+      <table id="contrib-details" class="table table-sm">
+        <thead>
         <tr>
           <th scope="col" id="repo-name" data-sorting="asc">{% trans "Repository" %}</th>
           <th scope="col" id="cit" data-sorting="" title="{% trans 'Commits' %}"></th>
@@ -34,11 +45,11 @@
           <th scope="col" id="iss" data-sorting="" title="{% trans 'Issues' %}"></th>
           <th scope="col" id="cnt" data-sorting="" title="{% trans 'Comments' %}"></th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         {% for repo in repositories %}
           <tr class="repo-contributions">
-            <td data-field="repo-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></th>
+            <td data-field="repo-name"><a href="{{ repo.get_absolute_url }}">{{ repo.full_name }}</a></td>
             <td data-field="cit">{{ repo.commits }}</td>
             <td data-field="cit-add">{{ repo.additions }}</td>
             <td data-field="cit-del">{{ repo.deletions }}</td>
@@ -47,10 +58,10 @@
             <td data-field="cnt">{{ repo.comments }}</td>
           </tr>
         {% endfor %}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 {% endblock content %}
 {% block body_end_scripts %}
   <script src="{% static 'js/contribDataSortAndSearch.js' %}"></script>

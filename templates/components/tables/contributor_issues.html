@@ -1,0 +1,50 @@
+{% extends './list_as_table.html' %}
+{% load i18n contrib_extras %}
+
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__title' %}">
+      <a href="{% get_sort_query_string 'info__title' %}"
+         class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
+      <a href="{% get_sort_query_string 'repository__full_name' %}"
+         class="stretched-link text-reset text-decoration-none">{% trans "Repository" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'html_url' %}">
+      <a href="{% get_sort_query_string 'html_url' %}"
+         class="stretched-link text-reset text-decoration-none">{% trans "URL" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'created_at' %}">
+      <a href="{% get_sort_query_string 'created_at' %}"
+         class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__is_open' %}">
+      <a href="{% get_sort_query_string 'info__is_open' %}"
+         class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
+    </th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for issue in page %}
+    <tr>
+      <th scope="row">{{ issue.num }}</th>
+      <td>{{ issue.info.title }}</td>
+      <td>{{ issue.repository.full_name }}</td>
+      <td><a href="{{ issue.html_url }}">{{ issue.html_url }}</a></td>
+      <td>{{ issue.created_at|date:"d.m.Y H:i" }}</td>
+      <td>
+        {% if issue.info.is_open %}
+        {% trans "Open" %}
+        {% else %}
+        {% trans "Closed" %}
+        {% endif %}
+      </td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td class="text-center" colspan="9">{% trans "Nothing found" %}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}
