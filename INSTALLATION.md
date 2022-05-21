@@ -3,15 +3,16 @@
 ---
 
 
-#### Запустить приложение можно как с помощью Poetry, так и с помощью Docker.  
+Запустить приложение можно как с помощью Poetry, так и с помощью Docker.  
 
-### _Poetry_ устанавливается командами:  
-##### Linux \ OSX:  
+*Poetry* устанавливается командами:  
+
+Linux \ OSX:  
 `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -`  
+
+Подробности установки и использования пакета **Poetry** доступны в [официальной документации](https://python-poetry.org/docs/).  
   
-###### Подробности установки и использования пакета __Poetry__ доступны в [официальной документации](https://python-poetry.org/docs/).  
-  
-### Для установки Docker воспользуйтесь информацией с официального сайта [docs.docker.com](https://docs.docker.com/engine/install/)
+Для установки Docker воспользуйтесь информацией с официального сайта [docs.docker.com](https://docs.docker.com/engine/install/)
 
 ---
 
@@ -28,10 +29,12 @@ cd hexlet-friends
 python -m venv venv
 source venv/bin/activate
 ```
+
 #### Установка зависимостей, если вы используете _Poetry_
 ```commandline
 make install
 ```
+
 #### Установка зависимостей, если вы используете _Docker_
 ```commandline
 make .env
@@ -67,18 +70,18 @@ docker-compose build
 
 --- 
 
-## 1.3 Завершение установки  
+### 1.3 Завершение установки  
 
-### _Poetry_
+#### _Poetry_
 ```commandline
 make setup
 ```
-### _Docker_
+#### _Docker_
 ```commandline
 docker-compose run --rm django make setup
 ```
 ---
-# 2. Наполнение базы данных  
+## 2. Наполнение базы данных  
 
 Получить данные можно через интерфейс панели администрирования либо выполнив описанные команды.  
 
@@ -91,7 +94,7 @@ Example:
 ```commandline
 make sync ARGS='Hexlet'
 ```
->>Учитывайте, что в таком случае в базу данных будут добавляться все репозитории организации Hexlet. Это займёт продолжительно время. 
+>Учитывайте, что в таком случае в базу данных будут добавляться все репозитории организации Hexlet. Это займёт продолжительно время. 
 
 #### По полным именам репозиториев:
 ```commandline
@@ -101,13 +104,14 @@ Example:
 ```commandline
 make sync ARGS='Hexlet/hexlet-friends'
 ```
+
 #### При последующих обновлениях данных:
 ```commandline
 make sync  
 ```  
 
 ---
-# 3. Запуск сервера для разработки
+## 3. Запуск сервера для разработки
 ### Poetry
 
 ```
