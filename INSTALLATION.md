@@ -51,7 +51,7 @@ docker-compose build
 > В области ***Select scopes*** ставим галочки напротив ***repo*** ***Full control of private repositories*** и ***delete_repo*** ***Delete repositories***, Остальное на ваш выбор.  
 > Генерируем токен соответствующей кнопкой ***Generate token***
 
-Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в папке проекта или придумать.
+Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в директории проекта или придумать.
 
 Переменные `GITHUB_AUTH_CLIENT_ID` и `GITHUB_AUTH_CLIENT_SECRET` нужны для авторизации через GitHub.  
 Получить значения для них можно, создав [OAuth application](https://github.com/settings/applications/new).  
