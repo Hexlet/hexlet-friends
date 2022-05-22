@@ -24,18 +24,17 @@ Linux \ OSX:
 git clone https://github.com/Hexlet/hexlet-friends
 cd hexlet-friends
 ```
-Создать виртуальное окружение и активировать его
-```commandline
-python -m venv venv
-source venv/bin/activate
-```
 
-#### Установка зависимостей, если вы используете *Poetry*
+**Установка зависимостей, если вы используете *Poetry***
 ```commandline
 make install
 ```
+Активировать виртуальное окружение
+```commandline
+source $HOME/.cache/pypoetry/virtualenvs/<название созданного окружения>/bin/activate
+```
 
-#### Установка зависимостей, если вы используете *Docker*
+**Установка зависимостей, если вы используете *Docker***
 ```commandline
 make .env
 docker-compose build
@@ -46,11 +45,11 @@ docker-compose build
 ### 1.2 Для работы с проектом потребуется задать значения переменным окружения в файле .env  
 `GITHUB_AUTH_TOKEN` — Personal access token из [настроек GitHub](https://github.com/settings/tokens). Используется для запросов данных у GitHub.
 
-> Как его получить, если у вас его ещё нет:
->> Переходите по ссылке выше, нажимаете кнопку `Generate new token`. Github попросит ввести пароль от Github аккаунта.  
->> В поле `Note` вводим любое понятное для вас название токена.  
->> В области `Select scopes` ставим галочки напротив `repo` `Full control of private repositories` и `delete_repo` `Delete repositories`, Остальное на ваш выбор.  
->> Генерируем токен соответствующей кнопкой `Generate token`
+Как его получить, если у вас его ещё нет:
+> Переходите по ссылке выше, нажимаете кнопку `Generate new token`. Github попросит ввести пароль от Github аккаунта.  
+> В поле `Note` вводим любое понятное для вас название токена.  
+> В области `Select scopes` ставим галочки напротив `repo` `Full control of private repositories` и `delete_repo` `Delete repositories`, Остальное на ваш выбор.  
+> Генерируем токен соответствующей кнопкой `Generate token`
 
 Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в папке проекта или придумать.
 
