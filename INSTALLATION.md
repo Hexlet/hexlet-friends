@@ -54,7 +54,7 @@ docker-compose build
 Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в директории проекта или придумать.
 
 Переменные `GITHUB_AUTH_CLIENT_ID` и `GITHUB_AUTH_CLIENT_SECRET` нужны для авторизации через GitHub.  
-Получить значения для них можно, создав [OAuth application](https://github.com/settings/applications/new).  
+Получить значения для них можно, создав [OAuth application](https://github.com/settings/applications/new):  
 > В поле ***Application name*** указываем ***hexlet-friends***  
 > В поле ***Homepage URL*** указываем ***https://friends.hexlet.io/***  
 > В поле ***Authorization callback URL*** указываем ***http://localhost:8000/auth/github/login***  
@@ -101,7 +101,7 @@ make sync ARGS='--repo REPO [REPO ...]'
 ```
 Example:
 ```commandline
-make sync ARGS='Hexlet/hexlet-friends'
+make sync ARGS='--repo Hexlet/hexlet-friends'
 ```
 
 #### При последующих обновлениях данных:
