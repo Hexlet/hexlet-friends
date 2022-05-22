@@ -36,8 +36,7 @@ source $HOME/.cache/pypoetry/virtualenvs/<название созданного 
 
 **Установка зависимостей, если вы используете *Docker***
 ```commandline
-make .env
-docker-compose build
+make docker-install
 ```
 
 ---
@@ -121,6 +120,6 @@ make start
 ### Docker
 
 ```
-docker-compose up
+make docker-start
 ```
             
