@@ -1,6 +1,9 @@
 install: .env
 	@poetry install --extras psycopg2-binary
 
+docker-install: .env
+	docker-compose build
+
 .env:
 	@test ! -f .env && cp .env.example .env
 
@@ -42,6 +45,9 @@ check: lint test requirements.txt
 
 start: migrate transcompile
 	@poetry run python manage.py runserver 0.0.0.0:8000
+
+docker-start:
+	docker-compose up
 
 sync:
 	@poetry run python manage.py fetchdata $(ARGS)
