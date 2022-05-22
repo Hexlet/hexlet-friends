@@ -46,26 +46,26 @@ docker-compose build
 `GITHUB_AUTH_TOKEN` — Personal access token из [настроек GitHub](https://github.com/settings/tokens). Используется для запросов данных у GitHub.
 
 Как его получить, если у вас его ещё нет:
-> Переходите по ссылке выше, нажимаете кнопку `Generate new token`. Github попросит ввести пароль от Github аккаунта.  
-> В поле `Note` вводим любое понятное для вас название токена.  
-> В области `Select scopes` ставим галочки напротив `repo` `Full control of private repositories` и `delete_repo` `Delete repositories`, Остальное на ваш выбор.  
-> Генерируем токен соответствующей кнопкой `Generate token`
+> Переходите по ссылке выше, нажимаете кнопку ***Generate new token***. Github попросит ввести пароль от Github аккаунта.  
+> В поле ***Note*** вводим любое понятное для вас название токена.  
+> В области ***Select scopes*** ставим галочки напротив ***repo*** ***Full control of private repositories*** и ***delete_repo*** ***Delete repositories***, Остальное на ваш выбор.  
+> Генерируем токен соответствующей кнопкой ***Generate token***
 
 Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в папке проекта или придумать.
 
 Переменные `GITHUB_AUTH_CLIENT_ID` и `GITHUB_AUTH_CLIENT_SECRET` нужны для авторизации через GitHub.  
 Получить значения для них можно, создав [OAuth application](https://github.com/settings/applications/new).  
-> В поле `Application name` указываем `hexlet-friends`  
-> В поле `Homepage URL` указываем `https://friends.hexlet.io/`  
-> В поле `Authorization callback URL` указываем `http://localhost:8000/auth/github/login`  
+> В поле ***Application name*** указываем ***hexlet-friends***  
+> В поле ***Homepage URL*** указываем ***https://friends.hexlet.io/***  
+> В поле ***Authorization callback URL*** указываем ***http://localhost:8000/auth/github/login***  
 > 
 > Остальное оставляем по умолчанию.  
 
-После нажатия кнопки `Register application` в новом окне вы найдете `Client ID` для `GITHUB_AUTH_CLIENT_ID` и потребуется сгенерировать кнопкой `Generate a new client secret` токен для `GITHUB_AUTH_CLIENT_SECRET`  
+После нажатия кнопки ***Register application*** в новом окне вы найдете ***Client ID*** для `GITHUB_AUTH_CLIENT_ID` и потребуется сгенерировать кнопкой ***Generate a new client secret*** токен для `GITHUB_AUTH_CLIENT_SECRET`  
 Обратите внимание, что после того как вы покинете страницу, заново посмотреть токен будет нельзя, только генерировать заново и заносить в .env файл.
 
 При работе с Poetry можно использовать SQLite, добавив `DB_ENGINE=SQLite` в .env файл. По умолчанию это значение отсутствует.  
-Если установлена PostgreSQL, задать значения соответствующим переменным `POSTGRES`.
+Если установлена PostgreSQL, задать значения соответствующим переменным ***POSTGRES***.
 
 --- 
 
