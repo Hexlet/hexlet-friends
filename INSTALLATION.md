@@ -5,14 +5,14 @@
 
 Запустить приложение можно как с помощью Poetry, так и с помощью Docker.  
 
-*Poetry* устанавливается командами:  
+***Poetry* устанавливается командами:**
 
 Linux \ OSX:  
 `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -`  
 
 Подробности установки и использования пакета **Poetry** доступны в [официальной документации](https://python-poetry.org/docs/).  
   
-Для установки Docker воспользуйтесь информацией с официального сайта [docs.docker.com](https://docs.docker.com/engine/install/)
+**Для установки **Docker** воспользуйтесь информацией с официального сайта [docs.docker.com](https://docs.docker.com/engine/install/)**
 
 ---
 
@@ -30,12 +30,12 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-#### Установка зависимостей, если вы используете _Poetry_
+#### Установка зависимостей, если вы используете *Poetry*
 ```commandline
 make install
 ```
 
-#### Установка зависимостей, если вы используете _Docker_
+#### Установка зависимостей, если вы используете *Docker*
 ```commandline
 make .env
 docker-compose build
@@ -72,11 +72,11 @@ docker-compose build
 
 ### 1.3 Завершение установки  
 
-#### _Poetry_
+#### *Poetry*
 ```commandline
 make setup
 ```
-#### _Docker_
+#### *Docker*
 ```commandline
 docker-compose run --rm django make setup
 ```
@@ -85,8 +85,8 @@ docker-compose run --rm django make setup
 
 Получить данные можно через интерфейс панели администрирования либо выполнив описанные команды.  
 
-### _Poetry_  
-#### По именам организаций:
+### *Poetry*  
+**По именам организаций:**
 ```commandline
 make sync ARGS='ORG [ORG ...]'
 ```
@@ -96,7 +96,7 @@ make sync ARGS='Hexlet'
 ```
 >Учитывайте, что в таком случае в базу данных будут добавляться все репозитории организации Hexlet. Это займёт продолжительно время. 
 
-#### По полным именам репозиториев:
+**По полным именам репозиториев:**
 ```commandline
 make sync ARGS='--repo REPO [REPO ...]'
 ```
@@ -111,6 +111,7 @@ make sync
 ```  
 
 ---
+
 ## 3. Запуск сервера для разработки
 ### Poetry
 
