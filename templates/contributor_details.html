@@ -14,19 +14,13 @@
           <h2 class="h5 card-subtitle font-weight-light">{{ contributor.login }}</h2>
           <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
         </div>
+        <nav class="nav">
+          <a class="nav-link" href="{% url 'contributors:contributor_pullrequests' contributor.login %}">
+          {% trans 'Pull requests' %}</a>
+          <a class="nav-link" href="{% url 'contributors:contributor_issues' contributor.login %}">
+          {% trans 'Issues' %}</a>
+        </nav>
       </div>
-    <nav class="navbar navbar-light bg-light">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link"
-       href="{% url 'contributors:contributor_pullrequests' contributor.login %}">{% trans 'Pull requests' %}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"
-       href="{% url 'contributors:contributor_issues' contributor.login %}">{% trans 'Issues' %}</a>
-        </li>
-      </ul>
-    </nav>
     </div>
     <div class="col">
       <h2>{% trans "Past year activity" %}</h2>
