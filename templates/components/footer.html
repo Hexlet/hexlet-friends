@@ -3,27 +3,6 @@
   <div class="row">
     <div class="col-12 col-md">
       <ul class="list-unstyled my-0">
-        <li>
-          <form action="{% url 'set_language' %}" method="post" id="language-form" style="display: none;">
-            {% csrf_token %}
-            <label for="language">{% trans "Language" %}</label>
-            <select name="language">
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
-                  {{ language.name_local }} ({{ language.code }})
-                </option>
-              {% endfor %}
-            </select>
-          </form>
-          {% trans "Language" %}:
-          {% for language in languages %}
-            <a {% if language.code != LANGUAGE_CODE %}href="#" class="inactive-lang-link"{% endif %}>
-              {{ language.code|upper }}
-            </a>
-          {% endfor %}
-        </li>
         <li><a target="_blank" href="http://github.com/Hexlet/hexlet-friends">{% trans "Source code" %}</a></li>
       </ul>
     </div>
