@@ -62,5 +62,33 @@
           </li>
         {% endif %}
       </ul>
+      {% get_current_language as CURRENT_LANGUAGE %}
+      {% get_available_languages as AVAILABLE_LANGUAGES %}
+      {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+      <ul class="navbar-nav btn-group">
+        <a class="nav-link dropdown-toggle" data-toggle='dropdown' role='button' aria-expanded='false'>
+          <img class="mt-auto" src="{% static "images/locale_icons/"|add:CURRENT_LANGUAGE|add:".svg" %}"
+          alt="current language is {{CURRENT_LANGUAGE}}" width="25">
+          {{CURRENT_LANGUAGE|upper}}
+        </a>
+        <ul class='dropdown-menu' role='menu'>
+          {% for language in languages %}
+            <li>
+            {% if language.code != CURRENT_LANGUAGE %}
+              <form name="language{{ language.code|title }}" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}"/>
+                <input name="language" type="hidden" value="{{ language.code|lower }}"/>
+                <a class="dropdown-item" href="javascript:document.language{{ language.code|title }}.submit()">
+                  <img src="{% static "images/locale_icons/"|add:language.code|add:".svg" %}"
+                  alt="set language to {{ language.code}}" width="25">
+                  {{language.name_local}}
+                </a>
+              </form>    
+            {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </ul>
     </div>
 </nav>
