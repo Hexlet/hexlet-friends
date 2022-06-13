@@ -62,19 +62,18 @@
           </li>
         {% endif %}
       </ul>
-      {% get_current_language as CURRENT_LANGUAGE %}
       {% get_available_languages as AVAILABLE_LANGUAGES %}
       {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
       <ul class="navbar-nav btn-group">
         <a class="nav-link dropdown-toggle" data-toggle='dropdown' role='button' aria-expanded='false'>
-          <img class="mt-auto" src="{% static "images/locale_icons/"|add:CURRENT_LANGUAGE|add:".svg" %}"
-          alt="current language is {{CURRENT_LANGUAGE}}" width="25">
-          {{CURRENT_LANGUAGE|upper}}
+          <img class="mt-auto" src="{% static "images/locale_icons/"|add:LANGUAGE_CODE|add:".svg" %}"
+          alt="current language is {{LANGUAGE_CODE}}" width="25">
+          {{LANGUAGE_CODE|upper}}
         </a>
         <ul class='dropdown-menu' role='menu'>
           {% for language in languages %}
             <li>
-            {% if language.code != CURRENT_LANGUAGE %}
+            {% if language.code != LANGUAGE_CODE %}
               <form name="language{{ language.code|title }}" action="{% url 'set_language' %}" method="post">
                 {% csrf_token %}
                 <input name="next" type="hidden" value="{{ redirect_to }}"/>
