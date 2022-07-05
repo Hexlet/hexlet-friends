@@ -1,125 +1,143 @@
-# Установка и запуск приложения
+# Installing and running the app
+
+You can run the application using both Poetry and Docker.
+
+**Poetry** is setup by the commands:
+
+Linux \ OSX:
+`curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -`
+
+Details on installing and using the **Poetry** package are available in [official documentation](https://python-poetry.org/docs/).
+
+To install **Docker**, use the information from the official website [docs.docker.com](https://docs.docker.com/engine/install/)
 
 ---
 
+## 1. Installation
 
-Запустить приложение можно как с помощью Poetry, так и с помощью Docker.  
+### 1.1 Cloning the repository and installing dependencies
 
-***Poetry* устанавливается командами:**
-
-Linux \ OSX:  
-`curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -`  
-
-Подробности установки и использования пакета **Poetry** доступны в [официальной документации](https://python-poetry.org/docs/).  
-  
-**Для установки **Docker** воспользуйтесь информацией с официального сайта [docs.docker.com](https://docs.docker.com/engine/install/)**
-
----
-
-## 1. Установка
-
-### 1.1 Клонирование репозитория и установка зависимостей:  
-
-```commandline
+```bash
 git clone https://github.com/Hexlet/hexlet-friends
 cd hexlet-friends
 ```
 
-**Установка зависимостей, если вы используете *Poetry***
-```commandline
+Installing dependencies if you use **Poetry**
+
+```bash
 make install
 ```
-Активировать виртуальное окружение
-```commandline
-source $HOME/.cache/pypoetry/virtualenvs/<название созданного окружения>/bin/activate
+
+Activate virtual environment
+
+```bash
+source $HOME/.cache/pypoetry/virtualenvs/<name of the created environment>/bin/activate
 ```
 
-**Установка зависимостей, если вы используете *Docker***
-```commandline
+Installing dependencies if you use **Docker**
+
+```bash
 make docker-install
 ```
 
 ---
 
-### 1.2 Для работы с проектом потребуется задать значения переменным окружения в файле .env  
-`GITHUB_AUTH_TOKEN` — Personal access token из [настроек GitHub](https://github.com/settings/tokens). Используется для запросов данных у GitHub.
+### 1.2 To work with the project, you will need to set the values of the environment variables in the .env file
 
-Как его получить, если у вас его ещё нет:
-> Переходите по ссылке выше, нажимаете кнопку ***Generate new token***. Github попросит ввести пароль от Github аккаунта.  
-> В поле ***Note*** вводим любое понятное для вас название токена.  
-> В области ***Select scopes*** ставим галочки напротив ***repo*** ***Full control of private repositories*** и ***delete_repo*** ***Delete repositories***, Остальное на ваш выбор.  
-> Генерируем токен соответствующей кнопкой ***Generate token***
+`GITHUB_AUTH_TOKEN` — Personal access token from [GitHub's settings](https://github.com/settings/tokens). Used to query data on GitHub.
 
-Значения для `GITHUB_WEBHOOK_TOKEN` и `SECRET_KEY` можно сгенерировать командой `make secretkey` в терминале в директории проекта или придумать.
+How do you get it if you don't already have it:
 
-Переменные `GITHUB_AUTH_CLIENT_ID` и `GITHUB_AUTH_CLIENT_SECRET` нужны для авторизации через GitHub.  
-Получить значения для них можно, создав [OAuth application](https://github.com/settings/applications/new):  
-> В поле ***Application name*** указываем ***hexlet-friends***  
-> В поле ***Homepage URL*** указываем ***https://friends.hexlet.io/***  
-> В поле ***Authorization callback URL*** указываем ***http://localhost:8000/auth/github/login***  
-> 
-> Остальное оставляем по умолчанию.  
+- Go to the link above, click the ***Generate new token*** button. Github will ask you to enter the password for your Github account.
+- In the ***Note*** field, enter any token name you understand.
+- In the ***Select scopes*** area, check the ***repo*** ***Full control of private repositories*** and ***delete_repo*** ***Delete repositories***, the rest is your choice.
+- Generate a token with the appropriate button ***Generate token***
 
-После нажатия кнопки ***Register application*** в новом окне вы найдете ***Client ID*** для `GITHUB_AUTH_CLIENT_ID` и потребуется сгенерировать кнопкой ***Generate a new client secret*** токен для `GITHUB_AUTH_CLIENT_SECRET`  
-Обратите внимание, что после того как вы покинете страницу, заново посмотреть токен будет нельзя, только генерировать заново и заносить в .env файл.
+The values for `GITHUB_WEBHOOK_TOKEN` and `SECRET_KEY` can be generated with the terminal command `make secretkey` in the project directory or you can make one up.
 
-При работе с Poetry можно использовать SQLite, добавив `DB_ENGINE=SQLite` в .env файл. По умолчанию это значение отсутствует.  
-Если установлена PostgreSQL, задать значения соответствующим переменным ***POSTGRES***.
+The `GITHUB_AUTH_CLIENT_ID` and `GITHUB_AUTH_CLIENT_SECRET` variables are needed for authorization through GitHub.
 
---- 
+You can get the values for them by creating [OAuth application](https://github.com/settings/applications/new):
+- In the ***Application name*** field specify ***hexlet-friends***
+- In the ***Homepage URL*** field specify ***<https://friends.hexlet.io/>***
+- In the ***Authorization callback URL*** field specify ***<http://localhost:8000/auth/github/login>***
+- Leave the rest as default.
 
-### 1.3 Завершение установки  
+After clicking ***Register application*** in the new window you will find ***Client ID*** for `GITHUB_AUTH_CLIENT_ID` and will need to generate with ***Generate a new client secret*** token for `GITHUB_AUTH_CLIENT_SECRET`.
+Note that after you leave the page, you can't look at the token again, you just have to generate it again and put it into an .env file.
+
+You can use SQLite with Poetry by adding `DB_ENGINE=SQLite` to the .env file. By default, this value is not present.
+If PostgreSQL is installed, set values to the corresponding variables ***POSTGRES***.
+
+---
+
+### 1.3 Finishing the installation
 
 #### *Poetry*
-```commandline
+
+```bash
 make setup
 ```
+
 #### *Docker*
-```commandline
+
+
+```bash
 docker-compose run --rm django make setup
 ```
+
 ---
-## 2. Наполнение базы данных  
 
-Получить данные можно через интерфейс панели администрирования либо выполнив описанные команды.  
+## 2. Filling the database
 
-### *Poetry*  
-**По именам организаций:**
-```commandline
+You can get the data through the interface of the administration panel or by running the described commands.
+
+### *Poetry*
+
+**By organization name:**
+
+```bash
 make sync ARGS='ORG [ORG ...]'
 ```
+
 Example:
-```commandline
+
+```bash
 make sync ARGS='Hexlet'
 ```
->Учитывайте, что в таком случае в базу данных будут добавляться все репозитории организации Hexlet. Это займёт продолжительно время. 
 
-**По полным именам репозиториев:**
-```commandline
+>Keep in mind that this will add all repositories of the Hexlet organization to the database. This will take a long time.
+
+**By full repository names:**
+
+```bash
 make sync ARGS='--repo REPO [REPO ...]'
 ```
+
 Example:
-```commandline
+
+```bash
 make sync ARGS='--repo Hexlet/hexlet-friends'
 ```
 
-#### При последующих обновлениях данных:
-```commandline
-make sync  
-```  
+#### On subsequent data updates
+
+```bash
+make sync
+```
 
 ---
 
-## 3. Запуск сервера для разработки
+## 3. Running a server for development
+
 ### Poetry
 
-```
+```bash
 make start
 ```
 
 ### Docker
 
-```
+```bash
 make docker-start
 ```
-            
