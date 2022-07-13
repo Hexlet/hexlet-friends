@@ -13,12 +13,11 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         'repository__full_name',
         'created_at',
         'html_url',
+        'info__state',
     )
     searchable_fields = (
         'info__title',
         'repository__full_name',
-        'created_at',
-        'html_url',
     )
     ordering = sortable_fields[0]
 

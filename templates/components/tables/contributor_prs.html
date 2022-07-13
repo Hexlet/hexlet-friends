@@ -20,8 +20,8 @@
       <a href="{% get_sort_query_string 'created_at' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__is_open' %}">
-      <a href="{% get_sort_query_string 'info__is_open' %}"
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__state' %}">
+      <a href="{% get_sort_query_string 'info__state' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
     </th>
   </tr>
