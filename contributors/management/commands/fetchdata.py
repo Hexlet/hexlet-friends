@@ -1,6 +1,5 @@
 import logging
 import sys
-from contextlib import suppress
 
 import requests
 from django.core import management
@@ -34,7 +33,7 @@ IGNORED_CONTRIBUTORS = tuple(
 session = requests.Session()
 
 
-def create_contributions(   # noqa: C901,WPS231
+def create_contributions(   # noqa: C901,WPS231,WPS210
     repo, contrib_data, user_field=None, id_field=None, type_=None,
 ):
     """Create a contribution record."""
@@ -45,8 +44,9 @@ def create_contributions(   # noqa: C901,WPS231
         contrib_author_login = contrib_author['login']
         if contrib_author_login in IGNORED_CONTRIBUTORS:
             continue
-        if not type_:
-            pr_or_iss = 'pr' if 'pull_request' in contrib else 'iss'
+
+        type_ = 'pr' if type_ == 'iss' and 'pull_request' in contrib else type_
+
         if type_ == 'cit':
             datetime = contrib['commit']['author']['date']
         else:
@@ -61,7 +61,7 @@ def create_contributions(   # noqa: C901,WPS231
                         contrib_author_login, session,
                     ),
                 )[0],
-                'type': type_ or pr_or_iss,
+                'type': type_,
                 'html_url': contrib['html_url'],
                 'created_at': dateparse.parse_datetime(datetime),
             },
@@ -76,15 +76,21 @@ def create_contributions(   # noqa: C901,WPS231
                 additions=commit_stats['additions'],
                 deletions=commit_stats['deletions'],
             )
-        with suppress(NameError):
-            if pr_or_iss:
-                IssueInfo.objects.update_or_create(
-                    issue=contribution,
-                    defaults={
-                        'title': contrib['title'],
-                        'is_open': contrib['state'] == 'open',
-                    },
-                )
+
+        if type_ in {'pr', 'iss'}:
+            state = 'merged' if type_ == 'pr' and github.is_pr_merged(
+                repo.organization,
+                repo,
+                contrib['number'],
+            ) else contrib['state']
+
+            IssueInfo.objects.update_or_create(
+                issue=contribution,
+                defaults={
+                    'title': contrib['title'],
+                    'state': state,
+                },
+            )
 
 
 class Command(management.base.BaseCommand):
@@ -150,6 +156,7 @@ class Command(management.base.BaseCommand):
                     github.get_repo_issues(org, repo, session),
                     user_field='user',
                     id_field='id',
+                    type_='iss',
                 )
 
                 logger.info("Processing commits")
