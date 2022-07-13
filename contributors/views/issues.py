@@ -16,7 +16,7 @@ class ListView(TemplateView):
         repositories = Repository.objects.filter(
             is_visible=True,
             contribution__type='iss',
-            contribution__info__is_open=True,
+            contribution__info__state='open',
         ).distinct().annotate(
             Count('contribution'),
         ).order_by('-contribution__count')
@@ -25,7 +25,7 @@ class ListView(TemplateView):
         for repo in repositories:
             repos_with_issues[repo] = repo.contribution_set.filter(
                 type='iss',
-                info__is_open=True,
+                info__state='open',
             ).order_by('-created_at')
 
         context['repos_with_issues'] = repos_with_issues

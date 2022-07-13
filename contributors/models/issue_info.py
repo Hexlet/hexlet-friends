@@ -6,6 +6,7 @@ class IssueInfo(models.Model):
     """Additional info for an issue or pull request."""
 
     TITLE_LENGTH = 255  # noqa: WPS115
+    STATE_LENGTH = 10  # noqa: WPS115
 
     issue = models.OneToOneField(
         'Contribution',
@@ -14,7 +15,7 @@ class IssueInfo(models.Model):
         related_name='info',
     )
     title = models.CharField(_("title"), max_length=TITLE_LENGTH)
-    is_open = models.BooleanField(_("open"))
+    state = models.CharField(_("state"), max_length=STATE_LENGTH)
 
     class Meta(object):
         verbose_name = _("issue info")
