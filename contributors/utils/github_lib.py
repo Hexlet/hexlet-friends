@@ -18,7 +18,7 @@ def merge_dicts(*dicts):
     return counter
 
 
-class GitHubError(Exception):
+class GitHubError(requests.RequestException):
     """GitHub error."""
 
 
@@ -120,7 +120,7 @@ def get_whole_response_as_json(url, session=None):
     response = req.get(url, headers=get_headers())
     response.raise_for_status()
     if response.status_code == requests.codes.no_content:
-        raise NoContent("204 No Content")
+        raise NoContent("204 No Content", response=response)
     elif response.status_code == requests.codes.accepted:
         raise Accepted("202 Accepted. No cached data. Retry.")
     return response.json()
@@ -193,6 +193,20 @@ def get_repo_prs(owner, repo, session=None):
     url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls'
     query_params = {'state': 'all'}
     return get_one_item_at_a_time(url, query_params, session)
+
+
+def is_pr_merged(owner, repo, pull_number, session=None):
+    """Check pull request status."""
+    url = f'{GITHUB_API_URL}/repos/{owner}/{repo}/pulls/{pull_number}/merge'
+    try:
+        get_whole_response_as_json(url, session)
+    except (NoContent, requests.HTTPError) as exc:
+        status_code = exc.response.status_code
+        if status_code == requests.codes.no_content:
+            return True
+        elif status_code == requests.codes.not_found:
+            return False
+        raise exc
 
 
 def get_repo_issues(owner, repo, session=None):
