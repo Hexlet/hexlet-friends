@@ -82,6 +82,7 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
                 repo.organization,
                 repo,
                 contrib['number'],
+                session,
             ) else contrib['state']
 
             IssueInfo.objects.update_or_create(
