@@ -20,8 +20,8 @@
       <a href="{% get_sort_query_string 'created_at' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__is_open' %}">
-      <a href="{% get_sort_query_string 'info__is_open' %}"
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__state' %}">
+      <a href="{% get_sort_query_string 'info__state' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
     </th>
   </tr>
@@ -33,14 +33,8 @@
       <td>{{ pr.info.title }}</td>
       <td>{{ pr.repository.full_name }}</td>
       <td><a href="{{ pr.html_url }}">{{ pr.html_url }}</a></td>
-      <td>{{ pr.created_at|date:"d.m.Y H:i" }}</td>
-      <td>
-        {% if pr.info.is_open %}
-        {% trans "Open" %}
-        {% else %}
-        {% trans "Closed" %}
-        {% endif %}
-      </td>
+      <td>{{ pr.created_at|date:"d.m.Y" }}</td>
+      <td>{{ pr.info.state|capfirst }}</td>
     </tr>
   {% empty %}
     <tr>
