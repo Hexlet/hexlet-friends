@@ -1,0 +1,48 @@
+{% extends './list_as_table.html' %}
+{% load i18n contrib_extras %}
+
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__title' %}">
+      <a href="{% get_sort_query_string 'info__title' %}"
+        class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
+      <a href="{% get_sort_query_string 'repository__full_name' %}"
+        class="stretched-link text-reset text-decoration-none">{% trans "Repository" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'contributor__login' %}">
+      <a href="{% get_sort_query_string 'contributor__login' %}"
+        class="stretched-link text-reset text-decoration-none">{% trans "Author" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'created_at' %}">
+      <a href="{% get_sort_query_string 'created_at' %}"
+        class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
+    </th>
+    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__state' %}">
+      <a href="{% get_sort_query_string 'info__state' %}"
+        class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
+    </th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for pr in page %}
+    <tr>
+      <th scope="row">{{ pr.num }}</th>
+      <td>
+        <a href="{{ pr.html_url }}">{{ pr.info.title }}</a>
+      </td>
+      <td>{{ pr.repository.full_name }}</td>
+      <td>
+        <a href="{% url 'contributors:contributor_details' pr.contributor.login %}">{{ pr.contributor.login }}</a>
+      </td>
+      <td>{{ pr.created_at|date:"d.m.Y" }}</td>
+      <td>{{ pr.info.state|capfirst }}</td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td class="text-center" colspan="9">{% trans "Nothing found" %}</td>
+    </tr>
+  {% endfor %}
+{% endblock tbody %}

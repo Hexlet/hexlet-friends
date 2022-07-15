@@ -36,6 +36,11 @@
             {% trans "Open Issues" %}
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contributors:pull_requests_list' %}">
+            {% trans "Pull requests" %}
+          </a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto btn-group">
         {% if user.is_authenticated %}

@@ -65,5 +65,10 @@ urlpatterns = [
         views.issues.ListView.as_view(),
         name="open_issues_list",
     ),
+    path(
+        "pull_requests",
+        views.pull_requests.ListView.as_view(),
+        name="pull_requests_list",
+    ),
     path('event-handler', views.webhook.EventHandler.as_view()),
 ]
