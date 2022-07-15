@@ -11,7 +11,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         'info__title',
         'repository__full_name',
         'contributor__login',
-        'html_url',
         'created_at',
         'info__state',
     )
