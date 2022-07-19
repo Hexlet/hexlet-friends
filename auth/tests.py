@@ -60,7 +60,7 @@ class RegistrationPageViewTest(TestCase):
             response.rendered_content,
         )
 
-    def _assert_password_confiramtion(self, form_fields, response):
+    def _assert_password_confirmation(self, form_fields, response):
         self.assertIn(
             str(form_fields['password2'].label),
             response.rendered_content,
