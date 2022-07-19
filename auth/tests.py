@@ -28,7 +28,7 @@ class RegistrationPageViewTest(TestCase):
         self._assert_email(form_fields, response)
         self._assert_username(form_fields, response)
         self._assert_password(form_fields, response)
-        self._assert_password_confiramtion(form_fields, response)
+        self._assert_password_confirmation(form_fields, response)
 
     def _assert_email(self, form_fields, response):
         self.assertIn(
