@@ -18,7 +18,7 @@ django-crispy-forms = "^1.9.1"
 django-cte = "^1.1.5"
 psycopg2 = { version = "^2.8", optional = true }
 psycopg2-binary = { version = "^2.8.6", optional = true }
-PyJWT = "^2.3.0"
+PyJWT = "^2.4.0"
 cryptography = "^36.0.1"
 
 [tool.poetry.dev-dependencies]
