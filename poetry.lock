@@ -789,7 +789,7 @@ psycopg2-binary = ["psycopg2-binary"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "57f11f9d6cc5985e72337fedf54a61362fbaec04ec0af61c7cf7537f38173f0c"
+content-hash = "086c0c5d60a0ebf8b6fe54e4a28de91e84ca70930f67ee89f0f9c9e887aa9ac9"
 
 [metadata.files]
 apscheduler = [
