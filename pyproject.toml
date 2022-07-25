@@ -6,8 +6,8 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-
-python-dotenv = "^0.13"
+Django = "^4.0.6"
+python-dotenv = "^0.20.0"
 requests = "^2.22"
 gunicorn = "^20"
 dj-database-url = "^0.5"
@@ -20,7 +20,7 @@ psycopg2 = { version = "^2.8", optional = true }
 psycopg2-binary = { version = "^2.8.6", optional = true }
 PyJWT = "^2.4.0"
 cryptography = "^36.0.1"
-Django = "^4.0.6"
+
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.14"
