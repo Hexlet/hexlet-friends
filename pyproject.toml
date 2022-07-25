@@ -21,12 +21,10 @@ psycopg2-binary = { version = "^2.9.3", optional = true }
 PyJWT = "^2.4.0"
 cryptography = "^37.0.4"
 
-
-
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.16.1"
 Faker = "^13.15.1"
-coverage = "^5.2"
+coverage = "^6.4.2"
 
 [tool.poetry.extras]
 psycopg2 = ["psycopg2"]
