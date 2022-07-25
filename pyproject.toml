@@ -24,7 +24,7 @@ cryptography = "^37.0.4"
 
 
 [tool.poetry.dev-dependencies]
-wemake-python-styleguide = "^0.14"
+wemake-python-styleguide = "^0.16.1"
 faker = "^4.1"
 coverage = "^5.2"
 
