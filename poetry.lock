@@ -195,7 +195,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "django-cte"
-version = "1.1.5"
+version = "1.2.1"
 description = "Common Table Expressions (CTE) for Django"
 category = "main"
 optional = false
@@ -789,7 +789,7 @@ psycopg2-binary = ["psycopg2-binary"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "30989b787d7a1876cd0502b1569a7c9b3648d6bf41928f4b37916949df4dae92"
+content-hash = "d05672e5ba3dac8ace3afe3951434e3c923696b48fccf00f1db786972bd87382"
 
 [metadata.files]
 apscheduler = []
@@ -963,10 +963,7 @@ django-crispy-forms = [
     {file = "django-crispy-forms-1.14.0.tar.gz", hash = "sha256:35887b8851a931374dd697207a8f56c57a9c5cb9dbf0b9fa54314da5666cea5b"},
     {file = "django_crispy_forms-1.14.0-py3-none-any.whl", hash = "sha256:bc4d2037f6de602d39c0bc452ac3029d1f5d65e88458872cc4dbc01c3a400604"},
 ]
-django-cte = [
-    {file = "django-cte-1.1.5.tar.gz", hash = "sha256:32296007cfc820d55b01e2fdfcc9d7c39e0f470cf4c64ac7d321e7aadf8f9a3b"},
-    {file = "django_cte-1.1.5-py2.py3-none-any.whl", hash = "sha256:eceb36657efcf9f0a10b1be0da1ca76fe37c73f015962457edb54d356d87a4b4"},
-]
+django-cte = []
 docutils = [
     {file = "docutils-0.17.1-py2.py3-none-any.whl", hash = "sha256:cf316c8370a737a022b72b56874f6602acf974a37a9fba42ec2876387549fc61"},
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
