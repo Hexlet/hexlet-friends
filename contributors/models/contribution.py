@@ -1,6 +1,5 @@
 from dateutil import relativedelta
 from django.db import models
-from django.db.models import Count
 from django.db.models.functions import ExtractMonth
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -27,7 +26,7 @@ class ContributionManager(CTEManager):
             created_at__gte=date_eleven_months_ago,
         ).annotate(
             month=ExtractMonth('created_at'),
-        ).values('month', 'type').annotate(count=Count('id'))
+        ).values('month', 'type').annotate(count=models.Count('id'))
 
         sums_of_contribs_by_months = misc.group_contribs_by_months(
             months_with_contrib_sums,
