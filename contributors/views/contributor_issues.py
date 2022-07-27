@@ -21,7 +21,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     )
     ordering = sortable_fields[0]
 
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: WPS615
         """Get issues from contributions.
 
         Returns:
