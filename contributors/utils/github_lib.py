@@ -182,9 +182,9 @@ def get_repo_commits_except_merges(
 ):
     """Return all commits for a repository except for merge commits."""
     return (
-        commit for commit in get_repo_commits(
-            owner, repo, query_params, session,
-        ) if len(commit['parents']) < 2
+        commit
+        for commit in get_repo_commits(owner, repo, query_params, session)
+        if len(commit['parents']) < 2
     )
 
 
@@ -350,7 +350,8 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
 
     try:
         contributor_stats = [
-            stats for stats in contributors
+            stats
+            for stats in contributors
             if stats['author']['id'] == contributor_id
         ][0]
     except IndexError:
