@@ -17,7 +17,7 @@ class OrgRepositoryList(repositories.ListView):
         ('contributors_count', _("Contributors")),
     )
 
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: WPS615
         """Get a dataset."""
         self.organization = get_object_or_404(
             Organization, name=self.kwargs['slug'],

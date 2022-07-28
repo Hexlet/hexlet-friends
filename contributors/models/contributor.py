@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.db.models import Count, OuterRef, Q, Subquery, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -23,14 +22,24 @@ class ContributorQuerySet(CTEQuerySet):
     def with_contributions(self):
         """Return a list of contributors annotated with contributions."""
         return self.annotate(
-            commits=Count('contribution', filter=Q(contribution__type='cit')),
-            additions=Coalesce(Sum('contribution__stats__additions'), 0),
-            deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
-            pull_requests=Count(
-                'contribution', filter=Q(contribution__type='pr'),
+            commits=models.Count(
+                'contribution', filter=models.Q(contribution__type='cit'),
             ),
-            issues=Count('contribution', filter=Q(contribution__type='iss')),
-            comments=Count('contribution', filter=Q(contribution__type='cnt')),
+            additions=Coalesce(
+                models.Sum('contribution__stats__additions'), 0,
+            ),
+            deletions=Coalesce(
+                models.Sum('contribution__stats__deletions'), 0,
+            ),
+            pull_requests=models.Count(
+                'contribution', filter=models.Q(contribution__type='pr'),
+            ),
+            issues=models.Count(
+                'contribution', filter=models.Q(contribution__type='iss'),
+            ),
+            comments=models.Count(
+                'contribution', filter=models.Q(contribution__type='cnt'),
+            ),
         )
 
     def for_month(self):
@@ -41,9 +50,9 @@ class ContributorQuerySet(CTEQuerySet):
 
     def visible_with_monthly_stats(self):
         """Get contribution stats for visible contributors."""
-        visible_contributors = self.visible().filter(id=OuterRef('id'))
+        visible_contributors = self.visible().filter(id=models.OuterRef('id'))
         return self.for_month().filter(
-            id__in=Subquery(visible_contributors.values('id')),
+            id__in=models.Subquery(visible_contributors.values('id')),
         ).with_contributions()
 
 

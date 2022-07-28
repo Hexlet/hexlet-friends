@@ -82,7 +82,7 @@ class PaginationMixin(MultipleObjectMixin):
 class TableSortSearchMixin(MultipleObjectMixin):
     """A mixin for table sort and search."""
 
-    def set_ordering(self, ordering=None):
+    def set_ordering(self, ordering=None):  # noqa: WPS615
         """Set ordering."""
         sortable_fields = []
         for field in self.sortable_fields:
@@ -150,7 +150,7 @@ class TableSortSearchAndPaginationMixin(TableSortSearchMixin, PaginationMixin):
 class LabelsMixin(object):
     """A mixin for labels."""
 
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: WPS615
         """Get a dataset."""
         labels_param = self.request.GET.get('labels')
         if labels_param:
