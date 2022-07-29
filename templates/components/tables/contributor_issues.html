@@ -4,23 +4,23 @@
 {% block thead %}
   <tr>
     <th scope="col">#</th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__title' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'info__title' %}">
       <a href="{% get_sort_query_string 'info__title' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
       <a href="{% get_sort_query_string 'repository__full_name' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Repository" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'html_url' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'html_url' %}">
       <a href="{% get_sort_query_string 'html_url' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "URL" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'created_at' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'created_at' %}">
       <a href="{% get_sort_query_string 'created_at' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__state' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'info__state' %}">
       <a href="{% get_sort_query_string 'info__state' %}"
          class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
     </th>

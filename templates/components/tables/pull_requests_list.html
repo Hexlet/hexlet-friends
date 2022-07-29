@@ -2,25 +2,25 @@
 {% load i18n contrib_extras %}
 
 {% block thead %}
-  <tr>
+  <tr class="d-xl-flex">
     <th scope="col">#</th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__title' %}">
+    <th scope="col" class="col-3 sortable pr-4" data-sorting="{% get_ordering_direction 'info__title' %}">
       <a href="{% get_sort_query_string 'info__title' %}"
         class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
+    <th scope="col" class="col-3 sortable pr-4" data-sorting="{% get_ordering_direction 'repository__full_name' %}">
       <a href="{% get_sort_query_string 'repository__full_name' %}"
         class="stretched-link text-reset text-decoration-none">{% trans "Repository" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'contributor__login' %}">
+    <th scope="col" class="col-2 sortable pr-4" data-sorting="{% get_ordering_direction 'contributor__login' %}">
       <a href="{% get_sort_query_string 'contributor__login' %}"
         class="stretched-link text-reset text-decoration-none">{% trans "Author" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'created_at' %}">
+    <th scope="col" class="col-2 text-nowrap sortable pr-4" data-sorting="{% get_ordering_direction 'created_at' %}">
       <a href="{% get_sort_query_string 'created_at' %}"
         class="stretched-link text-reset text-decoration-none">{% trans "Creation date" %}</a>
     </th>
-    <th scope="col" class="sortable" data-sorting="{% get_ordering_direction 'info__state' %}">
+    <th scope="col" class="col sortable pr-4" data-sorting="{% get_ordering_direction 'info__state' %}">
       <a href="{% get_sort_query_string 'info__state' %}"
         class="stretched-link text-reset text-decoration-none">{% trans "Status" %}</a>
     </th>
@@ -28,17 +28,17 @@
 {% endblock thead %}
 {% block tbody %}
   {% for pr in page %}
-    <tr>
+    <tr class="d-xl-flex">
       <th scope="row">{{ pr.num }}</th>
-      <td>
+      <td class="col-3">
         <a href="{{ pr.html_url }}">{{ pr.info.title }}</a>
       </td>
-      <td>{{ pr.repository.full_name }}</td>
-      <td>
+      <td class="col-3">{{ pr.repository.full_name }}</td>
+      <td class="col-2">
         <a href="{% url 'contributors:contributor_details' pr.contributor.login %}">{{ pr.contributor.login }}</a>
       </td>
-      <td>{{ pr.created_at|date:"d.m.Y" }}</td>
-      <td>{{ pr.info.state|capfirst }}</td>
+      <td class="col-2">{{ pr.created_at|date:"d.m.Y" }}</td>
+      <td class="col">{{ pr.info.state|capfirst }}</td>
     </tr>
   {% empty %}
     <tr>

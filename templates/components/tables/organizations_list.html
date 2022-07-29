@@ -2,26 +2,26 @@
 {% load i18n contrib_extras %}
 
 {% block thead %}
-  <tr class="d-flex">
-    <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'name' %}">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'name' %}">
       <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
-    <th scope="col" class="col-3 sortable" data-sorting="{% get_ordering_direction 'repository_count' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'repository_count' %}">
       <a href="{% get_sort_query_string 'repository_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Repositories" %}</a>
     </th>
   </tr>
 {% endblock thead %}
 {% block tbody %}
   {% for organization in page %}
-    <tr class="d-flex">
-      <th scope="row" class="col-1">{{ organization.num }}</th>
-      <td class="col">
+    <tr>
+      <th scope="row">{{ organization.num }}</th>
+      <td>
         <a href="{{ organization.get_absolute_url }}">
           {{ organization.name }}
         </a>
       </td>
-      <td class="col-3">{{ organization.repository_count }}</td>
+      <td>{{ organization.repository_count }}</td>
     </tr>
   {% empty %}
     <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>

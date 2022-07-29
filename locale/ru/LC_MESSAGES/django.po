@@ -421,6 +421,7 @@ msgid "Filter by name"
 msgstr "Фильтр по имени"
 
 #: templates/contributor_details.html
+#: templates/components/pull_requests_list.html
 msgid "Repository"
 msgstr "Репозиторий"
 
@@ -475,3 +476,19 @@ msgstr "Зарегистрироваться"
 
 #~ msgid "Recently active contributors"
 #~ msgstr "Недавно активные участники"
+
+#: templates/components/pull_requests_list.html
+msgid "Author"
+msgstr "Автор"
+
+#: templates/components/pull_requests_list.html
+msgid "Status"
+msgstr "Статус"
+
+#: templates/components/pull_requests_list.html
+msgid "Creation date"
+msgstr "Дата создания"
+
+#: templates/components/pull_requests_list.html
+msgid "Title"
+msgstr "Заголовок"

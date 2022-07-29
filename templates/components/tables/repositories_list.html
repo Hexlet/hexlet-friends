@@ -2,46 +2,46 @@
 {% load i18n contrib_extras %}
 
 {% block thead %}
-  <tr class="d-flex">
-    <th scope="col" class="col-1">#</th>
-    <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'name' %}">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'name' %}">
       <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
     {% if not organization %}
-      <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'organization' %}">
+      <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'organization' %}">
         <a href="{% get_sort_query_string 'organization' %}" class="stretched-link text-reset text-decoration-none">{% trans "Organization" %}</a>
       </th>
     {% endif %}
     {% if not project %}
-      <th scope="col" class="col sortable" data-sorting="{% get_ordering_direction 'project' %}">
+      <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'project' %}">
         <a href="{% get_sort_query_string 'project' %}" class="stretched-link text-reset text-decoration-none">{% trans "Project" %}</a>
       </th>
     {% endif %}
-    <th scope="col" class="col-2 text-nowrap sortable" data-sorting="{% get_ordering_direction 'pull_requests' %}">
+    <th scope="col" class="text-nowrap sortable pr-4" data-sorting="{% get_ordering_direction 'pull_requests' %}">
       <a href="{% get_sort_query_string 'pull_requests' %}" class="stretched-link text-reset text-decoration-none">{% trans "Pull requests" %}</a>
     </th>
-    <th scope="col" class="col-2 sortable" data-sorting="{% get_ordering_direction 'issues' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'issues' %}">
       <a href="{% get_sort_query_string 'issues' %}" class="stretched-link text-reset text-decoration-none">{% trans "Issues" %}</a>
     </th>
-    <th scope="col" class="col-2 sortable" data-sorting="{% get_ordering_direction 'contributors_count' %}">
+    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'contributors_count' %}">
       <a href="{% get_sort_query_string 'contributors_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Contributors" %}</a>
     </th>
   </tr>
 {% endblock thead %}
 {% block tbody %}
   {% for repository in page %}
-    <tr class="d-flex">
-      <th scope="row" class="col-1">{{ repository.num }}</th>
-      <td class="col text-truncate" title="{{ repository.name }}">
+    <tr>
+      <th scope="row">{{ repository.num }}</th>
+      <td class="text-truncate" title="{{ repository.name }}">
         <a href="{{ repository.get_absolute_url }}">
           {{ repository.name }}
         </a>
       </td>
       {% if not organization %}
-        <td class="col">{{ repository.organization.name }}</td>
+        <td>{{ repository.organization.name }}</td>
       {% endif %}
       {% if not project %}
-        <td class="col">
+        <td>
           {% if repository.project %}
             <a href="{{ repository.project.get_absolute_url }}">
               {{ repository.project.name }}
@@ -51,9 +51,9 @@
           {% endif %}
         </td>
       {% endif %}
-      <td class="col-2">{{ repository.pull_requests }}</td>
-      <td class="col-2">{{ repository.issues }}</td>
-      <td class="col-2">{{ repository.contributors_count }}</td>
+      <td>{{ repository.pull_requests }}</td>
+      <td>{{ repository.issues }}</td>
+      <td>{{ repository.contributors_count }}</td>
     </tr>
   {% empty %}
     <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>

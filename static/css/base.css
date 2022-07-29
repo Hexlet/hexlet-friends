@@ -86,7 +86,7 @@ th.sortable {
 th.sortable::after {
   position: absolute;
   top: 0.8em;
-  right: 0.8em;
+  right: 0.5em;
 }
 
 th.sortable[data-sorting="desc"]::after {
