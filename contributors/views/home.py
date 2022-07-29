@@ -3,6 +3,8 @@ from django.views.generic.base import TemplateView
 from contributors.models import Contribution, Contributor
 from contributors.utils.misc import datetime_month_ago
 
+LATEST_ISSUES_COUNT = 11
+
 
 def get_top10(dataset, contrib_type):
     """Return top 10 contributors of the type from the dataset."""
@@ -30,7 +32,7 @@ class HomeView(TemplateView):
         latest_issues = Contribution.objects.filter(
             repository__is_visible=True,
             type__in=['pr', 'iss'],
-        ).order_by('-created_at')[:11]
+        ).order_by('-created_at')[:LATEST_ISSUES_COUNT]
 
         context.update(
             {
@@ -42,7 +44,7 @@ class HomeView(TemplateView):
                 'dt_month_ago': datetime_month_ago(),
                 'contributions_for_year': Contribution.objects.for_year(),
                 'latest_issues': latest_issues,
-            }
+            },
         )
 
         return context
