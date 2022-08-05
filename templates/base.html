@@ -6,6 +6,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Open Graph tags -->
+    <!-- Required -->
+  <meta property="og:title" content="{% block og_title %}{{ PROJECT_NAME }}{% endblock og_title %}" />
+  <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}" />
+  <meta property="og:image" content="{% block og_image %}{% static '/images/og_images/default_og_image.jpg' %}{% endblock og_image %}" />
+  <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock og_url %}" />
+    <!-- Optional -->
+  <meta property="og:description"
+  content="{% block og_description %}{% trans "A service to track contributions from members of the Hexlet community to the Hexlet open-source projects on GitHub" %}{% endblock og_description %}" />
+  <meta property="og:locale" content="{{ LANGUAGE_CODE }}" />
+  <meta property="og:locale:alternate" content="en-gb" />
+  <meta property="og:locale:alternate" content="ru-ru" />
+  <!-- End Open Graph tags -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">

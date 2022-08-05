@@ -2,6 +2,9 @@
 {% load i18n %}
 
 {% block title %}{% trans "Projects" %}{% endblock %}
+<!-- Open Graph tags -->
+{% block og_title %}{% trans "Projects" %}{% endblock og_title %}
+<!-- End Open Graph tags -->
 {% block header %}{% trans "Projects" %}{% endblock %}
 {% block content %}
 {% for project in projects_list %}

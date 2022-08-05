@@ -475,3 +475,23 @@ msgstr "Зарегистрироваться"
 
 #~ msgid "Recently active contributors"
 #~ msgstr "Недавно активные участники"
+
+#: templates/base.html
+msgid "A service to track contributions from members of the Hexlet community to the Hexlet open-source projects on GitHub"
+msgstr "Сервис для отслеживания вкладов членов сообщества Hexlet в проекты с открытым исходным кодов Hexlet на GitHub"
+
+#: templates/contributor_details.html
+msgid "Contributor:"
+msgstr "Участник:"
+
+#: templates/contributor_issues.html
+msgid "Issues by:"
+msgstr "Issues пользователя"
+
+#: templates/contributor_prs.html
+msgid "Pull requests by:"
+msgstr "Пулл реквесты пользователя"
+
+#: templates/organization_details.html
+msgid "Details for organization:"
+msgstr "Детали организации"

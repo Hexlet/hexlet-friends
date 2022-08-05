@@ -2,6 +2,9 @@
 {% load i18n %}
 
 {% block title %}{% trans "Open Issues" %}{% endblock %}
+<!-- Open Graph tags -->
+{% block og_title %}{% trans "Open Issues" %}{% endblock og_title %}
+<!-- End Open Graph tags -->
 {% block content %}
   <h1>{% trans "Open Issues" %}</h1>
   <div class="accordion" id="open-issues">

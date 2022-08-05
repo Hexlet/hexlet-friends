@@ -2,6 +2,9 @@
 {% load i18n %}
 
 {% block title %}{{ repository.full_name }}{% endblock %}
+<!-- Open Graph tags -->
+{% block og_title %}{% trans "Repository" %} {{ repository.name }}{% endblock og_title %}
+<!-- End Open Graph tags -->
 {% block header %}{{ repository.name }}{% endblock %}
 {% block additional %}
   <p class="h5">
