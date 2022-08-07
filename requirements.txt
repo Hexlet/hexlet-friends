@@ -4,6 +4,7 @@ backports.zoneinfo==0.2.1; python_version < "3.9" and python_version >= "3.8"
 certifi==2021.5.30; python_version >= "3.7" and python_version < "4"
 cffi==1.15.0; python_version >= "3.6"
 charset-normalizer==2.1.0; python_version >= "3.7" and python_version < "4" and python_full_version >= "3.6.0"
+crispy-bootstrap5==0.6; python_version >= "3.6"
 cryptography==37.0.4; python_version >= "3.6"
 dj-database-url==0.5.0
 django-crispy-forms==1.14.0; python_version >= "3.7"

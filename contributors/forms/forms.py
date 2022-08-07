@@ -21,7 +21,7 @@ class TableSortSearchForm(forms.Form):
         """Control form attributes and its layout."""
         helper = FormHelper()
         helper.form_method = 'get'
-        helper.form_class = 'form-inline my-3'
+        helper.form_class = 'd-flex'
         helper.layout = Layout(
             Field('sort'),
             Field('labels'),
@@ -30,7 +30,7 @@ class TableSortSearchForm(forms.Form):
                 StrictButton(
                     _("Search"),
                     type='submit',
-                    css_class='btn-primary',
+                    css_class='btn btn-outline-primary',
                 ),
             ),
         )
