@@ -26,7 +26,7 @@ class TableSortSearchForm(forms.Form):
             Field('sort'),
             Field('labels'),
             FieldWithButtons(
-                Field('search', css_class='form-control', placeholder=_("Filter by name")),
+                Field('search', placeholder=_("Filter by name")),
                 StrictButton(
                     _("Search"),
                     type='submit',
