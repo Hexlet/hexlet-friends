@@ -4,26 +4,26 @@
 {% block thead %}
   <tr>
     <th scope="col">#</th>
-    <th scope="col" class="sortable ps-4" data-sorting="{% get_ordering_direction 'name' %}">
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'name' %}">
       <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
     {% if not organization %}
-      <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'organization' %}">
+      <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'organization' %}">
         <a href="{% get_sort_query_string 'organization' %}" class="stretched-link text-reset text-decoration-none">{% trans "Organization" %}</a>
       </th>
     {% endif %}
     {% if not project %}
-      <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'project' %}">
+      <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'project' %}">
         <a href="{% get_sort_query_string 'project' %}" class="stretched-link text-reset text-decoration-none">{% trans "Project" %}</a>
       </th>
     {% endif %}
-    <th scope="col" class="text-nowrap sortable pr-4" data-sorting="{% get_ordering_direction 'pull_requests' %}">
+    <th scope="col" class="text-nowrap sortable pe-4" data-sorting="{% get_ordering_direction 'pull_requests' %}">
       <a href="{% get_sort_query_string 'pull_requests' %}" class="stretched-link text-reset text-decoration-none">{% trans "Pull requests" %}</a>
     </th>
-    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'issues' %}">
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'issues' %}">
       <a href="{% get_sort_query_string 'issues' %}" class="stretched-link text-reset text-decoration-none">{% trans "Issues" %}</a>
     </th>
-    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'contributors_count' %}">
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'contributors_count' %}">
       <a href="{% get_sort_query_string 'contributors_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Contributors" %}</a>
     </th>
   </tr>
