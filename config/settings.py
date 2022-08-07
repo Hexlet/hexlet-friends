@@ -203,8 +203,6 @@ GITHUB_WEBHOOK_TOKEN = os.getenv('GITHUB_WEBHOOK_TOKEN')
 GTM_ID = os.environ.get('GTM_ID')
 YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION')
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 TEXT_COLUMNS = ('name', 'organization', 'project', 'login')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
