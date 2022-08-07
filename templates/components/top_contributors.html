@@ -6,7 +6,7 @@
       <span class="top-list-number">{{ forloop.counter }}. </span>
       <a href="{{ contributor.get_absolute_url }}">{{ contributor }}</a>
       <span class="text-muted">{% if contributor.name %} | {{ contributor.name }}{% endif %}</span>
-      <span class="badge badge-pill badge-secondary">{{ contributor|get:contrib_type }}</span>
+      <span class="badge rounded-pill bg-secondary">{{ contributor|get:contrib_type }}</span>
     </li>
   {% endfor %}
 </ul>
