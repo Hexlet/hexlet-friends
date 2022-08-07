@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'contributors.apps.ContributorsConfig',
     'auth.apps.AuthConfig',
     'crispy_forms',
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -91,7 +92,6 @@ LOGIN_REDIRECT_URL = 'contributors:home'
 
 LOGOUT_REDIRECT_URL = 'contributors:home'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -124,7 +124,6 @@ CONN_MAX_AGE = 500
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config(conn_max_age=CONN_MAX_AGE)
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -155,7 +154,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -178,7 +176,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -187,7 +184,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 
 # Project specific settings
 
@@ -210,3 +206,7 @@ YANDEX_VERIFICATION = os.environ.get('YANDEX_VERIFICATION')
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEXT_COLUMNS = ('name', 'organization', 'project', 'login')
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

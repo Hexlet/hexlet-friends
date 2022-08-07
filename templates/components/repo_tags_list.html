@@ -1,5 +1,11 @@
 {% load i18n contrib_extras %}
 
-{% for label in labels %}
-  <a href="{% url 'contributors:repositories_list' %}{% get_label_query_string label|lower %}" class="badge">{{ label }}</a>
-{% endfor %}
+<div class="my-3">
+    {% for label in labels %}
+        <a href="{% url 'contributors:repositories_list' %}{% get_label_query_string label|lower %}"
+           class="text-decoration-none">
+            <span class="badge bg-primary">{{ label }}</span>
+        </a>
+    {% endfor %}
+</div>
+

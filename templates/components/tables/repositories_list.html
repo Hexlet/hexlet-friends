@@ -4,7 +4,7 @@
 {% block thead %}
   <tr>
     <th scope="col">#</th>
-    <th scope="col" class="sortable pr-4" data-sorting="{% get_ordering_direction 'name' %}">
+    <th scope="col" class="sortable ps-4" data-sorting="{% get_ordering_direction 'name' %}">
       <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
     </th>
     {% if not organization %}
