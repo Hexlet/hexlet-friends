@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="{% url 'contributors:home' %}">{{ PROJECT_NAME }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             {% trans "Contributors" %}
           </a>
           <div class="dropdown-menu">
@@ -45,7 +45,7 @@
       <ul class="navbar-nav ml-auto btn-group">
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               {{ user.username }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -68,7 +68,7 @@
         {% endif %}
       </ul>
       <ul class="navbar-nav btn-group">
-        <a class="nav-link dropdown-toggle" data-toggle='dropdown' role='button' aria-expanded='false'>
+        <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' role='button' aria-expanded='false'>
           <img class="mt-auto" src="{% static "images/locale_icons/"|add:LANGUAGE_CODE|add:".svg" %}"
           alt="current language is {{ LANGUAGE_CODE }}" width="25">
           {{ LANGUAGE_CODE|upper }}
