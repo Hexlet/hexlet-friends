@@ -185,7 +185,22 @@ caption.app-header {
   list-style-type: none;
 }
 
-.accordion .card-header
-{
+.accordion .card-header {
   cursor: pointer;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+}
+
+.text-underline-hover:hover {
+  text-decoration: underline;
+}
+
+a:not([class]) {
+  text-decoration: none;
+}
+
+a:not([class]):hover {
+  text-decoration: underline;
 }

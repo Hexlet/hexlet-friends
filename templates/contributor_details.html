@@ -12,7 +12,9 @@
         <div class="card-body">
           {% if contributor.name %}<h1 class="h4 card-title">{{ contributor.name }}</h1>{% endif %}
           <h2 class="h5 card-subtitle font-weight-light">{{ contributor.login }}</h2>
-          <a href="{{ contributor.html_url }}" class="card-link badge badge-dark">GitHub</a>
+          <a href="{{ contributor.html_url }}">
+            <span class="badge bg-dark">GitHub</span>
+          </a>
         </div>
         <nav class="nav">
           <a class="nav-link" href="{% url 'contributors:contributor_pullrequests' contributor.login %}">
