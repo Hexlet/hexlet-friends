@@ -482,19 +482,19 @@ msgid "A service to track contributions from members of the Hexlet community to 
 msgstr "Сервис для отслеживания вкладов членов сообщества Hexlet в проекты с открытым исходным кодов Hexlet на GitHub"
 
 #: templates/contributor_details.html
-msgid "Contributor:"
-msgstr "Участник:"
+msgid "Contributor"
+msgstr "Участник"
 
 #: templates/contributor_issues.html
-msgid "Issues by:"
+msgid "Issues by"
 msgstr "Issues пользователя"
 
 #: templates/contributor_prs.html
-msgid "Pull requests by:"
+msgid "Pull requests by"
 msgstr "Пулл реквесты пользователя"
 
 #: templates/organization_details.html
-msgid "Details for organization:"
+msgid "Details for organization"
 msgstr "Детали организации"
 
 #: templates/components/pull_requests_list.html
