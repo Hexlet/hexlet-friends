@@ -4,6 +4,9 @@
   {% include 'components/activity_chart/scripts.html' %}
 {% endblock head_scripts %}
 {% block title %}{{ contributor.login }}{% endblock %}
+<!-- Open Graph tags -->
+{% block og_title %}{% trans "Contributor" %} {{ contributor.login }}{% endblock og_title %}
+<!-- End Open Graph tags -->
 {% block content %}
   <div class="row">
     <div class="col-md-4">

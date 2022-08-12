@@ -2,6 +2,9 @@
 {% load i18n %}
 
 {% block title %}{{ project.name }}{% endblock %}
+<!-- Open Graph tags -->
+{% block og_title %}{{ project.name }}{% endblock og_title %}
+<!-- End Open Graph tags -->
 {% block additional %}
   <h2>{% trans "Project" %} {{ project.name }}</h2>
     <p>
