@@ -25,6 +25,7 @@ class RepositoryAdmin(base.ModelAdmin):
                 'name',
                 'full_name',
                 'html_url',
+                'owner',
                 'organization',
                 'project',
             ),
@@ -33,6 +34,7 @@ class RepositoryAdmin(base.ModelAdmin):
     list_display = (
         'id',
         'name',
+        'owner',
         'organization',
         'project',
         'is_tracked',

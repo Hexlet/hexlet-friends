@@ -185,7 +185,11 @@ msgstr "полное имя"
 
 #: contributors/models/repository.py
 msgid "labels"
-msgstr ""
+msgstr "лейблы"
+
+#: contributors/models/repository.py
+msgid "owner"
+msgstr "владелец"
 
 #: contributors/models/repository.py
 msgid "repositories"
@@ -425,6 +429,11 @@ msgstr "Автор"
 #: templates/repository_details.html
 msgid "Organization"
 msgstr "Организация"
+
+#: templates/components/tables/repositories_list.html
+#: templates/project_details.html templates/repository_details.html
+msgid "Owner"
+msgstr "Владелец"
 
 #: templates/components/tables/repositories_list.html
 #: templates/project_details.html templates/repository_details.html
