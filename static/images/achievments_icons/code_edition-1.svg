@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>achievement-code_edition-1</title>
+    <g id="achievement-code_edition-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.75" stroke-opacity="0.25">
+        <path d="M270,10 L30,10 C19,10 10,19 10,30 L10,270 C10,281 19,290 30,290 L270,290 C281,290 290,281 290,270 L290,30 C290,19 281,10 270,10 Z M270,270 L30,270 L30,30 L270,30 L270,270 Z" id="Shape" stroke="#000000" fill="#07A700" fill-rule="nonzero"></path>
+        <polygon id="Path" stroke="#000000" fill="#07A700" fill-rule="nonzero" points="77.5 102.5 40 102.5 40 77.5 77.5 77.5 77.5 40 102.5 40 102.5 77.5 140 77.5 140 102.5 102.5 102.5 102.5 140 77.5 140"></polygon>
+        <polygon id="Path" stroke="#000000" fill="#07A700" fill-rule="nonzero" points="260 222 160 222 160 197 260 197"></polygon>
+    </g>
+</svg>

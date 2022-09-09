@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300px" height="300px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>achievement-issue-1</title>
+    <g id="achievement-issue-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.75" stroke-opacity="0.25">
+        <path d="M150,32 C215.003509,32 268,84.9964912 268,150 C268,215.003509 215.003509,268 150,268 C84.8776576,267.88605 32.1139501,215.122342 32,150 C32,84.9964912 84.9964912,32 150,32 Z M150,5 C70.0428571,5 5,70.0428571 5,150 C5,229.957143 70.0428571,295 150,295 C229.957143,295 295,229.957143 295,150 C295,70.0428571 229.957143,5 150,5 Z M170,67 L129,67 L129,171 L170,171 L170,67 Z M149.5,192 C138.178163,192 129,201.178163 129,212.5 C129,223.821837 138.178163,233 149.5,233 C160.821837,233 170,223.821837 170,212.5 C170,201.178163 160.821837,192 149.5,192 Z" id="Combined-Shape" stroke="#000000" fill="#07A700" fill-rule="nonzero"></path>
+    </g>
+</svg>
