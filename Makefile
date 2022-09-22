@@ -43,7 +43,7 @@ test-coverage-report-xml:
 
 check: lint test requirements.txt
 
-start: migrate transcompile
+start:
 	poetry run python manage.py runserver 127.0.0.1:8000
 
 docker-start:
