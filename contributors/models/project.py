@@ -3,7 +3,6 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from contributors.models.base import CommonFields
-import contributors.models.contribution as contribution
 
 
 class Project(CommonFields):
@@ -20,32 +19,31 @@ class Project(CommonFields):
         return reverse('contributors:project_details', args=[self.pk])
 
     def pull_requests(self):
-        """Return pull_requests to repositories within a project"""
-
-        return contribution.Contribution.objects.filter(
+        """Return pull_requests to repositories within a project."""
+        return sum([repository.contribution_set.filter(
             repository__is_visible=True,
             contributor__is_visible=True,
             repository__project=self,
             type='pr',
         ).aggregate(
-            count=models.Count('id')
-            ).get('count')
+            count=models.Count('id'),
+        ).get('count') for repository in self.repository_set.all()
+        ])
 
     def issues(self):
-        """Return issues of repositories within a project"""
-
-        return contribution.Contribution.objects.filter(
+        """Return issues of repositories within a project."""
+        return sum([repository.contribution_set.filter(
             repository__is_visible=True,
             contributor__is_visible=True,
             repository__project=self,
             type='iss',
         ).aggregate(
-            count=models.Count('id')
-            ).get('count')
+            count=models.Count('id'),
+        ).get('count') for repository in self.repository_set.all()
+        ])
 
     def contributors_count(self):
-        """Return a number of contributors within a project"""
-
+        """Return a number of contributors within a project."""
         return self.repository_set.aggregate(
-            count=models.Count('contributors', distinct=True)
+            count=models.Count('contributors', distinct=True),
         ).get('count')

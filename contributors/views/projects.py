@@ -1,5 +1,5 @@
-from django.views import generic
 from django.utils.translation import gettext_lazy as _
+from django.views import generic
 
 from contributors.models import Project
 from contributors.views.mixins import TableSortSearchAndPaginationMixin

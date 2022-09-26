@@ -1,11 +1,11 @@
-from contributors.models import Project
-from contributors.views import repositories
 from dateutil import relativedelta
-from django.utils import timezone
 from django.db import models
 from django.db.models.functions import ExtractMonth
-from contributors.models import Contribution
+from django.utils import timezone
+
+from contributors.models import Contribution, Project
 from contributors.utils import misc
+from contributors.views import repositories
 
 
 class ProjectRepositoryList(repositories.ListView):
