@@ -1,7 +1,7 @@
 from django.views.generic.base import TemplateView
 
 from contributors.models import Contribution, Contributor
-from contributors.utils.misc import datetime_month_ago
+from contributors.utils.misc import datetime_month_ago, datetime_week_ago
 
 LATEST_ISSUES_COUNT = 11
 
@@ -42,6 +42,7 @@ class HomeView(TemplateView):
                 'top10_reporters': top10_reporters,
                 'top10_commentators': top10_commentators,
                 'dt_month_ago': datetime_month_ago(),
+                'dt_week_ago': datetime_week_ago(),
                 'contributions_for_year': Contribution.objects.for_year(),
                 'latest_issues': latest_issues,
             },

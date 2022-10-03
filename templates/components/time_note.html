@@ -1,5 +1,11 @@
 {% load i18n %}
 
+<a class="time-note m-1" href=""
+  data-toggle="tooltip" data-placement="right"
+  title="{% trans 'since' %} {{ dt_week_ago|date:'DATE_FORMAT' }}">
+  {% trans "for the past week" %}
+</a>
+
 <a class="time-note" href="javascript:void(0)"
     data-toggle="tooltip" data-placement="right"
     title="{% trans 'since' %} {{ dt_month_ago|date:'DATE_FORMAT' }}">

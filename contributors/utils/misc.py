@@ -1,3 +1,4 @@
+from calendar import week
 import os
 from collections import deque
 from functools import partial
@@ -139,6 +140,12 @@ def datetime_month_ago():
     """Return datetime 1 month ago from now."""
     dt_now = timezone.now()
     return dt_now - relativedelta.relativedelta(months=1)
+
+
+def datetime_week_ago():
+    """Return datetime 1 week ago from now."""
+    dt_now = timezone.now()
+    return dt_now - relativedelta.relativedelta(weeks=1)
 
 
 def split_full_name(name):
