@@ -6,11 +6,13 @@ You can run the application using both Poetry and Docker.
 
 **Linux, macOS, Windows (WSL):**
 
-    `curl -sSL https://install.python-poetry.org | python3 -`
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
 
 Details on installing and using the **Poetry** package are available in [official documentation](https://python-poetry.org/docs/).
 
-To install **Poetry** you need **Python 3.7+** you can use tutorial (Ubuntu) [How To Install Python 3](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-programming-environment-on-ubuntu-22-04)
+To install **Poetry** you need **Python 3.7+** use the information from the official website [python.org](https://www.python.org/downloads/)
 
 To install **Docker**, use the information from the official website [docs.docker.com](https://docs.docker.com/engine/install/)
 
