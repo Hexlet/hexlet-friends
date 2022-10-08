@@ -138,7 +138,7 @@ def get_repo_data(repo, session=None):
     return get_whole_response_as_json(url, session)
 
 
-def get_user_data(user, session=None):
+def get_owner_data(user, session=None):
     """Return a user's data."""
     url = f'{GITHUB_API_URL}/users/{user}'
     return get_whole_response_as_json(url, session)
@@ -155,8 +155,8 @@ def get_org_repos(org, session=None):
     return get_one_item_at_a_time(url, {'type': 'sources'}, session)
 
 
-def get_user_repos(user, session=None):
-    """Return repositories of an user."""
+def get_owner_repos(user, session=None):
+    """Return repositories of a user."""
     url = f'{GITHUB_API_URL}/users/{user}/repos'
     return get_one_item_at_a_time(url, {'type': 'sources'}, session)
 
@@ -379,11 +379,11 @@ def get_data_of_owners_and_repos(*, owner_names=None, repo_full_names=None):  # 
         if owner_names:
             for owner_name in owner_names:
                 data_of_owners_and_repos[owner_name] = {
-                    'details': get_user_data(owner_name, session),
-                    'repos': list(get_user_repos(owner_name, session)),
+                    'details': get_owner_data(owner_name, session),
+                    'repos': list(get_owner_repos(owner_name, session)),
                 }
         elif repo_full_names:
-            # Construct a dictionary of names {org: [repo, repo, ...]}
+            # Construct a dictionary of names {owner: [repo, repo, ...]}
             names_of_owners_and_repos = {}
             for repo_full_name in repo_full_names:
                 owner_name, repo_name = repo_full_name.split('/')
@@ -394,9 +394,9 @@ def get_data_of_owners_and_repos(*, owner_names=None, repo_full_names=None):  # 
 
             for owner_name, repo_names in names_of_owners_and_repos.items():
                 data_of_owners_and_repos[owner_name] = {
-                    'details': get_user_data(owner_name, session),
+                    'details': get_owner_data(owner_name, session),
                     'repos': [
-                        repo for repo in get_user_repos(
+                        repo for repo in get_owner_repos(
                             owner_name, session,
                         )
                         if repo['name'] in repo_names

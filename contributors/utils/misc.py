@@ -34,11 +34,7 @@ def update_or_create_record(cls, github_resp, additional_fields=None):
 
     """
     cls_fields = {
-        'Organization': (
-            lambda: {'name': github_resp['login']}
-            if github_resp['type'] == 'Organization'
-            else None
-        ),
+        'Organization': lambda: {'name': github_resp['login']},
         'Repository': lambda: {
             'owner_id': (
                 github_resp['owner']['id']
