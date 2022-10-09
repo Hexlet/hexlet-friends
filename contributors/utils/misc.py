@@ -72,7 +72,7 @@ def get_contributor_data(login, session=None):
     try:
         user = Contributor.objects.get(login=login)
     except Contributor.DoesNotExist:
-        return github.get_user_data(login, session)
+        return github.get_owner_data(login, session)
     return {
         'id': user.id,
         'name': user.name,
