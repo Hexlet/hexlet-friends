@@ -10,31 +10,11 @@
   {% include 'components/activity_chart/chart.html' %}
   <div class="row">
     <div class="col-md-6">
-      <h2 class="top-10-heading">{% trans "Top 10 contributors" %}</h2>
-      {% include 'components/time_note.html' %}
-      <div class="card top-10">
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a class="nav-link px-2 active" name="top-committers" href="#">{% trans 'by commits' %}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link px-2" name="top-requesters" href="#">{% trans 'by pull requests' %}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link px-2" name="top-reporters" href="#">{% trans 'by issues' %}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link px-2" name="top-commentators" href="#">{% trans 'by comments' %}</a>
-            </li>
-          </ul>
-        </div>
-        {% with top10='components/top_contributors.html' %}
-          {% include top10 with contributors=top10_committers contrib_type='commits' class='top-committers'%}
-          {% include top10 with contributors=top10_requesters contrib_type='pull_requests' class='top-requesters' %}
-          {% include top10 with contributors=top10_reporters contrib_type='issues' class='top-reporters' %}
-          {% include top10 with contributors=top10_commentators contrib_type='comments' class='top-commentators' %}
-        {% endwith %}
+      <h2 class="top-10-title">{% trans "Top 10 contributors" %}</h2>
+      <div class="top-10-items">
+        {% include 'components/time_note.html' %}
+        {% include 'components/top10_of_week.html' %}
+        {% include 'components/top10_of_month.html' %}
       </div>
     </div>
     <div class="col-md-6">
