@@ -49,7 +49,7 @@ class ContributorQuerySet(CTEQuerySet):
         ).distinct()
 
     def for_week(self):
-        """Return weekly results"""
+        """Return weekly results."""
         return self.filter(
             contribution__created_at__gte=datetime_week_ago(),
         ).distinct()

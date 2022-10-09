@@ -1,7 +1,6 @@
 from django.views.generic.base import TemplateView
 
 from contributors.models import Contribution, Contributor
-from contributors.utils.misc import datetime_month_ago, datetime_week_ago
 
 LATEST_ISSUES_COUNT = 11
 
@@ -27,16 +26,32 @@ class HomeView(TemplateView):
             Contributor.objects.visible_with_weekly_stats()
         )
 
-        top10_committers_of_month = get_top10(contributors_for_month, 'commits')
-        top10_requesters_of_month = get_top10(contributors_for_month, 'pull_requests')
-        top10_reporters_of_month = get_top10(contributors_for_month, 'issues')
-        top10_commentators_of_month = get_top10(contributors_for_month, 'comments')
+        top10_committers_of_month = get_top10(
+            contributors_for_month, 'commits',
+        )
+        top10_requesters_of_month = get_top10(
+            contributors_for_month, 'pull_requests',
+        )
+        top10_reporters_of_month = get_top10(
+            contributors_for_month, 'issues',
+        )
+        top10_commentators_of_month = get_top10(
+            contributors_for_month, 'comments',
+        )
 
-        top10_committers_of_week = get_top10(contributors_for_week, 'commits')
-        top10_requesters_of_week = get_top10(contributors_for_week, 'pull_requests')
-        top10_reporters_of_week = get_top10(contributors_for_week, 'issues')
-        top10_commentators_of_week = get_top10(contributors_for_week, 'comments')
-        
+        top10_committers_of_week = get_top10(
+            contributors_for_week, 'commits',
+        )
+        top10_requesters_of_week = get_top10(
+            contributors_for_week, 'pull_requests',
+        )
+        top10_reporters_of_week = get_top10(
+            contributors_for_week, 'issues',
+        )
+        top10_commentators_of_week = get_top10(
+            contributors_for_week, 'comments',
+        )
+
         latest_issues = Contribution.objects.filter(
             repository__is_visible=True,
             type__in=['pr', 'iss'],
@@ -53,8 +68,6 @@ class HomeView(TemplateView):
                 'top10_requesters_of_week': top10_requesters_of_week,
                 'top10_reporters_of_week': top10_reporters_of_week,
                 'top10_commentators_of_week': top10_commentators_of_week,
-                'dt_month_ago': datetime_month_ago(),
-                'dt_week_ago': datetime_week_ago(),
                 'contributions_for_year': Contribution.objects.for_year(),
                 'latest_issues': latest_issues,
             },
