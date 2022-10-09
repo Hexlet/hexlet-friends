@@ -138,7 +138,7 @@ def get_repo_data(repo, session=None):
     return get_whole_response_as_json(url, session)
 
 
-def get_user_data(user, session=None):
+def get_owner_data(user, session=None):
     """Return a user's data."""
     url = f'{GITHUB_API_URL}/users/{user}'
     return get_whole_response_as_json(url, session)
@@ -152,6 +152,12 @@ def get_user_name(url, session=None):
 def get_org_repos(org, session=None):
     """Return repositories of an organization."""
     url = f'{GITHUB_API_URL}/orgs/{org}/repos'
+    return get_one_item_at_a_time(url, {'type': 'sources'}, session)
+
+
+def get_owner_repos(user, session=None):
+    """Return repositories of a user."""
+    url = f'{GITHUB_API_URL}/users/{user}/repos'
     return get_one_item_at_a_time(url, {'type': 'sources'}, session)
 
 
@@ -364,37 +370,39 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     return totals['c'], totals['a'], totals['d']
 
 
-def get_data_of_orgs_and_repos(*, org_names=None, repo_full_names=None):  # noqa: C901,R701,E501,WPS231
-    """Return data of organizations and their repositories from GitHub."""
-    if not (org_names or repo_full_names):
-        raise ValueError("Neither org_names nor repo_full_names is provided")
-    data_of_orgs_and_repos = {}
+def get_data_of_owners_and_repos(*, owner_names=None, repo_full_names=None):  # noqa: C901,R701,E501,WPS231
+    """Return data of owners and their repositories from GitHub."""
+    if not (owner_names or repo_full_names):
+        raise ValueError("Neither owner_names nor repo_full_names is provided")
+    data_of_owners_and_repos = {}
     with requests.Session() as session:
-        if org_names:
-            for org_name in org_names:
-                data_of_orgs_and_repos[org_name] = {
-                    'details': get_org_data(org_name, session),
-                    'repos': list(get_org_repos(org_name, session)),
+        if owner_names:
+            for owner_name in owner_names:
+                data_of_owners_and_repos[owner_name] = {
+                    'details': get_owner_data(owner_name, session),
+                    'repos': list(get_owner_repos(owner_name, session)),
                 }
         elif repo_full_names:
-            # Construct a dictionary of names {org: [repo, repo, ...]}
-            names_of_orgs_and_repos = {}
+            # Construct a dictionary of names {owner: [repo, repo, ...]}
+            names_of_owners_and_repos = {}
             for repo_full_name in repo_full_names:
-                org_name, repo_name = repo_full_name.split('/')
-                repos_of_org = names_of_orgs_and_repos.setdefault(org_name, [])
-                repos_of_org.append(repo_name)
+                owner_name, repo_name = repo_full_name.split('/')
+                repos_of_owner = (
+                    names_of_owners_and_repos.setdefault(owner_name, [])
+                )
+                repos_of_owner.append(repo_name)
 
-            for org_name, repo_names in names_of_orgs_and_repos.items():
-                data_of_orgs_and_repos[org_name] = {
-                    'details': get_org_data(org_name, session),
+            for owner_name, repo_names in names_of_owners_and_repos.items():
+                data_of_owners_and_repos[owner_name] = {
+                    'details': get_owner_data(owner_name, session),
                     'repos': [
-                        repo for repo in get_org_repos(
-                            org_name, session,
+                        repo for repo in get_owner_repos(
+                            owner_name, session,
                         )
                         if repo['name'] in repo_names
                     ],
                 }
-    return data_of_orgs_and_repos
+    return data_of_owners_and_repos
 
 
 def get_access_token(code, **kwargs):

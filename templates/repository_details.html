@@ -8,8 +8,12 @@
 {% block header %}{{ repository.name }}{% endblock %}
 {% block additional %}
   <p class="h5">
-    {% trans "Organization" %}:
-    <a href="{{ repository.organization.get_absolute_url }}">{{ repository.organization }}</a>
+    {% trans "Owner" %}:
+    {% if repository.organization %}
+      <a href="{{ repository.organization.get_absolute_url }}">{{ repository.organization }}</a>
+    {% else %}
+      <a href="{{ repository.owner.get_absolute_url }}">{{ repository.owner }}</a>
+    {% endif %}
     <br>
     {% if repository.project %}
       {% trans "Project" %}:
