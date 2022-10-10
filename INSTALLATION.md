@@ -4,10 +4,15 @@ You can run the application using both Poetry and Docker.
 
 **Poetry** is setup by the commands:
 
-Linux \ OSX:
-`curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -`
+**Linux, macOS, Windows (WSL):**
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
 
 Details on installing and using the **Poetry** package are available in [official documentation](https://python-poetry.org/docs/).
+
+To install **Poetry** you need **Python 3.7+** use the information from the official website [python.org](https://www.python.org/downloads/)
 
 To install **Docker**, use the information from the official website [docs.docker.com](https://docs.docker.com/engine/install/)
 
@@ -46,7 +51,7 @@ make docker-install
 
 `GITHUB_AUTH_TOKEN` — Personal access token from [GitHub's settings](https://github.com/settings/tokens). Used to query data on GitHub.
 
-How do you get it if you don't already have it:
+How do you get it if you don't have it yet:
 
 - Go to the link above, click the ***Generate new token*** button. Github will ask you to enter the password for your Github account.
 - In the ***Note*** field, enter any token name you understand.

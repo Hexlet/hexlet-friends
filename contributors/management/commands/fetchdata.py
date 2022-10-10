@@ -68,7 +68,10 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
         )
         if created and type_ == 'cit':
             commit_data = github.get_commit_data(
-                repo.organization, repo, contribution.id, session,
+                repo.organization or repo.owner,
+                repo,
+                contribution.id,
+                session,
             )
             commit_stats = commit_data['stats']
             CommitStats.objects.create(
@@ -79,7 +82,7 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
 
         if type_ in {'pr', 'iss'}:
             state = 'merged' if type_ == 'pr' and github.is_pr_merged(
-                repo.organization,
+                repo.organization or repo.owner,
                 repo,
                 contrib['number'],
                 session,
@@ -102,40 +105,47 @@ class Command(management.base.BaseCommand):
     def add_arguments(self, parser):
         """Add arguments for the command."""
         parser.add_argument(
-            'org',
+            'owner',
             nargs='*',
             default=ORGANIZATIONS,
-            help='a list of organization names',
+            help='a list of owner names',
         )
         parser.add_argument(
             '--repo', nargs='*', help='a list of repository full names',
         )
 
-    def handle(self, *args, **options):  # noqa: C901,WPS110,WPS213,WPS231
+    def handle(  # noqa: C901,WPS110,WPS213,WPS231,WPS210
+        self, *args, **options,
+    ):
         """Collect data from GitHub."""
         logger.info("Data collection started")
 
         if options['repo']:
-            data_of_orgs_and_repos = github.get_data_of_orgs_and_repos(
+            data_of_owners_and_repos = github.get_data_of_owners_and_repos(
                 repo_full_names=options['repo'],
             )
-        elif options['org']:
-            data_of_orgs_and_repos = github.get_data_of_orgs_and_repos(
-                org_names=options['org'],
+        elif options['owner']:
+            data_of_owners_and_repos = github.get_data_of_owners_and_repos(
+                owner_names=options['owner'],
             )
         else:
             raise management.base.CommandError(
-                "Provide a list of organizations or repositories",
+                "Provide a list of owners or repositories",
             )
 
-        for org_data in data_of_orgs_and_repos.values():
-            org, _ = misc.update_or_create_record(
-                Organization, org_data['details'],
+        for owner_data in data_of_owners_and_repos.values():
+            table = (
+                Contributor
+                if owner_data['details']['type'] == 'User'
+                else Organization
             )
-            logger.info(org)
+            owner, _ = misc.update_or_create_record(
+                table, owner_data['details'],
+            )
+            logger.info(owner)
 
             repos_to_process = [
-                repo for repo in org_data['repos']
+                repo for repo in owner_data['repos']
                 if repo['name'] not in IGNORED_REPOSITORIES
             ]
             number_of_repos = len(repos_to_process)
@@ -154,7 +164,7 @@ class Command(management.base.BaseCommand):
                 logger.info("Processing issues and pull requests")
                 create_contributions(
                     repo,
-                    github.get_repo_issues(org, repo, session),
+                    github.get_repo_issues(owner, repo, session),
                     user_field='user',
                     id_field='id',
                     type_='iss',
@@ -164,7 +174,7 @@ class Command(management.base.BaseCommand):
                 create_contributions(
                     repo,
                     github.get_repo_commits_except_merges(
-                        org, repo, session=session,
+                        owner, repo, session=session,
                     ),
                     user_field='author',
                     id_field='sha',
@@ -174,7 +184,7 @@ class Command(management.base.BaseCommand):
                 logger.info("Processing comments")
                 create_contributions(
                     repo,
-                    github.get_all_types_of_comments(org, repo, session),
+                    github.get_all_types_of_comments(owner, repo, session),
                     user_field='user',
                     id_field='id',
                     type_='cnt',

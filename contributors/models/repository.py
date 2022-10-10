@@ -17,12 +17,23 @@ class Repository(CommonFields):
     contributors = models.ManyToManyField(
         Contributor,
         through='Contribution',
+        related_name='contributors',
         verbose_name=_("contributors"),
+    )
+    owner = models.ForeignKey(
+        Contributor,
+        on_delete=models.CASCADE,
+        related_name='owner',
+        verbose_name=_("owner"),
+        null=True,
+        blank=True,
     )
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
         verbose_name=_("organization"),
+        null=True,
+        blank=True,
     )
     project = models.ForeignKey(
         Project,
