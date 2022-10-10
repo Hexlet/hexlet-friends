@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-08 21:09+0400\n"
+"POT-Creation-Date: 2022-10-10 12:02+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,16 +180,16 @@ msgid "projects"
 msgstr "проекты"
 
 #: contributors/models/repository.py
+msgid "owner"
+msgstr "владелец"
+
+#: contributors/models/repository.py
 msgid "full name"
 msgstr "полное имя"
 
 #: contributors/models/repository.py
 msgid "labels"
 msgstr "метки"
-
-#: contributors/models/repository.py
-msgid "owner"
-msgstr "владелец"
 
 #: contributors/models/repository.py
 msgid "repositories"
@@ -426,14 +426,8 @@ msgid "Author"
 msgstr "Автор"
 
 #: templates/components/tables/repositories_list.html
-#: templates/repository_details.html
 msgid "Organization"
 msgstr "Организация"
-
-#: templates/components/tables/repositories_list.html
-#: templates/project_details.html templates/repository_details.html
-msgid "Owner"
-msgstr "Владелец"
 
 #: templates/components/tables/repositories_list.html
 #: templates/project_details.html templates/repository_details.html
@@ -538,6 +532,10 @@ msgstr "Регистрация"
 #: templates/registration/registration.html
 msgid "Register"
 msgstr "Зарегистрироваться"
+
+#: templates/repository_details.html
+msgid "Owner"
+msgstr "Владелец"
 
 #~ msgid "since"
 #~ msgstr "с"
