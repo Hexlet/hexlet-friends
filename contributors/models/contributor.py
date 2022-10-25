@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django_cte import CTEQuerySet
 
 from contributors.models.base import NAME_LENGTH, CommonFields
-from contributors.utils.misc import datetime_month_ago
+from contributors.utils.misc import datetime_month_ago, datetime_week_ago
 
 
 class ContributorQuerySet(CTEQuerySet):
@@ -48,10 +48,23 @@ class ContributorQuerySet(CTEQuerySet):
             contribution__created_at__gte=datetime_month_ago(),
         ).distinct()
 
+    def for_week(self):
+        """Return weekly results."""
+        return self.filter(
+            contribution__created_at__gte=datetime_week_ago(),
+        ).distinct()
+
     def visible_with_monthly_stats(self):
-        """Get contribution stats for visible contributors."""
+        """Get monthly contribution stats for visible contributors ."""
         visible_contributors = self.visible().filter(id=models.OuterRef('id'))
         return self.for_month().filter(
+            id__in=models.Subquery(visible_contributors.values('id')),
+        ).with_contributions()
+
+    def visible_with_weekly_stats(self):
+        """Get weekly contribution stats for visible contributors."""
+        visible_contributors = self.visible().filter(id=models.OuterRef('id'))
+        return self.for_week().filter(
             id__in=models.Subquery(visible_contributors.values('id')),
         ).with_contributions()
 
