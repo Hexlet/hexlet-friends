@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-18 21:26+0300\n"
+"POT-Creation-Date: 2022-11-03 14:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,7 +221,7 @@ msgstr "Репозитории"
 #: templates/about.html:4 templates/about.html:5
 #: templates/components/footer.html:15
 msgid "About project"
-msgstr "О проекте"
+msgstr "О проекте   "
 
 #: templates/about.html:7
 msgid "Welcome to the open-source project Hexlet-friends!"
