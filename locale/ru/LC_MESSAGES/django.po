@@ -1,3 +1,25 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-25 12:49+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
 #: auth/apps.py:10
 msgid "Custom Authentication and Authorization"
 msgstr ""
@@ -166,7 +188,7 @@ msgstr ""
 
 #: contributors/models/repository.py:45
 msgid "full name"
-msgstr ""
+msgstr "полное имя"
 
 #: contributors/models/repository.py:49
 msgid "labels"
@@ -212,6 +234,9 @@ msgid ""
 "development of Hexlet projects, analyze your contributions, increase your "
 "rating and get achievements."
 msgstr ""
+"Hexlet-friends — это аналог GitHub в среде Хекслета. Сервис отслеживает "
+"оперсорсные проекты Хекслета. Активно участвуйте в разработке проектов "
+"Хекслета, анализируйте свой вклад, повышайте рейтинг и получайте 'ачивки'."
 
 #: templates/about.html:10
 msgid "Features"
@@ -500,20 +525,7 @@ msgstr ""
 #: templates/components/tables/repositories_list.html:17
 #: templates/project_details.html:9 templates/repository_details.html:19
 msgid "Project"
-msgstr ""
-
-#: templates/components/time_note.html:7
-msgid "for the past week"
-msgstr ""
-
-#: templates/components/time_note.html:13
-msgid "for the past month"
-msgstr ""
-
-#: templates/components/top10_of_month.html:7
-#: templates/components/top10_of_week.html:7
-msgid "by commits"
-msgstr ""
+msgstr "Проект"
 
 #: templates/components/top10_of_month.html:10
 #: templates/components/top10_of_week.html:10
@@ -525,15 +537,12 @@ msgstr ""
 msgid "by issues"
 msgstr ""
 
-#: templates/components/top10_of_month.html:16
-#: templates/components/top10_of_week.html:16
-msgid "by comments"
-msgstr ""
 
 #: templates/contributor_details.html:8
 msgid "Contributor"
-msgstr ""
+msgstr "Участник"
 
+>>>>>>> fix issue
 #: templates/contributor_details.html:22
 msgid "Achievments"
 msgstr ""
@@ -608,7 +617,8 @@ msgstr ""
 
 #: templates/registration/registration.html:17
 msgid "Register"
-msgstr ""
+msgstr "Зарегистрироваться"
+
 
 #: templates/repository_details.html:11
 msgid "Owner"
