@@ -2,6 +2,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from auth.forms import UserChangeForm, UserCreationForm
 from auth.models import SiteUser
+from auth.models import GroupUser
 from contributors.admin.custom import site
 
 
@@ -13,4 +14,5 @@ class SiteUserAdmin(UserAdmin):
     form = UserChangeForm
 
 
-site.register(SiteUser, SiteUserAdmin)
+site.register(SiteUser)
+site.register(GroupUser)

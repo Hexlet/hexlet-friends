@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.db import models
 
 
 class SiteUser(AbstractUser):
@@ -17,3 +19,17 @@ class SiteUser(AbstractUser):
     def get_absolute_url(self):
         """Return the url of an instance."""
         return reverse('account_details', args=[self.pk])
+
+
+class GroupUser(Group):
+    """Model representing a group users."""
+    users = models.ManyToManyField(SiteUser)
+    #users = models.ForeignKey(SiteUser, on_delete=models.PROTECT, null=True)
+    
+    class Meta(object):
+        verbose_name = _("Group")
+        verbose_name_plural = _("Groups")
+    
+    def __str__(self):
+        """Represent an instance as a string."""
+        return self.name

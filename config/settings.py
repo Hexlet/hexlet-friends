@@ -23,7 +23,7 @@ DEBUG = os.getenv('DEBUG', 'true').lower() in {'yes', '1', 'true'}
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False #True
 
 ALLOWED_HOSTS = [
     'localhost',
