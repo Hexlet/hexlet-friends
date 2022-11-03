@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-25 12:49+0300\n"
+"POT-Creation-Date: 2022-11-03 15:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -221,11 +221,11 @@ msgstr ""
 #: templates/about.html:4 templates/about.html:5
 #: templates/components/footer.html:15
 msgid "About project"
-msgstr ""
+msgstr "О проекте"
 
 #: templates/about.html:7
 msgid "Welcome to the open-source project Hexlet-friends!"
-msgstr ""
+msgstr "Добро пожаловать в open-source проект Hexlet-friends!"
 
 #: templates/about.html:8
 msgid ""
@@ -240,39 +240,39 @@ msgstr ""
 
 #: templates/about.html:10
 msgid "Features"
-msgstr ""
+msgstr "Возможности сервиса"
 
 #: templates/about.html:12
 msgid "See the rating of the most active contributors"
-msgstr ""
+msgstr "Смотреть рейтинг самых активных участников"
 
 #: templates/about.html:13
 msgid "View new PR and issues"
-msgstr ""
+msgstr "Просматривать новые пулреквесты и проблемы"
 
 #: templates/about.html:14
 msgid "Analyze the activity of an individual user for the year"
-msgstr ""
+msgstr "Анализировать активность отдельного пользователя за год"
 
 #: templates/about.html:15
 msgid "Go to problems on GitHub"
-msgstr ""
+msgstr "Переходить к проблемам на GitHub"
 
 #: templates/about.html:19
 msgid "Guidelines"
-msgstr ""
+msgstr "Рекомендации"
 
 #: templates/about.html:21
 msgid "What is Git and what is it for"
-msgstr ""
+msgstr "Что такое Git и для чего он нужен"
 
 #: templates/about.html:22
 msgid "How to participate in open source projects on GitHub."
-msgstr ""
+msgstr "Как принять участие в работе Open Source проектов на GitHub."
 
 #: templates/about.html:23
 msgid "Participate in the project (source code)"
-msgstr ""
+msgstr "Участвовать в проекте (исходный код)"
 
 #: templates/admin/configuration.html:15
 msgid "Get repositories"
@@ -369,7 +369,7 @@ msgstr ""
 #: templates/components/navbar.html:36 templates/open_issues_list.html:4
 #: templates/open_issues_list.html:6 templates/open_issues_list.html:9
 msgid "Open Issues"
-msgstr ""
+msgstr "Проблемы"
 
 #: templates/components/navbar.html:41
 #: templates/components/tables/contributors_list.html:23
@@ -437,7 +437,7 @@ msgstr ""
 #: templates/components/tables/contributor_prs.html:25
 #: templates/components/tables/pull_requests_list.html:25
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: templates/components/tables/contributor_issues.html:41
 #: templates/components/tables/contributor_prs.html:41
@@ -520,29 +520,47 @@ msgstr ""
 
 #: templates/components/tables/repositories_list.html:12
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: templates/components/tables/repositories_list.html:17
 #: templates/project_details.html:9 templates/repository_details.html:19
 msgid "Project"
 msgstr "Проект"
 
+#: templates/components/time_note.html:7
+#, fuzzy
+#| msgid "for the past month"
+msgid "for the past week"
+msgstr "за прошедший месяц"
+
+#: templates/components/time_note.html:13
+msgid "for the past month"
+msgstr "за прошедший месяц"
+
+#: templates/components/top10_of_month.html:7
+#: templates/components/top10_of_week.html:7
+msgid "by commits"
+msgstr "по коммитам"
+
 #: templates/components/top10_of_month.html:10
 #: templates/components/top10_of_week.html:10
 msgid "by pull requests"
-msgstr ""
+msgstr "по PR"
 
 #: templates/components/top10_of_month.html:13
 #: templates/components/top10_of_week.html:13
 msgid "by issues"
-msgstr ""
+msgstr "по проблемам"
 
+#: templates/components/top10_of_month.html:16
+#: templates/components/top10_of_week.html:16
+msgid "by comments"
+msgstr "по комментариям"
 
 #: templates/contributor_details.html:8
 msgid "Contributor"
 msgstr "Участник"
 
->>>>>>> fix issue
 #: templates/contributor_details.html:22
 msgid "Achievments"
 msgstr ""
@@ -591,7 +609,7 @@ msgstr ""
 
 #: templates/home.html:13
 msgid "Top 10 contributors"
-msgstr ""
+msgstr "Топ 10 контрибьюторов"
 
 #: templates/home.html:21
 msgid "New PRs and issues"
@@ -619,7 +637,9 @@ msgstr ""
 msgid "Register"
 msgstr "Зарегистрироваться"
 
-
 #: templates/repository_details.html:11
 msgid "Owner"
 msgstr ""
+
+#~ msgid "since"
+#~ msgstr "с"
