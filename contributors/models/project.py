@@ -9,6 +9,7 @@ class Project(CommonFields):
     """Model representing a project."""
 
     description = models.TextField(_("description"), blank=True)
+    html_url = models.URLField()
 
     class Meta(object):
         verbose_name = _("project")
@@ -37,6 +38,30 @@ class Project(CommonFields):
             contributor__is_visible=True,
             repository__project=self,
             type='iss',
+        ).aggregate(
+            count=models.Count('id'),
+        ).get('count') for repository in self.repository_set.all()
+        ])
+
+    def commits(self):
+        """Return commits referring to repositories within a project."""
+        return sum([repository.contribution_set.filter(
+            repository__is_visible=True,
+            contributor__is_visible=True,
+            repository__project=self,
+            type='cit',
+        ).aggregate(
+            count=models.Count('id'),
+        ).get('count') for repository in self.repository_set.all()
+        ])
+
+    def comments(self):
+        """Return comments referring to repositories within a project."""
+        return sum([repository.contribution_set.filter(
+            repository__is_visible=True,
+            contributor__is_visible=True,
+            repository__project=self,
+            type='cnt',
         ).aggregate(
             count=models.Count('id'),
         ).get('count') for repository in self.repository_set.all()
