@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-03 15:33+0300\n"
+"POT-Creation-Date: 2022-11-08 19:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,14 +229,14 @@ msgstr "Добро пожаловать в open-source проект Hexlet-frien
 
 #: templates/about.html:8
 msgid ""
-"Hexlet-friends is an analogue of GitHub in the Hexlet. The service keeps "
-"track of Hexlet's opensourced projects. Actively participate in the "
-"development of Hexlet projects, analyze your contributions, increase your "
-"rating and get achievements."
+"Hexlet-friends is an open-source Python project. The service keeps track of "
+"Hexlet's open-source projects. It analyzes the count of commits, pull-"
+"requests, and issues. The service automatically builds a ranking of "
+"participants with achievements."
 msgstr ""
-"Hexlet-friends — это аналог GitHub в среде Хекслета. Сервис отслеживает "
-"оперсорсные проекты Хекслета. Активно участвуйте в разработке проектов "
-"Хекслета, анализируйте свой вклад, повышайте рейтинг и получайте 'ачивки'."
+"Hexlet-friends - проект с открытым исходным кодом на Python. Сервис отслеживает"
+"опенсорсные проекты «Хекслета». Анализируется количество коммитов, пулл-реквестов и"
+"issue. Сервис автоматически строит рейтинг участников с «ачивками»."
 
 #: templates/about.html:10
 msgid "Features"
@@ -269,10 +269,6 @@ msgstr "Что такое Git и для чего он нужен"
 #: templates/about.html:22
 msgid "How to participate in open source projects on GitHub."
 msgstr "Как принять участие в работе Open Source проектов на GitHub."
-
-#: templates/about.html:23
-msgid "Participate in the project (source code)"
-msgstr "Участвовать в проекте (исходный код)"
 
 #: templates/admin/configuration.html:15
 msgid "Get repositories"
