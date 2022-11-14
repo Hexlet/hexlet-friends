@@ -14,10 +14,36 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     ).annotate(
         pull_requests=Count(
             'repository__contribution__id',
-            filter=Q(repository__contribution__type='pr')),
+            filter=Q(
+                repository__contribution__type='pr',
+                repository__contribution__repository__is_visible=True,
+                repository__contribution__contributor__is_visible=True,
+                )
+        ),
         issues=Count(
             'repository__contribution__id',
-            filter=Q(repository__contribution__type='iss')),
+            filter=Q(
+                repository__contribution__type='iss',
+                repository__contribution__repository__is_visible=True,
+                repository__contribution__contributor__is_visible=True,
+            )
+        ),
+        commits=Count(
+            'repository__contribution__id',
+            filter=Q(
+                repository__contribution__type='cit',
+                repository__contribution__repository__is_visible=True,
+                repository__contribution__contributor__is_visible=True,
+            )
+        ),
+        comments=Count(
+            'repository__contribution__id',
+            filter=Q(
+                repository__contribution__type='cnt',
+                repository__contribution__repository__is_visible=True,
+                repository__contribution__contributor__is_visible=True,
+            )
+        ),
         contributors_count=Count(
             'repository__contribution__contributor',
             distinct=True),
@@ -31,6 +57,8 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         'description',
         'pull_requests',
         'issues',
+        'commits',
+        'comments',
         ('contributors_count', _("Contributors")),
     )
     ordering = sortable_fields[0]
