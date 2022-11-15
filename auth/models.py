@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
+from django.contrib.admin import ModelAdmin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.db import models
@@ -7,7 +8,7 @@ from django.db import models
 
 class SiteUser(AbstractUser):
     """Model representing a user account."""
-
+    
     class Meta(object):
         verbose_name = _("User")
         verbose_name_plural = _("Users")
@@ -24,7 +25,6 @@ class SiteUser(AbstractUser):
 class GroupUser(Group):
     """Model representing a group users."""
     users = models.ManyToManyField(SiteUser)
-    #users = models.ForeignKey(SiteUser, on_delete=models.PROTECT, null=True)
     
     class Meta(object):
         verbose_name = _("Group")
@@ -33,3 +33,4 @@ class GroupUser(Group):
     def __str__(self):
         """Represent an instance as a string."""
         return self.name
+
