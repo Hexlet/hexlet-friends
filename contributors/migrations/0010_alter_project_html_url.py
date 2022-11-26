@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contributors', '0009_repository_owner_alter_repository_contributors_and_more in contributors'),
+        ('contributors', '0009_repository_owner_alter_repository_contributors_and_more'),
     ]
 
     operations = [
