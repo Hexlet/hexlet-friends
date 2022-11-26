@@ -1,0 +1,56 @@
+{% extends './list_as_table.html' %}
+{% load i18n contrib_extras %}
+
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'name' %}">
+      <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'html_url' %}">
+      <a href="{% get_sort_query_string 'html_url' %}" class="stretched-link text-reset text-decoration-none">URL</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'description' %}">
+        <a href="{% get_sort_query_string 'description' %}" class="stretched-link text-reset text-decoration-none">{% trans "Description" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'pull_requests' %}">
+        <a href="{% get_sort_query_string 'pull_requests' %}" class="stretched-link text-reset text-decoration-none">{% trans "Pull requests" %}</a>
+      </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'issues' %}">
+        <a href="{% get_sort_query_string 'issues' %}" class="stretched-link text-reset text-decoration-none">{% trans "Issues" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'commits' %}">
+        <a href="{% get_sort_query_string 'commits' %}" class="stretched-link text-reset text-decoration-none">{% trans "Commits" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'comments' %}">
+        <a href="{% get_sort_query_string 'comments' %}" class="stretched-link text-reset text-decoration-none">{% trans "Comments" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'contributors_count' %}">
+        <a href="{% get_sort_query_string 'contributors_count' %}" class="stretched-link text-reset text-decoration-none">{% trans "Contributors" %}</a>
+    </th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for project in projects_list %}
+  <tr>
+    <th scope="row">{{ project.id }}</th>
+    <td>
+      <a href="{{ project.get_absolute_url }}">
+        {{ project.name }}
+      </a>
+    </td>
+    <td>
+      <a href="{{ project.html_url }}">
+        {{ project.html_url }}
+      </a>
+    </td>
+    <td>{{ project.description }}</td>
+    <td>{{ project.pull_requests }}</td>
+    <td>{{ project.issues }}</td>
+    <td>{{ project.commits }}</td>
+    <td>{{ project.comments }}</td>
+    <td>{{ project.contributors_count }}</td>
+  </tr>
+
+  {% endfor %}
+{% endblock tbody %}
