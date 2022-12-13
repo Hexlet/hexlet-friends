@@ -5,7 +5,7 @@ from contributors.views import (  # noqa: WPS235
     contributor_issues,
     contributor_prs,
     contributors,
-    contributors_for_month,
+    contributors_for_period,
     home,
     issues,
     organization,

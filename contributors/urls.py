@@ -32,8 +32,17 @@ urlpatterns = [
     ),
     path(
         'contributors/for-month',
-        views.contributors_for_month.ListView.as_view(),
+        views.contributors_for_period.ListView.as_view(
+            extra_context={'period': 'month'}
+        ),
         name='contributors_for_month',
+    ),
+    path(
+        'contributors/for-week',
+        views.contributors_for_period.ListView.as_view(
+            extra_context={'period': 'week'}
+        ),
+        name='contributors_for_week',
     ),
     path(
         'contributors/<slug:slug>',
