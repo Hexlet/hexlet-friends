@@ -3,7 +3,7 @@
 1. Choose an issue in repo (`https://github.com/Hexlet/hexlet-friends/issues`)
 2. Read comments and if nobody took it yet make a comment
 3. Fork it
-4. Clone repo (`https://github.com/{your-nickname}/{repo_name}.git`)
+4. Clone repo ```git clone ssh://git@github.com/{your-nickname}/hexlet-friends.git```
 5. Create your feature branch (`git checkout -b my-new-feature`)
 6. Make changes
 7. Checkout Makefile or README.md for commands like `make check` `make lint` `make test`
