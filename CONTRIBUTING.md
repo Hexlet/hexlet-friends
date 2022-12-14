@@ -1,6 +1,6 @@
 ## Main steps
 
-1. Choose an issue in repo you like (`https://github.com/{owner}/{repo_name}/issues`)
+1. Choose an issue in repo (`https://github.com/Hexlet/hexlet-friends/issues`)
 2. Read comments and if nobody took it yet make a comment
 3. Fork it
 4. Clone repo (`https://github.com/{your-nickname}/{repo_name}.git`)
