@@ -13,6 +13,10 @@ Contribution &mdash; issues, pull requests, commits, comments.
 
 _[Instructions for installing and running the app](INSTALLATION.md)_
 
+## Contributing
+
+See [contribution guidelines](./CONTRIBUTING.md)
+
 ## Text localization
 
 Install **gettext** (when working with Poetry).
