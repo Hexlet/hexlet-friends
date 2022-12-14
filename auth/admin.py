@@ -1,9 +1,8 @@
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin import ModelAdmin
+from django.contrib.auth.admin import UserAdmin
 
 from auth.forms import UserChangeForm, UserCreationForm
-from auth.models import SiteUser
-from auth.models import GroupUser
+from auth.models import GroupUser, SiteUser
 from contributors.admin.custom import site
 
 
