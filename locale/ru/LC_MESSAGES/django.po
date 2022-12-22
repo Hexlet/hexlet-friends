@@ -519,7 +519,7 @@ msgid "Contributor"
 msgstr "Участник"
 
 #: templates/contributor_details.html
-msgid "Achievments"
+msgid "Achievements"
 msgstr "Достижения"
 
 #: templates/contributor_details.html
@@ -527,7 +527,7 @@ msgid "Hexlet friend"
 msgstr ""
 
 #: templates/contributor_details.html
-msgid "Issuess"
+msgid "Issues"
 msgstr "Проблемы"
 
 #: templates/contributor_details.html
