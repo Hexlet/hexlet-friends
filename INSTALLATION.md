@@ -97,9 +97,9 @@ docker-compose run --rm django make setup
 
 You can get the data through the interface of the administration panel or by running the described commands.
 
-### *Poetry*
+### **By organization name:**
 
-**By organization name:**
+*With Poetry*
 
 ```bash
 make sync ARGS='ORG [ORG ...]'
@@ -111,9 +111,23 @@ Example:
 make sync ARGS='Hexlet'
 ```
 
+*With Docker*
+
+```bash
+docker-compose run --rm django make sync ARGS='ORG [ORG ...]'
+```
+
+Example:
+
+```bash
+docker-compose run --rm django make sync ARGS='Hexlet'
+```
+
 >Keep in mind that this will add all repositories of the Hexlet organization to the database. This will take a long time.
 
 **By full repository names:**
+
+*Poetry*
 
 ```bash
 make sync ARGS='--repo REPO [REPO ...]'
@@ -123,6 +137,18 @@ Example:
 
 ```bash
 make sync ARGS='--repo Hexlet/hexlet-friends'
+```
+
+*Docker*
+
+```bash
+docker-compose run --rm django make sync ARGS='--repo REPO [REPO ...]'
+```
+
+Example:
+
+```bash
+docker-compose run --rm django make sync ARGS='--repo Hexlet/hexlet-friends'
 ```
 
 #### On subsequent data updates
