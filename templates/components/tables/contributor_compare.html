@@ -1,0 +1,17 @@
+{% load i18n %}
+<tr>
+    <td>
+      <select onchange="MakeCompare(this.value)" id="compare_contributor" >
+          <option value=-1>{% trans "compare with ..." %}</option>
+        {% for contributor in contributors %}
+          <option value={{ contributor.id }}>{{ contributor.name }}</option>
+        {% endfor %}
+      </select>
+    </td>
+        <td id="contributor_cit" ></td>
+        <td id="contributor_cit-add" ></td>
+        <td id="contributor_cit-del" ></td>
+        <td id="contributor_pr" ></td>
+        <td id="contributor_iss" ></td>
+        <td id="contributor_cnt" ></td>
+</tr>
