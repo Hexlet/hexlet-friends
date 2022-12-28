@@ -207,8 +207,14 @@
             <td data-field="cnt">{{ repo.comments }}</td>
           </tr>
         {% endfor %}
+        <tfoot>
+        {% include 'components/tables/contributor_total.html' %}
+        {% include 'components/tables/contributor_compare.html' %}
+        </tfoot>
         </tbody>
       </table>
+      <script src="{% static 'js/contrib_compare.js' %}"></script>
+      {{contributors_json|json_script:"contributors_data"}}
     </div>
   </div>
 {% endblock content %}

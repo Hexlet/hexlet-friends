@@ -1,0 +1,10 @@
+{% load i18n %}
+<tr class="total-contdibutions">
+  <th data-field="total-name">{% trans "Total" %}</th>
+  <td data-field="cit" id="own-cit">{{ total.commits }}</td>
+  <td data-field="cit-add" id="own-cit-add">{{ total.additions }}</td>
+  <td data-field="cit-del" id="own-cit-del">{{ total.deletions }}</td>
+  <td data-field="pr" id="own-pr">{{ total.pull_requests }}</td>
+  <td data-field="iss" id="own-iss">{{ total.issues }}</td>
+  <td data-field="cnt" id="own-cnt">{{ total.comments }}</td>
+</tr>
