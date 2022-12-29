@@ -41,9 +41,9 @@ class DetailView(generic.DetailView):
             commits=Count('id', filter=Q(type='cit')),
             additions=Coalesce(Sum('stats__additions'), 0),
             deletions=Coalesce(Sum('stats__deletions'), 0),
-            pull_requests=Count('id', filter=Q(type='pr')),
-            issues=Count('id', filter=Q(type='iss')),
-            comments=Count('id', filter=Q(type='cnt')),
+            pull_requests=Count('type', filter=Q(type='pr')),
+            issues=Count('type', filter=Q(type='iss')),
+            comments=Count('type', filter=Q(type='cnt')),
         )
         context['contributors_json'] = list(
             Contributor.objects.visible().with_contributions().values(
