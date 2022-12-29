@@ -15,7 +15,7 @@ setup: migrate
 	poetry run python manage.py createsuperuser
 
 shell:
-	poetry run python manage.py shell
+	poetry run python manage.py shell_plus --plain
 
 # Need to have GNU gettext installed
 transprepare:

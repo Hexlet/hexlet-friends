@@ -21,6 +21,7 @@ psycopg2-binary = { version = "^2.9.3", optional = true }
 PyJWT = "^2.4.0"
 cryptography = "^37.0.4"
 crispy-bootstrap5 = "^0.6"
+django-extensions = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.16.1"
