@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% block head_scripts %}
 
+{% endblock %}
 {% block title %}{% trans "Open Issues" %}{% endblock %}
 <!-- Open Graph tags -->
 {% block og_title %}{% trans "Open Issues" %}{% endblock og_title %}
@@ -11,7 +13,9 @@
     {% for repo, issues in repos_with_issues.items %}
       <div class="card">
         <div class="card-header" id="{{ repo.name }}" data-bs-toggle="collapse" data-bs-target="#repo{{ repo.id }}-issues" aria-expanded="false" aria-controls="repo{{ repo.id }}-issues">
-            <a href="{{ repo.get_absolute_url }}" onclick="event.stopPropagation();"><b>{{ repo.full_name }}</b></a>
+          <a id="card-header-link" href="{{ repo.get_absolute_url }}"
+             onclick="window.open(this.attributes.getNamedItem('href').value, '_self')"
+             data-bs-toggle="collapse"><b>{{ repo.full_name }}</b></a>
           {% for label in repo.labels.all %}
             <span class="text-muted">| {{ label }}</span>
           {% endfor %}
