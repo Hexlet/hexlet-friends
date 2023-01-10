@@ -1,7 +1,14 @@
-FROM python:3.8-alpine as builder
+FROM python:3.11-alpine as builder
 
-ENV VIRTUAL_ENV=/opt/venv \
-    PATH=/root/.poetry/bin:$PATH
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    POETRY_VERSION=1.2.2 \
+    POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_CACHE_DIR='/var/cache/pypoetry' \
+    PATH="$PATH:/root/.local/bin"
 
 RUN apk add --no-cache \
     gcc \
@@ -9,11 +16,14 @@ RUN apk add --no-cache \
     postgresql-dev \
     libffi-dev \
     openssl-dev \
-    cargo
+    cargo \
+    curl \
+    gettext \
+    git \
+    make 
 
-RUN wget https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -O - | python > /dev/null
-
-RUN python -m venv $VIRTUAL_ENV
+RUN curl -sSL https://install.python-poetry.org | python3 - \
+    && poetry --version
 
 WORKDIR /project/
 
@@ -21,32 +31,6 @@ COPY pyproject.toml poetry.lock ./
 
 RUN poetry install --extras psycopg2-binary
 
-FROM python:3.8-alpine
-
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=false \
-    VIRTUAL_ENV=/opt/venv \
-    PATH=/home/user/.poetry/bin:$PATH
-
-RUN apk add --no-cache \
-    gettext \
-    git \
-    make \
-    postgresql-dev
-
 WORKDIR /usr/local/src/hexlet-friends
-
-RUN adduser -D user \
-    && chown -R user:user ./
-
-USER user
-
-COPY --from=builder --chown=user:user /root/.poetry/ /home/user/.poetry/
-
-COPY --from=builder --chown=user:user $VIRTUAL_ENV $VIRTUAL_ENV
-
-COPY --chown=user:user ./ ./
 
 CMD ["make", "start"]

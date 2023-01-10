@@ -9,6 +9,7 @@ class Project(CommonFields):
     """Model representing a project."""
 
     description = models.TextField(_("description"), blank=True)
+    html_url = models.URLField()
 
     class Meta(object):
         verbose_name = _("project")

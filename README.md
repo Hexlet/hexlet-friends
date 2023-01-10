@@ -13,6 +13,10 @@ Contribution &mdash; issues, pull requests, commits, comments.
 
 _[Instructions for installing and running the app](INSTALLATION.md)_
 
+## Contributing
+
+See [contribution guidelines](./CONTRIBUTING.md)
+
 ## Text localization
 
 Install **gettext** (when working with Poetry).
@@ -21,7 +25,9 @@ Install **gettext** (when working with Poetry).
 2. Make changes in these files.
 3. Run `make transcompile`.
 
----
+### **Please do not do localization in your PR , if you do not have the appropriate issue.**
+
+--
 
 [![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/assets/master/images/hexlet_logo128.png)](https://hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=hexlet-friends)
 

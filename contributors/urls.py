@@ -71,4 +71,5 @@ urlpatterns = [
         name="pull_requests_list",
     ),
     path('event-handler', views.webhook.EventHandler.as_view()),
+    path('about', views.about.AboutView.as_view(), name="about"),
 ]
