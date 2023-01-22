@@ -27,6 +27,7 @@
                  alt="{% trans "Hexlet friend" %}"
                  title="{% trans "Hexlet friend" %}"
                  src="{% static 'images/achievments_icons/friend.svg' %}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
@@ -34,26 +35,31 @@
             <img src="{% static 'images/achievments_icons/pull_requests-100.svg' %}"
                  alt="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
                  title="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.pull_requests >= 50 %}
             <img src="{% static 'images/achievments_icons/pull_requests-50.svg' %}"
                  alt="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
                  title="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.pull_requests >= 25 %}
             <img src="{% static 'images/achievments_icons/pull_requests-25.svg' %}"
                  alt="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
                  title="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.pull_requests >= 10 %}
             <img src="{% static 'images/achievments_icons/pull_requests-10.svg' %}"
                  alt="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
                  title="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.pull_requests >= 1 %}
             <img src="{% static 'images/achievments_icons/pull_request-1.svg' %}"
                  alt="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
                  title="{% trans 'Pull requests' %}: {{ contributor.pull_requests }}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
@@ -61,26 +67,31 @@
             <img src="{% static 'images/achievments_icons/commits-200.svg' %}"
                  alt="{% trans 'Commits' %}: {{ contributor.commits }}"
                  title="{% trans 'Commits' %}: {{ contributor.commits }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.commits >= 100 %}
             <img src="{% static 'images/achievments_icons/commits-100.svg' %}"
                  alt="{% trans 'Commits' %}: {{ contributor.commits }}"
                  title="{% trans 'Commits' %}: {{ contributor.commits }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.commits >= 50 %}
             <img src="{% static 'images/achievments_icons/commits-50.svg' %}"
                  alt="{% trans 'Commits' %}: {{ contributor.commits }}"
                  title="{% trans 'Commits' %}: {{ contributor.commits }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.commits >= 25 %}
             <img src="{% static 'images/achievments_icons/commits-25.svg' %}"
                  alt="{% trans 'Commits' %}: {{ contributor.commits }}"
                  title="{% trans 'Commits' %}: {{ contributor.commits }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.commits >= 1 %}
             <img src="{% static 'images/achievments_icons/commit-1.svg' %}"
                  alt="{% trans 'Commits' %}: {{ contributor.commits }}"
                  title="{% trans 'Commits' %}: {{ contributor.commits }}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
@@ -88,26 +99,31 @@
             <img src="{% static 'images/achievments_icons/issues-50.svg' %}"
                  alt="{% trans 'Issues' %}: {{ contributor.issues }}"
                  title="{% trans 'Issues' %}: {{ contributor.issues }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.issues >= 25 %}
             <img src="{% static 'images/achievments_icons/issues-25.svg' %}"
                  alt="{% trans 'Issues' %}: {{ contributor.issues }}"
                  title="{% trans 'Issues' %}: {{ contributor.issues }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.issues >= 10 %}
             <img src="{% static 'images/achievments_icons/issues-10.svg' %}"
                  alt="{% trans 'Issues' %}: {{ contributor.issues }}"
                  title="{% trans 'Issues' %}: {{ contributor.issues }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.issues >= 5 %}
             <img src="{% static 'images/achievments_icons/issues-5.svg' %}"
                  alt="{% trans 'Issues' %}: {{ contributor.issues }}"
                  title="{% trans 'Issues' %}: {{ contributor.issues }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.issues >= 1 %}
             <img src="{% static 'images/achievments_icons/issue-1.svg' %}"
                  alt="{% trans 'Issues' %}: {{ contributor.issues }}"
                  title="{% trans 'Issues' %}: {{ contributor.issues }}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
@@ -115,26 +131,31 @@
             <img src="{% static 'images/achievments_icons/comments-200.svg' %}"
                  alt="{% trans 'Comments' %}: {{ contributor.comments }}"
                  title="{% trans 'Comments' %}: {{ contributor.comments }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.comments >= 100 %}
             <img src="{% static 'images/achievments_icons/comments-100.svg' %}"
                  alt="{% trans 'Comments' %}: {{ contributor.comments }}"
                  title="{% trans 'Comments' %}: {{ contributor.comments }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.comments >= 50 %}
             <img src="{% static 'images/achievments_icons/comments-50.svg' %}"
                  alt="{% trans 'Comments' %}: {{ contributor.comments }}"
                  title="{% trans 'Comments' %}: {{ contributor.comments }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.comments >= 25 %}
             <img src="{% static 'images/achievments_icons/comments-25.svg' %}"
                  alt="{% trans 'Comments' %}: {{ contributor.comments }}"
                  title="{% trans 'Comments' %}: {{ contributor.comments }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.comments >= 1 %}
             <img src="{% static 'images/achievments_icons/comment-1.svg' %}"
                  alt="{% trans 'Comments' %}: {{ contributor.comments }}"
                  title="{% trans 'Comments' %}: {{ contributor.comments }}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
@@ -142,26 +163,31 @@
             <img src="{% static 'images/achievments_icons/code_editioins-1000.svg' %}"
                  alt="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
                  title="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.additions|add:contributor.deletions >= 500 %}
             <img src="{% static 'images/achievments_icons/code_editions-500.svg' %}"
                  alt="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
                  title="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.additions|add:contributor.deletions >= 250 %}
             <img src="{% static 'images/achievments_icons/code_editions-250.svg' %}"
                  alt="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
                  title="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.additions|add:contributor.deletions >= 100 %}
             <img src="{% static 'images/achievments_icons/code_editions-100.svg' %}"
                  alt="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
                  title="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
+                 data-toggle="tooltip"
                  width="50">
           {% elif contributor.additions|add:contributor.deletions >= 1 %}
             <img src="{% static 'images/achievments_icons/code_edition-1.svg' %}"
                  alt="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
                  title="{% trans 'Additions and deletions' %}: {{ contributor.additions|add:contributor.deletions }}"
+                 data-toggle="tooltip"
                  width="50">
           {% endif %}
 
