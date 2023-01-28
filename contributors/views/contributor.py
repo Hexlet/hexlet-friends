@@ -3,9 +3,15 @@ from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models import Contributor, Repository
+from contributors.views.mixins import (
+    ContributorsJsonMixin,
+    ContributorTotalStatMixin,
+)
 
 
-class DetailView(generic.DetailView):
+class DetailView(
+    ContributorTotalStatMixin, ContributorsJsonMixin, generic.DetailView,
+):
     """Contributor's details."""
 
     model = Contributor
@@ -37,28 +43,9 @@ class DetailView(generic.DetailView):
         context['contributions_for_year'] = (
             self.object.contribution_set.for_year()
         )
-        total = self.object.contribution_set.aggregate(
-            commits=Count('id', filter=Q(type='cit')),
-            additions=Coalesce(Sum('stats__additions'), 0),
-            deletions=Coalesce(Sum('stats__deletions'), 0),
-            pull_requests=Count('type', filter=Q(type='pr')),
-            issues=Count('type', filter=Q(type='iss')),
-            comments=Count('type', filter=Q(type='cnt')),
-        )
-        context['contributors_json'] = list(
-            Contributor.objects.visible().with_contributions().values(
-                'id',
-                'commits',
-                'additions',
-                'deletions',
-                'pull_requests',
-                'issues',
-                'comments',
-            ),
-        )
+
         context['contributors'] = Contributor.objects.visible().values(
             'id',
             'name',
         )
-        context['total'] = total
         return context

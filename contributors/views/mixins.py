@@ -2,8 +2,8 @@ import operator
 from functools import reduce
 
 from django.core.paginator import Paginator
-from django.db.models import F, Q, Window  # noqa: WPS347
-from django.db.models.functions import RowNumber
+from django.db.models import Count, F, Q, Sum, Window  # noqa: WPS347
+from django.db.models.functions import Coalesce, RowNumber
 from django.views.generic.list import MultipleObjectMixin
 from django_cte import With
 
@@ -159,3 +159,40 @@ class LabelsMixin(object):
                     labels__name__iexact=label,
                 )
         return super().get_queryset()
+
+
+class ContributorTotalStatMixin(object):
+    """Add total stat to contributor context."""
+
+    def get_context_data(self, **kwargs):
+        """Get and modify context data."""
+        context = super().get_context_data(**kwargs)
+        context['total'] = self.object.contribution_set.aggregate(
+            commits=Count('id', filter=Q(type='cit')),
+            additions=Coalesce(Sum('stats__additions'), 0),
+            deletions=Coalesce(Sum('stats__deletions'), 0),
+            pull_requests=Count('type', filter=Q(type='pr')),
+            issues=Count('type', filter=Q(type='iss')),
+            comments=Count('type', filter=Q(type='cnt')),
+        )
+        return context
+
+
+class ContributorsJsonMixin(object):
+    """Add json-formatted list of contributors stats."""
+
+    def get_context_data(self, **kwargs):
+        """Get and modify context data."""
+        context = super().get_context_data(**kwargs)
+        context['contributors_json'] = list(
+            self.model.objects.visible().with_contributions().values(
+                'id',
+                'commits',
+                'additions',
+                'deletions',
+                'pull_requests',
+                'issues',
+                'comments',
+            ),
+        )
+        return context
