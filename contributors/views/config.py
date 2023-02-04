@@ -52,17 +52,18 @@ def show_repos(request):
 
 
 def collect_data(request):
-        """Collect data for chosen repositories."""
-        context = set_up_context(request)
-        if request.method == 'POST':
-            repo_ids = request.POST.getlist('repositories')
-            repos = Repository.objects.filter(id__in=repo_ids)
-            for repo in repos:
-                repo.is_tracked = True
-                repo.is_visible = True
-            Repository.objects.bulk_update(repos, ['is_tracked', 'is_visible'])
-            fetch_command = ['./manage.py', 'fetchdata', '--repo']
-            fetch_command.extend([repo.full_name for repo in repos])  # noqa: WPS441,E501
-            subprocess.Popen(fetch_command)  # noqa: S603
-            return TemplateResponse(request, 'admin/data_collection.html', context)
-        return HttpResponseForbidden("Forbidden.")
+    """Collect data for chosen repositories."""
+    context = set_up_context(request)
+    if request.method == 'POST':
+        repo_ids = request.POST.getlist('repositories')
+        repos = Repository.objects.filter(id__in=repo_ids)
+        for repo in repos:
+            repo.is_tracked = True
+            repo.is_visible = True
+        Repository.objects.bulk_update(repos, ['is_tracked', 'is_visible'])
+        fetch_command = ['./manage.py', 'fetchdata', '--repo']
+        fetch_command.extend(
+            [repo.full_name for repo in repos])  # noqa: WPS441,E501
+        subprocess.Popen(fetch_command)  # noqa: S603
+        return TemplateResponse(request, 'admin/data_collection.html', context)
+    return HttpResponseForbidden("Forbidden.")
