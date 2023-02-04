@@ -60,7 +60,7 @@ def collect_data(request):
         for repo in repos:
             repo.is_tracked = True
             repo.is_visible = True
-            repo.save()
+        Repository.objects.bulk_update(repos, ['is_tracked', 'is_visible'])
         fetch_command = ['./manage.py', 'fetchdata', '--repo']
         fetch_command.extend([repo.full_name for repo in repos])  # noqa: WPS441,E501
         subprocess.Popen(fetch_command)  # noqa: S603
