@@ -41,7 +41,7 @@ class TableSortSearchForm(forms.Form):
 
 class OrganizationFilterForm(forms.Form):
     """Search form of contributors by organization."""
-    
+
     def __init__(self, *args, **kwargs):
         """Remove suffix."""
         super().__init__(*args, **kwargs)
