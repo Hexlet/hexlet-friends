@@ -40,14 +40,15 @@ class TableSortSearchForm(forms.Form):
 
 
 class OrganizationFilterForm(forms.Form):
-    """search form of contributors by organization"""
+    """Search form of contributors by organization."""
+    
     def __init__(self, *args, **kwargs):
-        """remove suffix"""
+        """Remove suffix."""
         super().__init__(*args, **kwargs)
         self.label_suffix = ""
 
     organizations = forms.ModelChoiceField(
         queryset=Organization.objects.all(),
         required=False,
-        label=_("Организации")
+        label=_("Organization"),
     )
