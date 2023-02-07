@@ -23,19 +23,23 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     searchable_fields = ('login', 'name')
     ordering = sortable_fields[0]
 
+    @property
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form_org'] = OrganizationFilterForm(self.request.GET)
         return context
 
+    @property
     def get_queryset(self):
         queryset = super().get_queryset().prefetch_related(
-            'contributors__organization')
+            'contributors__organization'
+        )
         form_org = OrganizationFilterForm(self.request.GET)
         if form_org.is_valid():
             organizations = form_org.cleaned_data['organizations']
 
             if organizations:
                 queryset = queryset.filter(
-                    contributors__organization=organizations).distinct()
+                    contributors__organization=organizations).distinct(
+                )
             return queryset
