@@ -29,8 +29,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         context['form_org'] = OrganizationFilterForm(self.request.GET)
         return context
 
-    @property
-    def get_queryset(self):
+    def get_queryset(self):  # noqa: WPS615
         """Get filter queryset."""
         queryset = super().get_queryset().prefetch_related(
             'contributors__organization',
@@ -40,7 +39,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
             organizations = form_org.cleaned_data['organizations']
             if organizations:
                 queryset = queryset.filter(
-                    contributors__organization=organizations
+                    contributors__organization=organizations,
                 ).distinct()
 
             return queryset
