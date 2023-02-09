@@ -2,13 +2,13 @@
 
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link time-note py-1 {% if period == 'week' %}active{% endif %}" href="{% url "contributors:contributors_for_week" %}"
+    <a class="nav-link time-note py-1 active" href="#"
        name="top-week">
       {% trans "for the past week" %}
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link time-note py-1 {% if period == 'month' %}active{% endif %}" href="{% url "contributors:contributors_for_month" %}"
+    <a class="nav-link time-note py-1" href="#"
        name="top-month">
       {% trans "for the past month" %}
     </a>
