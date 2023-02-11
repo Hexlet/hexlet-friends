@@ -154,10 +154,10 @@ class LabelsMixin(object):
         """Get a dataset."""
         labels_param = self.request.GET.get('labels')
         if labels_param:
-            for label in labels_param.split('.'):
-                self.queryset = self.queryset.filter(
-                    labels__name__iexact=label,
-                )
+            labels_param = labels_param.split('.')
+            self.queryset = self.queryset.filter(
+                labels__name__lower__in=labels_param,
+            )
         return super().get_queryset()
 
 

@@ -50,10 +50,12 @@ class ListView(
 
     def get_context_data(self, **kwargs):
         """Add context."""
+        all_labels = Label.objects.all()
         labels = Label.objects.filter(
             repository__id__in=self.get_queryset(),
         ).distinct()
 
         context = super().get_context_data(**kwargs)
+        context['all_labels'] = all_labels
         context['labels'] = labels
         return context
