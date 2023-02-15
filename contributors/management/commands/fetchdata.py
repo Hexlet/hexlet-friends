@@ -10,6 +10,7 @@ from contributors.models import (
     Contribution,
     Contributor,
     IssueInfo,
+    ContributionLabel,
     Label,
     Organization,
     Repository,
@@ -87,6 +88,10 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
                 contrib['number'],
                 session,
             ) else contrib['state']
+
+            for label in contrib['labels']:
+                label_name, _ = ContributionLabel.objects.get_or_create(name=label["name"])
+                contribution.labels.add(label_name)
 
             IssueInfo.objects.update_or_create(
                 issue=contribution,

@@ -7,6 +7,7 @@ from django_cte import CTEManager
 
 from contributors.models.contributor import Contributor
 from contributors.models.repository import Repository
+from contributors.models.contribution_label import ContributionLabel
 from contributors.utils import misc
 
 
@@ -67,6 +68,11 @@ class Contribution(models.Model):
     created_at = models.DateTimeField(_("creation date"))
 
     objects = ContributionManager()  # noqa: WPS110
+
+    labels = models.ManyToManyField(
+        ContributionLabel,
+        verbose_name=_("contribution labels"),
+    )
 
     class Meta(object):
         verbose_name = _("contribution")

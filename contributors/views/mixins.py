@@ -10,6 +10,8 @@ from django_cte import With
 from contributors.forms import TableSortSearchForm
 from contributors.utils.misc import DIRECTION_TRANSLATIONS, split_ordering
 
+from contributors.models import ContributionLabel
+
 MAX_PAGES_WITHOUT_SHRINKING = 8
 PAGES_VISIBLE_AT_BOUNDARY = 5
 INNER_VISIBLE_PAGES = 3
@@ -158,6 +160,21 @@ class LabelsMixin(object):
                 self.queryset = self.queryset.filter(
                     labels__name__iexact=label,
                 )
+        return super().get_queryset()
+
+
+class ContributionLabelsMixin(object):
+    """A mixin for labels."""
+
+    def get_queryset(self):  # noqa: WPS615
+        """Get a dataset."""
+        labels_param = self.request.GET.get('contribution_labels')
+        if labels_param:
+                labels_param = labels_param.split('.')
+                self.queryset = self.queryset.filter(
+                    labels__name__in=labels_param,
+                )
+                print(self.queryset)
         return super().get_queryset()
 
 

@@ -10,6 +10,7 @@ from contributors.models import (
     IssueInfo,
     Organization,
     Repository,
+    ContributionLabel,
 )
 from contributors.utils import github_lib as github
 
@@ -137,6 +138,11 @@ def update_database(event_type, payload):   # noqa: WPS210
                 ),
             },
         )
+
+        for label in contrib_data['labels']:
+            label_name, _ = ContributionLabel.objects.get_or_create(name=label["name"])
+            contrib.labels.add(label_name)
+
         if contrib.type == 'iss':
             IssueInfo.objects.update_or_create(
                 issue=contrib,

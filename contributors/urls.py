@@ -72,7 +72,7 @@ urlpatterns = [
     path(
         "issues",
         views.issues.ListView.as_view(),
-        name="open_issues_list",
+        name="open_issues",
     ),
     path(
         "pull_requests",

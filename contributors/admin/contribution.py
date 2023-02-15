@@ -11,6 +11,15 @@ class CommitStatsInline(admin.StackedInline):
     extra = 0
 
 
+class ContributionLabelInline(admin.StackedInline):
+    """Repository label."""
+
+    model = Contribution.labels.through
+    extra = 1
+    verbose_name = "relation"
+    verbose_name_plural = "relations"
+
+
 class IssueInfoInline(admin.StackedInline):
     """Issue or pull request additional info."""
 
