@@ -1,0 +1,49 @@
+[
+    {
+        "model": "contributors.repository",
+        "pk": 1,
+        "fields": {
+            "name": "scriptaculous",
+            "html_url": "https://github.com/mintough57/scriptaculous",
+            "is_tracked": true,
+            "owner": 1,
+            "organization": null,
+            "project": null,
+            "full_name": "mintough57/scriptaculous",
+            "is_visible": true,
+            "labels": [
+                2
+            ]
+        }
+    },
+    {
+        "model": "contributors.repository",
+        "pk": 2,
+        "fields": {
+            "name": "olsonmarket",
+            "html_url": "https://github.com/kinganduld/olsonmarket",
+            "is_tracked": true,
+            "owner": 2,
+            "organization": null,
+            "project": null,
+            "full_name": "kinganduld/olsonmarket",
+            "is_visible": true,
+            "labels": []
+        }
+    },
+    {
+        "model": "contributors.repository",
+        "pk": 3,
+        "fields": {
+            "name": "depinna",
+            "html_url": "https://github.com/mintough57/depinna",
+            "is_tracked": true,
+            "owner": 1,
+            "organization": null,
+            "project": null,
+            "full_name": "mintough57/depinna",
+            "is_visible": false,
+            "labels": []
+        }
+    }
+]

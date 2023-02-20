@@ -1,0 +1,29 @@
+[
+    {
+        "model": "contributors.organization",
+        "pk": 1,
+        "fields": {
+            "name": "Hexlet",
+            "html_url": "https://github.com/hexlet",
+            "is_tracked": false
+        }
+    },
+    {
+        "model": "contributors.organization",
+        "pk": 2,
+        "fields": {
+            "name": "Zantigo",
+            "html_url": "https://github.com/zantigo",
+            "is_tracked": true
+        }
+    },
+    {
+        "model": "contributors.organization",
+        "pk": 3,
+        "fields": {
+            "name": "mendez",
+            "html_url": "",
+            "is_tracked": true
+        }
+    }
+]

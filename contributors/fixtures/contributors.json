@@ -1,0 +1,67 @@
+[
+    {
+        "model": "contributors.contributor",
+        "pk": 1,
+        "fields": {
+            "name": "George Rogers",
+            "html_url": "https://github.com/mintough57",
+            "is_tracked": true,
+            "user": null,
+            "login": "mintough57",
+            "avatar_url": "https://avatars.githubusercontent.com/u/5575?v=4",
+            "is_visible": true
+        }
+    },
+    {
+        "model": "contributors.contributor",
+        "pk": 2,
+        "fields": {
+            "name": "Uliana Isayeva",
+            "html_url": "https://github.com/kinganduld",
+            "is_tracked": true,
+            "user": null,
+            "login": "kinganduld",
+            "avatar_url": "https://avatars.githubusercontent.com/u/9665?v=4",
+            "is_visible": true
+        }
+    },
+    {
+        "model": "contributors.contributor",
+        "pk": 3,
+        "fields": {
+            "name": null,
+            "html_url": "https://github.com/indecing",
+            "is_tracked": false,
+            "user": null,
+            "login": "indecing",
+            "avatar_url": "https://avatars.githubusercontent.com/u/27384?v=4",
+            "is_visible": false
+        }
+    },
+    {
+        "model": "contributors.contributor",
+        "pk": 4,
+        "fields": {
+            "name": "Albert Muravyov",
+            "html_url": "https://github.com/pilly1964",
+            "is_tracked": true,
+            "user": null,
+            "login": "pilly1964",
+            "avatar_url": "https://avatars.githubusercontent.com/u/28718?v=4",
+            "is_visible": true
+        }
+    },
+    {
+        "model": "contributors.contributor",
+        "pk": 5,
+        "fields": {
+            "name": "Gerasimos Voronov",
+            "html_url": "https://github.com/suir1948",
+            "is_tracked": true,
+            "user": null,
+            "login": "suir1948",
+            "avatar_url": "https://avatars.githubusercontent.com/u/160197?v=4",
+            "is_visible": true
+        }
+    }
+]

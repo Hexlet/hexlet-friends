@@ -1,0 +1,38 @@
+[
+    {
+        "model": "contributors.issueinfo",
+        "pk": 1,
+        "fields": {
+            "issue": "2",
+            "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "state": "merged"
+        }
+    },
+    {
+        "model": "contributors.issueinfo",
+        "pk": 2,
+        "fields": {
+            "issue": "3",
+            "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "state": "merged"
+        }
+    },
+    {
+        "model": "contributors.issueinfo",
+        "pk": 3,
+        "fields": {
+            "issue": "4",
+            "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "state": "merged"
+        }
+    },
+    {
+        "model": "contributors.issueinfo",
+        "pk": 4,
+        "fields": {
+            "issue": "8",
+            "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+            "state": "open"
+        }
+    }
+]

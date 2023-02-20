@@ -1,0 +1,23 @@
+[
+    {
+        "model": "contributors.label",
+        "pk": 1,
+        "fields": {
+            "name": "Ruby"
+        }
+    },
+    {
+        "model": "contributors.label",
+        "pk": 2,
+        "fields": {
+            "name": "JavaScript"
+        }
+    },
+    {
+        "model": "contributors.label",
+        "pk": 3,
+        "fields": {
+            "name": "Python"
+        }
+    }
+]
