@@ -52,3 +52,21 @@ class OrganizationFilterForm(forms.Form):
         required=False,
         label=_("Organization"),
     )
+
+    @property
+    def helper(self):
+        """Control form attributes and its layout."""
+        helper = FormHelper()
+        helper.form_method = 'get'
+        helper.form_class = 'd-flex'
+        helper.layout = Layout(
+            FieldWithButtons(
+                Field('organizations'),
+                StrictButton(
+                    _("Search"),
+                    type='submit',
+                    css_class='btn btn-outline-primary',
+                ),
+            ),
+        )
+        return helper
