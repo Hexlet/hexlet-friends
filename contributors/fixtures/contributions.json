@@ -1,0 +1,112 @@
+[
+    {
+        "model": "contributors.contribution",
+        "pk": "1",
+        "fields": {
+            "repository": 1,
+            "contributor": 1,
+            "type": "cit",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "1224afad56d8821628fbaf773ad6b146614883bf",
+        "fields": {
+            "repository": 2,
+            "contributor": 1,
+            "type": "cit",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "1257b483af1fae85bc750c41b14292fd56b3d020",
+        "fields": {
+            "repository": 2,
+            "contributor": 2,
+            "type": "cit",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "2",
+        "fields": {
+            "repository": 1,
+            "contributor": 1,
+            "type": "iss",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "3",
+        "fields": {
+            "repository": 1,
+            "contributor": 2,
+            "type": "iss",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "4",
+        "fields": {
+            "repository": 2,
+            "contributor": 1,
+            "type": "iss",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "5",
+        "fields": {
+            "repository": 1,
+            "contributor": 1,
+            "type": "pr",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "6",
+        "fields": {
+            "repository": 1,
+            "contributor": 2,
+            "type": "pr",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "7",
+        "fields": {
+            "repository": 2,
+            "contributor": 1,
+            "type": "pr",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    },
+    {
+        "model": "contributors.contribution",
+        "pk": "8",
+        "fields": {
+            "repository": 2,
+            "contributor": 2,
+            "type": "iss",
+            "html_url": "https://github.com/#",
+            "created_at": "2022-04-29T10:24:44Z"
+        }
+    }
+]

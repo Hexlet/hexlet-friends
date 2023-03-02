@@ -1,0 +1,22 @@
+[
+    {
+        "model": "contributors.project",
+        "pk": 1,
+        "fields": {
+            "name": "YoungHeart",
+            "is_tracked": true,
+            "description": "",
+            "html_url": ""
+        }
+    },
+    {
+        "model": "contributors.project",
+        "pk": 2,
+        "fields": {
+            "name": "Gallenkamp",
+            "is_tracked": false,
+            "description": "",
+            "html_url": ""
+        }
+    }
+]
