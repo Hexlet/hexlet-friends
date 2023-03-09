@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
@@ -10,5 +11,9 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/', include('auth.urls')),
     path('', include('contributors.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include('debug_toolbar.urls')),
+    ]
