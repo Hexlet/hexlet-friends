@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-05 15:00+0500\n"
+"POT-Creation-Date: 2023-03-27 00:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,223 +20,222 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: auth/apps.py:10
+#: auth/apps.py
 msgid "Custom Authentication and Authorization"
 msgstr "Настраиваемая аутентификация и авторизация"
 
-#: auth/models.py:11
+#: auth/models.py
 msgid "User"
 msgstr "Пользователь"
 
-#: auth/models.py:12
+#: auth/models.py
 msgid "Users"
 msgstr "Пользователи"
 
-#: auth/models.py:29
+#: auth/models.py
 msgid "Group"
 msgstr ""
 
-#: auth/models.py:30
+#: auth/models.py
 msgid "Groups"
 msgstr ""
 
-#: contributors/admin/base.py:25
+#: contributors/admin/base.py
 msgid "Change tracking to the opposite value"
 msgstr "Измените отслеживание на противоположное значение"
 
-#: contributors/admin/base.py:28
+#: contributors/admin/base.py
 msgid "Change visibility to the opposite value"
 msgstr "Измените видимость на противоположное значение"
 
-#: contributors/forms/admin_forms.py:12 templates/components/navbar.html:12
-#: templates/organizations_list.html:4 templates/organizations_list.html:6
-#: templates/organizations_list.html:8
+#: contributors/forms/admin_forms.py templates/components/navbar.html
+#: templates/organizations_list.html
 msgid "Organizations"
 msgstr "Организации"
 
-#: contributors/forms/admin_forms.py:15
+#: contributors/forms/admin_forms.py
 msgid "Enter organization names separated by a space or newline."
 msgstr "Введите названия организаций, разделенные пробелом или новой строкой."
 
-#: contributors/forms/admin_forms.py:27
+#: contributors/forms/admin_forms.py
 msgid "Invalid name: "
 msgstr "Недопустимое имя: "
 
-#: contributors/forms/admin_forms.py:43
+#: contributors/forms/admin_forms.py
 msgid "Uncheck those you wish to skip."
 msgstr "Снимите флажки с тех, которые вы хотите пропустить."
 
-#: contributors/forms/forms.py:29 templates/contributor_details.html:185
+#: contributors/forms/forms.py templates/contributor_details.html
 msgid "Filter by name"
 msgstr "Фильтрация по имени"
 
-#: contributors/forms/forms.py:31
+#: contributors/forms/forms.py
 msgid "Search"
 msgstr "Поиск"
 
-#: contributors/models/base.py:12
+#: contributors/forms/forms.py
+#: templates/components/tables/repositories_list.html
+msgid "Organization"
+msgstr "Организация"
+
+#: contributors/models/base.py
 msgid "name"
 msgstr "имя"
 
-#: contributors/models/base.py:16 contributors/models/contribution.py:66
-#: templates/components/tables/contributor_issues.html:17
-#: templates/components/tables/contributor_prs.html:17
+#: contributors/models/base.py contributors/models/contribution.py
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
 msgid "URL"
 msgstr ""
 
-#: contributors/models/base.py:17
+#: contributors/models/base.py
 msgid "tracked"
 msgstr "отслеживание"
 
-#: contributors/models/commit_stats.py:11
-#: contributors/models/contribution.py:48
+#: contributors/models/commit_stats.py contributors/models/contribution.py
 msgid "commit"
 msgstr "коммит"
 
-#: contributors/models/commit_stats.py:14
+#: contributors/models/commit_stats.py
 msgid "additions"
 msgstr "добавлено"
 
-#: contributors/models/commit_stats.py:15
+#: contributors/models/commit_stats.py
 msgid "deletions"
 msgstr "удалено"
 
-#: contributors/models/commit_stats.py:18
-#: contributors/models/commit_stats.py:19
+#: contributors/models/commit_stats.py
 msgid "commit stats"
 msgstr "статистика коммита"
 
-#: contributors/models/contribution.py:49 contributors/models/issue_info.py:14
+#: contributors/models/contribution.py contributors/models/issue_info.py
 msgid "issue"
 msgstr "проблема"
 
-#: contributors/models/contribution.py:50
+#: contributors/models/contribution.py
 msgid "pull request"
 msgstr "пул-реквест"
 
-#: contributors/models/contribution.py:51
+#: contributors/models/contribution.py
 msgid "comment"
 msgstr "комментарий"
 
-#: contributors/models/contribution.py:57 contributors/models/repository.py:53
+#: contributors/models/contribution.py contributors/models/repository.py
 msgid "repository"
 msgstr "репозиторий"
 
-#: contributors/models/contribution.py:62 contributors/models/contributor.py:88
+#: contributors/models/contribution.py contributors/models/contributor.py
 msgid "contributor"
 msgstr "участник"
 
-#: contributors/models/contribution.py:65
+#: contributors/models/contribution.py
 msgid "type"
 msgstr "тип"
 
-#: contributors/models/contribution.py:67
+#: contributors/models/contribution.py
 msgid "creation date"
 msgstr "дата создания"
 
-#: contributors/models/contribution.py:72
+#: contributors/models/contribution.py
 msgid "contribution"
 msgstr "вклад"
 
-#: contributors/models/contribution.py:73
+#: contributors/models/contribution.py
 msgid "contributions"
 msgstr "вклады"
 
-#: contributors/models/contributor.py:81
+#: contributors/models/contributor.py
 msgid "login"
 msgstr "Логин"
 
-#: contributors/models/contributor.py:82
+#: contributors/models/contributor.py
 msgid "avatar URL"
 msgstr "URL аватара"
 
-#: contributors/models/contributor.py:83 contributors/models/repository.py:46
+#: contributors/models/contributor.py contributors/models/repository.py
 msgid "visible"
 msgstr "видимость"
 
-#: contributors/models/contributor.py:89 contributors/models/repository.py:21
+#: contributors/models/contributor.py contributors/models/repository.py
 msgid "contributors"
 msgstr "участники"
 
-#: contributors/models/issue_info.py:17
+#: contributors/models/issue_info.py
 msgid "title"
 msgstr "название"
 
-#: contributors/models/issue_info.py:18
+#: contributors/models/issue_info.py
 msgid "state"
 msgstr "состояние"
 
-#: contributors/models/issue_info.py:21 contributors/models/issue_info.py:22
+#: contributors/models/issue_info.py
 msgid "issue info"
 msgstr "информация о проблеме"
 
-#: contributors/models/organization.py:11 contributors/models/repository.py:34
+#: contributors/models/organization.py contributors/models/repository.py
 msgid "organization"
 msgstr "организация"
 
-#: contributors/models/organization.py:12
+#: contributors/models/organization.py
 msgid "organizations"
 msgstr "организации"
 
-#: contributors/models/project.py:11
+#: contributors/models/project.py
 msgid "description"
 msgstr "описание"
 
-#: contributors/models/project.py:15 contributors/models/repository.py:41
+#: contributors/models/project.py contributors/models/repository.py
 msgid "project"
 msgstr "проект"
 
-#: contributors/models/project.py:16
+#: contributors/models/project.py
 msgid "projects"
 msgstr "проекты"
 
-#: contributors/models/repository.py:27
+#: contributors/models/repository.py
 msgid "owner"
 msgstr "владелец"
 
-#: contributors/models/repository.py:45
+#: contributors/models/repository.py
 msgid "full name"
 msgstr "полное имя"
 
-#: contributors/models/repository.py:49
+#: contributors/models/repository.py
 msgid "labels"
 msgstr "метки"
 
-#: contributors/models/repository.py:54
+#: contributors/models/repository.py
 msgid "repositories"
 msgstr "репозитории"
 
-#: contributors/views/config.py:18
+#: contributors/views/config.py
 msgid "Processing configuration"
 msgstr "Настройка процесса"
 
-#: contributors/views/organization.py:17 contributors/views/projects.py:63
-#: contributors/views/repositories.py:46 templates/components/navbar.html:27
-#: templates/components/tables/projects_list.html:29
-#: templates/components/tables/repositories_list.html:27
-#: templates/contributors_for_period.html:8 templates/contributors_list.html:4
-#: templates/contributors_list.html:6 templates/contributors_list.html:8
-#: templates/repository_details.html:26
+#: contributors/views/organization.py contributors/views/projects.py
+#: contributors/views/repositories.py templates/components/navbar.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributors_for_period.html templates/contributors_list.html
+#: templates/repository_details.html
 msgid "Contributors"
 msgstr "Участники"
 
-#: contributors/views/organizations.py:18 templates/components/navbar.html:22
-#: templates/components/tables/organizations_list.html:11
-#: templates/organization_details.html:13 templates/repositories_list.html:4
-#: templates/repositories_list.html:6 templates/repositories_list.html:8
+#: contributors/views/organizations.py templates/components/navbar.html
+#: templates/components/tables/organizations_list.html
+#: templates/organization_details.html templates/repositories_list.html
 msgid "Repositories"
 msgstr "Репозитории"
 
-#: templates/about.html:4 templates/about.html:5
-#: templates/components/footer.html:15
+#: templates/about.html templates/components/footer.html
 msgid "About project"
 msgstr "О проекте"
 
-#: templates/about.html:7
+#: templates/about.html
 msgid "Welcome to the open-source project Hexlet-friends!"
 msgstr "Добро пожаловать в проект с открытым исходным кодом Hexlet-friends!"
 
-#: templates/about.html:8
+#: templates/about.html
 msgid ""
 "Hexlet-friends is an open-source Python project. The service keeps track of "
 "Hexlet's open-source projects. It analyzes the count of commits, pull-"
@@ -248,88 +247,88 @@ msgstr ""
 "количество проблем, коммитов и пул-реквестов. Сервис автоматически строит "
 "рейтинг участников с достижениями."
 
-#: templates/about.html:10
+#: templates/about.html
 msgid "Features"
 msgstr "Возможности сервиса"
 
-#: templates/about.html:12
+#: templates/about.html
 msgid "See the rating of the most active contributors"
 msgstr "Смотреть рейтинг самых активных участников"
 
-#: templates/about.html:13
+#: templates/about.html
 msgid "View new PR and issues"
 msgstr "Просматривать новые пул-реквесты и проблемы"
 
-#: templates/about.html:14
+#: templates/about.html
 msgid "Analyze the activity of an individual user for the year"
 msgstr "Анализировать активность отдельного пользователя за год"
 
-#: templates/about.html:15
+#: templates/about.html
 msgid "Go to problems on GitHub"
 msgstr "Переходить к проблемам на GitHub"
 
-#: templates/about.html:19
+#: templates/about.html
 msgid "Guidelines"
 msgstr "Рекомендации"
 
-#: templates/about.html:21
+#: templates/about.html
 msgid "What is Git and what is it for"
 msgstr "Что такое Git и для чего он нужен"
 
-#: templates/about.html:22
+#: templates/about.html
 msgid "How to participate in open source projects on GitHub."
 msgstr "Как принять участие в проектах с открытым исходным кодом на GitHub."
 
-#: templates/admin/configuration.html:15
+#: templates/admin/configuration.html
 msgid "Get repositories"
 msgstr "Получить репозитории"
 
-#: templates/admin/configuration.html:23
+#: templates/admin/configuration.html
 msgid "Invert selection"
 msgstr "Инвертировать выделение"
 
-#: templates/admin/index.html:23
+#: templates/admin/index.html
 #, python-format
 msgid "Models in the %(name)s application"
 msgstr ""
 
-#: templates/admin/index.html:26
+#: templates/admin/index.html
 msgid "Configure"
 msgstr "Настроить"
 
-#: templates/admin/index.html:39
+#: templates/admin/index.html
 msgid "Add"
 msgstr "Добавить"
 
-#: templates/admin/index.html:46
+#: templates/admin/index.html
 msgid "View"
 msgstr "Посмотреть"
 
-#: templates/admin/index.html:48
+#: templates/admin/index.html
 msgid "Change"
 msgstr "Изменить"
 
-#: templates/admin/index.html:59
+#: templates/admin/index.html
 msgid "You don't have permission to view or edit anything."
 msgstr "У вас нет доступа на просмотр или редактирование чего-либо."
 
-#: templates/admin/index.html:67
+#: templates/admin/index.html
 msgid "Recent actions"
 msgstr "Недавняя активность"
 
-#: templates/admin/index.html:68
+#: templates/admin/index.html
 msgid "My actions"
 msgstr "Моя активность"
 
-#: templates/admin/index.html:72
+#: templates/admin/index.html
 msgid "None available"
 msgstr "Недоступно"
 
-#: templates/admin/index.html:86
+#: templates/admin/index.html
 msgid "Unknown content"
 msgstr "Неизвестный контент"
 
-#: templates/base.html:17
+#: templates/base.html
 msgid ""
 "A service to track contributions from members of the Hexlet community to the "
 "Hexlet open-source projects on GitHub"
@@ -337,327 +336,281 @@ msgstr ""
 "Сервис для отслеживания вклада членов сообщества в проекты Хекслета с "
 "открытым исходным кодом на GitHub"
 
-#: templates/components/footer.html:6
+#: templates/components/footer.html
 msgid "Source code"
 msgstr "Исходный код"
 
-#: templates/components/footer.html:10
+#: templates/components/footer.html
 msgid "Other projects"
 msgstr "Другие проекты"
 
-#: templates/components/footer.html:28
+#: templates/components/footer.html
 msgid "Useful resources"
 msgstr "Полезные ресурсы"
 
-#: templates/components/footer.html:32
+#: templates/components/footer.html
 msgid "Knowledge base"
 msgstr "База знаний"
 
-#: templates/components/footer.html:33
+#: templates/components/footer.html
 msgid "Recommended books"
 msgstr "Рекомендуемые книги"
 
-#: templates/components/footer.html:34
+#: templates/components/footer.html
 msgid "Blog"
 msgstr "Блог Хекслета"
 
-#: templates/components/navbar.html:17 templates/projects_list.html:4
-#: templates/projects_list.html:6 templates/projects_list.html:8
+#: templates/components/navbar.html templates/projects_list.html
 msgid "Projects"
 msgstr "Проекты"
 
-#: templates/components/navbar.html:30
+#: templates/components/navbar.html
 msgid "For period"
 msgstr "За период"
 
-#: templates/components/navbar.html:31
+#: templates/components/navbar.html
 msgid "All-time"
 msgstr "За всё время"
 
-#: templates/components/navbar.html:36 templates/open_issues_list.html:4
-#: templates/open_issues_list.html:6 templates/open_issues_list.html:9
+#: templates/components/navbar.html templates/open_issues_list.html
 msgid "Open Issues"
 msgstr "Нерешенные проблемы"
 
-#: templates/components/navbar.html:41
-#: templates/components/tables/contributors_list.html:23
-#: templates/components/tables/projects_list.html:17
-#: templates/components/tables/recent_contributors.html:12
-#: templates/components/tables/repositories_list.html:21
-#: templates/contributor_details.html:35 templates/contributor_details.html:36
-#: templates/contributor_details.html:40 templates/contributor_details.html:41
-#: templates/contributor_details.html:45 templates/contributor_details.html:46
-#: templates/contributor_details.html:50 templates/contributor_details.html:51
-#: templates/contributor_details.html:55 templates/contributor_details.html:56
-#: templates/contributor_details.html:172
-#: templates/contributor_details.html:193 templates/contributor_prs.html:4
-#: templates/contributor_prs.html:8 templates/pull_requests_list.html:4
-#: templates/pull_requests_list.html:6 templates/pull_requests_list.html:8
+#: templates/components/navbar.html
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributor_details.html templates/contributor_prs.html
+#: templates/pull_requests_list.html
 msgid "Pull requests"
 msgstr "Пул-реквесты"
 
-#: templates/components/navbar.html:53
+#: templates/components/navbar.html
 msgid "Admin"
 msgstr "Админ"
 
-#: templates/components/navbar.html:56
+#: templates/components/navbar.html
 msgid "My statistics"
 msgstr "Моя статистика"
 
-#: templates/components/navbar.html:58
+#: templates/components/navbar.html
 msgid "Log out"
 msgstr "Выйти"
 
-#: templates/components/navbar.html:65 templates/registration/login.html:17
+#: templates/components/navbar.html templates/registration/login.html
 msgid "Log in"
 msgstr "Войти"
 
-#: templates/components/pagination.html:7
-#: templates/components/pagination.html:9
+#: templates/components/pagination.html
 msgid "Previous"
 msgstr "Предыдущая"
 
-#: templates/components/pagination.html:31
-#: templates/components/pagination.html:33
+#: templates/components/pagination.html
 msgid "Next"
 msgstr "Следующая"
 
-#: templates/components/tables/contributor_compare.html:5
+#: templates/components/tables/contributor_compare.html
 msgid "compare with ..."
 msgstr "Сравнить с ..."
 
-#: templates/components/tables/contributor_issues.html:9
-#: templates/components/tables/contributor_prs.html:9
-#: templates/components/tables/pull_requests_list.html:9
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/pull_requests_list.html
 msgid "Title"
 msgstr "Название"
 
-#: templates/components/tables/contributor_issues.html:13
-#: templates/components/tables/contributor_prs.html:13
-#: templates/components/tables/pull_requests_list.html:13
-#: templates/contributor_details.html:189 templates/repository_details.html:6
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/pull_requests_list.html
+#: templates/contributor_details.html templates/repository_details.html
 msgid "Repository"
 msgstr "Репозиторий"
 
-#: templates/components/tables/contributor_issues.html:21
-#: templates/components/tables/contributor_prs.html:21
-#: templates/components/tables/pull_requests_list.html:21
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/pull_requests_list.html
 msgid "Creation date"
 msgstr "Дата создания"
 
-#: templates/components/tables/contributor_issues.html:25
-#: templates/components/tables/contributor_prs.html:25
-#: templates/components/tables/pull_requests_list.html:25
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/pull_requests_list.html
 msgid "Status"
 msgstr "Статус"
 
-#: templates/components/tables/contributor_issues.html:41
-#: templates/components/tables/contributor_prs.html:41
-#: templates/components/tables/contributors_list.html:51
-#: templates/components/tables/organizations_list.html:27
-#: templates/components/tables/pull_requests_list.html:45
-#: templates/components/tables/repositories_list.html:59
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organizations_list.html
+#: templates/components/tables/pull_requests_list.html
+#: templates/components/tables/repositories_list.html
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
-#: templates/components/tables/contributor_total.html:3
+#: templates/components/tables/contributor_total.html
 msgid "Total"
 msgstr "Итого"
 
-#: templates/components/tables/contributors_list.html:8
-#: templates/components/tables/recent_contributors.html:7
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
 msgid "Login"
 msgstr "Логин"
 
-#: templates/components/tables/contributors_list.html:11
-#: templates/components/tables/organizations_list.html:8
-#: templates/components/tables/projects_list.html:8
-#: templates/components/tables/recent_contributors.html:8
-#: templates/components/tables/repositories_list.html:8
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/organizations_list.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
 msgid "Name"
 msgstr "Имя"
 
-#: templates/components/tables/contributors_list.html:14
-#: templates/components/tables/projects_list.html:23
-#: templates/components/tables/recent_contributors.html:9
-#: templates/contributor_details.html:62 templates/contributor_details.html:63
-#: templates/contributor_details.html:67 templates/contributor_details.html:68
-#: templates/contributor_details.html:72 templates/contributor_details.html:73
-#: templates/contributor_details.html:77 templates/contributor_details.html:78
-#: templates/contributor_details.html:82 templates/contributor_details.html:83
-#: templates/contributor_details.html:190
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/contributor_details.html
 msgid "Commits"
 msgstr "Коммиты"
 
-#: templates/components/tables/contributors_list.html:17
-#: templates/components/tables/recent_contributors.html:10
-#: templates/contributor_details.html:191
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/contributor_details.html
 msgid "Additions"
 msgstr "Добавлено"
 
-#: templates/components/tables/contributors_list.html:20
-#: templates/components/tables/recent_contributors.html:11
-#: templates/contributor_details.html:192
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/contributor_details.html
 msgid "Deletions"
 msgstr "Удалено"
 
-#: templates/components/tables/contributors_list.html:26
-#: templates/components/tables/projects_list.html:20
-#: templates/components/tables/recent_contributors.html:13
-#: templates/components/tables/repositories_list.html:24
-#: templates/contributor_details.html:89 templates/contributor_details.html:90
-#: templates/contributor_details.html:94 templates/contributor_details.html:95
-#: templates/contributor_details.html:99 templates/contributor_details.html:100
-#: templates/contributor_details.html:104
-#: templates/contributor_details.html:105
-#: templates/contributor_details.html:109
-#: templates/contributor_details.html:110
-#: templates/contributor_details.html:175
-#: templates/contributor_details.html:194 templates/contributor_issues.html:4
-#: templates/contributor_issues.html:8
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/components/tables/repositories_list.html
+#: templates/contributor_details.html templates/contributor_issues.html
 msgid "Issues"
 msgstr "Проблемы"
 
-#: templates/components/tables/contributors_list.html:29
-#: templates/components/tables/projects_list.html:26
-#: templates/components/tables/recent_contributors.html:14
-#: templates/contributor_details.html:116
-#: templates/contributor_details.html:117
-#: templates/contributor_details.html:121
-#: templates/contributor_details.html:122
-#: templates/contributor_details.html:126
-#: templates/contributor_details.html:127
-#: templates/contributor_details.html:131
-#: templates/contributor_details.html:132
-#: templates/contributor_details.html:136
-#: templates/contributor_details.html:137
-#: templates/contributor_details.html:195
+#: templates/components/tables/contributors_list.html
+#: templates/components/tables/projects_list.html
+#: templates/components/tables/recent_contributors.html
+#: templates/contributor_details.html
 msgid "Comments"
 msgstr "Комментарии"
 
-#: templates/components/tables/projects_list.html:14
+#: templates/components/tables/projects_list.html
 #, fuzzy
 #| msgid "description"
 msgid "Description"
 msgstr "описание"
 
-#: templates/components/tables/pull_requests_list.html:17
+#: templates/components/tables/pull_requests_list.html
 msgid "Author"
 msgstr "Автор"
 
-#: templates/components/tables/repositories_list.html:12
-msgid "Organization"
-msgstr "Организация"
-
-#: templates/components/tables/repositories_list.html:17
-#: templates/project_details.html:13 templates/repository_details.html:19
+#: templates/components/tables/repositories_list.html
+#: templates/project_details.html templates/repository_details.html
 msgid "Project"
 msgstr "Проект"
 
-#: templates/components/time_note.html:7
+#: templates/components/time_note.html
 msgid "for the past week"
 msgstr "за прошедшую неделю"
 
-#: templates/components/time_note.html:13
+#: templates/components/time_note.html
 msgid "for the past month"
 msgstr "за прошедший месяц"
 
-#: templates/components/top10_of_month.html:7
-#: templates/components/top10_of_week.html:7
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
 msgid "by commits"
 msgstr "по коммитам"
 
-#: templates/components/top10_of_month.html:10
-#: templates/components/top10_of_week.html:10
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
 msgid "by pull requests"
 msgstr "по пул-реквестам"
 
-#: templates/components/top10_of_month.html:13
-#: templates/components/top10_of_week.html:13
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
 msgid "by issues"
 msgstr "по проблемам"
 
-#: templates/components/top10_of_month.html:16
-#: templates/components/top10_of_week.html:16
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
 msgid "by comments"
 msgstr "по комментариям"
 
-#: templates/contributor_details.html:8
+#: templates/contributor_details.html
 msgid "Contributor"
 msgstr "Участник"
 
-#: templates/contributor_details.html:22
+#: templates/contributor_details.html
 msgid "Achievements"
 msgstr "Достижения"
 
-#: templates/contributor_details.html:27 templates/contributor_details.html:28
+#: templates/contributor_details.html
 msgid "Hexlet friend"
 msgstr ""
 
-#: templates/contributor_details.html:143
-#: templates/contributor_details.html:144
-#: templates/contributor_details.html:148
-#: templates/contributor_details.html:149
-#: templates/contributor_details.html:153
-#: templates/contributor_details.html:154
-#: templates/contributor_details.html:158
-#: templates/contributor_details.html:159
-#: templates/contributor_details.html:163
-#: templates/contributor_details.html:164
+#: templates/contributor_details.html
 msgid "Additions and deletions"
 msgstr "Добавлено и удалено"
 
-#: templates/contributor_details.html:181 templates/home.html:9
+#: templates/contributor_details.html templates/home.html
 msgid "Past year activity"
 msgstr "Активность за прошлый год"
 
-#: templates/contributor_details.html:183
+#: templates/contributor_details.html
+msgid "Compare with yourself"
+msgstr "Сравнить с собой"
+
+#: templates/contributor_details.html
 msgid "All-time contributions"
 msgstr "Вклад за всё время"
 
-#: templates/contributor_issues.html:6
+#: templates/contributor_issues.html
 msgid "Issues by"
 msgstr "Проблемы по"
 
-#: templates/contributor_prs.html:6
+#: templates/contributor_prs.html
 msgid "Pull requests by"
 msgstr "Пул-реквесты по"
 
-#: templates/contributors_for_period.html:4
-#: templates/contributors_for_period.html:6
+#: templates/contributors_for_period.html
 msgid "Contributors for month"
 msgstr "Участники за месяц"
 
-#: templates/home.html:13
+#: templates/home.html
 msgid "Top 10 contributors"
 msgstr "Топ 10 участников"
 
-#: templates/home.html:21
+#: templates/home.html
 msgid "New PRs and issues"
 msgstr "Новые пул-реквесты и проблемы"
 
-#: templates/organization_details.html:6
+#: templates/organization_details.html
 msgid "Details for organization"
 msgstr "Подробности об организации"
 
-#: templates/project_details.html:24
+#: templates/project_details.html
 msgid "Project related repositories"
 msgstr "Репозитории, связанные с проектом"
 
-#: templates/registration/login.html:4 templates/registration/login.html:11
+#: templates/registration/login.html
 msgctxt "logon"
 msgid "Login"
 msgstr "Войти"
 
-#: templates/registration/registration.html:4
-#: templates/registration/registration.html:11
+#: templates/registration/registration.html
 msgid "Registration"
 msgstr "Регистрация"
 
-#: templates/registration/registration.html:17
+#: templates/registration/registration.html
 msgid "Register"
 msgstr "Зарегистрировать"
 
-#: templates/repository_details.html:11
+#: templates/repository_details.html
 msgid "Owner"
 msgstr "Владелец"

@@ -1,3 +1,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 {{ contributions_for_year|json_script:'contributions_for_year' }}
+{% if my_contributions_for_year %}
+  {{ my_contributions_for_year|json_script:'my_contributions_for_year' }}
+{% endif %}

@@ -204,7 +204,15 @@
       </div>
     </div>
     <div class="col">
-      <h2>{% trans "Past year activity" %}</h2>
+      <h2>
+        {% trans "Past year activity" %}
+        {% if user.is_authenticated and object.user != user%}
+          <a class="btn btn-outline-primary"
+            href="{% url 'contributors:contributor_details' current_contributor %}?compare=yes">
+            {% trans "Compare with yourself" %}
+          </a>
+          {% endif %}
+      </h2>
       {% include 'components/activity_chart/chart.html' %}
       <h2 class="mr-5">{% trans "All-time contributions" %}</h2>
       <input type="text" name="name" id="repo-search-field" class="form-control col-3"
