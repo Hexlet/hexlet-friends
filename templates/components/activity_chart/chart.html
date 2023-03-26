@@ -2,3 +2,8 @@
 
 <div class="chart-container mb-5"><canvas id="yearActivityChart"></canvas></div>
 <script src="{% static 'js/activity_chart/chart.js' %}"></script>
+
+{% if my_contributions_for_year %}
+  <div class="chart-container mb-5"><canvas id="my_yearActivityChart"></canvas></div>
+  <script src="{% static 'js/activity_chart/my_chart.js' %}"></script>
+{% endif %}
