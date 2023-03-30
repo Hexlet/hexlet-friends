@@ -48,4 +48,12 @@ class DetailView(
             'id',
             'name',
         )
+
+        context['current_contributor'] = self.object
+        if self.request.GET.get('compare') == 'yes':
+            current_user = self.request.user.contributor
+            context['my_contributions_for_year'] = (
+                current_user.contribution_set.for_year()
+            )
+
         return context
