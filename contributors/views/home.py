@@ -1,8 +1,9 @@
 from django.views.generic.base import TemplateView
 
 from contributors.models import Contribution, Contributor
+from contributors.utils.misc import datetime_month_ago, datetime_week_ago
 
-LATEST_ISSUES_COUNT = 11
+LATEST_ISSUES_COUNT = 10
 
 
 def get_top10(dataset, contrib_type):
@@ -52,10 +53,29 @@ class HomeView(TemplateView):
             contributors_for_week, 'comments',
         )
 
-        latest_issues = Contribution.objects.filter(
+        latest_month_issues = Contribution.objects.filter(
             repository__is_visible=True,
-            type__in=['pr', 'iss'],
-        ).order_by('-created_at')[:LATEST_ISSUES_COUNT]
+            type='iss',
+            created_at__gte=datetime_month_ago(),
+        ).distinct().order_by('-created_at')[:LATEST_ISSUES_COUNT]
+
+        latest_week_issues = Contribution.objects.filter(
+            repository__is_visible=True,
+            type='iss',
+            created_at__gte=datetime_week_ago(),
+        ).distinct().order_by('-created_at')[:LATEST_ISSUES_COUNT]
+
+        latest_month_pr = Contribution.objects.filter(
+            repository__is_visible=True,
+            type='pr',
+            created_at__gte=datetime_month_ago(),
+        ).distinct().order_by('-created_at')[:LATEST_ISSUES_COUNT]
+
+        latest_week_pr = Contribution.objects.filter(
+            repository__is_visible=True,
+            type='pr',
+            created_at__gte=datetime_week_ago(),
+        ).distinct().order_by('-created_at')[:LATEST_ISSUES_COUNT]
 
         context.update(
             {
@@ -69,7 +89,10 @@ class HomeView(TemplateView):
                 'top10_reporters_of_week': top10_reporters_of_week,
                 'top10_commentators_of_week': top10_commentators_of_week,
                 'contributions_for_year': Contribution.objects.for_year(),
-                'latest_issues': latest_issues,
+                'latest_month_issues': latest_month_issues,
+                'latest_week_issues': latest_week_issues,
+                'latest_month_pr': latest_month_pr,
+                'latest_week_pr': latest_week_pr,
             },
         )
 

@@ -63,8 +63,16 @@ main {
   margin-right: 1.7em;
 }
 
-.latest-issues-heading {
-  margin-bottom: 3.0rem;
+.issues-and-pr-time-note {
+  display: inline-block;
+  cursor: default;
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
+  margin-bottom: 8px;
+}
+
+.issues-and-pr-time-note:hover {
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {

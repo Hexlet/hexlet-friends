@@ -19,24 +19,15 @@
     </div>
     <div class="col-md-6">
       <h2 class="latest-issues-heading">{% trans "New PRs and issues" %}</h2>
-      <div class="card latest-issues">
-        <ul class="list-group list-group-flush">
-          {% for issue in latest_issues %}
-            <li class="list-group-item text-truncate">
-              {% if issue.type == 'iss' %}
-                <img src="{% static 'images/github_icons/issue-opened.svg' %}" alt="Issue">
-              {% elif issue.type == 'pr' %}
-                <img src="{% static 'images/github_icons/git-pull-request.svg' %}" alt="PR">
-              {% endif %}
-              <a href="{{ issue.repository.get_absolute_url }}">{{ issue.repository }}</a>:
-              <a href="{{ issue.html_url }}" target="_blank">{{ issue.info.title }}</a>
-            </li>
-          {% endfor %}
-        </ul>
+      <div class="latest-issues">
+        {% include 'components/time_note_for_issues_and_pr.html' %}
+        {% include 'components/issues_and_pr_for_week.html' %}
+        {% include 'components/issues_and_pr_for_month.html' %}
       </div>
     </div>
   </div>
 {% endblock content %}
 {% block body_end_scripts %}
   <script src="{% static 'js/top10Contributors.js' %}"></script>
+  <script src="{% static 'js/issues_and_pr.js' %}"></script>
 {% endblock %}

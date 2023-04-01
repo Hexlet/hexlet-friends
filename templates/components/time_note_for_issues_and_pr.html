@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link issues-and-pr-time-note py-1 active" href="#"
+       name="issues-and-pr-for-week">
+      {% trans "for the past week" %}
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link issues-and-pr-time-note py-1" href="#"
+       name="issues-and-pr-for-month">
+      {% trans "for the past month" %}
+    </a>
+  </li>
+</ul>
