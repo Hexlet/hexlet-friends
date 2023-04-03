@@ -173,8 +173,7 @@ class ContributionLabelsMixin(object):
                 labels_param = labels_param.split('.')
                 self.queryset = self.queryset.filter(
                     labels__name__in=labels_param,
-                )
-                print(self.queryset)
+                ).distinct()
         return super().get_queryset()
 
 

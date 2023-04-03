@@ -88,10 +88,12 @@ def get_label_query_string(context, passed_label):
 def get_contribution_label_query_string(context, passed_label):
     """Get labels query string."""
     def prepare_contribution_labels_param_value(labels_param):  # noqa: WPS430
-        if passed_label == labels_param:
-            labels_param = ''
+        delimiter = '.'
+        labels = labels_param.split(delimiter) if labels_param else []
+        if passed_label in labels:
+            labels.remove(passed_label)
         else:
-            labels_param = passed_label
-        return labels_param
+            labels.append(passed_label)
+        return delimiter.join(labels)
 
     return get_query_string(context, 'contribution_labels', prepare_contribution_labels_param_value)
