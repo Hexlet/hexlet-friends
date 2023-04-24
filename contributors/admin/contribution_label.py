@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from contributors.admin.custom import site
 from contributors.admin.contribution import ContributionLabelInline
+from contributors.admin.custom import site
 from contributors.models import ContributionLabel
 
 

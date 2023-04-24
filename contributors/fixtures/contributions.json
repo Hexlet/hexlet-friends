@@ -5,6 +5,9 @@
         "fields": {
             "repository": 1,
             "contributor": 1,
+            "labels": [
+                1
+            ],
             "type": "cit",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -16,6 +19,9 @@
         "fields": {
             "repository": 2,
             "contributor": 1,
+            "labels": [
+                1
+            ],
             "type": "cit",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -27,6 +33,9 @@
         "fields": {
             "repository": 2,
             "contributor": 2,
+            "labels": [
+                1
+            ],
             "type": "cit",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -38,6 +47,9 @@
         "fields": {
             "repository": 1,
             "contributor": 1,
+            "labels": [
+                1
+            ],
             "type": "iss",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -49,6 +61,9 @@
         "fields": {
             "repository": 1,
             "contributor": 2,
+            "labels": [
+                1
+            ],
             "type": "iss",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -60,6 +75,9 @@
         "fields": {
             "repository": 2,
             "contributor": 1,
+            "labels": [
+                1, 2
+            ],
             "type": "iss",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -71,6 +89,9 @@
         "fields": {
             "repository": 1,
             "contributor": 1,
+            "labels": [
+                1
+            ],
             "type": "pr",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -82,6 +103,9 @@
         "fields": {
             "repository": 1,
             "contributor": 2,
+            "labels": [
+                1
+            ],
             "type": "pr",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -93,6 +117,9 @@
         "fields": {
             "repository": 2,
             "contributor": 1,
+            "labels": [
+                1
+            ],
             "type": "pr",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"
@@ -104,6 +131,9 @@
         "fields": {
             "repository": 2,
             "contributor": 2,
+            "labels": [
+                1, 2
+            ],
             "type": "iss",
             "html_url": "https://github.com/#",
             "created_at": "2022-04-29T10:24:44Z"

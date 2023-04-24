@@ -5,9 +5,9 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_cte import CTEManager
 
+from contributors.models.contribution_label import ContributionLabel
 from contributors.models.contributor import Contributor
 from contributors.models.repository import Repository
-from contributors.models.contribution_label import ContributionLabel
 from contributors.utils import misc
 
 

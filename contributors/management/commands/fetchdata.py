@@ -8,9 +8,9 @@ from django.utils import dateparse
 from contributors.models import (
     CommitStats,
     Contribution,
+    ContributionLabel,
     Contributor,
     IssueInfo,
-    ContributionLabel,
     Label,
     Organization,
     Repository,
@@ -90,7 +90,9 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
             ) else contrib['state']
 
             for label in contrib['labels']:
-                label_name, _ = ContributionLabel.objects.get_or_create(name=label["name"])
+                label_name, _ = ContributionLabel.objects.get_or_create(
+                    name=label["name"],
+                )
                 contribution.labels.add(label_name)
 
             IssueInfo.objects.update_or_create(

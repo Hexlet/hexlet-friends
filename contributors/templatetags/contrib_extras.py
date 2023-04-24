@@ -96,4 +96,8 @@ def get_contribution_label_query_string(context, passed_label):
             labels.append(passed_label)
         return delimiter.join(labels)
 
-    return get_query_string(context, 'contribution_labels', prepare_contribution_labels_param_value)
+    return get_query_string(
+        context,
+        'contribution_labels',
+        prepare_contribution_labels_param_value,
+    )

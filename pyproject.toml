@@ -22,6 +22,7 @@ PyJWT = "^2.4.0"
 cryptography = "^39.0.1"
 crispy-bootstrap5 = "^0.6"
 django-extensions = "^3.2.1"
+black = "^23.3.0"
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.16.1"

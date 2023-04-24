@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 
@@ -11,3 +12,7 @@ class ContributionLabel(models.Model):
     def __str__(self):
         """Represent an instance as a string."""
         return self.name
+
+    class Meta(object):
+        verbose_name = _("contribution label")
+        verbose_name_plural = _("contribution label")

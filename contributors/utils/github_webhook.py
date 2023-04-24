@@ -6,11 +6,11 @@ from django.utils import dateparse, timezone
 from contributors.models import (
     CommitStats,
     Contribution,
+    ContributionLabel,
     Contributor,
     IssueInfo,
     Organization,
     Repository,
-    ContributionLabel,
 )
 from contributors.utils import github_lib as github
 
@@ -31,7 +31,7 @@ def signatures_match(payload_body, gh_signature):
     return hmac.compare_digest(signature, gh_signature)
 
 
-def update_database(event_type, payload):   # noqa: WPS210
+def update_database(event_type, payload):   # noqa: WPS210, C901
     """Update the database with an event's data."""
     action = payload.get('action', 'created')
     if action not in {'created', 'opened', 'edited', 'closed', 'reopened'}:
@@ -140,7 +140,9 @@ def update_database(event_type, payload):   # noqa: WPS210
         )
 
         for label in contrib_data['labels']:
-            label_name, _ = ContributionLabel.objects.get_or_create(name=label["name"])
+            label_name, _ = ContributionLabel.objects.get_or_create(
+                name=label["name"],
+            )
             contrib.labels.add(label_name)
 
         if contrib.type == 'iss':

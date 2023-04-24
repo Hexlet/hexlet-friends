@@ -1,0 +1,16 @@
+[
+    {
+        "model": "contributors.contributionlabel",
+        "pk": 1,
+        "fields": {
+            "name": "bug"
+        }
+    },
+    {
+        "model": "contributors.contributionlabel",
+        "pk": 2,
+        "fields": {
+            "name": "first_good_ussue"
+        }
+    }
+]
