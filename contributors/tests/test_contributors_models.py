@@ -3,11 +3,11 @@ from faker import Faker
 from faker.generator import Generator
 
 from contributors.models.base import CommonFields
+from contributors.models.contribution_label import ContributionLabel
 from contributors.models.label import Label
 from contributors.models.organization import Organization
 from contributors.models.project import Project
 from contributors.models.repository import Repository
-from contributors.models.contribution_label import ContributionLabel
 
 
 class ContributorsModelsMethodsTest(TestCase):
@@ -53,11 +53,13 @@ class ContributorsModelsMethodsTest(TestCase):
         common_field_name: str = self.faker.domain_word()
         common_field = CommonFieldTestClass(name=common_field_name)
         self.assertEqual(str(common_field), common_field.name)
-    
+
     def test_contributions_label_methods(self):
         """Create a test contribution label and test its methods."""
         contribution_label_name: str = self.faker.domain_word()
-        contribution_label = ContributionLabel.objects.create(name=contribution_label_name)
+        contribution_label = ContributionLabel.objects.create(
+            name=contribution_label_name,
+        )
         self.assertEqual(str(contribution_label), contribution_label.name)
 
 

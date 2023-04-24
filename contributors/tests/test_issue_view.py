@@ -8,6 +8,7 @@ EXPECTED_ISSUES_COUNT = 2
 
 class TestIssuesListViewTestCase(TestCase):
     """Test the methods for a list of open issues."""
+
     fixtures = [
         "contributions",
         "contributionlabel",
@@ -26,5 +27,6 @@ class TestIssuesListViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIn("contribution_labels", response.context)
         self.assertEqual(
-            len(response.context["contribution_labels"]), EXPECTED_ISSUES_COUNT,
+            len(response.context["contribution_labels"]),
+            EXPECTED_ISSUES_COUNT,
         )
