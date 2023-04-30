@@ -2,7 +2,8 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="{% url 'contributors:home' %}">{{ PROJECT_NAME }}</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -11,19 +12,14 @@
           <a class="nav-link" href="{% url 'contributors:organizations_list' %}">
             {% trans "Organizations" %}
           </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contributors:projects_list' %}">
-            {% trans "Projects" %}
-          </a>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'contributors:repositories_list' %}">
             {% trans "Repositories" %}
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+             aria-expanded="false">
             {% trans "Contributors" %}
           </a>
           <div class="dropdown-menu">
@@ -45,7 +41,8 @@
       <ul class="navbar-nav ml-auto btn-group">
         {% if user.is_authenticated %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+               aria-expanded="false">
               {{ user.username }}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
@@ -70,7 +67,7 @@
       <ul class="navbar-nav btn-group">
         <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' role='button' aria-expanded='false'>
           <img class="mt-auto" src="{% static "images/locale_icons/"|add:LANGUAGE_CODE|add:".svg" %}"
-          alt="current language is {{ LANGUAGE_CODE }}" width="25">
+               alt="current language is {{ LANGUAGE_CODE }}" width="25">
           {{ LANGUAGE_CODE|upper }}
         </a>
         <ul class='dropdown-menu' role='menu'>
@@ -84,12 +81,12 @@
                   <input name="language" type="hidden" value="{{ language.code|lower }}"/>
                   <a class="dropdown-item" href="javascript:document.setLanguage.submit()">
                     <img src="{% static "images/locale_icons/"|add:language.code|add:".svg" %}"
-                    alt="set language to {{ language.code}}" width="25">
+                         alt="set language to {{ language.code }}" width="25">
                     {{ language.name_local }}
                   </a>
                 {% endif %}
               {% endfor %}
-            </form>    
+            </form>
           </li>
         </ul>
       </ul>
