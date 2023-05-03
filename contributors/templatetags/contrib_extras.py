@@ -32,6 +32,8 @@ def get_query_string(context, qs_param, qs_param_value):
     with suppress(KeyError):
         if qs_param == 'labels':
             get_params.pop('page')
+        if qs_param == 'contribution_labels':
+            get_params.pop('page')
     with suppress(KeyError):
         get_params.pop(qs_param)
     get_params[qs_param] = (
@@ -80,3 +82,22 @@ def get_label_query_string(context, passed_label):
         return delimiter.join(labels)
 
     return get_query_string(context, 'labels', prepare_labels_param_value)
+
+
+@register.simple_tag(takes_context=True)
+def get_contribution_label_query_string(context, passed_label):
+    """Get labels query string."""
+    def prepare_contribution_labels_param_value(labels_param):  # noqa: WPS430
+        delimiter = '.'
+        labels = labels_param.split(delimiter) if labels_param else []
+        if passed_label in labels:
+            labels.remove(passed_label)
+        else:
+            labels.append(passed_label)
+        return delimiter.join(labels)
+
+    return get_query_string(
+        context,
+        'contribution_labels',
+        prepare_contribution_labels_param_value,
+    )

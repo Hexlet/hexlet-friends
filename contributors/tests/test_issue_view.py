@@ -3,7 +3,7 @@ from http import HTTPStatus
 from django.test import Client, TestCase
 from django.urls import reverse
 
-EXPECTED_ISSUES_COUNT = 1
+EXPECTED_ISSUES_COUNT = 2
 
 
 class TestIssuesListViewTestCase(TestCase):
@@ -11,6 +11,7 @@ class TestIssuesListViewTestCase(TestCase):
 
     fixtures = [
         "contributions",
+        "contributionlabel",
         "contributors",
         "issues",
         "labels",
@@ -22,9 +23,10 @@ class TestIssuesListViewTestCase(TestCase):
         self.client: Client = Client()
 
     def test_issues_listview_methods(self):
-        response = self.client.get(reverse("contributors:open_issues_list"))
+        response = self.client.get(reverse("contributors:open_issues"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertIn("repos_with_issues", response.context)
+        self.assertIn("contribution_labels", response.context)
         self.assertEqual(
-            len(response.context["repos_with_issues"]), EXPECTED_ISSUES_COUNT,
+            len(response.context["contribution_labels"]),
+            EXPECTED_ISSUES_COUNT,
         )

@@ -14,7 +14,13 @@ EXPECTED_CONTRIBUTORS_PR_COUNT = 2
 class TestContributorDetailView(TestCase):
     """Test the methods for the contributor's details view."""
 
-    fixtures = ["contributions", "contributors", "labels", "repositories"]
+    fixtures = [
+        "contributions",
+        "contributionlabel",
+        "contributors",
+        "labels",
+        "repositories",
+    ]
 
     def setUp(self):
         """Create a test database."""
@@ -44,6 +50,7 @@ class TestContributorIssuesView(TestCase):
 
     fixtures = [
         "contributions",
+        "contributionlabel",
         "contributors",
         "issues",
         "labels",
@@ -72,7 +79,13 @@ class TestContributorIssuesView(TestCase):
 class TestContributorPrView(TestCase):
     """Test the methods for the list of pull requests."""
 
-    fixtures = ["contributions", "contributors", "labels", "repositories"]
+    fixtures = [
+        "contributions",
+        "contributionlabel",
+        "contributors",
+        "labels",
+        "repositories",
+    ]
 
     def setUp(self):
         """Create a test database."""

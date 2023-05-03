@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 00:42+0300\n"
+"POT-Creation-Date: 2023-04-24 08:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,6 +135,12 @@ msgstr "тип"
 #: contributors/models/contribution.py
 msgid "creation date"
 msgstr "дата создания"
+
+#: contributors/models/contribution.py
+#, fuzzy
+#| msgid "contributions"
+msgid "contribution labels"
+msgstr "метки вкладов"
 
 #: contributors/models/contribution.py
 msgid "contribution"
@@ -372,7 +378,7 @@ msgstr "За период"
 msgid "All-time"
 msgstr "За всё время"
 
-#: templates/components/navbar.html templates/open_issues_list.html
+#: templates/components/navbar.html templates/open_issues.html
 msgid "Open Issues"
 msgstr "Нерешенные проблемы"
 
@@ -416,12 +422,14 @@ msgstr "Сравнить с ..."
 
 #: templates/components/tables/contributor_issues.html
 #: templates/components/tables/contributor_prs.html
+#: templates/components/tables/open_issues_list.html
 #: templates/components/tables/pull_requests_list.html
 msgid "Title"
 msgstr "Название"
 
 #: templates/components/tables/contributor_issues.html
 #: templates/components/tables/contributor_prs.html
+#: templates/components/tables/open_issues_list.html
 #: templates/components/tables/pull_requests_list.html
 #: templates/contributor_details.html templates/repository_details.html
 msgid "Repository"
@@ -429,6 +437,7 @@ msgstr "Репозиторий"
 
 #: templates/components/tables/contributor_issues.html
 #: templates/components/tables/contributor_prs.html
+#: templates/components/tables/open_issues_list.html
 #: templates/components/tables/pull_requests_list.html
 msgid "Creation date"
 msgstr "Дата создания"
@@ -442,6 +451,7 @@ msgstr "Статус"
 #: templates/components/tables/contributor_issues.html
 #: templates/components/tables/contributor_prs.html
 #: templates/components/tables/contributors_list.html
+#: templates/components/tables/open_issues_list.html
 #: templates/components/tables/organizations_list.html
 #: templates/components/tables/pull_requests_list.html
 #: templates/components/tables/repositories_list.html
@@ -499,15 +509,24 @@ msgstr "Проблемы"
 msgid "Comments"
 msgstr "Комментарии"
 
+#: templates/components/tables/open_issues_list.html
+msgid "Programming languages"
+msgstr "Языки программирования"
+
+#: templates/components/tables/open_issues_list.html
+#: templates/components/tables/pull_requests_list.html
+msgid "Author"
+msgstr "Автор"
+
+#: templates/components/tables/open_issues_list.html
+msgid "Issue labels"
+msgstr "Метки вкладов"
+
 #: templates/components/tables/projects_list.html
 #, fuzzy
 #| msgid "description"
 msgid "Description"
 msgstr "описание"
-
-#: templates/components/tables/pull_requests_list.html
-msgid "Author"
-msgstr "Автор"
 
 #: templates/components/tables/repositories_list.html
 #: templates/project_details.html templates/repository_details.html
