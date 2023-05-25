@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<div class="card latest-issues-and-prs latest-for-month d-none">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link px-2 active" name="pull-requests" href="#">{% trans 'by pull requests' %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-2" name="issues" href="#">{% trans 'by issues' %}</a>
+        </li>
+      </ul>
+    </div>
+    {% with tab='components/top_issues.html' %}
+      {% include tab with latest_issues=latest_month_pr class='pull-requests' %}
+      {% include tab with latest_issues=latest_month_issues class='issues' %}
+    {% endwith %}
+</div>

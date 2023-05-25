@@ -38,6 +38,32 @@ class ContributionManager(CTEManager):
             sums_of_contribs_by_months,
         )
 
+    def for_week(self):
+        """Return weekly results."""
+        return self.filter(
+            created_at__gte=misc.datetime_week_ago(),
+        ).distinct()
+
+    def for_month(self):
+        """Return monthly results."""
+        return self.filter(
+            created_at__gte=misc.datetime_month_ago(),
+        ).distinct()
+
+    def visible_for_month(self):
+        """Get monthly visible contribution."""
+        return self.for_month().filter(
+            repository__is_visible=True,
+            contributor__is_visible=True,
+        )
+
+    def visible_for_week(self):
+        """Get weekly visible contribution."""
+        return self.for_week().filter(
+            repository__is_visible=True,
+            contributor__is_visible=True,
+        )
+
 
 class Contribution(models.Model):
     """Model representing a set of contributions."""

@@ -63,10 +63,6 @@ main {
   margin-right: 1.7em;
 }
 
-.latest-issues-heading {
-  margin-bottom: 3.0rem;
-}
-
 @media (max-width: 768px) {
   .latest-issues-heading {
     margin-top: 1rem;

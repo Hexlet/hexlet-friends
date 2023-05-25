@@ -2,12 +2,19 @@ from django.views.generic.base import TemplateView
 
 from contributors.models import Contribution, Contributor
 
-LATEST_ISSUES_COUNT = 11
+LATEST_COUNT = 10
 
 
 def get_top10(dataset, contrib_type):
     """Return top 10 contributors of the type from the dataset."""
-    return dataset.order_by('-{0}'.format(contrib_type))[:10]
+    return dataset.order_by('-{0}'.format(contrib_type))[:LATEST_COUNT]
+
+
+def get_latest_contributions(dataset, contrib_type):
+    """Return latest contributions of contrib_type."""
+    return dataset.filter(type=contrib_type).order_by(
+        '-created_at',
+    )[:LATEST_COUNT]
 
 
 class HomeView(TemplateView):
@@ -24,6 +31,14 @@ class HomeView(TemplateView):
         )
         contributors_for_week = (
             Contributor.objects.visible_with_weekly_stats()
+        )
+
+        contributions_for_month = (
+            Contribution.objects.visible_for_month()
+        )
+
+        contributions_for_week = (
+            Contribution.objects.visible_for_week()
         )
 
         top10_committers_of_month = get_top10(
@@ -52,10 +67,21 @@ class HomeView(TemplateView):
             contributors_for_week, 'comments',
         )
 
-        latest_issues = Contribution.objects.filter(
-            repository__is_visible=True,
-            type__in=['pr', 'iss'],
-        ).order_by('-created_at')[:LATEST_ISSUES_COUNT]
+        latest_month_issues = get_latest_contributions(
+            contributions_for_month, 'iss',
+        )
+
+        latest_week_issues = get_latest_contributions(
+            contributions_for_week, 'iss',
+        )
+
+        latest_month_pr = get_latest_contributions(
+            contributions_for_month, 'pr',
+        )
+
+        latest_week_pr = get_latest_contributions(
+            contributions_for_week, 'pr',
+        )
 
         context.update(
             {
@@ -69,7 +95,10 @@ class HomeView(TemplateView):
                 'top10_reporters_of_week': top10_reporters_of_week,
                 'top10_commentators_of_week': top10_commentators_of_week,
                 'contributions_for_year': Contribution.objects.for_year(),
-                'latest_issues': latest_issues,
+                'latest_month_issues': latest_month_issues,
+                'latest_week_issues': latest_week_issues,
+                'latest_month_pr': latest_month_pr,
+                'latest_week_pr': latest_week_pr,
             },
         )
 

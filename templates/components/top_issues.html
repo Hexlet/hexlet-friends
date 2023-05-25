@@ -1,0 +1,15 @@
+{% load i18n static %}
+
+<ul class="list-group list-group-flush {{ class }} {% if class != 'pull-requests' %}d-none{% endif %}">
+  {% for issue in latest_issues %}
+    <li class="list-group-item text-truncate">
+      {% if issue.type == 'iss' %}
+        <img src="{% static 'images/github_icons/issue-opened.svg' %}" alt="Issue">
+      {% elif issue.type == 'pr' %}
+        <img src="{% static 'images/github_icons/git-pull-request.svg' %}" alt="PR">
+      {% endif %}
+      <a href="{{ issue.repository.get_absolute_url }}">{{ issue.repository }}</a>:
+      <a href="{{ issue.html_url }}" target="_blank">{{ issue.info.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
