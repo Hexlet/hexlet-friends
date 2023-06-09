@@ -4,7 +4,7 @@ from crispy_forms.layout import Field, Layout
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from contributors.models import Organization
+# from contributors.models import Organization
 
 
 class TableSortSearchForm(forms.Form):
@@ -47,10 +47,10 @@ class OrganizationFilterForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.label_suffix = ""
 
-    organizations = forms.ModelChoiceField(
-        queryset=Organization.objects.all(),
+    organizations = forms.CharField(
+        label=False,
         required=False,
-        label=_("Organization"),
+        widget=forms.TextInput(attrs={'placeholder': _("Filter by organization")}),
     )
 
     @property

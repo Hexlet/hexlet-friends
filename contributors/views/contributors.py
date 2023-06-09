@@ -1,4 +1,5 @@
 from django.views import generic
+from django.db.models import Q
 
 from contributors.forms.forms import OrganizationFilterForm
 from contributors.models import Contributor
@@ -39,7 +40,13 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
             organizations = form_org.cleaned_data['organizations']
             if organizations:
                 queryset = queryset.filter(
-                    contributors__organization=organizations,
+                    contributors__organization__name__icontains=organizations,
                 ).distinct()
 
-            return queryset
+        search_query = self.request.GET.get('search_query')
+        if search_query:
+            queryset = queryset.filter(
+                Q(name__icontains=search_query),
+            )
+
+        return queryset
