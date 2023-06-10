@@ -4,8 +4,6 @@ from crispy_forms.layout import Field, Layout
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-# from contributors.models import Organization
-
 
 class TableSortSearchForm(forms.Form):
     """A search form."""
@@ -39,18 +37,13 @@ class TableSortSearchForm(forms.Form):
         return helper
 
 
-class OrganizationFilterForm(forms.Form):
+class CombinedSearchForm(TableSortSearchForm):
     """Search form of contributors by organization."""
-
-    def __init__(self, *args, **kwargs):
-        """Remove suffix."""
-        super().__init__(*args, **kwargs)
-        self.label_suffix = ""
 
     organizations = forms.CharField(
         label=False,
         required=False,
-        widget=forms.TextInput(attrs={'placeholder': _("Filter by organization")}),
+        widget=forms.TextInput(),
     )
 
     @property
@@ -60,8 +53,11 @@ class OrganizationFilterForm(forms.Form):
         helper.form_method = 'get'
         helper.form_class = 'd-flex'
         helper.layout = Layout(
+            Field('search', placeholder=_("Filter by name")),
             FieldWithButtons(
-                Field('organizations'),
+                Field(
+                    'organizations', placeholder=_("Filter by organization"),
+                ),
                 StrictButton(
                     _("Search"),
                     type='submit',

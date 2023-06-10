@@ -8,8 +8,7 @@
 <!-- End Open Graph tags -->
 {% block header %}{% trans "Contributors" %}{% endblock %}
 {% block content %}
-  {% include 'components/sort_and_search_form.html' %}
-  {% include 'components/search_by_org.html' %}
+  {% include 'components/search_by_org_and_contributors.html' %}
   {% include 'components/tables/contributors_list.html' %}
   {% include 'components/pagination.html' %}
 {% endblock content %}
