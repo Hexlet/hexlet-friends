@@ -1,3 +1,4 @@
+from django.db import IntegrityError, transaction
 from django.test import Client, TestCase
 from faker import Faker
 from faker.generator import Generator
@@ -9,9 +10,13 @@ from contributors.models.organization import Organization
 from contributors.models.project import Project
 from contributors.models.repository import Repository
 
+EXISTING_ORGANISATION_NAME = "Hexlet"
+
 
 class ContributorsModelsMethodsTest(TestCase):
     """Test model methods."""
+
+    fixtures = ["organizations"]
 
     def setUp(self):
         """Create a test database."""
@@ -32,6 +37,16 @@ class ContributorsModelsMethodsTest(TestCase):
             org.get_absolute_url(),
             f"/organizations/{organisation_name}",
         )
+
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                Organization.objects.create(name=organisation_name)
+
+        with self.assertRaises(IntegrityError):
+            with transaction.atomic():
+                rename_org = Organization.objects.get(name=organisation_name)
+                rename_org.name = EXISTING_ORGANISATION_NAME
+                rename_org.save()
 
     def test_project_methods(self):
         """Create a test project and test its methods."""
