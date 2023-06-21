@@ -30,7 +30,7 @@ jobs:
           GITHUB_WEBHOOK_TOKEN: secret
           DB_ENGINE: SQLite
       - name: Publish code coverage report
-        uses: paambaati/codeclimate-action@v2.6.0
+        uses: paambaati/codeclimate-action@v4.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
