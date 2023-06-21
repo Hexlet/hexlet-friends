@@ -19,18 +19,34 @@ RUN apk add --no-cache \
     cargo \
     curl \
     gettext \
-    git \
-    make 
+    git
 
-RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry --version
-
-WORKDIR /project/
-
-COPY pyproject.toml poetry.lock ./
-
-RUN poetry install --extras psycopg2-binary
+RUN curl -sSL https://install.python-poetry.org | python3 - && poetry --version
 
 WORKDIR /usr/local/src/hexlet-friends
 
-CMD ["make", "start"]
+COPY . .
+
+RUN poetry install --extras psycopg2-binary --only main
+
+FROM python:3.11-alpine as runner
+
+ENV PYTHONFAULTHANDLER=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+RUN apk add --no-cache libpq gettext
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+COPY --from=builder /usr/local/src/hexlet-friends /usr/local/src/hexlet-friends
+COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+RUN chown -R appuser:appgroup /usr/local/src/hexlet-friends
+
+USER appuser
+
+WORKDIR /usr/local/src/hexlet-friends
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
