@@ -13,6 +13,7 @@ services:
   django:
     build:
       context: .
+      dockerfile: dockerfile.dev
     environment:
       - DEBUG=True
     env_file:

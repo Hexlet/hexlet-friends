@@ -590,7 +590,7 @@ files = [
 name = "django-debug-toolbar"
 version = "3.8.1"
 description = "A configurable set of panels that display various debug information about the current request/response."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1606,4 +1606,4 @@ psycopg2-binary = ["psycopg2-binary"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "4092620499075926e9cd78ce216891acc92ee0005d89b6aa0de69c458687f558"
+content-hash = "273655775699bfea634ce71aef529f71e42777d73410aa331b5adf7999d57e0c"
