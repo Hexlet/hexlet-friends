@@ -27,7 +27,23 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         Returns:
             Queryset.
         """
-        self.queryset = Contribution.objects.select_related('info').filter(
+        queryset = Contribution.objects.select_related('info').filter(
             contributor__login=self.kwargs['slug'], type='iss',
         )
-        return super().get_queryset()
+
+        form_status = StatusFilterForm(self.request.GET)
+        if form_status.is_valid():
+            status = form_status.cleaned_data['state']
+            if status:
+                queryset = queryset.filter(
+                    info__state=status,
+                ).distinct()
+
+            return queryset
+
+    def get_context_data(self, **kwargs):
+        """Get search form by state."""
+        context = super().get_context_data(**kwargs)
+        context['form_status'] = StatusFilterForm(self.request.GET)
+
+        return context

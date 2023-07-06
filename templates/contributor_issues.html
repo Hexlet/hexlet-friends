@@ -8,6 +8,7 @@
 {% block header %}{% trans "Issues" %}{% endblock %}
 {% block content %}
   {% include 'components/sort_and_search_form.html' %}
+  {% include 'components/search_by_state.html' %}
   {% include 'components/tables/contributor_issues.html' %}
   {% include 'components/pagination.html' %}
 {% endblock content %}
