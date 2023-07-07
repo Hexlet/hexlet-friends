@@ -1,5 +1,6 @@
 from django.views import generic
 
+from contributors.forms.forms import StatusFilterForm
 from contributors.models import Contribution
 from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
