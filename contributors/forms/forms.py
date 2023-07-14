@@ -1,6 +1,6 @@
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field, Layout, Div
+from crispy_forms.layout import Field, Layout
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -66,19 +66,19 @@ class CombinedSearchForm(TableSortSearchForm):
             ),
         )
         return helper
-    
+
 
 class NameStatusFilterForm(TableSortSearchForm):
     """Search form of issues by their status."""
 
-    STATUS_CHOICES = [
+    status_choices = [
         ('', _('Filter by status')),
         ('open', 'Open'),
-        ('closed', 'Closed')
+        ('closed', 'Closed'),
     ]
 
     state = forms.ChoiceField(
-        choices=STATUS_CHOICES,
+        choices=status_choices,
         required=False,
         label=False,
         initial='',
@@ -87,7 +87,6 @@ class NameStatusFilterForm(TableSortSearchForm):
     @property
     def helper(self):
         """Control form attributes and its layout."""
-
         helper = FormHelper()
         helper.form_method = 'get'
         helper.form_class = 'd-flex'

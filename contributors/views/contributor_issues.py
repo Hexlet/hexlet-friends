@@ -22,7 +22,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     )
     ordering = sortable_fields[0]
 
-
     def get_queryset(self):  # noqa: WPS615
         """Get issues from contributions.
 
@@ -42,7 +41,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
                 ).distinct()
 
             return super().get_queryset()
-
 
     def get_context_data(self, **kwargs):
         """Get search form by state."""
