@@ -1,6 +1,7 @@
-from django.views import generic
+from django_filters.views import FilterView
 
 from contributors.models import Contribution, ContributionLabel
+from contributors.views.filters import IssuesFilter
 from contributors.views.mixins import (
     ContributionLabelsMixin,
     TableSortSearchAndPaginationMixin,
@@ -10,7 +11,7 @@ from contributors.views.mixins import (
 class ListView(
     ContributionLabelsMixin,
     TableSortSearchAndPaginationMixin,
-    generic.ListView,
+    FilterView,
 ):
     """A list of repositories."""
 
@@ -18,26 +19,23 @@ class ListView(
         type='iss', info__state='open',
     ).distinct()
     template_name = 'open_issues.html'
+    filterset_class = IssuesFilter
     sortable_fields = (  # noqa: WPS317
         'info__title',
         'repository__full_name',
         'repository__labels',
         'contributor__login',
         'created_at',
-        'labels',
+        'info__state',
     )
     searchable_fields = (
         'info__title',
         'repository__full_name',
         'repository__labels',
-        'contributor__login',
-        'created_at',
-        'labels',
     )
+    ordering = sortable_fields[0]
 
-    ordering = sortable_fields[1]
-
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         """Add context."""
         all_contribution_id = Contribution.objects.filter(
             type='iss', info__state='open',
@@ -45,16 +43,11 @@ class ListView(
         all_contribution_labels = ContributionLabel.objects.filter(
             contribution__id__in=all_contribution_id,
         ).distinct()
-        if self.request.GET.get('contribution_labels'):
-            contribution_labels_names = self.request.GET.get(
-                'contribution_labels',
-            ).split('.')
-            contribution_labels = all_contribution_labels.filter(
-                name__in=contribution_labels_names,
-            ).distinct()
-        else:
-            contribution_labels = all_contribution_labels
-        # here I ve got some dublicates. What is wrong?
+
+        contribution_labels = ContributionLabel.objects.filter(
+            contribution__id__in=self.get_queryset(),
+        ).distinct()
+
         context = super().get_context_data(**kwargs)
         context['all_contribution_labels'] = all_contribution_labels
         context['contribution_labels'] = contribution_labels

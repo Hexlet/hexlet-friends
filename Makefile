@@ -10,6 +10,13 @@ docker-install: .env
 migrate:
 	poetry run python manage.py migrate
 
+build:
+	poetry install --extras psycopg2-binary
+	poetry run python manage.py migrate
+
+start-deploy:
+	gunicorn config.wsgi
+
 setup: migrate
 	echo Create a super user
 	poetry run python manage.py createsuperuser
