@@ -19,7 +19,7 @@ django-cte = "^1.2.1"
 psycopg2 = { version = "^2.8", optional = true }
 psycopg2-binary = { version = "^2.9.3", optional = true }
 PyJWT = "^2.4.0"
-cryptography = "^41.0.0"
+cryptography = "^41.0.2"
 crispy-bootstrap5 = "^0.6"
 django-extensions = "^3.2.1"
 black = "^23.3.0"
