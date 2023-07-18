@@ -6,7 +6,7 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Django = "^4.1.9"
+Django = "^4.1.10"
 python-dotenv = "^0.20.0"
 requests = "^2.31.0"
 gunicorn = "^20.1.0"
