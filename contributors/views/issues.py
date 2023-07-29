@@ -12,7 +12,7 @@ class ListView(
     TableSortSearchAndPaginationMixin,
     generic.ListView,
 ):
-    """A list of repositories."""
+    """A list of opened issues."""
 
     queryset = Contribution.objects.filter(
         type='iss', info__state='open',

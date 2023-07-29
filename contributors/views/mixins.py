@@ -172,7 +172,7 @@ class ContributionLabelsMixin(object):
             self.queryset = self.queryset.filter(
                 labels__name__in=labels_param,
             ).distinct()
-        return self.queryset
+        return super().get_queryset()
 
 
 class ContributorTotalStatMixin(object):
