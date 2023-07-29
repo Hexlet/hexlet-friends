@@ -74,6 +74,10 @@ msgid "Filter by status"
 msgstr "Фильтрация по статусу"
 
 #: contributors/forms/forms.py
+msgid "Filter by organization"
+msgstr "Фильтрация по организации"
+
+#: contributors/forms/forms.py
 msgid "Search"
 msgstr "Поиск"
 
