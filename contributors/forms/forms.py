@@ -66,3 +66,39 @@ class CombinedSearchForm(TableSortSearchForm):
             ),
         )
         return helper
+
+
+class NameStatusFilterForm(TableSortSearchForm):
+    """Search form of issues by their status."""
+
+    status_choices = [
+        ('', _('Filter by status')),
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+    ]
+
+    state = forms.ChoiceField(
+        choices=status_choices,
+        required=False,
+        label=False,
+        initial='',
+    )
+
+    @property
+    def helper(self):
+        """Control form attributes and its layout."""
+        helper = FormHelper()
+        helper.form_method = 'get'
+        helper.form_class = 'd-flex'
+        helper.layout = Layout(
+            Field('search', placeholder=_("Filter by name")),
+            FieldWithButtons(
+                Field('state'),
+                StrictButton(
+                    _("Search"),
+                    type='submit',
+                    css_class='btn btn-outline-primary',
+                ),
+            ),
+        )
+        return helper
