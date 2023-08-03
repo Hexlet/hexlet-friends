@@ -5,18 +5,10 @@ from django.utils.translation import gettext_lazy as _
 
 from contributors.models import Contribution, ContributionLabel
 
-# """TO DO: Add filter for label by group"""
-# FILTER_LABEL_GROUPS = (
-# (0, 'Type'),
-# (1, 'Priority'),
-# (2, 'Technology'),
-# (3, 'Difficulty'),
-# (4, 'Scope')
-# )
-
 
 class IssuesFilter(django_filters.FilterSet):
     """Open issues filter."""
+
     info_title = django_filters.CharFilter(
         field_name='info__title',
         lookup_expr='icontains',
@@ -42,23 +34,17 @@ class IssuesFilter(django_filters.FilterSet):
         label='good first issue',
     )
 
-# """TO DO: Add filter for label by group"""
-# label_group = django_filters.ChoiceFilter(
-# choices=FILTER_LABEL_GROUPS,
-# field_name='label_group',
-# label='Label group'
-# )
-
     class Meta:  # noqa: WPS306
         model = Contribution
         fields = [
             'info_title',
             'repository_full_name',
             'repository_labels',
-    ]
+        ]
 
-    def get_good_first_issue(self, queryset, name, value):
+    def get_good_first_issue(self, queryset, name, value):  # noqa: WPS110
         """Filter open issues by label 'good_first_issue'."""
+
         good_first = ContributionLabel.objects.get(
             name='good_first_issue',
         )
