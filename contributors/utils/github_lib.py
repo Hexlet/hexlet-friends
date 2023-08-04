@@ -63,7 +63,7 @@ def get_installation_id(jwt_token):
             'Accept': 'application/vnd.github.v3+json',
             'Authorization': f'Bearer {jwt_token}',
         },
-        timeout=None,
+        timeout=(3.05, 27),
     )
     response.raise_for_status()
 
@@ -81,7 +81,7 @@ def get_installation_token():
             'Accept': 'application/vnd.github.v3+json',
             'Authorization': f'Bearer {jwt_token}',
         },
-        timeout=None,
+        timeout=(3.05, 27),
     )
     response.raise_for_status()
 
@@ -419,7 +419,7 @@ def get_access_token(code, **kwargs):
         GITHUB_TOKEN_PROVIDER_URL,
         headers={'Accept': 'application/json'},
         data=query_params,
-        timeout=None,
+        timeout=(3.05, 27),
     )
     response.raise_for_status()
     return response.json().get('access_token')
@@ -433,7 +433,7 @@ def get_data_of_token_holder(token):
             'Accept': 'application/vnd.github.v3+json',
             'Authorization': f'token {token}',
         },
-        timeout=None,
+        timeout=(3.05, 27),
     )
     response.raise_for_status()
     return response.json()
