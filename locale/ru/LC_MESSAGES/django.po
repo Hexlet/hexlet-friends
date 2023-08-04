@@ -278,6 +278,18 @@ msgid "Go to problems on GitHub"
 msgstr "Переходить к проблемам на GitHub"
 
 #: templates/about.html
+msgid "If you want to remove a repository from our service - create an issue on GitHub using the"
+msgstr "Если вы хотите удалить репозиторий из нашего сервиса - создайте задачу на GitHub перейдя по"
+
+#: templates/about.html
+msgid "link"
+msgstr "ссылке"
+
+#: templates/about.html
+msgid "."
+msgstr "."
+
+#: templates/about.html
 msgid "Guidelines"
 msgstr "Рекомендации"
 
