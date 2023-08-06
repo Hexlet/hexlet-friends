@@ -24,6 +24,7 @@ crispy-bootstrap5 = "^0.6"
 django-extensions = "^3.2.1"
 black = "^23.3.0"
 django-debug-toolbar = "^3.8.1"
+django-mathfilters = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 wemake-python-styleguide = "^0.16.1"

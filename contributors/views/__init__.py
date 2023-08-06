@@ -1,5 +1,6 @@
 from contributors.views import (  # noqa: WPS235
     about,
+    achievements,
     config,
     contributor,
     contributor_issues,

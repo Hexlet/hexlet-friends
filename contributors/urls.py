@@ -81,4 +81,9 @@ urlpatterns = [
     ),
     path('event-handler', views.webhook.EventHandler.as_view()),
     path('about', views.about.AboutView.as_view(), name="about"),
+    path(
+        'achievements',
+        views.achievements.AchievementListView.as_view(),
+        name='achievements',
+    ),
 ]

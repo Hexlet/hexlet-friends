@@ -40,6 +40,16 @@ class ContributorQuerySet(CTEQuerySet):
             comments=models.Count(
                 'contribution', filter=models.Q(contribution__type='cnt'),
             ),
+            editions=(models.F('additions') + models.F('deletions')),
+            contribution_amount=sum(
+                (
+                    models.F('commits'),
+                    models.F('editions'),
+                    models.F('pull_requests'),
+                    models.F('issues'),
+                    models.F('comments'),
+                ),
+            ),
         )
 
     def for_month(self):
