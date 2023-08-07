@@ -170,9 +170,9 @@ class ContributionLabelsMixin(object):
         if labels_param:
             labels_param = labels_param.split('.')
             self.queryset = self.queryset.filter(
-                labels__name__in=labels_param,
-            ).distinct()
-        return self.queryset
+                labels__name__lower__in=labels_param,
+            )
+        return super().get_queryset()
 
 
 class ContributorTotalStatMixin(object):
