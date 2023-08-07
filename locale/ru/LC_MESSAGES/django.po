@@ -74,14 +74,12 @@ msgid "Filter by status"
 msgstr "Фильтрация по статусу"
 
 #: contributors/forms/forms.py
-msgid "Search"
-msgstr "Поиск"
+msgid "Filter by organization"
+msgstr "Фильтрация по организации"
 
 #: contributors/forms/forms.py
-#, fuzzy
-#| msgid "organization"
-msgid "Filter by organization"
-msgstr "организация"
+msgid "Search"
+msgstr "Поиск"
 
 #: contributors/models/base.py
 msgid "name"
