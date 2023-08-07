@@ -13,7 +13,7 @@
       <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'repository__labels' %}">
         <a href="{% get_sort_query_string 'repository__labels' %}" class="stretched-link text-reset text-decoration-none">{% trans "Programming languages" %}</a>
       </th>
-    <th scope="col" class="text-nowrap sortable pe-4" data-sorting="{% get_ordering_direction 'contributor__login' %}">
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'contributor__login' %}">
       <a href="{% get_sort_query_string 'contributor__login' %}" class="stretched-link text-reset text-decoration-none">{% trans "Author" %}</a>
     </th>
     <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'created_at' %}">
@@ -25,7 +25,7 @@
   </tr>
 {% endblock thead %}
 {% block tbody %}
-  {% for issue in page %}
+  {% for issue in filter.qs %}
     <tr>
       <th scope="row">{{ issue.num }}</th>
       <td class="text-truncate" title="{{ issue.info.title }}">
