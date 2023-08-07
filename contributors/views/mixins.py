@@ -170,13 +170,8 @@ class ContributionLabelsMixin(object):
         if labels_param:
             labels_param = labels_param.split('.')
             self.queryset = self.queryset.filter(
-<<<<<<< HEAD
-                labels__name__in=labels_param,
-            ).distinct()
-=======
                 labels__name__lower__in=labels_param,
             )
->>>>>>> 160945a2158e106c7480d643a2fcbcd1ac5bff83
         return super().get_queryset()
 
 

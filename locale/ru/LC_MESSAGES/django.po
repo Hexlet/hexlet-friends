@@ -81,12 +81,6 @@ msgstr "Фильтрация по организации"
 msgid "Search"
 msgstr "Поиск"
 
-#: contributors/forms/forms.py
-#, fuzzy
-#| msgid "organization"
-msgid "Filter by organization"
-msgstr "организация"
-
 #: contributors/models/base.py
 msgid "name"
 msgstr "имя"
