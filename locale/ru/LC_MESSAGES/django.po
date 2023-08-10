@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-24 08:38+0300\n"
+"POT-Creation-Date: 2023-07-19 23:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,13 +74,12 @@ msgid "Filter by status"
 msgstr "Фильтрация по статусу"
 
 #: contributors/forms/forms.py
-msgid "Search"
-msgstr "Поиск"
+msgid "Filter by organization"
+msgstr "Фильтрация по организации"
 
 #: contributors/forms/forms.py
-#: templates/components/tables/repositories_list.html
-msgid "Organization"
-msgstr "Организация"
+msgid "Search"
+msgstr "Поиск"
 
 #: contributors/models/base.py
 msgid "name"
@@ -154,6 +153,12 @@ msgstr "вклад"
 msgid "contributions"
 msgstr "вклады"
 
+#: contributors/models/contribution_label.py
+#, fuzzy
+#| msgid "contributions"
+msgid "contribution label"
+msgstr "метки вкладов"
+
 #: contributors/models/contributor.py
 msgid "login"
 msgstr "Логин"
@@ -222,6 +227,22 @@ msgstr "репозитории"
 msgid "Processing configuration"
 msgstr "Настройка процесса"
 
+#: contributors/views/filters.py
+#: templates/components/tables/contributor_issues.html
+#: templates/components/tables/contributor_prs.html
+#: templates/components/tables/open_issues_list.html
+#: templates/components/tables/pull_requests_list.html
+msgid "Title"
+msgstr "Название"
+
+#: contributors/views/filters.py
+msgid "Repository name"
+msgstr "Имя репозитория"
+
+#: contributors/views/filters.py
+msgid "Language"
+msgstr "Язык"
+
 #: contributors/views/organization.py contributors/views/projects.py
 #: contributors/views/repositories.py templates/components/navbar.html
 #: templates/components/tables/projects_list.html
@@ -276,6 +297,18 @@ msgstr "Анализировать активность отдельного п�
 #: templates/about.html
 msgid "Go to problems on GitHub"
 msgstr "Переходить к проблемам на GitHub"
+
+#: templates/about.html
+msgid "If you want to remove a repository from our service - create an issue on GitHub using the"
+msgstr "Если вы хотите удалить репозиторий из нашего сервиса - создайте задачу на GitHub перейдя по"
+
+#: templates/about.html
+msgid "link"
+msgstr "ссылке"
+
+#: templates/about.html
+msgid "."
+msgstr "."
 
 #: templates/about.html
 msgid "Guidelines"
@@ -370,9 +403,23 @@ msgstr "Рекомендуемые книги"
 msgid "Blog"
 msgstr "Блог Хекслета"
 
-#: templates/components/navbar.html templates/projects_list.html
-msgid "Projects"
-msgstr "Проекты"
+#: templates/components/issues_and_pr_for_month.html
+#: templates/components/issues_and_pr_for_week.html
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
+msgid "by pull requests"
+msgstr "по пул-реквестам"
+
+#: templates/components/issues_and_pr_for_month.html
+#: templates/components/issues_and_pr_for_week.html
+#: templates/components/top10_of_month.html
+#: templates/components/top10_of_week.html
+msgid "by issues"
+msgstr "по проблемам"
+
+#: templates/components/issues_filter.html
+msgid "Filter"
+msgstr "Фильтр"
 
 #: templates/components/navbar.html
 msgid "For period"
@@ -423,13 +470,6 @@ msgstr "Следующая"
 #: templates/components/tables/contributor_compare.html
 msgid "compare with ..."
 msgstr "Сравнить с ..."
-
-#: templates/components/tables/contributor_issues.html
-#: templates/components/tables/contributor_prs.html
-#: templates/components/tables/open_issues_list.html
-#: templates/components/tables/pull_requests_list.html
-msgid "Title"
-msgstr "Название"
 
 #: templates/components/tables/contributor_issues.html
 #: templates/components/tables/contributor_prs.html
@@ -533,15 +573,21 @@ msgid "Description"
 msgstr "описание"
 
 #: templates/components/tables/repositories_list.html
+msgid "Organization"
+msgstr "Организация"
+
+#: templates/components/tables/repositories_list.html
 #: templates/project_details.html templates/repository_details.html
 msgid "Project"
 msgstr "Проект"
 
 #: templates/components/time_note.html
+#: templates/components/time_note_issues_and_pr.html
 msgid "for the past week"
 msgstr "за прошедшую неделю"
 
 #: templates/components/time_note.html
+#: templates/components/time_note_issues_and_pr.html
 msgid "for the past month"
 msgstr "за прошедший месяц"
 
@@ -549,16 +595,6 @@ msgstr "за прошедший месяц"
 #: templates/components/top10_of_week.html
 msgid "by commits"
 msgstr "по коммитам"
-
-#: templates/components/top10_of_month.html
-#: templates/components/top10_of_week.html
-msgid "by pull requests"
-msgstr "по пул-реквестам"
-
-#: templates/components/top10_of_month.html
-#: templates/components/top10_of_week.html
-msgid "by issues"
-msgstr "по проблемам"
 
 #: templates/components/top10_of_month.html
 #: templates/components/top10_of_week.html
@@ -620,6 +656,10 @@ msgstr "Подробности об организации"
 #: templates/project_details.html
 msgid "Project related repositories"
 msgstr "Репозитории, связанные с проектом"
+
+#: templates/projects_list.html
+msgid "Projects"
+msgstr "Проекты"
 
 #: templates/registration/login.html
 msgctxt "logon"
