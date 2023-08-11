@@ -4,8 +4,11 @@ from django.views.i18n import JavaScriptCatalog
 
 from contributors.admin.custom import site
 
+
 def trigger_error(request):
-  division_by_zero = 1 / 0
+    """Trigger error for Sentry checking."""
+    division_by_zero = 1 / 0  # noqa: F841, WPS344
+
 
 urlpatterns = [
     path('admin/', site.urls),
