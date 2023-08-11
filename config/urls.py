@@ -4,6 +4,9 @@ from django.views.i18n import JavaScriptCatalog
 
 from contributors.admin.custom import site
 
+def trigger_error(request):
+  division_by_zero = 1 / 0
+
 urlpatterns = [
     path('admin/', site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
@@ -11,6 +14,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/', include('auth.urls')),
     path('', include('contributors.urls')),
+    path('sentry-debug/', trigger_error),
 ]
 
 if settings.DEBUG:
