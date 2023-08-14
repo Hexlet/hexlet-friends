@@ -70,7 +70,7 @@ urlpatterns = [
         name='project_details',
     ),
     path(
-        "issues",
+        "issues/",
         views.issues.ListView.as_view(),
         name="open_issues",
     ),

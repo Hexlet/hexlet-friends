@@ -6,6 +6,7 @@
 <!-- End Open Graph tags -->
 {% block header %}{% trans "Open Issues" %}{% endblock header %}
 {% block content %}
+  {% include 'components/issues_filter.html' %}
   {% include 'components/issue_tags_list.html' %}
   {% include 'components/tables/open_issues_list.html' %}
   {% include 'components/pagination.html' %}
