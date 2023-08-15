@@ -1,11 +1,32 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Contributors for month" %}{% endblock %}
+{% block title %}
+    {% if is_week %}
+        {% trans "Contributors for week" %}
+    {% else %}
+        {% trans "Contributors for month" %}
+    {% endif %}
+{% endblock %}
+
 <!-- Open Graph tags -->
-{% block og_title %}{% trans "Contributors for month" %}{% endblock og_title %}
+{% block og_title %}
+    {% if is_week %}
+        {% trans "Contributors for week" %}
+    {% else %}
+        {% trans "Contributors for month" %}
+    {% endif %}
+{% endblock og_title %}
 <!-- End Open Graph tags -->
-{% block header %}{% trans "Contributors" %}{% endblock %}
+
+{% block header %}
+    {% if is_week %}
+        {% trans "Contributors for week" %}
+    {% else %}
+        {% trans "Contributors for month" %}
+    {% endif %}
+{% endblock %}
+
 {% block additional %}
   {% include 'components/time_note.html' %}
 {% endblock %}
