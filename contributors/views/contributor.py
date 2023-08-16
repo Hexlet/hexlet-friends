@@ -44,9 +44,9 @@ class DetailView(
             self.object.contribution_set.for_year()
         )
 
-        context['contributors'] = Contributor.objects.visible().values(
+        context['contributors'] = Contributor.objects.visible().order_by('name').values(
             'id',
-            'name',
+            'name'
         )
 
         context['current_contributor'] = self.object
