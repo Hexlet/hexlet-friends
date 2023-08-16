@@ -2,19 +2,15 @@
 
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link time-note py-1 active" href="#"
-       name="top-week">
-      {% trans "for the past week" %}
-    </a>
+      <a class="nav-link time-note py-1 {% if is_week %}active{% endif %}"
+         href="{% url 'contributors:contributors_for_week' %}" name="top-week">
+          {% trans "for the past week" %}
+      </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link time-note py-1" href="#"
-       name="top-month">
-      {% trans "for the past month" %}
-    </a>
+      <a class="nav-link time-note py-1 {% if is_month %}active{% endif %}"
+         href="{% url 'contributors:contributors_for_month' %}" name="top-month">
+          {% trans "for the past month" %}
+      </a>
   </li>
 </ul>
-
-
-
-
