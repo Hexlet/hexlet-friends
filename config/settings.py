@@ -237,6 +237,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+SENTRY_SAMPLE_RATE = 0.01
+
 sentry_sdk.init(
     dsn=os.getenv('SENTRY_DSN'),
     integrations=[DjangoIntegration()],
@@ -246,10 +248,10 @@ sentry_sdk.init(
     # Set traces_sample_rate to 1.0 to capture 100%
     # of transactions for performance monitoring.
     # We recommend adjusting this value in production.
-    # traces_sample_rate=0.01,
+    traces_sample_rate=SENTRY_SAMPLE_RATE,
     # To set a uniform sample rate
     # Set profiles_sample_rate to 1.0 to profile 100%
     # of sampled transactions.
     # We recommend adjusting this value in production,
-    # profiles_sample_rate=0.01,
+    profiles_sample_rate=SENTRY_SAMPLE_RATE,
 )
