@@ -44,10 +44,9 @@ class DetailView(
             self.object.contribution_set.for_year()
         )
 
-        context['contributors'] = Contributor.objects.visible().order_by('name').values(
-            'id',
-            'name'
-        )
+        contributors = Contributor.objects.visible()
+        contributors_ordered = contributors.order_by('name')
+        context['contributors'] = contributors_ordered.values('id', 'name')
 
         context['current_contributor'] = self.object
         if self.request.GET.get('compare') == 'yes':
