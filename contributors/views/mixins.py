@@ -124,7 +124,7 @@ class TableSortSearchMixin(MultipleObjectMixin):
         filter_value = self.request.GET.get('search', '').strip()
         lookups = {}
         for field in self.searchable_fields:
-            key = '{0}__icontains'.format(field)
+            key = f'{field}__icontains'
             lookups[key] = filter_value
         expressions = [
             Q(**{key: value})
