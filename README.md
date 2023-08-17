@@ -13,7 +13,7 @@ Contribution &mdash; issues, pull requests, commits, comments.
 
 _[Instructions for installing and running the app](INSTALLATION.md)_
 
-_[Instructions for deploying app on Railway](DEPLOYMENT.md)_
+_[Instructions for deploying app on Render](DEPLOYMENT.md)_
 
 ## Contributing
 
