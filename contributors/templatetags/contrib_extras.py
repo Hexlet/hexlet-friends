@@ -40,7 +40,7 @@ def get_query_string(context, qs_param, qs_param_value):
         qs_param_value(previous_value)
         if callable(qs_param_value) else qs_param_value
     )
-    return '?{0}'.format(get_params.urlencode()) if get_params else ''
+    return f'?{get_params.urlencode()}' if get_params else ''
 
 
 @register.simple_tag(takes_context=True)
@@ -52,7 +52,7 @@ def get_sort_query_string(context, passed_sort_field):
         if passed_sort_field == current_sort_field:
             new_ordering = (
                 ordering[1:] if ordering.startswith('-')
-                else '-{0}'.format(ordering)
+                else f'-{ordering}'
             )
         elif passed_sort_field in settings.TEXT_COLUMNS:
             new_ordering = passed_sort_field
