@@ -20,7 +20,7 @@
       <a href="{{ repository.project.get_absolute_url }}">{{ repository.project }}</a>
       <br>
     {% endif %}
-    <a href="{{ repository.html_url }}"><span class="badge bg-dark">GitHub</span></a>
+    <a href="{{ repository.html_url }}" target="_blank"><span class="badge bg-dark">GitHub</span></a>
     {% include 'components/repo_tags_list.html' %}
   </p>
   <h2>{% trans "Contributors" %}</h2>

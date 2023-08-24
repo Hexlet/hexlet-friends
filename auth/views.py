@@ -24,8 +24,8 @@ class GitHubAuthRedirectView(RedirectView):
 
     url = (
         'https://github.com/login/oauth/authorize'
-        '?client_id={0}'
-        '&scope=user:email'.format(settings.GITHUB_AUTH_CLIENT_ID)
+        f'?client_id={settings.GITHUB_AUTH_CLIENT_ID}'
+        '&scope=user:email'
     )
     permanent = True
 
