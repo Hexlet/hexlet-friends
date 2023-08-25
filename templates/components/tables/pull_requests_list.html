@@ -2,7 +2,7 @@
 {% load i18n contrib_extras %}
 
 {% block thead %}
-  <tr class="d-xl-flex">
+  <tr>
     <th scope="col">#</th>
     <th scope="col" class="col-3 sortable pe-4" data-sorting="{% get_ordering_direction 'info__title' %}">
       <a href="{% get_sort_query_string 'info__title' %}"
@@ -28,7 +28,7 @@
 {% endblock thead %}
 {% block tbody %}
   {% for pr in page %}
-    <tr class="d-xl-flex">
+    <tr>
       <th scope="row">{{ pr.num }}</th>
       <td class="col-3">
         <a href="{{ pr.html_url }}">{{ pr.info.title }}</a>
