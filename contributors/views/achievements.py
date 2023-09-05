@@ -8,7 +8,6 @@ class AchievementListView(generic.ListView):
 
     template_name = 'achievements_list.html'
     model = Contributor
-    contributors_amount = Contributor.objects.count()
     contributors = Contributor.objects.with_contributions()
 
     pull_request_ranges_for_achievements = [100, 50, 25, 10, 1]
@@ -19,6 +18,7 @@ class AchievementListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         """Add context data for achievement list."""
+        self.contributors_amount = Contributor.objects.count()
         context = super().get_context_data(**kwargs)
         contributors = Contributor.objects.with_contributions()
 
