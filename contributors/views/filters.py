@@ -45,12 +45,14 @@ class IssuesFilter(django_filters.FilterSet):
     def get_good_first_issue(self, queryset, name, value):  # noqa: WPS110
         """Filter open issues by label 'good_first_issue'."""
         good_first = ContributionLabel.objects.filter(
-            name='good_first_issue',
+            name='good first issue',
         ).first()
         all_open_issues = Contribution.objects.filter(
             type='iss', info__state='open',
         )
-        if value:
+        if good_first is None:
+            queryset = all_open_issues.none()
+        elif value:
             queryset = all_open_issues.filter(
                 labels__in=[good_first.id],
             )

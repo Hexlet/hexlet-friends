@@ -1,51 +1,102 @@
-## Развертывание Hexlet-Friends на Railway
+# Развертывание Hexlet-Friends на Render
 
-1. Создайте новый проект на Railway. Для успешного деплоя приложения вам понадобится база данных `PostgreSQL` и приложение
-2. Для добавления БД при создании проекта выберите `Provision PostgreSQL`
-3. После добавления БД, нажмите `+ New` -> `Github Repo`. В выпадающем списке выберите свой репозиторий с `Hexlet-friends`. Здесь возможно понадобится дать доступы Railway к вашим репозитория, если ранее вы их не настроили
-4. Переходим в настройки нашего приложения. Нам необходимо:
+Для деплоя понадобится аккаунт на Render. Достаточно бесплатного тарифного плана, но в нём нет консоли в браузере, поэтому будет рассмотрено заполнение БД через локальное приложение.
 
-   - настроить переменные окружения на вкладке `Variables`. Вам понадобятся:
+## Подготовка базы данных PostgreSQL
 
-        - `PORT` - присвойте значение 8000, после нажмите на три вертикальные точки справа от переменной и выберите `Promote` - это позволит использовать данный порт для входа в приложение.
-        - `GITHUB_AUTH_TOKEN`
-        - `SECRET_KEY`
-        - `POSTGRES_DB`
-        - `POSTGRES_USER`
-        - `POSTGRES_PASSWORD`
-        - `POSTGRES_HOST`
-        - `POSTGRES_PORT`
+*Убедитесь, что вы используете одинаковый `SECRET_KEY` при работе с одной БД из разных приложений.*
 
-    Переменные `PostgreSQL` можно использовать через `Add reference` при создании переменной для приложения
+### Создание
 
-   - выбрать ветку, изменения из которой будут отслеживаться в меню `Automatic Deployments` на вкладке `Settings`
-   - в графе `Domains` нажмем кнопку `Generate Domain` для генерации домена для доступа к приложению
-   - в меню `Deployments` открывает `Deploy Logs` и убеждаемся, что все работает
+1. Из Dashboard нажмите *+ New* -> *PostgreSQL*;
+2. Задайте имя и ближайший регион. Остальные поля можно оставить по умолчанию;
+3. Нажмите *Create Database* и дождитесь окончания процесса;
+4. В информации о БД, в разделе *Info* находятся **Internal Database URL** и **External Database URL**. Используйте их далее.
 
-    ```bash
-    Performing system checks...
-    ﻿System check identified no issues (0 silenced).
-    ﻿You have 36 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, contributors, custom_auth, sessions.
-    ﻿Run 'python manage.py migrate' to apply them.
-    ﻿June 21, 2023 - 09:22:50
-    ﻿Django version 4.1.9, using settings 'config.settings'
-    ﻿Starting development server at http://0.0.0.0:8000/
-    ﻿Quit the server with CONTROL-C.
+### Заполнение
+
+1. В локальном приложении укажите следующие переменные окружения в *[.env](.env.example)*:
+
+    ```text
+    DATABASE_URL=<External Database URL>
+    SECRET_KEY=<Секретный ключ для БД>
+    GITHUB_AUTH_TOKEN=<Ваш Github токен>
+    DB_ENGINE=<Должна быть пустой или отсутствовать>
     ```
 
-5. Как видим миграции не приняты, для этого перейдем вновь на вкладку `Settings` в настройках приложения:
-
-   - в меню `Start Command` укажем `python manage.py migrate`
-   - произойдет редеплой в ходе которого применятся миграции. Отследить выполнение команды можно в логах приложения
-   - удалим команду из `Start Command`
-   - убедимся по логам, что все в порядке
+    *Для получения `GITHUB_AUTH_TOKEN` см. [INSTALLATION.md](INSTALLATION.md#12-to-work-with-the-project-you-will-need-to-set-the-values-of-the-environment-variables-in-the-env-file);*
+2. Выполните команды:
 
     ```bash
-    Performing system checks...
-    ﻿Django version 4.1.9, using settings 'config.settings'
-    ﻿Starting development server at http://0.0.0.0:8000/
-    ﻿Quit the server with CONTROL-C.
+    make migrate
+    make sync ARGS='--repo Hexlet/hexlet-friends'
     ```
 
-6. Если необходимо выполнить заполнение БД, то в `Start Command` следует указать команду `python manage.py fetchdata <organization name>`
-7. Перейдем по ссылке в `Domains` в `Settings` и убедимся, что приложение работает
+    Параметр `ARGS` может быть любым, согласно [INSTALLATION.md](INSTALLATION.md#2-filling-the-database);
+3. Дождитесь окончания процесса. Желательно после этого удалить значение `DATABASE_URL`, во избежание путаницы.
+
+## Создание веб-приложения
+
+Теперь когда БД готова, можно деплоить само приложение.
+
+1. Из Dashboard нажмите *+ New* -> *Web Service*;
+2. Выберите желаемый репозиторий. Если его нет в списке - убедитесь что вы подключили Github аккаунт (*Connect account*) и предоставили доступ к репозиторию (*Configure account*);
+3. Заполните следующие параметры:
+
+   * Name: <Желаемое имя>
+   * Region: <Ближайший регион>
+   * Branch: <Ваша ветка с фичей>
+   * Root Directory: <Оставить по умолчанию>
+   * Runtime: Python 3
+   * Build Command:
+
+    ```bash
+    make build-production
+    ```
+
+   * Start Command:
+
+    ```bash
+    make start-production
+    ```
+
+4. Нажмите *Advanced* и введите следующие переменные окружения:
+
+    ```text
+    DEBUG=FALSE
+    SECRET_KEY=<Секретный ключ для БД>
+    DATABASE_URL=<Internal Database URL>
+    PYTHON_VERSION=<Желаемая версия Python>
+    POETRY_VERSION=<Желаемая версия Poetry>
+    ```
+
+5. Нажмите *Create Web Service* и дождитесь окончания процесса. В информации о приложении вы найдёте адрес и логи. Всё готово.
+
+## Дополнительно: применение фикстуры
+
+Процесс скачивания исходных данных с репозиториев может занимать длительное время.
+Поэтому стоит сохранить эти данные в фикстуру, чтобы в будущем сразу применить их к БД.
+Это возможно как для локального SQLite, так и для удалённого PostgreSQL.
+Будет рассмотрено сохранение БД в JSON файл db_fixture.json (имя может быть любым) для последующего восстановления из него.
+Предполагается, что локальное приложение настроено для работы с БД и указаны переменные окружения:
+
+* `SECRET_KEY`
+* Для SQLite добавочно `DB_ENGINE=SQLite`
+* Для PostgreSQL добавочно `DATABASE_URL`
+
+### Сохранение фикстуры
+
+Выполните команду:
+
+```bash
+poetry run python manage.py dumpdata --indent 2 > db_fixture.json
+```
+
+### Применение фикстуры
+
+*Не забудьте применить миграции `make migrate` перед записью фикстуры в БД.*
+Выполните команду:
+
+```bash
+poetry run python manage.py loaddata db_fixture.json
+```

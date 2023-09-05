@@ -21,13 +21,13 @@ def signatures_match(payload_body, gh_signature):
     The first is computed for the payload using the webhook token,
     the second comes from the request's header.
     """
-    signature = 'sha1={0}'.format(
-        hmac.new(
-            settings.GITHUB_WEBHOOK_TOKEN.encode(),
-            payload_body,
-            'sha1',
-        ).hexdigest(),
-    )
+    signature_body = hmac.new(
+        settings.GITHUB_WEBHOOK_TOKEN.encode(),
+        payload_body,
+        'sha1',
+    ).hexdigest()
+
+    signature = f'sha1={signature_body}'
     return hmac.compare_digest(signature, gh_signature)
 
 

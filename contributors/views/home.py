@@ -7,7 +7,7 @@ LATEST_COUNT = 10
 
 def get_top10(dataset, contrib_type):
     """Return top 10 contributors of the type from the dataset."""
-    return dataset.order_by('-{0}'.format(contrib_type))[:LATEST_COUNT]
+    return dataset.order_by(f'-{contrib_type}')[:LATEST_COUNT]
 
 
 def get_latest_contributions(dataset, contrib_type):

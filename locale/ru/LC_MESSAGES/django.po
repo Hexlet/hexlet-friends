@@ -641,6 +641,10 @@ msgstr "Пул-реквесты по"
 msgid "Contributors for month"
 msgstr "Участники за месяц"
 
+#: templates/contributors_for_period.html
+msgid "Contributors for week"
+msgstr "Участники за неделю"
+
 #: templates/home.html
 msgid "Top 10 contributors"
 msgstr "Топ 10 участников"

@@ -17,6 +17,13 @@ build:
 start-deploy:
 	gunicorn config.wsgi
 
+build-production:
+	poetry install --extras psycopg2-binary
+	$(MAKE) collectstatic
+
+start-production:
+	gunicorn -b 0.0.0.0:8000 config.wsgi:application
+
 setup: migrate
 	echo Create a super user
 	poetry run python manage.py createsuperuser

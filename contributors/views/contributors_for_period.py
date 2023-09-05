@@ -13,6 +13,8 @@ class ListView(contributors.ListView):
         """Add context."""
         context = super().get_context_data(**kwargs)
         context['dt_month_ago'] = misc.datetime_month_ago()
+        context['is_week'] = self.extra_context.get('period') == 'week'
+        context['is_month'] = self.extra_context.get('period') == 'month'
         return context
 
     def get_queryset(self):  # noqa: WPS615
