@@ -42,7 +42,7 @@ source $HOME/.cache/pypoetry/virtualenvs/<name of the created environment>/bin/a
 Installing dependencies if you use **Docker**
 
 ```bash
-make docker-install
+make compose-build
 ```
 
 ---
@@ -88,7 +88,7 @@ make setup
 
 
 ```bash
-docker-compose run --rm django make setup
+make compose-setup
 ```
 
 ---
@@ -114,13 +114,13 @@ make sync ARGS='Hexlet'
 *With Docker*
 
 ```bash
-docker-compose run --rm django make sync ARGS='ORG [ORG ...]'
+make compose-sync ARGS='ORG [ORG ...]'
 ```
 
 Example:
 
 ```bash
-docker-compose run --rm django make sync ARGS='Hexlet'
+make compose-sync ARGS='Hexlet'
 ```
 
 >Keep in mind that this will add all repositories of the Hexlet organization to the database. This will take a long time.
@@ -142,13 +142,13 @@ make sync ARGS='--repo Hexlet/hexlet-friends'
 *Docker*
 
 ```bash
-docker-compose run --rm django make sync ARGS='--repo REPO [REPO ...]'
+make compose-sync ARGS='--repo REPO [REPO ...]'
 ```
 
 Example:
 
 ```bash
-docker-compose run --rm django make sync ARGS='--repo Hexlet/hexlet-friends'
+make compose-sync ARGS='--repo Hexlet/hexlet-friends'
 ```
 
 #### On subsequent data updates
@@ -170,5 +170,5 @@ make start
 ### Docker
 
 ```bash
-make docker-start
+make compose-dev
 ```
