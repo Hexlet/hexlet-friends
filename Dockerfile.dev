@@ -1,4 +1,4 @@
-FROM python:3.11-alpine as builder
+FROM python:3.9.18-slim as builder
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -10,20 +10,9 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_CACHE_DIR='/var/cache/pypoetry' \
     PATH="$PATH:/root/.local/bin"
 
-RUN apk add --no-cache \
-    gcc \
-    musl-dev \
-    postgresql-dev \
-    libffi-dev \
-    openssl-dev \
-    cargo \
-    curl \
-    gettext \
-    git \
-    make 
-
-RUN curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry --version
+ RUN apt-get update \
+    && apt-get install -y curl make git \
+    && curl -sSL https://install.python-poetry.org | python3 - && poetry --version
 
 WORKDIR /project/
 
@@ -33,4 +22,4 @@ RUN poetry install --extras psycopg2-binary
 
 WORKDIR /usr/local/src/hexlet-friends
 
-CMD ["make", "start"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
