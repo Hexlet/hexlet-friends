@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:12-alpine
     environment:
-          POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - postgres_volume:/var/lib/postgresql/data
 
@@ -14,11 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-<<<<<<< HEAD
-    environment:
-      - DEBUG=True
-=======
->>>>>>> 3e0bc6a ([#328] fix: bugs in docker-compose.yaml)
+    command: "make start"
     env_file:
       - .env
     environment:
