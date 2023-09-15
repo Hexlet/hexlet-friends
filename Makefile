@@ -61,7 +61,7 @@ test-coverage-report-xml:
 check: lint test requirements.txt
 
 start:
-	poetry run python manage.py runserver 127.0.0.1:8000
+	poetry run python manage.py runserver 0.0.0.0:8000
 
 compose-dev:
 	docker compose up -d
@@ -79,7 +79,7 @@ compose-logs:
 	docker compose logs -f
 
 compose-sync:
-	docker compose run --rm django make sync
+	docker compose run --rm django make sync ARGS="$(ARGS)"
 
 sync:
 	poetry run python manage.py fetchdata $(ARGS)
