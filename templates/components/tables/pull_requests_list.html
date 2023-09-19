@@ -31,14 +31,16 @@
     <tr>
       <th scope="row">{{ pr.num }}</th>
       <td class="col-3">
-        <a href="{{ pr.html_url }}">{{ pr.info.title }}</a>
+        {% with "Pull request #"|add:pr.id as default_value %}
+          <a href="{{ pr.html_url }}">{{ pr.info.title|default:default_value }}</a>
+        {% endwith %}
       </td>
       <td class="col-3">{{ pr.repository.full_name }}</td>
       <td class="col-2">
         <a href="{% url 'contributors:contributor_details' pr.contributor.login %}">{{ pr.contributor.login }}</a>
       </td>
       <td class="col-2">{{ pr.created_at|date:"d.m.Y" }}</td>
-      <td class="col">{{ pr.info.state|capfirst }}</td>
+      <td class="col">{{ pr.info.state|default:"open"|capfirst }}</td>
     </tr>
   {% empty %}
     <tr>
