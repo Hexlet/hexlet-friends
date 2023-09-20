@@ -4,7 +4,7 @@ install: .env
 compose-build: .env
 	docker compose build
 
-compose-setup:
+compose-setup: compose-build
 	docker compose run --rm django make setup
 
 .env:
@@ -63,8 +63,8 @@ check: lint test requirements.txt
 start:
 	poetry run python manage.py runserver 0.0.0.0:8000
 
-compose-dev:
-	docker compose up -d
+compose-start:
+	docker compose up --abort-on-container-exit
 
 compose-stop:
 	docker compose stop || true
@@ -74,9 +74,6 @@ compose-down:
 
 compose-clear:
 	docker compose down -v || true
-
-compose-logs:
-	docker compose logs -f
 
 compose-sync:
 	docker compose run --rm django make sync ARGS="$(ARGS)"
