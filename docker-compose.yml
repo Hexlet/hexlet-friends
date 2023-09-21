@@ -1,12 +1,12 @@
 version: "3.8"
 services:
-
-  postgres:
+  db:
     image: postgres:12-alpine
-    env_file:
-      - .env
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+
     ports:
       - 5433:5432
 
@@ -14,16 +14,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    environment:
-      - DEBUG=True
+    command: "make start"
     env_file:
       - .env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
     volumes:
       - .:/usr/local/src/hexlet-friends
     ports:
       - 8000:8000
     depends_on:
-      - postgres
+      - db
 
 volumes:
   postgres_volume:

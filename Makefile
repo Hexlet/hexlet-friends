@@ -1,8 +1,11 @@
 install: .env
 	poetry install --extras psycopg2-binary
 
-docker-install: .env
-	docker-compose build
+compose-build: .env
+	docker compose build
+
+compose-setup: compose-build
+	docker compose run --rm django make setup
 
 .env:
 	test ! -f .env && cp .env.example .env
@@ -58,10 +61,22 @@ test-coverage-report-xml:
 check: lint test requirements.txt
 
 start:
-	poetry run python manage.py runserver 127.0.0.1:8000
+	poetry run python manage.py runserver 0.0.0.0:8000
 
-docker-start:
-	docker-compose up
+compose-start:
+	docker compose up --abort-on-container-exit
+
+compose-stop:
+	docker compose stop || true
+
+compose-down:
+	docker compose down || true
+
+compose-clear:
+	docker compose down -v || true
+
+compose-sync:
+	docker compose run --rm django make sync ARGS="$(ARGS)"
 
 sync:
 	poetry run python manage.py fetchdata $(ARGS)
