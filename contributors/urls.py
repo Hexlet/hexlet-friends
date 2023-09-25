@@ -26,6 +26,21 @@ urlpatterns = [
         name='repository_details',
     ),
     path(
+        'leaderboard/commits',
+        views.leaderboard_commits.ListView.as_view(),
+        name='leaderboard_commits',
+    ),
+    path(
+        'leaderboard/pull-requests',
+        views.leaderboard_prs.ListView.as_view(),
+        name='leaderboard_prs',
+    ),
+    path(
+        'leaderboard/issues',
+        views.leaderboard_issues.ListView.as_view(),
+        name='leaderboard_issues',
+    ),
+    path(
         'contributors/',
         views.contributors.ListView.as_view(),
         name='contributors_list',

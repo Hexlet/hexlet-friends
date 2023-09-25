@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Issues" %}{% endblock %}
+<!-- Open Graph tags -->
+
+{% block og_title %}{% trans "Issues" %}{% endblock og_title %}
+<!-- End Open Graph tags -->
+{% block header %}{% trans "Issues" %}{% endblock %}
+{% block content %}
+  {% include 'components/search_by_org_and_contributors.html' %}
+  {% include 'components/tables/leaderboard_issues.html' %}
+{% endblock content %}

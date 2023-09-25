@@ -1,0 +1,33 @@
+{% extends './list_as_table.html' %}
+{% load i18n contrib_extras %}
+
+{% block thead %}
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'login' %}">
+      <a href="{% get_sort_query_string 'login' %}" class="stretched-link text-reset text-decoration-none">{% trans "Login" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'name' %}">
+      <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
+    </th>
+    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'commits' %}">
+      <a href="{% get_sort_query_string 'commits' %}" class="stretched-link text-reset text-decoration-none">{% trans "Commits" %}</a>
+    </th>
+  </tr>
+{% endblock thead %}
+{% block tbody %}
+  {% for contributor in page %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>
+        <a href="{{ contributor.get_absolute_url }}">
+          {{ contributor.login }}
+        </a>
+      </td>
+      <td>{% firstof contributor.name "&mdash;" %}</td>
+      <td>{{ contributor.commits }}</td>
+    </tr>
+  {% empty %}
+    <tr><td class="text-center" colspan="9">{% trans "Nothing found" %}</td></tr>
+  {% endfor %}
+{% endblock tbody %}
