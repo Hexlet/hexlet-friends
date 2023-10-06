@@ -28,7 +28,7 @@
   {% for issue in filter.qs %}
     <tr>
       <th scope="row">{{ issue.num }}</th>
-      <td class="text-truncate" title="{{ issue.info.title }}">
+      <td class="text-truncate text-wrap" title="{{ issue.info.title }}">
         <a href="{{ issue.html_url }}">
           {{ issue.info.title }}
         </a>
