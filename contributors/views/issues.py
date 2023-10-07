@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from django_filters.views import FilterView
 
 from contributors.models import Contribution, ContributionLabel
@@ -15,9 +16,6 @@ class ListView(
 ):
     """A list of opened issues."""
 
-    queryset = Contribution.objects.filter(
-        type='iss', info__state='open',
-    ).distinct()
     template_name = 'open_issues.html'
     filterset_class = IssuesFilter
     sortable_fields = (  # noqa: WPS317
@@ -34,6 +32,18 @@ class ListView(
         'repository__labels',
     )
     ordering = sortable_fields[0]
+
+    contributionlabel_prefetch = Prefetch(
+        'labels',
+        queryset=ContributionLabel.objects.all(),
+    )
+
+    queryset = (
+        Contribution.objects.filter(type='iss', info__state='open').
+        select_related('repository', 'contributor', 'info').
+        prefetch_related("repository__labels", contributionlabel_prefetch).
+        distinct()
+    )
 
     def get_context_data(self, *args, **kwargs):
         """Add context."""
