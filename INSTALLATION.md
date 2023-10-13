@@ -74,6 +74,8 @@ Note that after you leave the page, you can't look at the token again, you just 
 You can use SQLite with Poetry by adding `DB_ENGINE=SQLite` to the .env file. By default, this value is not present.
 If PostgreSQL is installed, set values to the corresponding variables ***POSTGRES***.
 
+You should also set `DEBUG=True` in .env file because by defualt content is loaded under the https protocol instead of http, witch is not supported by development server. Using debug also provides you with debug toolbar.
+
 ---
 
 ### 1.3 Finishing the installation
@@ -170,5 +172,5 @@ make start
 ### Docker
 
 ```bash
-make compose-dev
+make compose-start
 ```
