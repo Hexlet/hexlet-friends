@@ -23,4 +23,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     ordering = sortable_fields[0]
 
     template_name = 'pull_requests_list.html'
-    queryset = Contribution.objects.filter(type='pr')
+    queryset = (
+        Contribution.objects.filter(type='pr').
+        select_related('repository', 'contributor', 'info')
+    )
