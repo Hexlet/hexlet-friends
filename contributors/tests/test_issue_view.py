@@ -16,6 +16,7 @@ class TestIssuesListViewTestCase(TestCase):
         "issues",
         "labels",
         "repositories",
+        "organizations",
     ]
 
     def setUp(self):

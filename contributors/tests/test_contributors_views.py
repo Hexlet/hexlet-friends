@@ -20,6 +20,7 @@ class TestContributorDetailView(TestCase):
         "contributors",
         "labels",
         "repositories",
+        "organizations",
     ]
 
     def setUp(self):
@@ -55,6 +56,7 @@ class TestContributorIssuesView(TestCase):
         "issues",
         "labels",
         "repositories",
+        "organizations",
     ]
 
     def setUp(self):
@@ -85,6 +87,7 @@ class TestContributorPrView(TestCase):
         "contributors",
         "labels",
         "repositories",
+        "organizations",
     ]
 
     def setUp(self):
