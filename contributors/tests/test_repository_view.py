@@ -11,7 +11,7 @@ TEST_REPOSITORY_NOT_EXISTS_FULL_NAME = 'Greyvoid'
 class TestProjectRepositoryListTestCase(TestCase):
     """Test the methods for the repository's details view."""
 
-    fixtures = ["contributors", "labels", "repositories"]
+    fixtures = ["contributors", "labels", "repositories", "organizations"]
 
     def setUp(self):
         """Create a test database."""
