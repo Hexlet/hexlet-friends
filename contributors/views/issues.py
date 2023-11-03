@@ -54,9 +54,18 @@ class ListView(
             contribution__id__in=all_contribution_id,
         ).distinct()
 
-        contribution_labels = ContributionLabel.objects.filter(
-            contribution__id__in=self.get_queryset(),
-        ).distinct()
+        request_contribution_labels = self.request.GET.get(
+            'contribution_labels',
+        )
+
+        if request_contribution_labels:
+            contribution_labels = ContributionLabel.objects.exclude(
+                name__in=request_contribution_labels.split('.'),
+            ).distinct()
+        else:
+            contribution_labels = ContributionLabel.objects.filter(
+                contribution__id__in=self.get_queryset(),
+            ).distinct()
 
         context = super().get_context_data(**kwargs)
         context['all_contribution_labels'] = all_contribution_labels
