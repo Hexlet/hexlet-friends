@@ -14,7 +14,7 @@ class ListView(
     TableSortSearchAndPaginationMixin,
     FilterView,
 ):
-    """A list of opened issues."""
+    """A list of issues."""
 
     template_name = 'open_issues.html'
     filterset_class = IssuesFilter
@@ -39,7 +39,7 @@ class ListView(
     )
 
     queryset = (
-        Contribution.objects.filter(type='iss', info__state='open').
+        Contribution.objects.filter(type='iss').
         select_related('repository', 'contributor', 'info').
         prefetch_related("repository__labels", contributionlabel_prefetch).
         distinct()
@@ -48,7 +48,7 @@ class ListView(
     def get_context_data(self, *args, **kwargs):
         """Add context."""
         all_contribution_id = Contribution.objects.filter(
-            type='iss', info__state='open',
+            type='iss'
         ).values_list('id', flat=True).distinct()
         all_contribution_labels = ContributionLabel.objects.filter(
             contribution__id__in=all_contribution_id,
