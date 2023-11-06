@@ -38,8 +38,13 @@ compose-sync:
 deploy:
 	git push heroku
 
-install: .env
+setup-pre-commit-hooks:
+	poetry run pre-commit install
+
+install-dependencies: .env
 	poetry install --extras psycopg2-binary
+
+install: install-dependencies setup-pre-commit-hooks
 
 lint:
 	poetry run flake8
