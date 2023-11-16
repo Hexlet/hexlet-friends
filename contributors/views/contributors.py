@@ -27,6 +27,10 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         """Get search form by organizations."""
         context = super().get_context_data(**kwargs)
         context['form_org'] = CombinedSearchForm(self.request.GET)
+
+        canonical_url = 'https://friends.hexlet.io/contributors'
+        context['canonical_url'] = canonical_url
+
         return context
 
     def get_queryset(self):  # noqa: WPS615

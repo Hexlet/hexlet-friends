@@ -58,4 +58,8 @@ class ListView(
         context = super().get_context_data(**kwargs)
         context['all_labels'] = all_labels
         context['labels'] = labels
+
+        canonical_url = 'https://friends.hexlet.io/repositories'
+        context['canonical_url'] = canonical_url
+
         return context

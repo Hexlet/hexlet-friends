@@ -83,6 +83,9 @@ class HomeView(TemplateView):
             contributions_for_week, 'pr',
         )
 
+        canonical_url = 'https://friends.hexlet.io'
+        context['canonical_url'] = canonical_url
+
         context.update(
             {
                 'contributors_for_month': contributors_for_month,
