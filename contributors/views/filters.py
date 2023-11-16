@@ -37,7 +37,7 @@ class IssuesFilter(django_filters.FilterSet):
         lookup_expr='icontains',
         field_name='info__state',
         label='',
-        empty_label=_('All'),
+        empty_label=_('Status'),
     )
 
     good_first_issue_filter = django_filters.BooleanFilter(
