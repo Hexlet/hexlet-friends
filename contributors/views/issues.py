@@ -48,7 +48,7 @@ class ListView(
     def get_context_data(self, *args, **kwargs):
         """Add context."""
         all_contribution_id = Contribution.objects.filter(
-            type='iss'
+            type='iss',
         ).values_list('id', flat=True).distinct()
         all_contribution_labels = ContributionLabel.objects.filter(
             contribution__id__in=all_contribution_id,
