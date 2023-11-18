@@ -102,3 +102,21 @@ class NameStatusFilterForm(TableSortSearchForm):
             ),
         )
         return helper
+
+
+class PullRequestNameStatusFilterForm(NameStatusFilterForm):
+    """Search form of pull requests by their status."""
+
+    status_choices = [
+        ('', _('Filter by status')),
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+        ('merged', 'Merged'),
+    ]
+
+    state = forms.ChoiceField(
+        choices=status_choices,
+        required=False,
+        label=False,
+        initial='',
+    )
