@@ -43,6 +43,7 @@ class Repository(CommonFields):
         blank=True,
     )
     full_name = models.CharField(_("full name"), max_length=FULL_NAME_LENGTH)
+    fork = models.BooleanField(_("fork"), default=False)
     is_visible = models.BooleanField(_("visible"), default=True)
     labels = models.ManyToManyField(
         Label,

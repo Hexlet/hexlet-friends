@@ -33,13 +33,13 @@
     <tr>
       <th scope="row">{{ repository.num }}</th>
       <td class="text-truncate" title="{{ repository.name }}">
-        {% if repository.organization.name == 'Hexlet' %}
-          <a href="{{ repository.get_absolute_url }}">
-            {{ repository.name }}
-          </a>
-        {% elif repository.organization.name != 'Hexlet' %}
+        {% if repository.fork is True %}
           <a href="{{ repository.get_absolute_url }}">
             {{ repository.full_name }} <span class="badge bg-secondary">Fork</span>
+          </a>
+        {% else %}
+          <a href="{{ repository.get_absolute_url }}">
+            {{ repository.name }}
           </a>
         {% endif %}
       </td>
