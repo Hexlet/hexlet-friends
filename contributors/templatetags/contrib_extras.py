@@ -101,3 +101,11 @@ def get_contribution_label_query_string(context, passed_label):
         'contribution_labels',
         prepare_contribution_labels_param_value,
     )
+
+
+@register.simple_tag(takes_context=True)
+def get_canonical_url(context):
+    request = context.get('request')
+    if request:
+        return request.build_absolute_uri(request.path)
+    return ''
