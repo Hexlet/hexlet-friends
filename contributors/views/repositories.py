@@ -59,7 +59,7 @@ class ListView(
         context['all_labels'] = all_labels
         context['labels'] = labels
 
-        canonical_url = 'https://friends.hexlet.io/repositories'
+        canonical_url = self.request.build_absolute_uri(self.request.path)
         context['canonical_url'] = canonical_url
 
         return context

@@ -28,7 +28,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context['form_org'] = CombinedSearchForm(self.request.GET)
 
-        canonical_url = 'https://friends.hexlet.io/contributors'
+        canonical_url = self.request.build_absolute_uri(self.request.path)
         context['canonical_url'] = canonical_url
 
         return context

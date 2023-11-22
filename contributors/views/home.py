@@ -83,7 +83,7 @@ class HomeView(TemplateView):
             contributions_for_week, 'pr',
         )
 
-        canonical_url = 'https://friends.hexlet.io'
+        canonical_url = self.request.build_absolute_uri(self.request.path)
         context['canonical_url'] = canonical_url
 
         context.update(
