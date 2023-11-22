@@ -5,9 +5,14 @@ from django.utils.translation import gettext_lazy as _
 
 from contributors.models import Contribution, ContributionLabel
 
+STATE_CHOICES = (
+    ('open', _('Open')),
+    ('closed', _('Closed')),
+)
+
 
 class IssuesFilter(django_filters.FilterSet):
-    """Open issues filter."""
+    """Issues filter."""
 
     info_title = django_filters.CharFilter(
         field_name='info__title',
@@ -27,6 +32,14 @@ class IssuesFilter(django_filters.FilterSet):
         label='',
         widget=TextInput(attrs={'placeholder': _('Language')}),
     )
+    info_state = django_filters.ChoiceFilter(
+        choices=STATE_CHOICES,
+        lookup_expr='icontains',
+        field_name='info__state',
+        label='',
+        empty_label=_('Status'),
+    )
+
     good_first_issue_filter = django_filters.BooleanFilter(
         field_name='good_first_issue',
         method='get_good_first_issue',
@@ -40,10 +53,11 @@ class IssuesFilter(django_filters.FilterSet):
             'info_title',
             'repository_full_name',
             'repository_labels',
+            'info_state',
         ]
 
     def get_good_first_issue(self, queryset, name, value):  # noqa: WPS110
-        """Filter open issues by label 'good_first_issue'."""
+        """Filter issues by label 'good_first_issue'."""
         good_first = ContributionLabel.objects.filter(
             name='good first issue',
         ).first()
