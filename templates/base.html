@@ -1,4 +1,4 @@
-{% load i18n static %}
+{% load i18n static contrib_extras %}
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}" class="h-100">
@@ -22,6 +22,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  {% get_canonical_url as canonical_url %}
+  <link rel="canonical" href="{{ canonical_url }}">
   <script src="{% url 'javascript_catalog' %}"></script>
   {% block head_scripts %}{% endblock %}
   {% if GTM_ID %}

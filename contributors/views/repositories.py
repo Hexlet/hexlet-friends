@@ -58,4 +58,5 @@ class ListView(
         context = super().get_context_data(**kwargs)
         context['all_labels'] = all_labels
         context['labels'] = labels
+
         return context
