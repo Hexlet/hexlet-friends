@@ -46,9 +46,11 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
         if contrib_author_login in IGNORED_CONTRIBUTORS:
             continue
 
-        type_ = 'pr' if type_ == 'iss' and 'pull_request' in contrib else type_
+        true_type = 'pr' if (
+            type_ == 'iss' and 'pull_request' in contrib
+        ) else type_
 
-        if type_ == 'cit':
+        if true_type == 'cit':
             datetime = contrib['commit']['author']['date']
         else:
             datetime = contrib['created_at']
@@ -62,12 +64,12 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
                         contrib_author_login, session,
                     ),
                 )[0],
-                'type': type_,
+                'type': true_type,
                 'html_url': contrib['html_url'],
                 'created_at': dateparse.parse_datetime(datetime),
             },
         )
-        if created and type_ == 'cit':
+        if created and true_type == 'cit':
             commit_data = github.get_commit_data(
                 repo.organization or repo.owner,
                 repo,
@@ -81,8 +83,8 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
                 deletions=commit_stats['deletions'],
             )
 
-        if type_ in {'pr', 'iss'}:
-            state = 'merged' if type_ == 'pr' and github.is_pr_merged(
+        if true_type in {'pr', 'iss'}:
+            state = 'merged' if true_type == 'pr' and github.is_pr_merged(
                 repo.organization or repo.owner,
                 repo,
                 contrib['number'],
