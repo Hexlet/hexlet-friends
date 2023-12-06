@@ -9,12 +9,12 @@
 7. Checkout Makefile or README.md for commands like `make check` `make lint` `make test`
 8. Run tests and linters (`make check`)
 9. Commit your changes (`git commit -am 'Added some feature'`)
-*When you install a project, scripts for pre-commit hooks are added to the .git folder.
-When you make your first commit, you will see the environment setting for the hooks in the terminal.
-This is normal behavior and will only happen on your first commit. In general, you will see in the terminal
-the status of checks for pre-commit hooks. Some hooks will make edits automatically and clean files will be
-added to the commit. Some (e.g. flake8) will display errors in the terminal and abort the commit to fix
-them. In this case, fix the errors and try to commit again. You can read more about pre-commit hooks [here](https://pre-commit.com/).*
+* "When you install a project, scripts for the flake8 pre-commit hooks are added to the .git folder.  
+When you make your first commit, you will see the environment settings for the pre-commit hook displayed
+in the terminal. This is normal behavior and will only happen  
+on your first commit. In general, you will see in the terminal the status of the flake8 check for the pre-commit hook. 
+In case of linter errors, they will be displayed in the  
+terminal and abort the commit to fix them. If there are any errors, fix these errors and try to commit again. You can read more about pre-commit hooks [here](https://pre-commit.com/).*
 10. Push to the branch (`git push origin my-new-feature`)
 11. Create new Pull Request
 12. Check if Request passed GithubActions
