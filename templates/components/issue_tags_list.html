@@ -4,7 +4,12 @@
     {% for label in all_contribution_labels %}
         <a href="{% url 'contributors:open_issues' %}{% get_contribution_label_query_string label|lower %}"
            class="text-decoration-none">
-            <span class="badge bg-primary {% if label not in contribution_labels %} bg-secondary {% endif %}">{{ label }}</span>
+						<span class="badge {% if label not in contribution_labels %}bg-success{% else %}bg-secondary{% endif %}">{{ label }}</span>
         </a>
     {% endfor %}
+</div>
+<div>
+	<a href="{% url 'contributors:open_issues' %}">
+		<span class="btn btn-outline-danger">Reset</span>
+	</a>
 </div>
