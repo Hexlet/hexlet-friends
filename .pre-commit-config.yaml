@@ -1,5 +1,8 @@
 repos:
--  repo: https://github.com/PyCQA/flake8
-   rev: 6.1.0
-   hooks:
-   -  id: flake8
+- repo: local
+  hooks:
+  - id: lint
+    name: flake8 linter check
+    entry: make lint
+    language: system
+    pass_filenames: false
