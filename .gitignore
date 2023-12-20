@@ -11,5 +11,8 @@ htmlcov/
 *.sqlite3
 *.bak
 *.mo
+*.swp
+*.swo
+*.swn
 .coverage
 env/
