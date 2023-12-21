@@ -97,12 +97,12 @@ transprepare:
 
 # Need to have graphviz installed
 erd-dot:
-	poetry run python manage.py graph_models -a -g > erd-diagrams/erd.dot
+	poetry run python manage.py graph_models -a -g > erd.dot
 
 erd-in-png: erd-dot
-	dot -Tpng erd-diagrams/erd.dot -o erd-diagrams/erd.png
+	dot -Tpng erd.dot -o erd.png
 
 erd-in-pdf: erd-dot
-	dot -Tpdf erd-diagrams/erd.dot -o erd-diagrams/erd.pdf
+	dot -Tpdf erd.dot -o erd.pdf
 
 .PHONY: install setup shell lint test check start sync secretkey

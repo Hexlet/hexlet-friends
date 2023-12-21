@@ -11,5 +11,8 @@ htmlcov/
 *.sqlite3
 *.bak
 *.mo
+*.dot
+*.pdf
+erd.png
 .coverage
 env/
