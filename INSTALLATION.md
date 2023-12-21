@@ -174,3 +174,16 @@ make start
 ```bash
 make compose-start
 ```
+
+## 4. Useful commands
+
+### 4.1 Generate erd-diagrams
+You can generate actual erd-diagrams based on project models in pdf or png format using the following commands:  
+
+```
+make erd-in-png
+```  
+
+```
+make erd-in-pdf
+```
