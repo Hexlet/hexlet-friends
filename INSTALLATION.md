@@ -110,7 +110,7 @@ make sync ARGS='ORG [ORG ...]'
 Example:
 
 ```bash
-make sync ARGS='Hexlet'
+make sync ARGS='hexlet-boilerplates'
 ```
 
 *With Docker*
@@ -122,10 +122,13 @@ make compose-sync ARGS='ORG [ORG ...]'
 Example:
 
 ```bash
-make compose-sync ARGS='Hexlet'
+make compose-sync ARGS='hexlet-boilerplates'
 ```
 
->Keep in mind that this will add all repositories of the Hexlet organization to the database. This will take a long time.
+- Keep in mind that this will add all repositories of the organization to the database. This will take a long time.  
+- Keep in mind that the gitahub api has a limit of 5000 requests per hour. If you request data for an organization with a large number of repositories (e.g. Hexlet),  
+you will get a 403 error at some point and the data download will stop. In general it is not necessary to upload all data for development. If the work on the task  
+is related to a specific repository, you can upload data for a specific repository as described below.
 
 **By full repository names:**
 
