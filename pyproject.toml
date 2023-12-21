@@ -33,6 +33,8 @@ wemake-python-styleguide = "^0.16.1"
 Faker = "^13.15.1"
 coverage = "^6.4.2"
 pre-commit = "^3.5.0"
+pyparsing = "^3.1.1"
+pydot = "^1.4.2"
 
 
 [tool.poetry.extras]

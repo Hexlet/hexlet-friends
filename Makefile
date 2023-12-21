@@ -95,4 +95,14 @@ transprepare:
 	poetry run django-admin makemessages --locale ru --add-location file
 	poetry run django-admin makemessages --locale ru --add-location file --domain djangojs
 
+# Need to have graphviz installed
+erd-dot:
+	poetry run python manage.py graph_models -a -g > erd.dot
+
+erd-in-png: erd-dot
+	dot -Tpng erd.dot -o erd.png
+
+erd-in-pdf: erd-dot
+	dot -Tpdf erd.dot -o erd.pdf
+
 .PHONY: install setup shell lint test check start sync secretkey

@@ -256,3 +256,8 @@ sentry_sdk.init(
     # We recommend adjusting this value in production,
     profiles_sample_rate=SENTRY_SAMPLE_RATE,
 )
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
