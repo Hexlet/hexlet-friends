@@ -130,3 +130,22 @@ class TestContributorForPeriodView(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIn("dt_month_ago", response.context)
         self.assertEqual(response.context.get("period"), "week")
+
+
+class AchievementViewTestCase(TestCase):
+    """Test the methods for the list of achievements."""
+
+    fixtures = TestContributorDetailView.fixtures
+
+    def setUp(self):
+        """Create a test client."""
+        self.client = Client()
+
+    def test_get_context_data(self):
+        response = self.client.get(reverse('contributors:achievements'))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context['contributors_amount'], 5)
+        self.assertEqual(response.context['contributors_commits_gte_1'], 2)
+        self.assertEqual(response.context['contributors_issues_gte_1'], 2)
+        self.assertEqual(response.context['contributors_comments_gte_1'], 0)
+        self.assertEqual(response.context['contributors_editions_gte_1'], 0)
