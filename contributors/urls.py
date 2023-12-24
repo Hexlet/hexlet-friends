@@ -101,4 +101,8 @@ urlpatterns = [
         views.achievements.AchievementListView.as_view(),
         name='achievements',
     ),
+    path(
+        'landing/',
+        views.landing.LandingView.as_view(),
+        name='landing'),
 ]

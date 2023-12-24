@@ -1,0 +1,65 @@
+{% load i18n %}
+
+<div class="mb-5 pb-4">
+    <section class="container-xl">
+      <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+        <div class="col d-flex flex-column align-items-start gap-2">
+          <h2 class="fw-bold text-body-emphasis">{% trans "Hexlet - this is serious training for software engineers" %}</h2>
+          <p>Examples for FOR should be deleted</p>
+        </div>
+        <div class="col">
+          <div class="row row-cols-1 row-cols-sm-2 g-4">
+            {% for feature in features %}
+            <div class="col d-flex flex-column gap-2">
+                <div style="width: 3rem; height: 3rem" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                  <svg style="fill: #f8f9fa" width="1em" height="1em">
+                    <use xlink:href="#collection" />
+                  </svg>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">{{ feature.name }}</h4>
+                <p class="text-body-secondary">{{ feature.description }}</p>
+            </div>
+            {% endfor %}
+
+            <!-- EXAMPLES -->
+            <div class="col d-flex flex-column gap-2">
+                <div style="width: 3rem; height: 3rem" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                  <svg style="fill: #f8f9fa" width="1em" height="1em">
+                    <use xlink:href="#collection" />
+                  </svg>
+                </div>
+                <h4 class="fw-semibold mb-0 text-body-emphasis">{% trans "Employment" %}</h4>
+                <p class="text-body-secondary">{% trans "Our graduates have been successfully employed by top IT companies for 10 years now." %}</p>
+            </div>
+            <div class="col d-flex flex-column gap-2">
+              <div style="width: 3rem; height: 3rem" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <svg style="fill: #f8f9fa" width="1em" height="1em">
+                  <use xlink:href="#gear-fill" />
+                </svg>
+              </div>
+              <h4 class="fw-semibold mb-0 text-body-emphasis">{% trans "Relevance" %}</h4>
+              <p class="text-body-secondary">{% trans "All educational content was created by practicing IT specialists." %}</p>
+            </div>
+            <div class="col d-flex flex-column gap-2">
+              <div style="width: 3rem; height: 3rem" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <svg style="fill: #f8f9fa" width="1em" height="1em">
+                  <use xlink:href="#speedometer" />
+                </svg>
+              </div>
+              <h4 class="fw-semibold mb-0 text-body-emphasis">{% trans "Experience" %}</h4>
+              <p class="text-body-secondary">{% trans "150 real test tasks from employers to train your skills." %}</p>
+            </div>
+            <div class="col d-flex flex-column gap-2">
+              <div style="width: 3rem; height: 3rem" class="d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                <svg style="fill: #f8f9fa" width="1em" height="1em">
+                  <use xlink:href="#table" />
+                </svg>
+              </div>
+              <h4 class="fw-semibold mb-0 text-body-emphasis">{% trans "Guarantee" %}</h4>
+              <p class="text-body-secondary">{% trans "Guaranteed interviews with partner companies for the best students." %}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>

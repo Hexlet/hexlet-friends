@@ -1,0 +1,105 @@
+{% load i18n static %}
+
+<footer class="bg-body-tertiary border-top">
+    <div class="container-lg">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-5">
+            <div class="col mb-3">
+                <a class="navbar-brand pt-lg-0 pb-lg-2" href="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" role="img" version="1.1" id="Layer_1" x="0" y="0" viewBox="0 0 250 71" xml:space="preserve" width="110" height="25">
+                        <title>Hexlet</title>
+                        <style>
+                            .ct0 {
+                            fill: currentcolor
+                            }
+                        </style>
+                        <path class="ct0" d="M77 27c-13 0-22 10-22 22 0 13 9 22 22 22 9 0 17-4 20-14h-9c-2 4-6 6-11 6-7 0-12-4-13-11h34c1-14-8-25-21-25zM65 45c1-6 5-10 12-10 6 0 11 4 12 10H65zM141 29h-10l-9 14-9-14h-11l14 20-15 22h11l10-15 10 15h10l-15-21zM149 12h9v59h-9zM188 27c-12 0-21 10-21 22 0 13 9 22 21 22 9 0 17-4 21-14h-9c-2 4-6 6-11 6-7 0-13-4-14-11h34c1-14-7-25-21-25zm-12 18c1-6 6-10 12-10 7 0 11 4 12 10h-24zM248 61l-8 2c-6 0-9-3-9-9V36h18v-8h-18V17l-8 2v9h-8v8h8v18c0 12 6 17 15 17 5 0 10-2 12-3l-2-7zM37 21v19H9V21l-8-3v53h8V48h28v23h8V18z"></path>
+                        <path style="fill:#136ef6" d="M46 9 23 0 0 9l23 8z"></path>
+                    </svg>
+                </a> 
+                <ul class="nav align-items-start flex-wrap mb-lg-3">
+                    <li class="mb-3 me-4">
+                        <a class="fs-5 text-body text-decoration-none" href="tel:%2B1%20%28786%29%20405%2080%2044">+1 (786) 405 80 44</a>
+                        <span class="d-block small text-body-secondary">free call</span>
+                    </li>
+                </ul>
+                <div class="mb-md-5">
+                    <a rel="nofollow" class="link-dark text-body-secondary" href="mailto:support@hexlet.io">support@hexlet.io</a>
+                </div>
+            </div>
+            <div class="col mb-3 order-2">
+                <h5>Learn</h5>
+                <div class="row flex-row mb-3">
+                    <div class="col mb-3">
+                        <ul class="nav flex-column align-items-start">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses Frontend development" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses Layout design" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses Backend development" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3 order-2">
+                <div class="row flex-row h5"><br></div>
+                <div class="row flex-row mb-3">
+                    <div class="col mb-3 order-2">
+                        <ul class="nav flex-column align-items-start">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses JavaScript" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Courses Python" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "All categories" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3 order-2">
+                <h5>About Hexlet</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "About us" %}</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Jobs" %}</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Hexlet College" %}</a></li>
+                </ul>
+            </div>
+            <div class="col mb-3 order-2">
+                <div class="row mb-3">
+                    <p class="mb-0 text-body-secondary">
+                        <span class="d-block">Hexlet Ltd.</span>
+                        <span class="d-block">Itälahdenkatu 22 A,</span>
+                        <span class="d-block">00210 Helsinki, Finland</span>
+                        <span class="d-block">VAT ID: FI26641607</span>
+                    </p>
+                    <div class="row mb-3">
+                        <p>
+                        &copy; <a class="navbar-brand" href="#">Hexlet</a>, 2023
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3 order-2">
+                <h5>Support</h5>
+                <div class="row mb-3">
+                    <div class="col mb-3">
+                        <ul class="nav flex-column align-items-start">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Help" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Questions and Answers" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3 order-3">
+                <h5>Documents</h5>
+                <div class="row mb-3">
+                    <div class="col mb-3">
+                        <ul class="nav flex-column align-items-start">
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Terms of Service" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Privacy Policy" %}</a></li>
+                            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">{% trans "Cookie Policy" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-3 order-4">
+                <h5>Language</h5>
+            </div>
+        </div>
+    </div>
+</footer>
