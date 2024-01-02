@@ -37,14 +37,30 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         )
 
         form_status = PullRequestNameStatusFilterForm(self.request.GET)
+
         if form_status.is_valid():
             status = form_status.cleaned_data['state']
+            start_date = form_status.cleaned_data['created_after']
+            end_date = form_status.cleaned_data['created_till']
+            repository = form_status.cleaned_data['repository']
             if status:
                 self.queryset = self.queryset.filter(
                     info__state=status,
                 ).distinct()
+            if start_date:
+                self.queryset = self.queryset.filter(
+                    created_at__gte=start_date,
+                ).distinct()
+            if end_date:
+                self.queryset = self.queryset.filter(
+                    created_at__lte=end_date,
+                ).distinct()
+            if repository:
+                self.queryset = self.queryset.filter(
+                    repository=repository,
+                ).distinct()
 
-            return super().get_queryset()
+        return super().get_queryset()
 
     def get_context_data(self, **kwargs):
         """Get search form by state."""
@@ -52,5 +68,4 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         context['form_status'] = PullRequestNameStatusFilterForm(
             self.request.GET,
         )
-
         return context
