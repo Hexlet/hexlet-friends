@@ -63,7 +63,7 @@
                 <div class="col text-end">
                     {% if result2 %}
                     {% with iss_diff=result1.issues|sub:result2.issues %}
-                        {% if pr_diff > 0 %}
+                        {% if iss_diff > 0 %}
                         <span class="text-success">
                             +{{ iss_diff }}
                         </span>
