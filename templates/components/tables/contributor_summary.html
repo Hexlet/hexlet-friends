@@ -1,0 +1,130 @@
+{% load i18n %}
+{% load mathfilters %}
+
+
+<tbody class="latest-contributions">
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col text-end">
+                    {% if result2 %}
+                    {% with commit_diff=result1.commits|sub:result2.commits %}
+                        {% if commit_diff > 0 %}
+                        <span class="text-success">
+                            +{{ commit_diff }}
+                        </span>
+                        {% elif commit_diff == 0 %}
+                        <span>
+                            {{ commit_diff }}
+                        </span>
+                        {% else %}
+                        <span class="text-danger">
+                            {{ commit_diff }}
+                        </span>
+                        {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                </div>
+                <div class="col h5">
+                    {{ result1.commits }}
+                </div>
+                <div class="col text-start">{{ result2.commits }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col text-end">
+                    {% if result2 %}
+                    {% with pr_diff=result1.pull_requests|sub:result2.pull_requests %}
+                        {% if pr_diff > 0 %}
+                        <span class="text-success">
+                            +{{ pr_diff }}
+                        </span>
+                        {% elif pr_diff == 0 %}
+                        <span>
+                            {{ pr_diff }}
+                        </span>
+                        {% else %}
+                        <span class="text-danger">
+                            {{ pr_diff }}
+                        </span>
+                        {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                </div>
+                <div class="col h5">
+                    {{ result1.pull_requests }}
+                </div>
+                <div class="col text-start">{{ result2.pull_requests }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col text-end">
+                    {% if result2 %}
+                    {% with iss_diff=result1.issues|sub:result2.issues %}
+                        {% if pr_diff > 0 %}
+                        <span class="text-success">
+                            +{{ iss_diff }}
+                        </span>
+                        {% elif iss_diff == 0 %}
+                        <span>
+                            {{ iss_diff }}
+                        </span>
+                        {% else %}
+                        <span class="text-danger">
+                            {{ iss_diff }}
+                        </span>
+                        {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                </div>
+                <div class="col h5">
+                    {{ result1.issues }}
+                </div>
+                <div class="col text-start" id="contributor_iss">{{ result2.issues }}</div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col text-end">
+                    {% if result2 %}
+                    {% with comm_diff=result1.comments|sub:result2.comments %}
+                        {% if comm_diff > 0 %}
+                        <span class="text-success">
+                            +{{ comm_diff }}
+                        </span>
+                        {% elif comm_diff == 0 %}
+                        <span>
+                            {{ comm_diff }}
+                        </span>
+                        {% else %}
+                        <span class="text-danger">
+                            {{ comm_diff }}
+                        </span>
+                        {% endif %}
+                    {% endwith %}
+                    {% endif %}
+                </div>
+                <div class="col h5">
+                    {{ result1.comments }}
+                </div>
+                <div class="col text-start" id="contributor_cnt">{{ result2.comments }}</div>
+            </div>
+        </td>
+    </tr>
+</tbody>
+<tfoot>
+    <tr>
+        <td>
+            {% trans "The most popular repo" %}
+        </td>
+        <td>
+            {{ top_repository }}
+        </td>
+    </tr>
+</tfoot>
+<form method="get">
+  {{ filter2.form.as_p }}
+  <button type="submit" class="btn btn-primary">Filter</button>
+</form>
