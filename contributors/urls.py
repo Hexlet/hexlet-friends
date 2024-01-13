@@ -101,4 +101,9 @@ urlpatterns = [
         views.achievements.AchievementListView.as_view(),
         name='achievements',
     ),
+    path(
+        'contributor/compare_with_yourself/<slug:slug>/',
+        views.contributor_compare.CompareWithYourselfView.as_view(),
+        name='compare_with_yourself',
+    ),
 ]

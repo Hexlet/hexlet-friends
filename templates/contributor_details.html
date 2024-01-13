@@ -229,6 +229,15 @@
                 </tr>
             </thead>
             <div class="latest-contributions">
+              {% if user.is_authenticated and object.user != user %}
+              <div class="my-2">
+                <a href="{% url 'contributors:compare_with_yourself' slug=contributor.login %}">
+                <button class="btn btn-primary">
+                  {% trans "Compare with yourself" %}
+                </button>
+                </a>
+              </div>
+              {% endif %}
                 {% include 'components/tables/contributor_summary.html' %}
             </div>
         </table>

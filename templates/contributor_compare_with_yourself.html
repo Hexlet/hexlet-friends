@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% block head_scripts %}
+{% include 'components/activity_chart/scripts.html' %}
+{% endblock head_scripts %}
+{% block title %}{% trans "Compare" %}: {{ user }} - {{ enemy_obj.login }}{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+<form method="get">
+    {{ filter.form.as_table }}
+    <button type="submit" class="btn btn-outline-primary">{% trans "Filter" %}</button>
+</form>
+</div>
+
+<div class="text-center mb-5">
+    <h1 class="h2"><a class="text-decoration-none" href="{% url 'contributors:contributor_details' slug=user %}">{{ user }}</a></h1>
+    <h5 class="h5">{{ me_top_repo }}</h3>
+    <div class="row py-4">
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ me.commits }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ me.pull_requests }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ me.issues }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ me.comments }}</div>
+        </div>
+    </div>
+    <div class="row py-4">
+        <div class="col">
+            <div class="text-body-secondary">{% trans 'commits' %}</div>
+        </div>
+        <div class="col">
+            <div class="text-body-secondary">{% trans 'pull-requests' %}</div>
+        </div>
+        <div class="col">
+            <div class="text-body-secondary">{% trans 'issues' %}</div>
+        </div>
+        <div class="col">
+            <div class="text-body-secondary">{% trans 'comments' %}</div>
+        </div>
+    </div>
+    <div class="row py-4">
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ enemy.commits }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ enemy.pull_requests }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ enemy.issues }}</div>
+        </div>
+        <div class="col">
+            <div class="h3 fw-bold mb-0 text-body-secondary">{{ enemy.comments }}</div>
+        </div>
+    </div>
+    <h5 class="h5">{{ enemy_top_repo }}</h3>
+    <h1 class="h2"><a class="text-decoration-none" href="{% url 'contributors:contributor_details' slug=enemy_obj.login %}">{{ enemy_obj.login }}</a></h1>
+</div>
+{% endblock %}
