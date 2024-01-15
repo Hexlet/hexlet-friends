@@ -1,5 +1,4 @@
 from django.db.models import Count, Q  # noqa: WPS347
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
 from contributors.models import Contribution, Contributor, Repository
@@ -12,7 +11,6 @@ class CompareWithYourselfView(ListView):
     model = Contribution
     template_name = 'contributor_compare_with_yourself.html'
     slug_field = 'contributor'
-
 
     def get_queryset(self):
         """Override method for good queryset."""
