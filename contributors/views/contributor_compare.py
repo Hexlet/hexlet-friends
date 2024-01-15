@@ -13,6 +13,7 @@ class CompareWithYourselfView(ListView):
     template_name = 'contributor_compare_with_yourself.html'
     slug_field = 'contributor'
 
+
     def get_queryset(self):
         """Override method for good queryset."""
         qs_enemy = Contribution.objects.filter(
@@ -49,9 +50,9 @@ class CompareWithYourselfView(ListView):
             me_repo_full_name = Repository.objects.filter(
                 pk=me_top_repo_pk,
             ).first().full_name
-            context['me_top_repo'] = f'Top repo: {me_repo_full_name}'
+            context['me_top_repo'] = me_repo_full_name
         else:
-            context['me_top_repo'] = _('There is no contribution for the period')  # noqa: E501
+            context['me_top_repo'] = '---'  # noqa: E501
 
         enemy_qs = context['filter'].qs.filter(
             contributor=context['enemy_obj'].pk,
@@ -70,7 +71,7 @@ class CompareWithYourselfView(ListView):
             enemy_repo_full_name = Repository.objects.filter(
                 pk=enemy_top_repo_pk,
             ).first().full_name
-            context['enemy_top_repo'] = f'Top repo: {enemy_repo_full_name}'
+            context['enemy_top_repo'] = enemy_repo_full_name
         else:
-            context['enemy_top_repo'] = _('There is no contribution for the period')  # noqa: E501
+            context['enemy_top_repo'] = '---'  # noqa: E501
         return context
