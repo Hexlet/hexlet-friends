@@ -19,7 +19,9 @@ class CompareWithYourselfView(ListView):
                 login=self.request.path.split('/')[-2],
             ).first(),
         )  # noqa: WPS221
-        qs_me = Contribution.objects.filter(contributor=self.request.user.id)
+        qs_me = Contribution.objects.filter(
+            contributor=Contributor.objects.get(login=self.request.user),
+        )
         return qs_enemy | qs_me
 
     def get_context_data(self, **kwargs):
@@ -33,7 +35,9 @@ class CompareWithYourselfView(ListView):
             queryset=self.get_queryset(),
         )
 
-        me_qs = context['filter'].qs.filter(contributor=self.request.user.id)
+        me_qs = context['filter'].qs.filter(
+            contributor=Contributor.objects.get(login=self.request.user),
+        )
         context['me'] = me_qs.aggregate(
             commits=Count('id', filter=Q(type='cit')),
             pull_requests=Count('id', filter=Q(type='pr')),

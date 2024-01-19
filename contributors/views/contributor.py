@@ -3,10 +3,6 @@ from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models import Contribution, Contributor, Repository
-from contributors.views.filters import (
-    DetailTableCompareFilter,
-    DetailTablePeriodFilter,
-)
 from contributors.views.mixins import (
     ContributorsJsonMixin,
     ContributorTotalStatMixin,
@@ -50,30 +46,14 @@ class DetailView(
             summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: WPS221, E501
         ).order_by('-summary').first()
 
-        filter1 = DetailTablePeriodFilter(
-            self.request.GET,
-            queryset=Contribution.objects.filter(contributor=self.object),
-        )  # noqa: WPS221
-        context['filter1'] = filter1
-        context['result1'] = filter1.qs.aggregate(
+        context['summary'] = Contribution.objects.filter(
+            contributor=self.object,
+        ).aggregate(
             commits=Count('id', filter=Q(type='cit')),
             pull_requests=Count('id', filter=Q(type='pr')),
             issues=Count('id', filter=Q(type='iss')),
             comments=Count('id', filter=Q(type='cnt')),
         )
-
-        filter2 = DetailTableCompareFilter(
-            self.request.GET,
-            queryset=Contribution.objects.all(),
-        )
-        context['filter2'] = filter2
-        if 'contributor' in self.request.GET and self.request.GET['contributor'] != '':  # noqa: E501
-            context['result2'] = filter2.qs.aggregate(
-                commits=Count('id', filter=Q(type='cit')),
-                pull_requests=Count('id', filter=Q(type='pr')),
-                issues=Count('id', filter=Q(type='iss')),
-                comments=Count('id', filter=Q(type='cnt')),
-            )
 
         contributors = Contributor.objects.visible()
         contributors_ordered = contributors.order_by('name')

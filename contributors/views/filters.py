@@ -5,7 +5,7 @@ from django.forms.widgets import TextInput
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from contributors.models import Contribution, ContributionLabel, Contributor
+from contributors.models import Contribution, ContributionLabel
 from contributors.utils import misc
 
 STATE_CHOICES = (
@@ -115,22 +115,3 @@ class DetailTablePeriodFilter(django_filters.FilterSet):
                 created_at__gte=misc.datetime_week_ago(),
             ).distinct()
         return queryset
-
-
-class DetailTableCompareFilter(DetailTablePeriodFilter):
-    """Compare contributions filter."""
-
-    contributor = django_filters.ModelChoiceFilter(
-        queryset=Contributor.objects.visible().order_by('login'),
-        label=_('Compare with'),
-        method='compare_with_other_contributor',
-        field_name='compare_with_filter',
-        widget=forms.Select,
-        initial=False,
-    )
-
-    def compare_with_other_contributor(self, queryset, name, value):  # noqa: WPS110, E501
-        """Filter for comparing with other contributor."""
-        if value is None:
-            return None
-        return queryset.filter(contributor=value)
