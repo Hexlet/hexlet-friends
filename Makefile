@@ -2,7 +2,8 @@
 	test ! -f .env && cp .env.example .env
 
 build-production:
-	poetry install --extras psycopg2-binary
+	poetry install --extras psycopg2-binary && poetry run python manage.py migrate
+	poetry run python manage.py loaddata db_fixture.json
 	$(MAKE) collectstatic
 
 build:
