@@ -12,7 +12,7 @@
 </h3>
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        {% if request.GET.period == '' %}
+        {% if not request.GET.period  or request.GET.period == '' %}
         <a class="nav-link active" href="?period=#">{% trans "for all time" %}</a>
         {% else %}
         <a class="nav-link" href="?period=#">{% trans "for all time" %}</a>
