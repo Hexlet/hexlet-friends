@@ -3,7 +3,7 @@
 
 build-production:
 	poetry install --extras psycopg2-binary && poetry run python manage.py migrate
-	poetry run python manage.py loaddata db_fixture.json
+	make sync ARGS='--repo Hexlet/hexlet-friends'
 	$(MAKE) collectstatic
 
 build:
