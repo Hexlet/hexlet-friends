@@ -9,6 +9,7 @@ from contributors.views import (  # noqa: WPS235
     contributors_for_period,
     home,
     issues,
+    landing,
     leaderboard_commits,
     leaderboard_issues,
     leaderboard_prs,
