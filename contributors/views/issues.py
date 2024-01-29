@@ -38,12 +38,21 @@ class ListView(
         queryset=ContributionLabel.objects.all(),
     )
 
-    queryset = (
-        Contribution.objects.filter(type='iss').
-        select_related('repository', 'contributor', 'info').
-        prefetch_related("repository__labels", contributionlabel_prefetch).
-        distinct()
-    )
+    def get_queryset(self):
+        """Add queryset."""
+        queryset = (
+            Contribution.objects.filter(type='iss').
+            select_related('repository', 'contributor', 'info').
+            prefetch_related(
+                "repository__labels",
+                self.contributionlabel_prefetch,
+            ).distinct()
+        )
+        self.filterset = self.filterset_class(
+            self.request.GET,
+            queryset=queryset,
+        )
+        return self.filterset.qs.distinct()
 
     def get_context_data(self, *args, **kwargs):
         """Add context."""
