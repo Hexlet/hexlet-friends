@@ -60,15 +60,20 @@
     make start-production
     ```
 
-4. Нажмите *Advanced* и введите следующие переменные окружения:
+4. Нажмите *Environment* и введите следующие переменные окружения:
 
     ```text
-    DEBUG=FALSE
-    SECRET_KEY=<Секретный ключ для БД>
     DATABASE_URL=<Internal Database URL>
+    DEBUG=FALSE
+    GITHUB_AUTH_CLIENT_ID=<Нужна для авторизации через GitHub>
+    GITHUB_AUTH_CLIENT_SECRET=<Нужна для авторизации через GitHub>
     PYTHON_VERSION=<Желаемая версия Python>
     POETRY_VERSION=<Желаемая версия Poetry>
-    ```
+    GITHUB_AUTH_TOKEN=<Токен личного доступа из настроек GitHub>
+    GITHUB_WEBHOOK_TOKEN=<можно сгенерировать командой терминала make secretkey в каталоге проекта или создать самостоятельно>
+    SECRET_KEY=<можно сгенерировать командой терминала make secretkey в каталоге проекта или создать самостоятельно>
+	```
+	Для получения `GITHUB_AUTH_CLIENT_ID`, `GITHUB_AUTH_CLIENT_SECRET`, `GITHUB_AUTH_TOKEN` см. [INSTALLATION.md](INSTALLATION.md#12-to-work-with-the-project-you-will-need-to-set-the-values-of-the-environment-variables-in-the-env-file)
 
 5. Нажмите *Create Web Service* и дождитесь окончания процесса. В информации о приложении вы найдёте адрес и логи. Всё готово.
 

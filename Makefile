@@ -4,6 +4,7 @@
 build-production:
 	poetry install --extras psycopg2-binary
 	$(MAKE) collectstatic
+	$(MAKE) migrate
 
 build:
 	poetry install --extras psycopg2-binary
