@@ -60,10 +60,7 @@ secretkey:
 
 setup: install
 	$(MAKE) migrate
-	echo "from auth.models import SiteUser" > createadmin.py
-	echo "SiteUser.objects.create_superuser('admin', 'admin@email.io', 'admin')" >> createadmin.py
-	poetry run python manage.py shell < createadmin.py
-
+	poetry run python manage.py createsuperuser --noinput --username admin --email admin@mail.com
 
 shell:
 	poetry run python manage.py shell_plus --plain

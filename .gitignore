@@ -16,4 +16,3 @@ htmlcov/
 erd.png
 .coverage
 env/
-createadmin.py
