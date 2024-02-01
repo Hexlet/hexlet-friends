@@ -30,13 +30,13 @@ cd hexlet-friends
 Installing dependencies if you use **Poetry**
 
 ```bash
-make install
+make setup
 ```
 
 Activate virtual environment
 
 ```bash
-source $HOME/.cache/pypoetry/virtualenvs/<name of the created environment>/bin/activate
+poetry shell
 ```
 
 Installing dependencies if you use **Docker**
@@ -76,17 +76,13 @@ If PostgreSQL is installed, set values to the corresponding variables ***POSTGRE
 
 You should also set `DEBUG=True` in .env file because by defualt content is loaded under the https protocol instead of http, witch is not supported by development server. Using debug also provides you with debug toolbar.
 
+Admin login details:
+- login: admin
+- password: admin
+
 ---
 
-### 1.3 Finishing the installation
-
-#### *Poetry*
-
-```bash
-make setup
-```
-
-#### *Docker*
+### 1.3 Finishing the installation for *Docker*
 
 
 ```bash

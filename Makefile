@@ -59,9 +59,9 @@ requirements.txt: poetry.lock
 secretkey:
 	poetry run python -c 'from django.utils.crypto import get_random_string; print(get_random_string(40))'
 
-setup: migrate
-	echo Create a super user
-	poetry run python manage.py createsuperuser
+setup: install
+	$(MAKE) migrate
+	poetry run python manage.py createsuperuser --noinput --username admin --email admin@mail.com
 
 shell:
 	poetry run python manage.py shell_plus --plain
