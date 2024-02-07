@@ -26,8 +26,8 @@ class TestIssuesListViewTestCase(TestCase):
     def test_issues_listview_methods(self):
         response = self.client.get(reverse("contributors:open_issues"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertIn("contribution_labels", response.context)
+        self.assertIn("all_contribution_labels", response.context)
         self.assertEqual(
-            len(response.context["contribution_labels"]),
+            len(response.context["all_contribution_labels"]),
             EXPECTED_ISSUES_COUNT,
         )

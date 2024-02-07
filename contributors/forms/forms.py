@@ -4,6 +4,8 @@ from crispy_forms.layout import Field, Layout
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from contributors.models.repository import Repository
+
 
 class TableSortSearchForm(forms.Form):
     """A search form."""
@@ -84,6 +86,13 @@ class NameStatusFilterForm(TableSortSearchForm):
         initial='',
     )
 
+    repository = forms.ModelChoiceField(
+        queryset=Repository.objects.all(),
+        required=False,
+        label=False,
+        empty_label=_("Filter by repository"),
+    )
+
     @property
     def helper(self):
         """Control form attributes and its layout."""
@@ -92,8 +101,11 @@ class NameStatusFilterForm(TableSortSearchForm):
         helper.form_class = 'd-flex'
         helper.layout = Layout(
             Field('search', placeholder=_("Filter by name")),
+            Field('state'),
+            Field('repository'),
+            Field('created_after'),
             FieldWithButtons(
-                Field('state'),
+                Field('created_till'),
                 StrictButton(
                     _("Search"),
                     type='submit',
@@ -119,4 +131,26 @@ class PullRequestNameStatusFilterForm(NameStatusFilterForm):
         required=False,
         label=False,
         initial='',
+    )
+    created_till = forms.DateField(
+        required=False,
+        label=False,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'text',
+                'placeholder': _("Created till"),
+                'onfocus': "(this.type='date')",
+            },
+        ),
+    )
+    created_after = forms.DateField(
+        required=False,
+        label=False,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'text',
+                'placeholder': _("Created after"),
+                'onfocus': "(this.type='date')",
+            },
+        ),
     )

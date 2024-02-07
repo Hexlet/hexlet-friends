@@ -25,7 +25,7 @@
   </tr>
 {% endblock thead %}
 {% block tbody %}
-  {% for issue in filter.qs %}
+  {% for issue in object_list %}
     <tr>
       <th scope="row">{{ issue.num }}</th>
       <td class="text-truncate text-wrap" title="{{ issue.info.title }}">
