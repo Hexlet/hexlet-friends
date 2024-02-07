@@ -1,0 +1,36 @@
+{% load i18n %}
+
+
+<div class="container-xxl">
+    <header class="navbar navbar-light navbar-expand-lg border-bottom align-items-center py-lg-3 mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Hexlet Friends</a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">{% trans "My learning" %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">{% trans "All courses" %}</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% trans "About Hexlet" %}
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{% trans "About company" %}</a></li>
+                <li><a class="dropdown-item" href="#">{% trans "Blog" %}</a></li>
+                <li><a class="dropdown-item" href="#">{% trans "Testimonials" %}</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <button class="btn btn-primary" type="submit">Log in</button>
+          </form>
+        </div>
+      </div>
+    </header>
+</div>

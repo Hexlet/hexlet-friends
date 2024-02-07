@@ -1,0 +1,65 @@
+{% load i18n %}
+
+<div class="mb-5 pb-4">
+    <section class="container-xl">
+        <h2 class="display-6 fw-bold mb-5">{% trans "Courses" %}</h2>
+        Examples for FOR should be deleted
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gy-4">
+
+                {% for course in courses %}
+                <div class="col">
+                    <div class="card rounded-4 border-secondary border-opacity-10 shadow-sm h-100 overflow-hidden">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course.name }}</h5>
+                            <p>{{ course.description }}</p>
+                            <a href="#" class="icon-link">
+                                Learn more
+                                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- EXAMPLES -->
+                <div class="col">
+                    <div class="card rounded-4 border-secondary border-opacity-10 shadow-sm h-100 overflow-hidden">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p>With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="icon-link">
+                                Learn more
+                                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 border-secondary border-opacity-10 shadow-sm h-100 overflow-hidden">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p>With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="icon-link">
+                                Learn more
+                                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card rounded-4 border-secondary border-opacity-10 shadow-sm h-100 overflow-hidden">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p>With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="icon-link">
+                                Learn more
+                                <svg class="bi"><use xlink:href="#chevron-right"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+</div>

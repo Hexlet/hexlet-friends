@@ -102,6 +102,11 @@ urlpatterns = [
         name='achievements',
     ),
     path(
+        'landing/',
+        views.landing.LandingView.as_view(),
+        name='landing',
+    ),
+    path(
         'contributor/compare_with_yourself/<slug:slug>/',
         views.contributor_compare.CompareWithYourselfView.as_view(),
         name='compare_with_yourself',
