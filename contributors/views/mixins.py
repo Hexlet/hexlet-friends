@@ -10,7 +10,7 @@ from django_cte import With
 from contributors.forms import TableSortSearchForm
 from contributors.utils.misc import DIRECTION_TRANSLATIONS, split_ordering
 
-MAX_PAGES_WITHOUT_SHRINKING = 8
+MAX_PAGES_WITHOUT_SHRINKING = 7
 PAGES_VISIBLE_AT_BOUNDARY = 5
 INNER_VISIBLE_PAGES = 3
 
