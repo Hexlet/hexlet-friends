@@ -3,7 +3,6 @@
 
 {% block thead %}
   <tr>
-    <th scope="col">#</th>
     <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'info__title' %}">
       <a href="{% get_sort_query_string 'info__title' %}" class="stretched-link text-reset text-decoration-none">{% trans "Title" %}</a>
     </th>
@@ -27,7 +26,6 @@
 {% block tbody %}
   {% for issue in object_list %}
     <tr>
-      <th scope="row">{{ issue.num }}</th>
       <td class="text-truncate text-wrap" title="{{ issue.info.title }}">
         <a href="{{ issue.html_url }}">
           {{ issue.info.title }}
