@@ -30,7 +30,7 @@ jobs:
           DB_ENGINE: SQLite
       - name: Publish code coverage report
         if: github.event_name == 'push' && github.repository == 'hexlet/hexlet-friends'
-        uses: paambaati/codeclimate-action@v4.0.0
+        uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
