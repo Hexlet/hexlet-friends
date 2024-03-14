@@ -47,6 +47,7 @@ def update_or_create_record(cls, github_resp, additional_fields=None):
                 else None
             ),
             'full_name': github_resp['full_name'],
+            'fork': github_resp['fork'],
         },
         'Contributor': lambda: {
             'login': github_resp['login'],
