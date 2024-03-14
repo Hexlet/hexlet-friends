@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+{% load mathfilters %}
+{% block head_scripts %}
+{% include 'components/activity_chart/scripts.html' %}
+{% endblock head_scripts %}
+{% block title %}{% trans "Compare" %}: {{ user }} - {{ enemy_obj.login }}{% endblock %}
+
+{% block content %}
+<h3>
+    {% trans "Statistics Compare" %}
+</h3>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        {% if not request.GET.period  or request.GET.period == '' %}
+        <a class="nav-link active" href="?period=#">{% trans "for all time" %}</a>
+        {% else %}
+        <a class="nav-link" href="?period=#">{% trans "for all time" %}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if request.GET.period == 'for_year' %}
+        <a class="nav-link active" href="?period=for_year">{% trans "for year" %}</a>
+        {% else %}
+        <a class="nav-link" href="?period=for_year">{% trans "for year" %}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if request.GET.period == 'for_month' %}
+        <a class="nav-link active" href="?period=for_month">{% trans "for month" %}</a>
+        {% else %}
+        <a class="nav-link" href="?period=for_month">{% trans "for month" %}</a>
+        {% endif %}
+    </li>
+    <li class="nav-item">
+        {% if request.GET.period == 'for_week' %}
+        <a class="nav-link active" aria-current="page" href="?period=for_week">{% trans "for week" %}</a>
+        {% else %}
+        <a class="nav-link" aria-current="page" href="?period=for_week">{% trans "for week" %}</a>
+        {% endif %}
+    </li> 
+</ul>
+
+
+<div class="container d-flex justify-content-center">
+<div class="text-center text-dark" style="width: 75%;">
+    <div class="row py-2">
+        <div class="col h3 mb-0"></div>
+        <div class="col h3 fw-bold mb-0 text-body-secondary">
+            <a class="text-decoration-none" href="{% url 'contributors:contributor_details' slug=user %}">{{ user }}</a>
+        </div>
+        <div class="col h3 fw-bold mb-0 text-body-secondary">
+            <a class="text-decoration-none" href="{% url 'contributors:contributor_details' slug=enemy_obj.login %}">{{ enemy_obj.login }}</a>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col h5 mb-0 text-end">
+            <span class="text-decoration-none">{% trans "Top repo" %}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span>{{ me_top_repo }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span>{{ enemy_top_repo }}</span>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col h5 mb-0 text-end">
+            <span class="text-decoration-none">{% trans "commits" %}</span>
+        </div>
+        {% with diff=me.commits|sub:enemy.commits %}
+        {% if diff > 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ me.commits }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ enemy.commits }}</span>
+        </div>
+        {% elif diff < 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ me.commits }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ enemy.commits }}</span>
+        </div>
+        {% else %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ me.commits }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ enemy.commits }}</span>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="row py-2">
+        <div class="col h5 mb-0 text-end">
+            <span class="text-decoration-none">{% trans "pull-requests" %}</span>
+        </div>
+        {% with diff=me.pull_requests|sub:enemy.pull_requests %}
+        {% if diff > 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ me.pull_requests }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ enemy.pull_requests }}</span>
+        </div>
+        {% elif diff < 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ me.pull_requests }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ enemy.pull_requests }}</span>
+        </div>
+        {% else %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ me.pull_requests }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ enemy.pull_requests }}</span>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="row py-2">
+        <div class="col h5 mb-0 text-end">
+            <span class="text-decoration-none">{% trans "issues" %}</span>
+        </div>
+        {% with diff=me.issues|sub:enemy.issues %}
+        {% if diff > 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ me.issues }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ enemy.issues }}</span>
+        </div>
+        {% elif diff < 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ me.issues }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ enemy.issues }}</span>
+        </div>
+        {% else %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ me.issues }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ enemy.issues }}</span>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="row py-2">
+        <div class="col h5 mb-0 text-end">
+            <span class="text-decoration-none">{% trans "comments" %}</span>
+        </div>
+        {% with diff=me.comments|sub:enemy.comments %}
+        {% if diff > 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ me.comments }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ enemy.comments }}</span>
+        </div>
+        {% elif diff < 0 %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-danger">{{ me.comments }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-success">{{ enemy.comments }}</span>
+        </div>
+        {% else %}
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ me.comments }}</span>
+        </div>
+        <div class="col h5 mb-0 text-body-secondary">
+            <span class="text-muted">{{ enemy.comments }}</span>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,8 +1,8 @@
-from django.db.models import Count, Q, Sum  # noqa: WPS347
+from django.db.models import Count, F, Q, Sum  # noqa: WPS347
 from django.db.models.functions import Coalesce
 from django.views import generic
 
-from contributors.models import Contributor, Repository
+from contributors.models import Contribution, Contributor, Repository
 from contributors.views.mixins import (
     ContributorsJsonMixin,
     ContributorTotalStatMixin,
@@ -17,7 +17,6 @@ class DetailView(
     model = Contributor
     template_name = 'contributor_details.html'
     slug_field = 'login'
-    queryset = Contributor.objects.with_contributions()
 
     def get_context_data(self, **kwargs):
         """Add additional context for the contributor."""
@@ -42,6 +41,18 @@ class DetailView(
         context['repositories'] = repositories
         context['contributions_for_year'] = (
             self.object.contribution_set.for_year()
+        )
+        context['top_repository'] = repositories.annotate(
+            summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: WPS221, E501
+        ).order_by('-summary').first()
+
+        context['summary'] = Contribution.objects.filter(
+            contributor=self.object,
+        ).aggregate(
+            commits=Count('id', filter=Q(type='cit')),
+            pull_requests=Count('id', filter=Q(type='pr')),
+            issues=Count('id', filter=Q(type='iss')),
+            comments=Count('id', filter=Q(type='cnt')),
         )
 
         contributors = Contributor.objects.visible()

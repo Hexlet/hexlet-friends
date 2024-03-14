@@ -3,6 +3,7 @@ from contributors.views import (  # noqa: WPS235
     achievements,
     config,
     contributor,
+    contributor_compare,
     contributor_issues,
     contributor_prs,
     contributors,

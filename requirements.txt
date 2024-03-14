@@ -36,7 +36,7 @@ six==1.16.0 ; python_version >= "3.8" and python_version < "4.0"
 sqlparse==0.4.4 ; python_version >= "3.8" and python_version < "4.0"
 tomli==2.0.1 ; python_version >= "3.8" and python_version < "3.11"
 typing-extensions==4.7.1 ; python_version >= "3.8" and python_version < "3.11"
-tzdata==2023.3 ; python_version >= "3.8" and python_version < "4.0" and sys_platform == "win32" or python_version >= "3.8" and python_version < "4.0" and platform_system == "Windows"
+tzdata==2023.3 ; python_version >= "3.8" and python_version < "4.0" and (sys_platform == "win32" or platform_system == "Windows")
 tzlocal==5.0.1 ; python_version >= "3.8" and python_version < "4.0"
 urllib3==2.0.4 ; python_version >= "3.8" and python_version < "4.0"
 whitenoise==6.5.0 ; python_version >= "3.8" and python_version < "4.0"

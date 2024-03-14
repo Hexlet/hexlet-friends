@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load mathfilters %}
+
+
+<tbody class="latest-contributions">
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col h5">
+                    {{ summary.commits }}
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+
+                <div class="col h5">
+                    {{ summary.pull_requests }}
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col h5">
+                    {{ summary.issues }}
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col h5">
+                    {{ summary.comments }}
+                </div>
+            </div>
+        </td>
+    </tr>
+</tbody>
+<tfoot>
+    <tr>
+        <td>
+            {% trans "The most popular repo" %}
+        </td>
+        <td>
+            {{ top_repository }}
+        </td>
+    </tr>
+</tfoot>

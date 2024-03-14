@@ -216,9 +216,37 @@
           {% endif %}
       </h2>
       {% include 'components/activity_chart/chart.html' %}
+
+      <div class="container my-3">
+        <h5>{% trans "Summary" %}</h5>
+        <table class="table fw-lighter text-center">
+            <thead>
+                <tr>
+                    <th class="h4">{% trans "Commits" %}</th>
+                    <th class="h4">{% trans "Pull requests" %}</th>
+                    <th class="h4">{% trans "Issues" %}</th>
+                    <th class="h4">{% trans "Comments" %}</th>
+                </tr>
+            </thead>
+            <div class="latest-contributions">
+              {% if user.is_authenticated and object.user != user %}
+              <div class="my-2">
+                <a href="{% url 'contributors:compare_with_yourself' slug=contributor.login %}">
+                <button class="btn btn-primary">
+                  {% trans "Compare with yourself" %}
+                </button>
+                </a>
+              </div>
+              {% endif %}
+                {% include 'components/tables/contributor_summary.html' %}
+            </div>
+        </table>
+      </div>
+
       <h2 class="mr-5">{% trans "All-time contributions" %}</h2>
       <input type="text" name="name" id="repo-search-field" class="form-control col-3"
              placeholder="{% trans "Filter by name" %}">
+
       <table id="contrib-details" class="table table-sm">
         <thead>
         <tr>
