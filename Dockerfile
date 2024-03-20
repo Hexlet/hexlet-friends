@@ -49,4 +49,4 @@ USER appuser
 
 WORKDIR /usr/local/src/hexlet-friends
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD /usr/local/src/hexlet-friends/docker-start.sh
