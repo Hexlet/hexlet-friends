@@ -1,3 +1,4 @@
+from django import forms as django_forms
 from django.contrib.auth import forms
 
 from auth.models import SiteUser
@@ -17,3 +18,11 @@ class UserChangeForm(forms.UserChangeForm):
     class Meta(forms.UserChangeForm.Meta):
         model = SiteUser
         fields = ('username', 'email')
+
+
+class UserTokenForm(django_forms.ModelForm):
+    """User GitHub token change form."""
+
+    class Meta:  # noqa: WPS306
+        model = SiteUser
+        fields = ['github_token']

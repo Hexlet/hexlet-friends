@@ -63,6 +63,9 @@
               {% if user.contributor %}
                 <a class="dropdown-item" href="{{ user.contributor.get_absolute_url }}">{% trans "My statistics" %}</a>
               {% endif %}
+              {% if user.contributor %}
+                <a class="dropdown-item" href="{% url 'contributors:user_settings' slug=user.contributor.login %}">{% trans "Settings" %}</a>
+              {% endif %}
               <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
             </div>
           </li>
