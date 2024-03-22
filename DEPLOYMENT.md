@@ -42,7 +42,7 @@
 1. Из Dashboard нажмите *+ New* -> *Web Service*;
 2. Выберите желаемый репозиторий. Если его нет в списке - убедитесь что вы подключили Github аккаунт (*Connect account*) и предоставили доступ к репозиторию (*Configure account*);
 	
-	`if you use Docker'
+	`if you use Docker`
 	
 3. Заполните следующие параметры:
 
