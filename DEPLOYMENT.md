@@ -42,21 +42,17 @@
 1. Из Dashboard нажмите *+ New* -> *Web Service*;
 2. Выберите желаемый репозиторий. Если его нет в списке - убедитесь что вы подключили Github аккаунт (*Connect account*) и предоставили доступ к репозиторию (*Configure account*);
 3. Заполните следующие параметры:	
-	
- `if you use Docker`
-
    * Name: <Желаемое имя>
    * Region: <Ближайший регион>
    * Branch: <Ваша ветка с фичей>
    * Root Directory: <Оставить по умолчанию>
-
+     
+ `if you use Docker`
+ 
+   * Runtime: Docker
 
 `if you use Poetry`
 
-   * Name: <Желаемое имя>
-   * Region: <Ближайший регион>
-   * Branch: <Ваша ветка с фичей>
-   * Root Directory: <Оставить по умолчанию>
    * Runtime: Python 3
    * Build Command:
 
