@@ -7,6 +7,13 @@ from django.utils.translation import gettext_lazy as _
 class SiteUser(AbstractUser):
     """Model representing a user account."""
 
+    github_token = models.CharField(
+        _("GitHub token"),
+        max_length=100,
+        blank=True,
+        null=True,
+    )
+
     class Meta(object):
         verbose_name = _("User")
         verbose_name_plural = _("Users")

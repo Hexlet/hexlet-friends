@@ -1,9 +1,12 @@
 import operator
 from functools import reduce
 
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
 from django.db.models import Count, F, Q, Sum, Window  # noqa: WPS347
 from django.db.models.functions import Coalesce, RowNumber
+from django.shortcuts import redirect
 from django.views.generic.list import MultipleObjectMixin
 from django_cte import With
 
@@ -210,3 +213,35 @@ class ContributorsJsonMixin(object):
             ),
         )
         return context
+
+
+class AuthRequiredMixin(LoginRequiredMixin):
+    """Verify that the current user is authenticated."""
+
+    not_auth_msg = None
+    redirect_url = None
+
+    def dispatch(self, request, *args, **kwargs):
+        """Give permission if user is authenticated, deny otherwise."""
+        if not request.user.is_authenticated:
+            messages.warning(request, self.not_auth_msg)
+            return redirect(self.redirect_url)
+        return super().dispatch(request, *args, **kwargs)
+
+
+class PermissionRequiredMixin(UserPassesTestMixin):
+    """Verify that the current user has all specified permissions."""
+
+    no_permission_msg = None
+    redirect_url = None
+
+    def test_func(self):
+        """Check user permissions."""
+        requested_user = self.kwargs.get('slug')
+        auth_user = self.request.user.contributor.login
+        return requested_user == auth_user
+
+    def handle_no_permission(self):
+        """Redirect user without permissions."""
+        messages.warning(self.request, self.no_permission_msg)
+        return redirect(self.redirect_url)

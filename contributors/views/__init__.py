@@ -21,5 +21,6 @@ from contributors.views import (  # noqa: WPS235
     pull_requests,
     repositories,
     repository,
+    user_settings,
     webhook,
 )

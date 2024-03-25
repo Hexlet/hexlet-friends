@@ -6,6 +6,7 @@
 {% endblock head_scripts %}
 {% block header %}{% endblock %}
 {% block content %}
+  {% include 'components/flash_messages.html' %}
   <h2>{% trans "Past year activity" %}</h2>
   {% include 'components/activity_chart/chart.html' %}
   <div class="row">

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block head_scripts %}
+  {% include 'components/activity_chart/scripts.html' %}
+{% endblock head_scripts %}
+{% block title %}{% trans "Settings" %}{% endblock %}
+{% block header %}{% endblock %}
+{% block content %}
+{% include 'components/flash_messages.html' %}
+<div class="container p-0">
+  <div class="row my-4">
+    <div class="col-md-3 mb-2">
+      <div class="card shadow-sm">
+        <div class="card-header font-weight-bold text-muted">
+        {% trans "Settings" %}
+        </div>
+        <div class="list-group list-group-flush">
+        <a class="nav-link list-group-item list-group-item-action" href="{% url 'contributors:user_settings' slug=user.contributor.login %}">{% trans "Account" %}</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-9">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h2 class="card-title">{% trans "Account" %}</h2>
+          <p class="card-text">
+            {% trans "GitHub nickname" %}:
+            {{ user.contributor.login }}
+          </p>
+        </div>
+      </div>
+      <div class="card mb-2">
+        <div class="card-body">
+          <h3 class="card-title">{% trans "GitHub token" %}</h3>
+          <p class="card-text">
+            <form action="{% url 'contributors:user_settings' slug=user.contributor.login %}" method="post" class="simple_form">
+              {% csrf_token %}
+              <label class="form-label" for="id_github_token">{% trans "Current token" %}</label>
+              <input type="text" name="github_token" class="form-control" required value="{{ user.github_token|default_if_none:''}}" id="id_github_token">
+            <div class="my-3"></div>
+            {% trans "Save new token" as btn_name %}
+            <input type="submit" value="{{ btn_name }}" class="btn btn-outline-primary">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block body_end_scripts %}{% endblock %}

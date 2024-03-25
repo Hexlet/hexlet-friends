@@ -6,6 +6,11 @@ app_name = 'contributors'
 urlpatterns = [
     path('', views.home.HomeView.as_view(), name='home'),
     path(
+        '<slug:slug>/settings/account/edit',
+        views.user_settings.ChangeTokenView.as_view(),
+        name='user_settings',
+    ),
+    path(
         'organizations/',
         views.organizations.ListView.as_view(),
         name='organizations_list',
