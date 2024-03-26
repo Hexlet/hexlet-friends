@@ -1,4 +1,4 @@
-FROM python:3.11.5-slim as builder
+FROM python:3.11.5-slim
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -10,14 +10,12 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_CACHE_DIR='/var/cache/pypoetry' \
     PATH="$PATH:/root/.local/bin"
 
- RUN apt-get update \
-    && apt-get install -y curl make git \
-    && curl -sSL https://install.python-poetry.org | python3 - && poetry --version
-
-WORKDIR /project/
+WORKDIR /usr/local/src/hexlet-friends
 
 COPY pyproject.toml poetry.lock ./
 
-RUN poetry install --extras psycopg2-binary
-
-WORKDIR /usr/local/src/hexlet-friends
+RUN apt-get update \
+    && apt-get install -y curl make git \
+    && curl -sSL https://install.python-poetry.org | python3 - && poetry --version \
+    && git config --global --add safe.directory `pwd` \
+    && poetry install --extras psycopg2-binary
