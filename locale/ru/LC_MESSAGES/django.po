@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-21 00:18+0300\n"
+"POT-Creation-Date: 2024-04-13 20:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,10 @@ msgstr "Фильтрация по имени"
 #: contributors/forms/forms.py templates/components/issues_filter.html
 msgid "Search"
 msgstr "Поиск"
+
+#: contributors/forms/forms.py
+msgid "Exact match required for this field"
+msgstr "Введите точное название организации"
 
 #: contributors/forms/forms.py
 msgid "Filter by organization"
