@@ -6,7 +6,7 @@ from django.urls import reverse
 SEARCH_FORM_CONTEXT_NAME = "form_org"
 SEARCH_PARAM_ORG_EXISTS = {  # noqa: WPS407
     "search": "",
-    "organizations": "hexlet",
+    "organizations": "Hexlet",
 }
 SEARCH_PARAM_ORG_NOT_EXISTS = {  # noqa: WPS407
     "search": "",
