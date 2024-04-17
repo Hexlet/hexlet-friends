@@ -46,6 +46,7 @@ class CombinedSearchForm(TableSortSearchForm):
         label=False,
         required=False,
         widget=forms.TextInput(),
+        help_text=_("Exact match required for this field"),
     )
 
     @property
