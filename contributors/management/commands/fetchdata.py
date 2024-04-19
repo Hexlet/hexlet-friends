@@ -143,61 +143,64 @@ class Command(management.base.BaseCommand):
             )
 
         for owner_data in data_of_owners_and_repos.values():
-            table = (
-                Contributor
-                if owner_data['details']['type'] == 'User'
-                else Organization
-            )
-            owner, _ = misc.update_or_create_record(
-                table, owner_data['details'],
-            )
-            logger.info(owner)
-
-            repos_to_process = [
-                repo for repo in owner_data['repos']
-                if repo['name'] not in IGNORED_REPOSITORIES
-            ]
-            number_of_repos = len(repos_to_process)
-            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
-                repo, _ = misc.update_or_create_record(Repository, repo_data)
-                logger.info(f"{repo} ({i}/{number_of_repos})")
-                if repo_data['size'] == 0:
-                    logger.info("Empty repository")
-                    continue
-
-                language = repo_data['language']
-                if language:
-                    label, _ = Label.objects.get_or_create(name=language)
-                    repo.labels.add(label)
-
-                logger.info("Processing issues and pull requests")
-                create_contributions(
-                    repo,
-                    github.get_repo_issues(owner, repo, session),
-                    user_field='user',
-                    id_field='id',
-                    type_='iss',
+            try:
+                table = (
+                    Contributor
+                    if owner_data['details']['type'] == 'User'
+                    else Organization
                 )
-
-                logger.info("Processing commits")
-                create_contributions(
-                    repo,
-                    github.get_repo_commits_except_merges(
-                        owner, repo, session=session,
-                    ),
-                    user_field='author',
-                    id_field='sha',
-                    type_='cit',
+                owner, _ = misc.update_or_create_record(
+                    table, owner_data['details'],
                 )
+                logger.info(owner)
 
-                logger.info("Processing comments")
-                create_contributions(
-                    repo,
-                    github.get_all_types_of_comments(owner, repo, session),
-                    user_field='user',
-                    id_field='id',
-                    type_='cnt',
-                )
+                repos_to_process = [
+                    repo for repo in owner_data['repos']
+                    if repo['name'] not in IGNORED_REPOSITORIES
+                ]
+                number_of_repos = len(repos_to_process)
+                for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
+                    repo, _ = misc.update_or_create_record(Repository, repo_data)
+                    logger.info(f"{repo} ({i}/{number_of_repos})")
+                    if repo_data['size'] == 0:
+                        logger.info("Empty repository")
+                        continue
+
+                    language = repo_data['language']
+                    if language:
+                        label, _ = Label.objects.get_or_create(name=language)
+                        repo.labels.add(label)
+
+                    logger.info("Processing issues and pull requests")
+                    create_contributions(
+                        repo,
+                        github.get_repo_issues(owner, repo, session),
+                        user_field='user',
+                        id_field='id',
+                        type_='iss',
+                    )
+
+                    logger.info("Processing commits")
+                    create_contributions(
+                        repo,
+                        github.get_repo_commits_except_merges(
+                            owner, repo, session=session,
+                        ),
+                        user_field='author',
+                        id_field='sha',
+                        type_='cit',
+                    )
+
+                    logger.info("Processing comments")
+                    create_contributions(
+                        repo,
+                        github.get_all_types_of_comments(owner, repo, session),
+                        user_field='user',
+                        id_field='id',
+                        type_='cnt',
+                    )
+            except Exception as ex:
+                logger.warning(self.style.WARNING(f"Unexpected behavior while sync data for owner"), owner_data, ex)
 
         session.close()
 

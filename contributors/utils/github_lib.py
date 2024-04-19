@@ -29,6 +29,12 @@ class Accepted(GitHubError):
 class NoContent(GitHubError):
     """HTTP 204 Response."""
 
+class ClientErrorResponse(GitHubError):
+    """HTTP 4xx Response."""
+
+class ServerErrorResponse(GitHubError):
+    """HTTP 5xx Response"""
+
 
 class NoContributorsError(GitHubError):
     """A repository has no contributors."""
@@ -125,6 +131,11 @@ def get_whole_response_as_json(url, session=None):
         raise NoContent("204 No Content", response=response)
     elif response.status_code == requests.codes.accepted:
         raise Accepted("202 Accepted. No cached data. Retry.")
+    elif response.status_code >= 500:
+        raise ServerErrorResponse("Server error response", response=response)
+    elif response.status_code >= 400:
+        raise ClientErrorResponse("Client error response.", response=response)
+
     return response.json()
 
 
