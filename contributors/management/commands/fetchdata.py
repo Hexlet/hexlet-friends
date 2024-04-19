@@ -182,7 +182,7 @@ class Command(management.base.BaseCommand):
                 except Exception as processing_issues_exp:
                     logger.error(
                         msg="Failed processing issues and pull requests",
-                        args=(repo, processing_issues_exp),
+                        args=(owner, repo, processing_issues_exp),
                     )
                     continue
 
@@ -200,7 +200,7 @@ class Command(management.base.BaseCommand):
                 except Exception as processing_commits_ex:
                     logger.error(
                         msg="Failed processing commits",
-                        args=(repo, processing_commits_ex),
+                        args=(owner, repo, processing_commits_ex),
                     )
                     continue
 
@@ -216,7 +216,7 @@ class Command(management.base.BaseCommand):
                 except Exception as processing_comments_ex:
                     logger.error(
                         msg="Failed comments",
-                        args=(repo, processing_comments_ex),
+                        args=(owner, repo, processing_comments_ex),
                     )
 
         session.close()
