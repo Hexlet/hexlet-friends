@@ -36,6 +36,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
             organizations = form.cleaned_data['organizations']
             if organizations:
                 queryset = queryset.filter(
-                    contributors__organization__name__icontains=organizations,
-                ).distinct()
+                    contributors__organization__name__exact=organizations,
+                )
         return queryset
