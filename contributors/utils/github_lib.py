@@ -29,11 +29,13 @@ class Accepted(GitHubError):
 class NoContent(GitHubError):
     """HTTP 204 Response."""
 
+
 class ClientErrorResponse(GitHubError):
     """HTTP 4xx Response."""
 
+
 class ServerErrorResponse(GitHubError):
-    """HTTP 5xx Response"""
+    """HTTP 5xx Response."""
 
 
 class NoContributorsError(GitHubError):
@@ -127,14 +129,31 @@ def get_whole_response_as_json(url, session=None):
     req = session or requests
     response = req.get(url, headers=get_headers())
     response.raise_for_status()
-    if response.status_code == requests.codes.no_content:
-        raise NoContent("204 No Content", response=response)
-    elif response.status_code == requests.codes.accepted:
-        raise Accepted("202 Accepted. No cached data. Retry.")
-    elif response.status_code >= 500:
-        raise ServerErrorResponse("Server error response", response=response)
-    elif response.status_code >= 400:
-        raise ClientErrorResponse("Client error response.", response=response)
+    status_exceptions = {
+        requests.codes.no_content: (
+            NoContent("204 No Content", response=response)
+        ),
+        requests.codes.accepted: (
+            Accepted("202 Accepted. No cached data. Retry.", response=response)
+        ),
+        **dict.fromkeys(
+            range(
+                requests.codes.internal_server_error,
+                requests.codes.internal_server_error + 100,
+            ),
+            ServerErrorResponse("Server error response", response=response),
+        ),
+        **dict.fromkeys(
+            range(
+                requests.codes.bad_request,
+                requests.codes.bad_request + 100,
+            ),
+            ClientErrorResponse("Client error response", response=response),
+        ),
+    }
+
+    if response.status_code in status_exceptions:
+        raise status_exceptions.get(response.status_code)
 
     return response.json()
 

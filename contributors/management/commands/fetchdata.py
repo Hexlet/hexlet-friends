@@ -143,35 +143,35 @@ class Command(management.base.BaseCommand):
             )
 
         for owner_data in data_of_owners_and_repos.values():
-            try:
-                table = (
-                    Contributor
-                    if owner_data['details']['type'] == 'User'
-                    else Organization
-                )
-                owner, _ = misc.update_or_create_record(
-                    table, owner_data['details'],
-                )
-                logger.info(owner)
+            table = (
+                Contributor
+                if owner_data['details']['type'] == 'User'
+                else Organization
+            )
+            owner, _ = misc.update_or_create_record(
+                table, owner_data['details'],
+            )
+            logger.info(owner)
 
-                repos_to_process = [
-                    repo for repo in owner_data['repos']
-                    if repo['name'] not in IGNORED_REPOSITORIES
-                ]
-                number_of_repos = len(repos_to_process)
-                for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
-                    repo, _ = misc.update_or_create_record(Repository, repo_data)
-                    logger.info(f"{repo} ({i}/{number_of_repos})")
-                    if repo_data['size'] == 0:
-                        logger.info("Empty repository")
-                        continue
+            repos_to_process = [
+                repo for repo in owner_data['repos']
+                if repo['name'] not in IGNORED_REPOSITORIES
+            ]
+            number_of_repos = len(repos_to_process)
+            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
+                repo, _ = misc.update_or_create_record(Repository, repo_data)
+                logger.info(f"{repo} ({i}/{number_of_repos})")
+                if repo_data['size'] == 0:
+                    logger.info("Empty repository")
+                    continue
 
-                    language = repo_data['language']
-                    if language:
-                        label, _ = Label.objects.get_or_create(name=language)
-                        repo.labels.add(label)
+                language = repo_data['language']
+                if language:
+                    label, _ = Label.objects.get_or_create(name=language)
+                    repo.labels.add(label)
+                logger.info("Processing issues and pull requests")
 
-                    logger.info("Processing issues and pull requests")
+                try:
                     create_contributions(
                         repo,
                         github.get_repo_issues(owner, repo, session),
@@ -179,8 +179,15 @@ class Command(management.base.BaseCommand):
                         id_field='id',
                         type_='iss',
                     )
+                except Exception as processing_issues_exp:
+                    logger.error(
+                        msg="Failed processing issues and pull requests",
+                        args=(repo, processing_issues_exp),
+                    )
+                    continue
 
-                    logger.info("Processing commits")
+                logger.info("Processing commits")
+                try:
                     create_contributions(
                         repo,
                         github.get_repo_commits_except_merges(
@@ -190,8 +197,15 @@ class Command(management.base.BaseCommand):
                         id_field='sha',
                         type_='cit',
                     )
+                except Exception as processing_commits_ex:
+                    logger.error(
+                        msg="Failed processing commits",
+                        args=(repo, processing_commits_ex),
+                    )
+                    continue
 
-                    logger.info("Processing comments")
+                logger.info("Processing comments")
+                try:
                     create_contributions(
                         repo,
                         github.get_all_types_of_comments(owner, repo, session),
@@ -199,8 +213,11 @@ class Command(management.base.BaseCommand):
                         id_field='id',
                         type_='cnt',
                     )
-            except Exception as ex:
-                logger.warning(self.style.WARNING(f"Unexpected behavior while sync data for owner"), owner_data, ex)
+                except Exception as processing_comments_ex:
+                    logger.error(
+                        msg="Failed comments",
+                        args=(repo, processing_comments_ex),
+                    )
 
         session.close()
 
