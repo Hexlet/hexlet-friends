@@ -169,35 +169,55 @@ class Command(management.base.BaseCommand):
                 if language:
                     label, _ = Label.objects.get_or_create(name=language)
                     repo.labels.add(label)
-
                 logger.info("Processing issues and pull requests")
-                create_contributions(
-                    repo,
-                    github.get_repo_issues(owner, repo, session),
-                    user_field='user',
-                    id_field='id',
-                    type_='iss',
-                )
+
+                try:
+                    create_contributions(
+                        repo,
+                        github.get_repo_issues(owner, repo, session),
+                        user_field='user',
+                        id_field='id',
+                        type_='iss',
+                    )
+                except Exception as processing_issues_exp:
+                    logger.error(
+                        msg="Failed processing issues and pull requests",
+                        args=(owner, repo, processing_issues_exp),
+                    )
+                    continue
 
                 logger.info("Processing commits")
-                create_contributions(
-                    repo,
-                    github.get_repo_commits_except_merges(
-                        owner, repo, session=session,
-                    ),
-                    user_field='author',
-                    id_field='sha',
-                    type_='cit',
-                )
+                try:
+                    create_contributions(
+                        repo,
+                        github.get_repo_commits_except_merges(
+                            owner, repo, session=session,
+                        ),
+                        user_field='author',
+                        id_field='sha',
+                        type_='cit',
+                    )
+                except Exception as processing_commits_ex:
+                    logger.error(
+                        msg="Failed processing commits",
+                        args=(owner, repo, processing_commits_ex),
+                    )
+                    continue
 
                 logger.info("Processing comments")
-                create_contributions(
-                    repo,
-                    github.get_all_types_of_comments(owner, repo, session),
-                    user_field='user',
-                    id_field='id',
-                    type_='cnt',
-                )
+                try:
+                    create_contributions(
+                        repo,
+                        github.get_all_types_of_comments(owner, repo, session),
+                        user_field='user',
+                        id_field='id',
+                        type_='cnt',
+                    )
+                except Exception as processing_comments_ex:
+                    logger.error(
+                        msg="Failed comments",
+                        args=(owner, repo, processing_comments_ex),
+                    )
 
         session.close()
 
