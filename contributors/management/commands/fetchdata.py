@@ -170,6 +170,10 @@ class Command(management.base.BaseCommand):
                     label, _ = Label.objects.get_or_create(name=language)
                     repo.labels.add(label)
                 logger.info("Processing issues and pull requests")
+                extra_info = {
+                    'owner': owner,
+                    'repo': repo,
+                }
 
                 try:
                     create_contributions(
@@ -179,10 +183,10 @@ class Command(management.base.BaseCommand):
                         id_field='id',
                         type_='iss',
                     )
-                except Exception as processing_issues_exp:
+                except Exception as processing_issues_ex:
                     logger.error(
                         msg="Failed processing issues and pull requests",
-                        args=(owner, repo, processing_issues_exp),
+                        extra=extra_info | {'ex': processing_issues_ex},
                     )
                     continue
 
@@ -200,7 +204,7 @@ class Command(management.base.BaseCommand):
                 except Exception as processing_commits_ex:
                     logger.error(
                         msg="Failed processing commits",
-                        args=(owner, repo, processing_commits_ex),
+                        extra=extra_info | {'ex': processing_commits_ex},
                     )
                     continue
 
@@ -216,7 +220,7 @@ class Command(management.base.BaseCommand):
                 except Exception as processing_comments_ex:
                     logger.error(
                         msg="Failed comments",
-                        args=(owner, repo, processing_comments_ex),
+                        extra=extra_info | {'ex': processing_comments_ex},
                     )
 
         session.close()
