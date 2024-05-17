@@ -74,7 +74,7 @@ Note that after you leave the page, you can't look at the token again, you just 
 You can use SQLite with Poetry by adding `DB_ENGINE=SQLite` to the .env file. By default, this value is not present.
 If PostgreSQL is installed, set values to the corresponding variables ***POSTGRES***.
 
-You should also set `DEBUG=True` in .env file because by defualt content is loaded under the https protocol instead of http, witch is not supported by development server. Using debug also provides you with debug toolbar.
+You should also set `DEBUG=True` in .env file because by default content is loaded under the https protocol instead of http, witch is not supported by development server. Using debug also provides you with debug toolbar.
 
 Admin login details:
 - login: admin
@@ -122,8 +122,8 @@ make compose-sync ARGS='hexlet-boilerplates'
 ```
 
 - Keep in mind that this will add all repositories of the organization to the database. This will take a long time.  
-- Keep in mind that the gitahub api has a limit of 5000 requests per hour. If you request data for an organization with a large number of repositories (e.g. Hexlet),  
-you will get a 403 error at some point and the data download will stop. In general it is not necessary to upload all data for development. If the work on the task  
+- Keep in mind that the github api has a limit of 5000 requests per hour. If you request data for an organization with a large number of repositories (e.g. Hexlet),  
+you will get a 403 error at some point, and the data download will stop. In general, it is not necessary to upload all data for development. If the work on the task  
 is related to a specific repository, you can upload data for a specific repository as described below.
 
 **By full repository names:**
