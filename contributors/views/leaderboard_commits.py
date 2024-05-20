@@ -37,4 +37,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
                 queryset = queryset.filter(
                     contributors__organization__name__exact=organizations,
                 )
+            is_hexlet_stuff = form.cleaned_data['is_hexlet_stuff']
+            if is_hexlet_stuff:
+                queryset = queryset.filter(user__is_staff=True)
         return queryset

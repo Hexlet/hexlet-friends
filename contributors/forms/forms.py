@@ -1,6 +1,6 @@
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Field, Layout
+from crispy_forms.layout import Div, Field, Layout
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -49,6 +49,11 @@ class CombinedSearchForm(TableSortSearchForm):
         help_text=_("Exact match required for this field"),
     )
 
+    is_hexlet_stuff = forms.BooleanField(
+        required=False,
+        label=_('is_hexlet_stuff'),
+    )
+
     @property
     def helper(self):
         """Control form attributes and its layout."""
@@ -56,10 +61,16 @@ class CombinedSearchForm(TableSortSearchForm):
         helper.form_method = 'get'
         helper.form_class = 'd-flex'
         helper.layout = Layout(
-            Field('search', placeholder=_("Filter by name")),
+            Div(
+                Field('search', placeholder=_("Filter by name")),
+                Div(
+                    Field('is_hexlet_stuff'),
+                ),
+            ),
             FieldWithButtons(
                 Field(
-                    'organizations', placeholder=_("Filter by organization"),
+                    'organizations',
+                    placeholder=_("Filter by organization"),
                 ),
                 StrictButton(
                     _("Search"),
