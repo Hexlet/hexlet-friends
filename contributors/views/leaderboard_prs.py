@@ -1,6 +1,6 @@
 from django.views import generic
 
-from contributors.forms.forms import CombinedSearchForm
+from contributors.forms.forms import LeaderboardCombinedSearchForm
 from contributors.models import Contributor
 from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
@@ -23,7 +23,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         """Get search form by organizations."""
         context = super().get_context_data(**kwargs)
-        context['form_org'] = CombinedSearchForm(self.request.GET)
+        context['form_org'] = LeaderboardCombinedSearchForm(self.request.GET)
         return context
 
     def get_queryset(self):  # noqa: WPS615
@@ -31,7 +31,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         queryset = super().get_queryset().prefetch_related(
             'contributors__organization',
         )
-        form = CombinedSearchForm(self.request.GET)
+        form = LeaderboardCombinedSearchForm(self.request.GET)
         if form.is_valid():
             organizations = form.cleaned_data['organizations']
             if organizations:
