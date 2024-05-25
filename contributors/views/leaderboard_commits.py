@@ -11,7 +11,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     queryset = Contributor.objects.visible().with_contributions()
     template_name = 'leaderboard_commits.html'
     sortable_fields = (
-        '-commits',
+        'commits',
         'login',
         'name',
     )
