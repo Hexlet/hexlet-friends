@@ -85,9 +85,9 @@ class LeaderboardCombinedSearchForm(TableSortSearchForm):
         required=False,
         label='',
         choices=(
-            ('all', 'Все пользователи'),
-            ('except_staff', 'Кроме сотрудников'),
-            ('only_staff', 'Только сотрудники'),
+            ('all', _('All users')),
+            ('except_staff', _('Except staff')),
+            ('only_staff', _('Only staff')),
         ),
     )
 
