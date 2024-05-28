@@ -11,13 +11,10 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     queryset = Contributor.objects.visible().with_contributions()
     template_name = 'leaderboard_prs.html'
     sortable_fields = (
-        'pull_requests',
-        'login',
-        'name',
+        '-pull_requests',
     )
 
     searchable_fields = ('login', 'name')
-    ordering = sortable_fields[0]
     paginate_by = 100
 
     def get_context_data(self, **kwargs):

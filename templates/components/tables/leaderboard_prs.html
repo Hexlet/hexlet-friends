@@ -4,14 +4,14 @@
 {% block thead %}
   <tr>
     <th scope="col">#</th>
-    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'login' %}">
-      <a href="{% get_sort_query_string 'login' %}" class="stretched-link text-reset text-decoration-none">{% trans "Login" %}</a>
+    <th scope="col" class="sortable pe-4">
+      {% trans "Login" %}
     </th>
-    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'name' %}">
-      <a href="{% get_sort_query_string 'name' %}" class="stretched-link text-reset text-decoration-none">{% trans "Name" %}</a>
+    <th scope="col" class="sortable pe-4">
+      {% trans "Name" %}
     </th>
-    <th scope="col" class="sortable pe-4" data-sorting="{% get_ordering_direction 'pull_requests' %}">
-      <a href="{% get_sort_query_string 'pull_requests' %}" class="stretched-link text-reset text-decoration-none">{% trans "Pull requests" %}</a>
+    <th scope="col" class="sortable pe-4">
+      {% trans "Pull requests" %}
     </th>
   </tr>
 {% endblock thead %}
