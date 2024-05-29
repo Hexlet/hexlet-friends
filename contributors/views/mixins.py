@@ -10,7 +10,10 @@ from django.shortcuts import redirect
 from django.views.generic.list import MultipleObjectMixin
 from django_cte import With
 
-from contributors.forms import TableSortSearchForm
+from contributors.forms.forms import (
+    LeaderboardCombinedSearchForm,
+    TableSortSearchForm,
+)
 from contributors.utils.misc import DIRECTION_TRANSLATIONS, split_ordering
 
 MAX_PAGES_WITHOUT_SHRINKING = 7
@@ -245,3 +248,32 @@ class PermissionRequiredMixin(UserPassesTestMixin):
         """Redirect user without permissions."""
         messages.warning(self.request, self.no_permission_msg)
         return redirect(self.redirect_url)
+
+
+class LeaderboardQueryMixin(MultipleObjectMixin):
+    """A mixin for custom queries in leaderboard views."""
+
+    def get_context_data(self, **kwargs):
+        """Get search form by organizations."""
+        context = super().get_context_data(**kwargs)
+        context['form_org'] = LeaderboardCombinedSearchForm(self.request.GET)
+        return context
+
+    def get_queryset(self):  # noqa: WPS615
+        """Get filter queryset."""
+        queryset = super().get_queryset().prefetch_related(
+            'contributors__organization',
+        )
+        form = LeaderboardCombinedSearchForm(self.request.GET)
+        if form.is_valid():
+            organizations = form.cleaned_data['organizations']
+            if organizations:
+                queryset = queryset.filter(
+                    contributors__organization__name__exact=organizations,
+                )
+            sample = form.cleaned_data['sample']
+            if sample == 'except_staff':
+                queryset = queryset.exclude(user__is_staff=True)
+            elif sample == 'only_staff':
+                queryset = queryset.filter(user__is_staff=True)
+        return queryset

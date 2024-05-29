@@ -71,6 +71,50 @@ class CombinedSearchForm(TableSortSearchForm):
         return helper
 
 
+class LeaderboardCombinedSearchForm(TableSortSearchForm):
+    """Search form of contributors by organization."""
+
+    organizations = forms.CharField(
+        label=False,
+        required=False,
+        widget=forms.TextInput(),
+        help_text=_("Exact match required for this field"),
+    )
+
+    sample = forms.ChoiceField(
+        required=False,
+        label='',
+        choices=(
+            ('all', _('All users')),
+            ('except_staff', _('Except staff')),
+            ('only_staff', _('Only staff')),
+        ),
+    )
+
+    @property
+    def helper(self):
+        """Control form attributes and its layout."""
+        helper = FormHelper()
+        helper.form_method = 'get'
+        helper.form_class = 'd-flex'
+        helper.layout = Layout(
+            Field('sample', placeholder='Sample'),
+            Field('search', placeholder=_("Filter by name")),
+            FieldWithButtons(
+                Field(
+                    'organizations',
+                    placeholder=_("Filter by organization"),
+                ),
+                StrictButton(
+                    _("Search"),
+                    type='submit',
+                    css_class='btn btn-outline-primary',
+                ),
+            ),
+        )
+        return helper
+
+
 class NameStatusFilterForm(TableSortSearchForm):
     """Search form of issues by their status."""
 
