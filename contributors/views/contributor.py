@@ -15,7 +15,7 @@ class DetailView(
     """Contributor's details."""
 
     model = Contributor
-    template_name = 'contributor_details.html'
+    template_name = 'contributor/contributor_details.html'
     slug_field = 'login'
 
     def get_context_data(self, **kwargs):

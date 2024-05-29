@@ -6,7 +6,7 @@ from contributors.views import contributors
 class ListView(contributors.ListView):
     """A list of contributors with monthly contributions."""
 
-    template_name = 'contributors_for_period.html'
+    template_name = 'contributors_sections/contributors/contributors_for_period.html'  # noqa: E501
     context_object_name = 'contributors_list'
 
     def get_context_data(self, **kwargs):
