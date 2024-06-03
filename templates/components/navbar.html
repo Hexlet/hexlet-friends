@@ -44,7 +44,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contributors:pull_requests_list' %}">
+          <a class="nav-link text-nowrap" href="{% url 'contributors:pull_requests_list' %}">
             {% trans "Pull requests" %}
           </a>
         </li>
@@ -70,7 +70,7 @@
             </div>
           </li>
         {% else %}
-          <li class="nav-item">
+          <li class="nav-item text-nowrap">
             <a class="nav-link" href="{% url 'auth:github' %}">
               <img src="{% static 'images/github_icons/mark-github.svg' %}" alt="GitHub">
               {% trans "Log in" %}
@@ -80,7 +80,7 @@
       </ul>
       <ul class="navbar-nav btn-group">
         <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' role='button' aria-expanded='false'>
-          <img class="mt-auto" src="{% static "images/locale_icons/"|add:LANGUAGE_CODE|add:".svg" %}"
+          <img class="mt-auto" src="{% static 'images/locale_icons/'|add:LANGUAGE_CODE|add:'.svg' %}"
                alt="current language is {{ LANGUAGE_CODE }}" width="25">
           {{ LANGUAGE_CODE|upper }}
         </a>
@@ -94,7 +94,7 @@
                 {% if language.code != LANGUAGE_CODE %}
                   <input name="language" type="hidden" value="{{ language.code|lower }}"/>
                   <a class="dropdown-item" href="javascript:document.setLanguage.submit()">
-                    <img src="{% static "images/locale_icons/"|add:language.code|add:".svg" %}"
+                    <img src="{% static 'images/locale_icons/'|add:language.code|add:'.svg' %}"
                          alt="set language to {{ language.code }}" width="25">
                     {{ language.name_local }}
                   </a>
@@ -105,4 +105,5 @@
         </ul>
       </ul>
     </div>
+  </div>
 </nav>
