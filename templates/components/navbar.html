@@ -1,5 +1,5 @@
 {% load i18n static %}
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <a class="navbar-brand" href="{% url 'contributors:home' %}">{{ PROJECT_NAME }}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -12,6 +12,7 @@
           <a class="nav-link" href="{% url 'contributors:organizations_list' %}">
             {% trans "Organizations" %}
           </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'contributors:repositories_list' %}">
             {% trans "Repositories" %}
@@ -44,7 +45,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contributors:pull_requests_list' %}">
+          <a class="nav-link text-nowrap" href="{% url 'contributors:pull_requests_list' %}">
             {% trans "Pull requests" %}
           </a>
         </li>
@@ -70,7 +71,7 @@
             </div>
           </li>
         {% else %}
-          <li class="nav-item">
+          <li class="nav-item text-nowrap">
             <a class="nav-link" href="{% url 'auth:github' %}">
               <img src="{% static 'images/github_icons/mark-github.svg' %}" alt="GitHub">
               {% trans "Log in" %}
@@ -79,30 +80,33 @@
         {% endif %}
       </ul>
       <ul class="navbar-nav btn-group">
-        <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' role='button' aria-expanded='false'>
-          <img class="mt-auto" src="{% static "images/locale_icons/"|add:LANGUAGE_CODE|add:".svg" %}"
-               alt="current language is {{ LANGUAGE_CODE }}" width="25">
-          {{ LANGUAGE_CODE|upper }}
-        </a>
-        <ul class='dropdown-menu' role='menu'>
-          <li>
-            <form name="setLanguage" action="{% url 'set_language' %}" method="post">
-              {% csrf_token %}
-              {% get_available_languages as AVAILABLE_LANGUAGES %}
-              {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
-              {% for language in languages %}
-                {% if language.code != LANGUAGE_CODE %}
-                  <input name="language" type="hidden" value="{{ language.code|lower }}"/>
-                  <a class="dropdown-item" href="javascript:document.setLanguage.submit()">
-                    <img src="{% static "images/locale_icons/"|add:language.code|add:".svg" %}"
-                         alt="set language to {{ language.code }}" width="25">
-                    {{ language.name_local }}
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </form>
-          </li>
-        </ul>
+        <li>
+          <a class="nav-link dropdown-toggle" data-bs-toggle='dropdown' role='button' aria-expanded='false'>
+            <img class="mt-auto" src="{% static 'images/locale_icons/'|add:LANGUAGE_CODE|add:'.svg' %}"
+                 alt="current language is {{ LANGUAGE_CODE }}" width="25">
+            {{ LANGUAGE_CODE|upper }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" role='menu'>
+            <li>
+              <form name="setLanguage" action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                {% get_available_languages as AVAILABLE_LANGUAGES %}
+                {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+                {% for language in languages %}
+                  {% if language.code != LANGUAGE_CODE %}
+                    <input name="language" type="hidden" value="{{ language.code|lower }}"/>
+                    <a class="dropdown-item" href="javascript:document.setLanguage.submit()">
+                      <img src="{% static 'images/locale_icons/'|add:language.code|add:'.svg' %}"
+                           alt="set language to {{ language.code }}" width="25">
+                      {{ language.name_local }}
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </form>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
+  </div>
 </nav>
