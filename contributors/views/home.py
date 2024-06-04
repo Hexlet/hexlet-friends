@@ -33,12 +33,8 @@ class HomeView(TemplateView):
             Contributor.objects.visible_with_weekly_stats()
         )
 
-        contributions_for_month = (
-            Contribution.objects.visible_for_month()
-        )
-
-        contributions_for_week = (
-            Contribution.objects.visible_for_week()
+        latest_contributions = (
+            Contribution.objects.all()
         )
 
         top10_committers_of_month = get_top10(
@@ -67,20 +63,12 @@ class HomeView(TemplateView):
             contributors_for_week, 'comments',
         )
 
-        latest_month_issues = get_latest_contributions(
-            contributions_for_month, 'iss',
+        latest_issues = get_latest_contributions(
+            latest_contributions, 'iss',
         )
 
-        latest_week_issues = get_latest_contributions(
-            contributions_for_week, 'iss',
-        )
-
-        latest_month_pr = get_latest_contributions(
-            contributions_for_month, 'pr',
-        )
-
-        latest_week_pr = get_latest_contributions(
-            contributions_for_week, 'pr',
+        latest_pr = get_latest_contributions(
+            latest_contributions, 'pr',
         )
 
         context.update(
@@ -95,10 +83,8 @@ class HomeView(TemplateView):
                 'top10_reporters_of_week': top10_reporters_of_week,
                 'top10_commentators_of_week': top10_commentators_of_week,
                 'contributions_for_year': Contribution.objects.for_year(),
-                'latest_month_issues': latest_month_issues,
-                'latest_week_issues': latest_week_issues,
-                'latest_month_pr': latest_month_pr,
-                'latest_week_pr': latest_week_pr,
+                'latest_time_issues': latest_issues,
+                'latest_time_pr': latest_pr,
             },
         )
 

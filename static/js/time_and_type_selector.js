@@ -35,7 +35,7 @@ function time_note(data_type) {
 
 
 document.addEventListener('DOMContentLoaded', start('top-week'));
-document.addEventListener('DOMContentLoaded', start('latest-for-week'));
+document.addEventListener('DOMContentLoaded', start('latest-in-recent-times'));
 document.addEventListener('DOMContentLoaded', time_note('top-10-items'));
 document.addEventListener('DOMContentLoaded', time_note('latest-issues-and-prs'));
 
