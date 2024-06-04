@@ -9,7 +9,7 @@ class CompareWithYourselfView(ListView):
     """View of comparing current user with another one."""
 
     model = Contribution
-    template_name = 'contributor_compare_with_yourself.html'
+    template_name = 'contributors_sections/contributors/contributor_compare_with_yourself.html'  # noqa: E501
     slug_field = 'contributor'
 
     def get_queryset(self):

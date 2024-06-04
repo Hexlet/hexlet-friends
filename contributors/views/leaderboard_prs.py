@@ -15,7 +15,7 @@ class ListView(
     """List of leaders among contributors by pull requests."""
 
     queryset = Contributor.objects.visible().with_contributions()
-    template_name = 'leaderboard_prs.html'
+    template_name = 'contributors_sections/leaderboard/leaderboard_prs.html'
     sortable_fields = (
         '-pull_requests',
     )

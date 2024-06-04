@@ -6,7 +6,7 @@ from contributors.models import Contributor
 class AchievementListView(generic.ListView):
     """Achievement list."""
 
-    template_name = 'achievements_list.html'
+    template_name = 'contributor/achievements_list.html'
     model = Contributor
     contributors = Contributor.objects.with_contributions()
 

@@ -23,7 +23,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     )
     ordering = sortable_fields[0]
 
-    template_name = 'pull_requests_list.html'
+    template_name = 'contributors_sections/pull_requests/pull_requests_list.html'  # noqa: E501
 
     def get_queryset(self):  # noqa: WPS615
         """Get pull requests.

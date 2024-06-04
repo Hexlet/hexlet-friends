@@ -16,7 +16,7 @@ class ListView(
 ):
     """A list of issues."""
 
-    template_name = 'open_issues.html'
+    template_name = 'contributors_sections/issues/open_issues.html'
     filterset_class = IssuesFilter
     sortable_fields = (  # noqa: WPS317
         'info__title',

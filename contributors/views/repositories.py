@@ -36,7 +36,7 @@ class ListView(
             ),
         )
     )
-    template_name = 'repositories_list.html'
+    template_name = 'contributors_sections/repositories/repositories_list.html'
     sortable_fields = (  # noqa: WPS317
         'name',
         'organization',

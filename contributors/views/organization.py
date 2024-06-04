@@ -8,7 +8,7 @@ from contributors.views import repositories
 class OrgRepositoryList(repositories.ListView):
     """An organization's details."""
 
-    template_name = 'organization_details.html'
+    template_name = 'contributors_sections/organizations/organization_details.html'  # noqa: E501
     sortable_fields = (  # noqa: WPS317
         'name',
         'project',

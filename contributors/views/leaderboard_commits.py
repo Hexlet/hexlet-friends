@@ -15,7 +15,7 @@ class ListView(
     """List of leaders among contributors by commits."""
 
     queryset = Contributor.objects.visible().with_contributions()
-    template_name = 'leaderboard_commits.html'
+    template_name = 'contributors_sections/leaderboard/leaderboard_commits.html'  # noqa: E501
     sortable_fields = (
         '-commits',
     )

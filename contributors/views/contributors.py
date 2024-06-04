@@ -9,7 +9,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     """A list of contributors with contributions."""
 
     queryset = Contributor.objects.visible().with_contributions()
-    template_name = 'contributors_list.html'
+    template_name = 'contributors_sections/contributors/contributors_list.html'
     sortable_fields = (
         'login',
         'name',
