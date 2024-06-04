@@ -32,17 +32,17 @@ urlpatterns = [
     ),
     path(
         'leaderboard/commits',
-        views.leaderboard_commits.ListView.as_view(),
+        views.leaderboard.CommitsListView.as_view(),
         name='leaderboard_commits',
     ),
     path(
         'leaderboard/pull-requests',
-        views.leaderboard_prs.ListView.as_view(),
+        views.leaderboard.PrsListView.as_view(),
         name='leaderboard_prs',
     ),
     path(
         'leaderboard/issues',
-        views.leaderboard_issues.ListView.as_view(),
+        views.leaderboard.IssuesListView.as_view(),
         name='leaderboard_issues',
     ),
     path(
@@ -90,14 +90,14 @@ urlpatterns = [
         name='project_details',
     ),
     path(
-        "issues/",
+        'issues/',
         views.issues.ListView.as_view(),
-        name="open_issues",
+        name='open_issues',
     ),
     path(
-        "pull_requests",
+        'pull_requests',
         views.pull_requests.ListView.as_view(),
-        name="pull_requests_list",
+        name='pull_requests_list',
     ),
     path('event-handler', views.webhook.EventHandler.as_view()),
     path('about', views.about.AboutView.as_view(), name="about"),
