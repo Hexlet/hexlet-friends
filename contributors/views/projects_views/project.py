@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from contributors.models import Contribution, Project
 from contributors.utils import misc
-from contributors.views import repositories
+from contributors.views.repositories_views import repositories
 
 
 class ProjectRepositoryList(repositories.ListView):

@@ -2,7 +2,7 @@ from django.db.models import Count, Q  # noqa: WPS347
 from django.views.generic import ListView
 
 from contributors.models import Contribution, Contributor, Repository
-from contributors.views.filters import DetailTablePeriodFilter
+from contributors.views.utils.filters import DetailTablePeriodFilter
 
 
 class CompareWithYourselfView(ListView):

@@ -1,6 +1,6 @@
 from contributors.models import Contributor
 from contributors.utils import misc
-from contributors.views import contributors
+from contributors.views.contributors_views import contributors
 
 
 class ListView(contributors.ListView):

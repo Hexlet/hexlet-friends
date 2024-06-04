@@ -32,17 +32,17 @@ urlpatterns = [
     ),
     path(
         'leaderboard/commits',
-        views.leaderboard.CommitsListView.as_view(),
+        views.leaderboards.CommitsListView.as_view(),
         name='leaderboard_commits',
     ),
     path(
         'leaderboard/pull-requests',
-        views.leaderboard.PrsListView.as_view(),
+        views.leaderboards.PrsListView.as_view(),
         name='leaderboard_prs',
     ),
     path(
         'leaderboard/issues',
-        views.leaderboard.IssuesListView.as_view(),
+        views.leaderboards.IssuesListView.as_view(),
         name='leaderboard_issues',
     ),
     path(

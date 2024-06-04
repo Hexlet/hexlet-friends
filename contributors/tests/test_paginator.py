@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
-from contributors.views.mixins import (
+from contributors.views.utils.mixins import (
     INNER_VISIBLE_PAGES,
     MAX_PAGES_WITHOUT_SHRINKING,
     PAGES_VISIBLE_AT_BOUNDARY,

@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
 from contributors.models import Label, Repository
-from contributors.views.mixins import (
+from contributors.views.utils.mixins import (
     LabelsMixin,
     TableSortSearchAndPaginationMixin,
 )

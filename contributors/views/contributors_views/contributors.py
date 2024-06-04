@@ -2,7 +2,7 @@ from django.views import generic
 
 from contributors.forms.forms import CombinedSearchForm
 from contributors.models import Contributor
-from contributors.views.mixins import TableSortSearchAndPaginationMixin
+from contributors.views.utils.mixins import TableSortSearchAndPaginationMixin
 
 
 class ListView(TableSortSearchAndPaginationMixin, generic.ListView):

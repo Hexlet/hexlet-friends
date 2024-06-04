@@ -1,14 +1,14 @@
 from django.views import generic
 
-from contributors.forms.forms import PullRequestNameStatusFilterForm
+from contributors.forms.forms import NameStatusFilterForm
 from contributors.models import Contribution
-from contributors.views.mixins import TableSortSearchAndPaginationMixin
+from contributors.views.utils.mixins import TableSortSearchAndPaginationMixin
 
 
 class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
-    """A list of pull requests of a contributor."""
+    """A list of issues of a contributor."""
 
-    template_name = 'contributor/contributor_prs.html'
+    template_name = 'contributor/contributor_issues.html'
     sortable_fields = (
         'info__title',
         'repository__full_name',
@@ -23,16 +23,16 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     ordering = sortable_fields[0]
 
     def get_queryset(self):  # noqa: WPS615
-        """Get pull requests from contributions.
+        """Get issues from contributions.
 
         Returns:
             Queryset.
         """
         self.queryset = Contribution.objects.select_related('info').filter(
-            contributor__login=self.kwargs['slug'], type='pr',
+            contributor__login=self.kwargs['slug'], type='iss',
         )
 
-        form_status = PullRequestNameStatusFilterForm(self.request.GET)
+        form_status = NameStatusFilterForm(self.request.GET)
         if form_status.is_valid():
             status = form_status.cleaned_data['state']
             if status:
@@ -45,8 +45,6 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         """Get search form by state."""
         context = super().get_context_data(**kwargs)
-        context['form_status'] = PullRequestNameStatusFilterForm(
-            self.request.GET,
-        )
+        context['form_status'] = NameStatusFilterForm(self.request.GET)
 
         return context

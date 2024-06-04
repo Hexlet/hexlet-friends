@@ -2,13 +2,15 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 
 from contributors.models import Organization
-from contributors.views import repositories
+from contributors.views.repositories_views import repositories
 
 
 class OrgRepositoryList(repositories.ListView):
     """An organization's details."""
 
-    template_name = 'contributors_sections/organizations/organization_details.html'  # noqa: E501
+    template_name = (
+        'contributors_sections/organizations/organization_details.html'
+    )
     sortable_fields = (  # noqa: WPS317
         'name',
         'project',
@@ -20,7 +22,8 @@ class OrgRepositoryList(repositories.ListView):
     def get_queryset(self):  # noqa: WPS615
         """Get a dataset."""
         self.organization = get_object_or_404(
-            Organization, name=self.kwargs['slug'],
+            Organization,
+            name=self.kwargs['slug'],
         )
         self.queryset = self.queryset.filter(organization=self.organization)
         return super().get_queryset()
