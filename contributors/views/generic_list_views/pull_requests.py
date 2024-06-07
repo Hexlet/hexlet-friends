@@ -2,7 +2,7 @@ from django.views import generic
 
 from contributors.forms.forms import PullRequestNameStatusFilterForm
 from contributors.models.contribution import Contribution
-from contributors.views.utils.mixins import TableSortSearchAndPaginationMixin
+from contributors.views.mixins import TableSortSearchAndPaginationMixin
 
 
 class ListView(TableSortSearchAndPaginationMixin, generic.ListView):

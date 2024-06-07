@@ -3,7 +3,7 @@ from django.db.models.functions import Coalesce
 from django.views import generic
 
 from contributors.models import Contribution, Contributor, Repository
-from contributors.views.utils.mixins import (
+from contributors.views.mixins import (
     ContributorsJsonMixin,
     ContributorTotalStatMixin,
 )

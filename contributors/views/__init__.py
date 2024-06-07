@@ -1,10 +1,13 @@
 from contributors.views import (  # noqa: WPS235
     about,
     achievements,
+    config,
     contributor_compare,
+    filters,
     home,
     landing,
     user_settings,
+    webhook,
 )
 from contributors.views.contributors_views import (
     contributor,
@@ -21,4 +24,3 @@ from contributors.views.generic_list_views import (
 from contributors.views.organizations_views import organization, organizations
 from contributors.views.projects_views import project, projects
 from contributors.views.repositories_views import repositories, repository
-from contributors.views.utils import config, filters, webhook

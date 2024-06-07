@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 
-from contributors.views.utils.config import collect_data, show_repos
+from contributors.views.config import collect_data, show_repos
 
 
 class CustomAdminSite(admin.AdminSite):

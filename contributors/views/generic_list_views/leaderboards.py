@@ -1,7 +1,7 @@
 from django.views import generic
 
 from contributors.models import Contributor
-from contributors.views.utils.mixins import (
+from contributors.views.mixins import (
     LeaderboardQueryMixin,
     TableSortSearchAndPaginationMixin,
 )

@@ -2,8 +2,8 @@ from django.db.models import Prefetch
 from django_filters.views import FilterView
 
 from contributors.models import Contribution, ContributionLabel
-from contributors.views.utils.filters import IssuesFilter
-from contributors.views.utils.mixins import (
+from contributors.views.filters import IssuesFilter
+from contributors.views.mixins import (
     ContributionLabelsMixin,
     TableSortSearchAndPaginationMixin,
 )

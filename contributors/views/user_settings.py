@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from auth.forms import UserTokenForm
-from contributors.views.utils.mixins import (
+from contributors.views.mixins import (
     AuthRequiredMixin,
     PermissionRequiredMixin,
 )
