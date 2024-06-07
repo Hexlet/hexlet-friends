@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-28 20:03+0300\n"
+"POT-Creation-Date: 2024-06-07 15:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "Custom Authentication and Authorization"
 msgstr "Настраиваемая аутентификация и авторизация"
 
-#: auth/models.py templates/user_settings.html
+#: auth/models.py templates/contributor/user_settings.html
 msgid "GitHub token"
 msgstr "GitHub токен"
 
@@ -53,7 +53,7 @@ msgid "Change visibility to the opposite value"
 msgstr "Измените видимость на противоположное значение"
 
 #: contributors/forms/admin_forms.py templates/components/navbar.html
-#: templates/organizations_list.html
+#: templates/contributors_sections/organizations/organizations_list.html
 msgid "Organizations"
 msgstr "Организации"
 
@@ -69,7 +69,7 @@ msgstr "Недопустимое имя: "
 msgid "Uncheck those you wish to skip."
 msgstr "Снимите флажки с тех, которые вы хотите пропустить."
 
-#: contributors/forms/forms.py templates/contributor_details.html
+#: contributors/forms/forms.py templates/contributor/contributor_details.html
 msgid "Filter by name"
 msgstr "Фильтрация по имени"
 
@@ -314,13 +314,15 @@ msgstr "За период"
 #: contributors/views/repositories.py templates/components/navbar.html
 #: templates/components/tables/projects_list.html
 #: templates/components/tables/repositories_list.html
-#: templates/contributors_list.html templates/repository_details.html
+#: templates/contributors_sections/contributors/contributors_list.html
+#: templates/contributors_sections/repositories/repository_details.html
 msgid "Contributors"
 msgstr "Участники"
 
 #: contributors/views/organizations.py templates/components/navbar.html
 #: templates/components/tables/organizations_list.html
-#: templates/organization_details.html templates/repositories_list.html
+#: templates/contributors_sections/organizations/organization_details.html
+#: templates/contributors_sections/repositories/repositories_list.html
 msgid "Repositories"
 msgstr "Репозитории"
 
@@ -495,6 +497,7 @@ msgstr "Сбросить"
 
 #: templates/components/issues_and_pr_for_month.html
 #: templates/components/issues_and_pr_for_week.html
+#: templates/components/latest_issues_and_pr.html
 #: templates/components/top10_of_month.html
 #: templates/components/top10_of_week.html
 msgid "by pull requests"
@@ -502,6 +505,7 @@ msgstr "по пул-реквестам"
 
 #: templates/components/issues_and_pr_for_month.html
 #: templates/components/issues_and_pr_for_week.html
+#: templates/components/latest_issues_and_pr.html
 #: templates/components/top10_of_month.html
 #: templates/components/top10_of_week.html
 msgid "by issues"
@@ -516,7 +520,8 @@ msgstr "Лидеры"
 #: templates/components/tables/leaderboard_commits.html
 #: templates/components/tables/projects_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/contributor_details.html templates/leaderboard_commits.html
+#: templates/contributor/contributor_details.html
+#: templates/contributors_sections/leaderboard/leaderboard_commits.html
 msgid "Commits"
 msgstr "Коммиты"
 
@@ -526,8 +531,10 @@ msgstr "Коммиты"
 #: templates/components/tables/projects_list.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
-#: templates/contributor_details.html templates/contributor_prs.html
-#: templates/leaderboard_prs.html templates/pull_requests_list.html
+#: templates/contributor/contributor_details.html
+#: templates/contributor/contributor_prs.html
+#: templates/contributors_sections/leaderboard/leaderboard_prs.html
+#: templates/contributors_sections/pull_requests/pull_requests_list.html
 msgid "Pull requests"
 msgstr "Пул-реквесты"
 
@@ -537,8 +544,10 @@ msgstr "Пул-реквесты"
 #: templates/components/tables/projects_list.html
 #: templates/components/tables/recent_contributors.html
 #: templates/components/tables/repositories_list.html
-#: templates/contributor_details.html templates/contributor_issues.html
-#: templates/leaderboard_issues.html templates/open_issues.html
+#: templates/contributor/contributor_details.html
+#: templates/contributor/contributor_issues.html
+#: templates/contributors_sections/issues/open_issues.html
+#: templates/contributors_sections/leaderboard/leaderboard_issues.html
 msgid "Issues"
 msgstr "Проблемы"
 
@@ -558,7 +567,7 @@ msgstr "Админ"
 msgid "My statistics"
 msgstr "Моя статистика"
 
-#: templates/components/navbar.html templates/user_settings.html
+#: templates/components/navbar.html templates/contributor/user_settings.html
 msgid "Settings"
 msgstr "Настройки"
 
@@ -579,7 +588,7 @@ msgid "Next"
 msgstr "Следующая"
 
 #: templates/components/tables/achievements_list.html
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Hexlet friend"
 msgstr ""
 
@@ -697,7 +706,8 @@ msgstr "Добавлено и удалено"
 #: templates/components/tables/contributor_prs.html
 #: templates/components/tables/open_issues_list.html
 #: templates/components/tables/pull_requests_list.html
-#: templates/contributor_details.html templates/repository_details.html
+#: templates/contributor/contributor_details.html
+#: templates/contributors_sections/repositories/repository_details.html
 msgid "Repository"
 msgstr "Репозиторий"
 
@@ -750,20 +760,20 @@ msgstr "Имя"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Additions"
 msgstr "Добавлено"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Deletions"
 msgstr "Удалено"
 
 #: templates/components/tables/contributors_list.html
 #: templates/components/tables/projects_list.html
 #: templates/components/tables/recent_contributors.html
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -791,7 +801,8 @@ msgid "Organization"
 msgstr "Организация"
 
 #: templates/components/tables/repositories_list.html
-#: templates/project_details.html templates/repository_details.html
+#: templates/contributors_sections/repositories/repository_details.html
+#: templates/project_details.html
 msgid "Project"
 msgstr "Проект"
 
@@ -805,6 +816,12 @@ msgstr "за прошедшую неделю"
 msgid "for the past month"
 msgstr "за прошедший месяц"
 
+#: templates/components/time_note_issues_and_pr.html
+#, fuzzy
+#| msgid "Recent actions"
+msgid "Recent"
+msgstr "Недавняя активность"
+
 #: templates/components/top10_of_month.html
 #: templates/components/top10_of_week.html
 msgid "by commits"
@@ -815,93 +832,117 @@ msgstr "по коммитам"
 msgid "by comments"
 msgstr "по комментариям"
 
-#: templates/contributor_compare_with_yourself.html
-msgid "Compare"
-msgstr ""
-
-#: templates/contributor_compare_with_yourself.html
-msgid "Statistics Compare"
-msgstr "Сравнение статистик"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "for all time"
-msgstr "за всё время"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "for year"
-msgstr "за прошедший год"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "for month"
-msgstr "за прошедший месяц"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "for week"
-msgstr "за прошедшую неделю"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "Top repo"
-msgstr "Наибольший вклад"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "commits"
-msgstr "коммиты"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "pull-requests"
-msgstr "пул-реквесты"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "issues"
-msgstr "проблемы"
-
-#: templates/contributor_compare_with_yourself.html
-msgid "comments"
-msgstr "комментарии"
-
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Contributor"
 msgstr "Участник"
 
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Achievements"
 msgstr "Достижения"
 
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Additions and deletions"
 msgstr "Добавлено и удалено"
 
-#: templates/contributor_details.html templates/home.html
+#: templates/contributor/contributor_details.html templates/home.html
 msgid "Past year activity"
 msgstr "Активность за прошлый год"
 
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Compare with yourself"
 msgstr "Сравнить с собой"
 
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "Summary"
 msgstr ""
 
-#: templates/contributor_details.html
+#: templates/contributor/contributor_details.html
 msgid "All-time contributions"
 msgstr "Вклад за всё время"
 
-#: templates/contributor_issues.html
+#: templates/contributor/contributor_issues.html
 msgid "Issues by"
 msgstr "Проблемы по"
 
-#: templates/contributor_prs.html
+#: templates/contributor/contributor_prs.html
 msgid "Pull requests by"
 msgstr "Пул-реквесты по"
 
-#: templates/contributors_for_period.html
+#: templates/contributor/user_settings.html
+msgid "Account"
+msgstr "Аккаунт"
+
+#: templates/contributor/user_settings.html
+msgid "GitHub nickname"
+msgstr "GitHub никнейм"
+
+#: templates/contributor/user_settings.html
+msgid "Current token"
+msgstr "Текущий токен"
+
+#: templates/contributor/user_settings.html
+msgid "Save new token"
+msgstr "Сохранить новый токен"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "Compare"
+msgstr ""
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "Statistics Compare"
+msgstr "Сравнение статистик"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "for all time"
+msgstr "за всё время"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "for year"
+msgstr "за прошедший год"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "for month"
+msgstr "за прошедший месяц"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "for week"
+msgstr "за прошедшую неделю"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "Top repo"
+msgstr "Наибольший вклад"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "commits"
+msgstr "коммиты"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "pull-requests"
+msgstr "пул-реквесты"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "issues"
+msgstr "проблемы"
+
+#: templates/contributors_sections/contributors/contributor_compare_with_yourself.html
+msgid "comments"
+msgstr "комментарии"
+
+#: templates/contributors_sections/contributors/contributors_for_period.html
 msgid "Contributors for week"
 msgstr "Участники за неделю"
 
-#: templates/contributors_for_period.html
+#: templates/contributors_sections/contributors/contributors_for_period.html
 msgid "Contributors for month"
 msgstr "Участники за месяц"
+
+#: templates/contributors_sections/organizations/organization_details.html
+msgid "Details for organization"
+msgstr "Подробности об организации"
+
+#: templates/contributors_sections/repositories/repository_details.html
+msgid "Owner"
+msgstr "Владелец"
 
 #: templates/home.html
 msgid "Top 10 contributors"
@@ -910,6 +951,10 @@ msgstr "Топ 10 участников"
 #: templates/home.html
 msgid "New PRs and issues"
 msgstr "Новые пул-реквесты и проблемы"
+
+#: templates/home.html
+msgid "Latest in recent times"
+msgstr "За последнее время"
 
 #: templates/landing/components/features.html
 msgid "Hexlet - this is serious training for software engineers"
@@ -1044,10 +1089,6 @@ msgstr ""
 msgid "Get started for free"
 msgstr ""
 
-#: templates/organization_details.html
-msgid "Details for organization"
-msgstr "Подробности об организации"
-
 #: templates/project_details.html
 msgid "Project related repositories"
 msgstr "Репозитории, связанные с проектом"
@@ -1068,26 +1109,6 @@ msgstr "Регистрация"
 #: templates/registration/registration.html
 msgid "Register"
 msgstr "Зарегистрировать"
-
-#: templates/repository_details.html
-msgid "Owner"
-msgstr "Владелец"
-
-#: templates/user_settings.html
-msgid "Account"
-msgstr "Аккаунт"
-
-#: templates/user_settings.html
-msgid "GitHub nickname"
-msgstr "GitHub никнейм"
-
-#: templates/user_settings.html
-msgid "Current token"
-msgstr "Текущий токен"
-
-#: templates/user_settings.html
-msgid "Save new token"
-msgstr "Сохранить новый токен"
 
 #~ msgid "compare with ..."
 #~ msgstr "Сравнить с ..."
