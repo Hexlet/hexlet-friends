@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 
 from contributors.models import Repository
-from contributors.views import contributors
+from contributors.views.contributors_views import contributors
 
 
 class RepoContributorList(contributors.ListView):

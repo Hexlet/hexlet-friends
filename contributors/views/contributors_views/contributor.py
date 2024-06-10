@@ -8,6 +8,9 @@ from contributors.views.mixins import (
     ContributorTotalStatMixin,
 )
 
+# This was done to fix: WPS 226 Found string literal over-use: id > 4
+ID = 'id'
+
 
 class DetailView(
     ContributorTotalStatMixin, ContributorsJsonMixin, generic.DetailView,
@@ -49,10 +52,10 @@ class DetailView(
         context['summary'] = Contribution.objects.filter(
             contributor=self.object,
         ).aggregate(
-            commits=Count('id', filter=Q(type='cit')),
-            pull_requests=Count('id', filter=Q(type='pr')),
-            issues=Count('id', filter=Q(type='iss')),
-            comments=Count('id', filter=Q(type='cnt')),
+            commits=Count(ID, filter=Q(type='cit')),
+            pull_requests=Count(ID, filter=Q(type='pr')),
+            issues=Count(ID, filter=Q(type='iss')),
+            comments=Count(ID, filter=Q(type='cnt')),
         )
 
         contributors = Contributor.objects.visible()

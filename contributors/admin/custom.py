@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 
-from contributors import views
+from contributors.views.config import collect_data, show_repos
 
 
 class CustomAdminSite(admin.AdminSite):
@@ -17,12 +17,12 @@ class CustomAdminSite(admin.AdminSite):
         custom_urls = [
             path(
                 'contributors/config/',
-                self.admin_view(views.config.show_repos),
+                self.admin_view(show_repos),
                 name='config',
             ),
             path(
                 'contributors/config/collect_data',
-                self.admin_view(views.config.collect_data),
+                self.admin_view(collect_data),
                 name='collect_data',
             ),
         ]
