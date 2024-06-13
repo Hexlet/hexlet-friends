@@ -38,8 +38,8 @@ class ListView(
         queryset=ContributionLabel.objects.all(),
     )
 
-    def get_queryset(self):
-        """Add queryset."""
+    def get_queryset(self):  # noqa: WPS615
+        """Get the initial queryset and apply all filters."""
         queryset = (
             Contribution.objects.filter(type='iss').
             select_related('repository', 'contributor', 'info').
@@ -48,6 +48,8 @@ class ListView(
                 self.contributionlabel_prefetch,
             ).distinct()
         )
+        self.queryset = queryset
+        queryset = super().get_queryset()
         self.filterset = self.filterset_class(
             self.request.GET,
             queryset=queryset,
