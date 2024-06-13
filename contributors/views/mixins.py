@@ -170,15 +170,16 @@ class LabelsMixin(object):
 class ContributionLabelsMixin(object):
     """A mixin for labels."""
 
-    def get_queryset(self):  # noqa: WPS615
-        """Get a dataset."""
+    def get_queryset(self):
+        """Get a dataset and apply label filters if any."""
+        queryset = super().get_queryset()
         labels_param = self.request.GET.get('contribution_labels')
         if labels_param:
             labels_param = labels_param.split('.')
-            self.queryset = self.queryset.filter(
+            queryset = queryset.filter(
                 labels__name__lower__in=labels_param,
-            )
-        return super().get_queryset()
+            ).distinct()
+        return queryset
 
 
 class ContributorTotalStatMixin(object):
