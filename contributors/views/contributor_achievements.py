@@ -1,4 +1,4 @@
-from django.db.models import Count, Q, Sum  # noqa: WPS235, WPS347
+from django.db import models
 from django.db.models.functions import Coalesce
 from django.views import generic
 
@@ -35,33 +35,47 @@ class ContributorAchievementListView(generic.ListView):
             is_visible=True,
             contribution__contributor=current_contributor,
         ).annotate(
-            commits=Count('id', filter=Q(contribution__type='cit')),
-            additions=Coalesce(Sum('contribution__stats__additions'), 0),
-            deletions=Coalesce(Sum('contribution__stats__deletions'), 0),
-            pull_requests=Count(
-                'contribution', filter=Q(contribution__type='pr'),
+            commits=models.Count('id', filter=models.Q(contribution__type='cit')),
+            additions=Coalesce(models.Sum('contribution__stats__additions'), 0),
+            deletions=Coalesce(models.Sum('contribution__stats__deletions'), 0),
+            pull_requests=models.Count(
+                'contribution', filter=models.Q(contribution__type='pr'),
             ),
-            issues=Count('contribution', filter=Q(contribution__type='iss')),
-            comments=Count('contribution', filter=Q(contribution__type='cnt')),
+            issues=models.Count('contribution', filter=models.Q(contribution__type='iss')),
+            comments=models.Count('contribution', filter=models.Q(contribution__type='cnt')),
         ).order_by('organization', 'name')
 
         contributions = repositories.values().aggregate(
-            contributor_deletions=Sum('deletions'),
-            contributor_additions=Sum('additions'),
-            contributor_commits=Sum('commits'),
-            contributor_pull_requests=Sum('pull_requests'),
-            contributor_issues=Sum('issues'),
-            contributor_comments=Sum('comments'),
+            contributor_deletions=models.Sum('deletions'),
+            contributor_additions=models.Sum('additions'),
+            contributor_commits=models.Sum('commits'),
+            contributor_pull_requests=models.Sum('pull_requests'),
+            contributor_issues=models.Sum('issues'),
+            contributor_comments=models.Sum('comments'),
         )
 
         context['commits'] = contributions['contributor_commits']
         context['pull_requests'] = contributions['contributor_pull_requests']
         context['issues'] = contributions['contributor_issues']
-        context['comments'] = contributions['contributor_commits']
-        context['total_editions'] = (
-            contributions['contributor_additions'] + contributions['contributor_deletions']  # noqa: E501
-        )
-        context['total_actions'] = sum(contributions.values())
+        context['comments'] = contributions['contributor_comments']
+        context['total_editions'] = sum([
+            0 if edit is None else edit
+            for edit in [
+                contributions['contributor_additions'],
+                contributions['contributor_deletions'],
+            ]
+        ])
+        context['total_actions'] = sum([
+            0 if action is None else action
+            for action in [
+                contributions['contributor_commits'],
+                contributions['contributor_pull_requests'],
+                contributions['contributor_issues'],
+                contributions['contributor_comments'],
+                contributions['contributor_additions'],
+                contributions['contributor_deletions'],
+            ]
+        ])
         context['pull_request_ranges_for_achievements'] = (
             self.pull_request_ranges_for_achievements
         )

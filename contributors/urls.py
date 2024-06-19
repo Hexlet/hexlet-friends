@@ -108,7 +108,7 @@ urlpatterns = [
     ),
     path(
         'contributor_achievements/<slug:slug>',
-        views.contributor_achievements.ContributorAchievementListView.as_view(),  # noqa: E501
+        views.contributor_achievements.ContributorAchievementListView.as_view(),
         name='contributor_achievements',
     ),
     path(

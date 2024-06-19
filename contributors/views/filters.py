@@ -94,7 +94,7 @@ class DetailTablePeriodFilter(django_filters.FilterSet):
         field_name='period_filter',
     )
 
-    def get_contributions_by_period(self, queryset, name, value):  # noqa: WPS110, E501
+    def get_contributions_by_period(self, queryset, name, value):  # noqa: WPS110
         """Contributions filter for a period."""
         if value == 'for_year':
             datetime_now = timezone.now()

@@ -9,7 +9,7 @@ class CompareWithYourselfView(ListView):
     """View of comparing current user with another one."""
 
     model = Contribution
-    template_name = 'contributors_sections/contributors/contributor_compare_with_yourself.html'  # noqa: E501
+    template_name = 'contributors_sections/contributors/contributor_compare_with_yourself.html'
     slug_field = 'contributor'
 
     def get_queryset(self):
@@ -54,7 +54,7 @@ class CompareWithYourselfView(ListView):
             ).first().full_name
             context['me_top_repo'] = me_repo_full_name
         else:
-            context['me_top_repo'] = '---'  # noqa: E501
+            context['me_top_repo'] = '---'
 
         enemy_qs = context['filter'].qs.filter(
             contributor=context['enemy_obj'].pk,
@@ -75,5 +75,5 @@ class CompareWithYourselfView(ListView):
             ).first().full_name
             context['enemy_top_repo'] = enemy_repo_full_name
         else:
-            context['enemy_top_repo'] = '---'  # noqa: E501
+            context['enemy_top_repo'] = '---'
         return context
