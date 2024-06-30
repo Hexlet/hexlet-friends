@@ -1,7 +1,8 @@
 {% load i18n static mathfilters %}
+{% load i18n static contrib_extras %}
 
 <div class="progress d-flex justify-content-between" style="height: max-content;">
-  <div class="bg-info text-dark text-start aligns-items-center" role="progressbar" style="width: {{ contribution|div:achievement_made_count|mul:100|floatformat:0 }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  <div class="bg-info text-dark text-start aligns-items-center" role="progressbar" style="width: {% calc_percent_achievement contribution achievement_made_count %}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
     <dl class="p-2 fs-6 mb-0" style="width:50vw;">
       <dt>{% trans achievement_name %}</dt>
       <dd class="mb-0">{% trans achievement_description %}</dd>
@@ -9,10 +10,6 @@
   </div>
 
   <div class="p-2 fs-6 d-flex justify-content-center align-items-center">
-    {% if contribution|div:achievement_made_count|mul:100 > 100 %}
-      100.0%
-    {% else %}
-      {{ contribution|div:achievement_made_count|mul:100|floatformat:1 }}%
-    {% endif %}
+    {% calc_percent_achievement contribution achievement_made_count %}%
   </div>
 </div>
