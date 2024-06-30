@@ -10,6 +10,8 @@ EXPECTED_CONTRIBUTORS_COUNT = 2
 EXPECTED_CONTRIBUTORS_ISSUE_COUNT = 2
 EXPECTED_CONTRIBUTORS_PR_COUNT = 2
 
+TEST_CONTRIBUTORS = ["mintough57", "kinganduld", "indecing", "pilly1964", "suir1948"]
+
 
 class TestContributorDetailView(TestCase):
     """Test the methods for the contributor's details view."""
@@ -149,3 +151,13 @@ class AchievementViewTestCase(TestCase):
         self.assertEqual(response.context['contributors_issues_gte_1'], 2)
         self.assertEqual(response.context['contributors_comments_gte_1'], 0)
         self.assertEqual(response.context['contributors_editions_gte_1'], 0)
+
+    def test_get_context_data_contributor(self):
+        for contributor in TEST_CONTRIBUTORS:
+            response = self.client.get(reverse('contributors:contributor_achievements', args=[contributor]))
+            self.assertEqual(response.status_code, HTTPStatus.OK)
+        response = self.client.get(reverse('contributors:contributor_achievements', args=[TEST_CONTRIBUTOR_LOGIN]))
+        self.assertEqual(response.context['contributor_commits_gte_1'], 1)
+        self.assertEqual(response.context['contributor_issues_gte_1'], 1)
+        self.assertEqual(response.context['contributor_comments_gte_1'], 1)
+        self.assertEqual(response.context['contributor_editions_gte_1'], 1)

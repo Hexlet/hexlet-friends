@@ -7,7 +7,7 @@ import requests
 from django.conf import settings
 
 GITHUB_API_URL = 'https://api.github.com'
-GITHUB_TOKEN_PROVIDER_URL = 'https://github.com/login/oauth/access_token'  # noqa: E501,S105
+GITHUB_TOKEN_PROVIDER_URL = 'https://github.com/login/oauth/access_token'  # noqa: S105
 
 
 def merge_dicts(*dicts):
@@ -402,7 +402,7 @@ def get_commit_stats_for_contributor(repo_full_name, contributor_id):
     return totals['c'], totals['a'], totals['d']
 
 
-def get_data_of_owners_and_repos(*, owner_names=None, repo_full_names=None):  # noqa: C901,R701,E501,WPS231
+def get_data_of_owners_and_repos(*, owner_names=None, repo_full_names=None):  # noqa: C901,R701,WPS231
     """Return data of owners and their repositories from GitHub."""
     if not (owner_names or repo_full_names):
         raise ValueError("Neither owner_names nor repo_full_names is provided")
