@@ -31,7 +31,7 @@ def signatures_match(payload_body, gh_signature):
     return hmac.compare_digest(signature, gh_signature)
 
 
-def update_database(event_type, payload):   # noqa: WPS210, C901
+def update_database(event_type, payload):   # noqa: C901
     """Update the database with an event's data."""
     action = payload.get('action', 'created')
     if action not in {'created', 'opened', 'edited', 'closed', 'reopened'}:
@@ -98,9 +98,9 @@ def update_database(event_type, payload):   # noqa: WPS210, C901
             payload['commits'][0]['timestamp'],
         ),
         timezone.utc,
-    ).strftime('%Y-%m-%dT%H:%M:%SZ')    # noqa: WPS323
+    ).strftime('%Y-%m-%dT%H:%M:%SZ')
     if event_type == 'push':
-        for gh_commit in github.get_repo_commits_except_merges(  # noqa: WPS352
+        for gh_commit in github.get_repo_commits_except_merges(
             organization, repository, {'since': commit_created_at},
         ):
             commit = Contribution.objects.create(

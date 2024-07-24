@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 class IssueInfo(models.Model):
     """Additional info for an issue or pull request."""
 
-    TITLE_LENGTH = 255  # noqa: WPS115
-    STATE_LENGTH = 10  # noqa: WPS115
+    TITLE_LENGTH = 255
+    STATE_LENGTH = 10
 
     issue = models.OneToOneField(
         'Contribution',

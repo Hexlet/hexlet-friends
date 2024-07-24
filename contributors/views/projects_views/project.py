@@ -22,7 +22,7 @@ class ProjectRepositoryList(repositories.ListView):
         """Return yearly results."""
         datetime_now = timezone.now()
         date_eleven_months_ago = (datetime_now - relativedelta.relativedelta(
-            months=11, day=1,   # noqa: WPS432
+            months=11, day=1,
         )).date()
 
         months_with_contrib_sums = Contribution.objects.filter(

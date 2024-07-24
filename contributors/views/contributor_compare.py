@@ -1,4 +1,4 @@
-from django.db.models import Count, Q  # noqa: WPS347
+from django.db.models import Count, Q
 from django.views.generic import ListView
 
 from contributors.models import Contribution, Contributor, Repository
@@ -18,7 +18,7 @@ class CompareWithYourselfView(ListView):
             contributor=Contributor.objects.filter(
                 login=self.request.path.split('/')[-2],
             ).first(),
-        )  # noqa: WPS221
+        )
         qs_me = Contribution.objects.filter(
             contributor=Contributor.objects.get(login=self.request.user),
         )

@@ -4,11 +4,11 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 SEARCH_FORM_CONTEXT_NAME = "form_org"
-SEARCH_PARAM_ORG_EXISTS = {  # noqa: WPS407
+SEARCH_PARAM_ORG_EXISTS = {
     "search": "",
     "organizations": "Hexlet",
 }
-SEARCH_PARAM_ORG_NOT_EXISTS = {  # noqa: WPS407
+SEARCH_PARAM_ORG_NOT_EXISTS = {
     "search": "",
     "organizations": "123456",
 }

@@ -81,4 +81,4 @@ class ContributorsModelsMethodsTest(TestCase):
 class CommonFieldTestClass(CommonFields):
     """Empty class to test an abstract class."""
 
-    pass  # noqa: WPS420, WPS604
+    pass
