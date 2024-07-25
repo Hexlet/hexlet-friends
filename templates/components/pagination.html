@@ -15,7 +15,7 @@
         </li>
       {% endif %}
 
-      {% if page.number >= first_boundary_last_page and paginator.num_pages >= max_pages_without_shrinking %}
+      {% if page.number >= first_boundary_last_page and paginator.num_pages > max_pages_without_shrinking %}
         <li class="page-item"><a class="page-link" href="{% get_pagination_query_string 1 %}">1</a></li>
         <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
       {% endif %}
@@ -28,7 +28,7 @@
         {% endif %}
       {% endfor %}
 
-      {% if page.number <= last_boundary_first_page and paginator.num_pages >= max_pages_without_shrinking %}
+      {% if page.number <= last_boundary_first_page and paginator.num_pages > max_pages_without_shrinking %}
         <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
         <li class="page-item"><a class="page-link" href="{% get_pagination_query_string paginator.num_pages %}">{{ paginator.num_pages }}</a></li>
       {% endif %}

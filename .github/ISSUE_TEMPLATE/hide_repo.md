@@ -1,24 +1,24 @@
 ---
 name: Hiding a repository
 about: Hiding a repository with a service
-title: 'Запрос на скрытие репозитория [название репозитория] с сервиса Hexlet Friends'
+title: 'Request to hide repo [repo name] from Hexlet Friends'
 labels:
     - hide_repo
 ---
 
-## Ссылка на ваш профиль Hexlet Friends:
+## Link to your profile Hexlet Friends:
 
 
-## Cсылка на ваш репозиторий:
+## Link to repo:
 
 
-## Вы подтверждаете, что являетесь владельцем репозитория?
-<!--- Да/Нет -->
+## Confirm that you are owner of the repo?
+<!--- Yes -->
 
 
-## Описание проблемы:
-<!--- Опишите причину, почему вы хотите скрыть репозиторий и статистику с сервиса -->
+## Describe problem:
+<!--- Describe the reason why you want to hide the repository and statistics from the service -->
 
 
-## Дополнительная информация:
-<!--- Укажите дополнительные детали, если это необходимо -->
+## Additional info:
+<!--- Provide additional details if necessary -->
