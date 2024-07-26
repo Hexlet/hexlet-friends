@@ -110,3 +110,13 @@ def get_canonical_url(context):
     if request:
         return request.build_absolute_uri(request.path)
     return ''
+
+
+@register.simple_tag
+def calc_percent_achievement(numerator, denominator):
+    """Get contributor statistics and required quantity."""
+    if numerator is not None:
+        if numerator / denominator > 1:
+            return 100.0
+        return numerator / denominator * 100
+    return 0
