@@ -1,4 +1,4 @@
-from django.db.models import Count, Q  # noqa: WPS347
+from django.db.models import Count, Q
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 
@@ -52,7 +52,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
 
     template_name = 'projects_list.html'
     context_object_name = 'projects_list'
-    sortable_fields = (  # noqa: WPS317
+    sortable_fields = (
         'name',
         'html_url',
         'description',

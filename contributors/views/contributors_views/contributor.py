@@ -1,4 +1,4 @@
-from django.db.models import Count, F, Q, Sum  # noqa: WPS347
+from django.db.models import Count, F, Q, Sum
 from django.db.models.functions import Coalesce
 from django.views import generic
 
@@ -46,7 +46,7 @@ class DetailView(
             self.object.contribution_set.for_year()
         )
         context['top_repository'] = repositories.annotate(
-            summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: WPS221, E501
+            summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: E501
         ).order_by('-summary').first()
 
         context['summary'] = Contribution.objects.filter(

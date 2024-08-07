@@ -22,7 +22,7 @@ class HomeView(TemplateView):
 
     template_name = 'home.html'
 
-    def get_context_data(self, **kwargs):  # noqa: WPS210
+    def get_context_data(self, **kwargs):
         """Add context."""
         context = super().get_context_data(**kwargs)
 

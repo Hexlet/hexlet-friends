@@ -4,7 +4,7 @@ from functools import reduce
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.paginator import Paginator
-from django.db.models import Count, F, Q, Sum, Window  # noqa: WPS347
+from django.db.models import Count, F, Q, Sum, Window
 from django.db.models.functions import Coalesce, RowNumber
 from django.shortcuts import redirect
 from django.views.generic.list import MultipleObjectMixin
@@ -88,7 +88,7 @@ class PaginationMixin(MultipleObjectMixin):
 class TableSortSearchMixin(MultipleObjectMixin):
     """A mixin for table sort and search."""
 
-    def set_ordering(self, ordering=None):  # noqa: WPS615
+    def set_ordering(self, ordering=None):
         """Set ordering."""
         sortable_fields = []
         for field in self.sortable_fields:
@@ -107,7 +107,7 @@ class TableSortSearchMixin(MultipleObjectMixin):
             return
         self.ordering = ''.join((direction, field_name))
 
-    def get_queryset(self):  # noqa: WPS210
+    def get_queryset(self):
         """Return an ordered and filtered QuerySet."""
         self.set_ordering(self.request.GET.get('sort'))
         direction, field_name = split_ordering(self.get_ordering())
@@ -134,7 +134,7 @@ class TableSortSearchMixin(MultipleObjectMixin):
             lookups[key] = filter_value
         expressions = [
             Q(**{key: value})
-            for key, value in lookups.items()  # noqa: WPS110
+            for key, value in lookups.items()
         ]
         if filter_value:
             return numbered_queryset.filter(reduce(operator.or_, expressions))
@@ -156,7 +156,7 @@ class TableSortSearchAndPaginationMixin(TableSortSearchMixin, PaginationMixin):
 class LabelsMixin(object):
     """A mixin for labels."""
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get a dataset."""
         labels_param = self.request.GET.get('labels')
         if labels_param:
@@ -260,7 +260,7 @@ class LeaderboardQueryMixin(MultipleObjectMixin):
         context['form_org'] = LeaderboardCombinedSearchForm(self.request.GET)
         return context
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get filter queryset."""
         queryset = super().get_queryset().prefetch_related(
             'contributors__organization',

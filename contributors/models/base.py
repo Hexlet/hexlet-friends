@@ -16,7 +16,7 @@ class CommonFields(models.Model):
     html_url = models.URLField(_("URL"))
     is_tracked = models.BooleanField(_("tracked"), default=True)
 
-    objects = CTEManager()  # noqa: WPS110
+    objects = CTEManager()
 
     class Meta(object):
         abstract = True

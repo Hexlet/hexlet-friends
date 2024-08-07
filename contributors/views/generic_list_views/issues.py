@@ -18,7 +18,7 @@ class ListView(
 
     template_name = 'contributors_sections/issues/open_issues.html'
     filterset_class = IssuesFilter
-    sortable_fields = (  # noqa: WPS317
+    sortable_fields = (
         'info__title',
         'repository__full_name',
         'repository__labels',
@@ -38,7 +38,7 @@ class ListView(
         queryset=ContributionLabel.objects.all(),
     )
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get the initial queryset and apply all filters."""
         queryset = (
             Contribution.objects.filter(type='iss').

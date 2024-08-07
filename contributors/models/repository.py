@@ -12,7 +12,7 @@ from contributors.models.project import Project
 class Repository(CommonFields):
     """Model representing a repository."""
 
-    FULL_NAME_LENGTH = 100  # noqa: WPS115
+    FULL_NAME_LENGTH = 100
 
     contributors = models.ManyToManyField(
         Contributor,

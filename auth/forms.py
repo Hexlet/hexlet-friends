@@ -23,6 +23,6 @@ class UserChangeForm(forms.UserChangeForm):
 class UserTokenForm(django_forms.ModelForm):
     """User GitHub token change form."""
 
-    class Meta:  # noqa: WPS306
+    class Meta:
         model = SiteUser
         fields = ['github_token']

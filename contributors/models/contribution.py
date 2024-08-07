@@ -18,7 +18,7 @@ class ContributionManager(CTEManager):
         """Return yearly results."""
         datetime_now = timezone.now()
         date_eleven_months_ago = (datetime_now - relativedelta.relativedelta(
-            months=11, day=1,   # noqa: WPS432
+            months=11, day=1,
         )).date()
 
         months_with_contrib_sums = self.get_queryset().filter(
@@ -68,10 +68,10 @@ class ContributionManager(CTEManager):
 class Contribution(models.Model):
     """Model representing a set of contributions."""
 
-    ID_LENGTH = 40   # noqa: WPS115
-    TYPE_LENGTH = 3  # noqa: WPS115
+    ID_LENGTH = 40
+    TYPE_LENGTH = 3
 
-    TYPES = (   # noqa: WPS115
+    TYPES = (
         ('cit', _("commit")),
         ('iss', _("issue")),
         ('pr', _("pull request")),
@@ -88,12 +88,12 @@ class Contribution(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("contributor"),
     )
-    id = models.CharField(primary_key=True, max_length=ID_LENGTH)  # noqa: A003,WPS125,E501
-    type = models.CharField(_("type"), choices=TYPES, max_length=TYPE_LENGTH)  # noqa: A003,WPS125,E501
+    id = models.CharField(primary_key=True, max_length=ID_LENGTH)  # noqa: A003,E501
+    type = models.CharField(_("type"), choices=TYPES, max_length=TYPE_LENGTH)  # noqa: A003,E501
     html_url = models.URLField(_("URL"))
     created_at = models.DateTimeField(_("creation date"))
 
-    objects = ContributionManager()  # noqa: WPS110
+    objects = ContributionManager()
 
     labels = models.ManyToManyField(
         ContributionLabel,

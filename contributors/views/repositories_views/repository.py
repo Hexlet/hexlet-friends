@@ -9,7 +9,7 @@ class RepoContributorList(contributors.ListView):
 
     template_name = 'contributors_sections/repositories/repository_details.html'  # noqa: E501
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get a dataset."""
         self.repository = get_object_or_404(
             Repository, full_name=self.kwargs['slug'],

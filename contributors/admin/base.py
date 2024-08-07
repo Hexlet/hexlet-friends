@@ -7,7 +7,7 @@ class ModelAdmin(admin.ModelAdmin):
 
     def change_tracking(self, request, queryset):
         """Inverse tracking of the object."""
-        for obj in queryset:    # noqa: WPS110
+        for obj in queryset:
             obj.is_tracked = not obj.is_tracked
             if not obj.is_tracked:
                 obj.is_visible = False
@@ -15,7 +15,7 @@ class ModelAdmin(admin.ModelAdmin):
 
     def change_visibility(self, request, queryset):
         """Inverse visibility of the object."""
-        for obj in queryset:    # noqa: WPS110
+        for obj in queryset:
             obj.is_visible = not obj.is_visible
             if obj.is_visible:
                 obj.is_tracked = True

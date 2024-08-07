@@ -34,7 +34,7 @@ IGNORED_CONTRIBUTORS = tuple(
 session = requests.Session()
 
 
-def create_contributions(   # noqa: C901,WPS231,WPS210
+def create_contributions(   # noqa: C901
     repo, contrib_data, user_field=None, id_field=None, type_=None,
 ):
     """Create a contribution record."""
@@ -109,7 +109,7 @@ def create_contributions(   # noqa: C901,WPS231,WPS210
 class Command(management.base.BaseCommand):
     """A management command for syncing with GitHub."""
 
-    help = "Saves data from GitHub to database"  # noqa: WPS125
+    help = "Saves data from GitHub to database"
 
     def add_arguments(self, parser):
         """Add arguments for the command."""
@@ -123,7 +123,7 @@ class Command(management.base.BaseCommand):
             '--repo', nargs='*', help='a list of repository full names',
         )
 
-    def handle(  # noqa: C901,WPS110,WPS213,WPS231,WPS210
+    def handle(  # noqa: C901
         self, *args, **options,
     ):
         """Collect data from GitHub."""
@@ -158,7 +158,7 @@ class Command(management.base.BaseCommand):
                 if repo['name'] not in IGNORED_REPOSITORIES
             ]
             number_of_repos = len(repos_to_process)
-            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111,E501
+            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: E501
                 repo, _ = misc.update_or_create_record(Repository, repo_data)
                 logger.info(f"{repo} ({i}/{number_of_repos})")
                 if repo_data['size'] == 0:

@@ -29,7 +29,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
         context['form_org'] = CombinedSearchForm(self.request.GET)
         return context
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get filter queryset."""
         queryset = super().get_queryset().prefetch_related(
             'contributors__organization',

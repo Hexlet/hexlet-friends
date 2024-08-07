@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class ContributionLabel(models.Model):
     """Model representing a label."""
 
-    NAME_LENGTH = 45  # noqa: WPS115
+    NAME_LENGTH = 45
 
     name = models.CharField(max_length=NAME_LENGTH)
 
