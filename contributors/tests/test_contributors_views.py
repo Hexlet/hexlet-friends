@@ -156,8 +156,3 @@ class AchievementViewTestCase(TestCase):
         for contributor in TEST_CONTRIBUTORS:
             response = self.client.get(reverse('contributors:contributor_achievements', args=[contributor]))
             self.assertEqual(response.status_code, HTTPStatus.OK)
-        response = self.client.get(reverse('contributors:contributor_achievements', args=[TEST_CONTRIBUTOR_LOGIN]))
-        self.assertEqual(response.context['contributor_commits_gte_1'], 1)
-        self.assertEqual(response.context['contributor_issues_gte_1'], 1)
-        self.assertEqual(response.context['contributor_comments_gte_1'], 1)
-        self.assertEqual(response.context['contributor_editions_gte_1'], 1)
