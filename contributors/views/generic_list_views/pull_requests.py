@@ -25,7 +25,7 @@ class ListView(TableSortSearchAndPaginationMixin, generic.ListView):
 
     template_name = 'contributors_sections/pull_requests/pull_requests_list.html'
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get pull requests.
 
         Returns:

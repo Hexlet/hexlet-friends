@@ -17,7 +17,7 @@ class ListView(contributors.ListView):
         context['is_month'] = self.extra_context.get('period') == 'month'
         return context
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Modify queryset depending on extra_content.period value."""
         if self.extra_context.get('period') == 'week':
             self.queryset = Contributor.objects.visible_with_weekly_stats()

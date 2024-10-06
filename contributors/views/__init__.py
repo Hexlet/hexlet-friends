@@ -1,4 +1,4 @@
-from contributors.views import (  # noqa: WPS235
+from contributors.views import (
     about,
     achievements,
     config,

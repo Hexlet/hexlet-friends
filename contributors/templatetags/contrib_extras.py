@@ -46,7 +46,7 @@ def get_query_string(context, qs_param, qs_param_value):
 @register.simple_tag(takes_context=True)
 def get_sort_query_string(context, passed_sort_field):
     """Get table column query string."""
-    def prepare_sort_param_value(ordering):  # noqa: WPS430
+    def prepare_sort_param_value(ordering):
         ordering = ordering or context['view'].get_ordering()
         current_sort_field = split_ordering(ordering)[1]
         if passed_sort_field == current_sort_field:
@@ -72,7 +72,7 @@ def get_pagination_query_string(context, page_num):
 @register.simple_tag(takes_context=True)
 def get_label_query_string(context, passed_label):
     """Get labels query string."""
-    def prepare_labels_param_value(labels_param):  # noqa: WPS430
+    def prepare_labels_param_value(labels_param):
         delimiter = '.'
         labels = labels_param.split(delimiter) if labels_param else []
         if passed_label in labels:
@@ -87,7 +87,7 @@ def get_label_query_string(context, passed_label):
 @register.simple_tag(takes_context=True)
 def get_contribution_label_query_string(context, passed_label):
     """Get labels query string."""
-    def prepare_contribution_labels_param_value(labels_param):  # noqa: WPS430
+    def prepare_contribution_labels_param_value(labels_param):
         delimiter = '.'
         labels = labels_param.split(delimiter) if labels_param else []
         if passed_label in labels:

@@ -92,7 +92,7 @@ class Contributor(CommonFields):
     avatar_url = models.URLField(_("avatar URL"))
     is_visible = models.BooleanField(_("visible"), default=True)
 
-    objects = ContributorQuerySet.as_manager()  # noqa: WPS110
+    objects = ContributorQuerySet.as_manager()
 
     class Meta(object):
         verbose_name = _("contributor")

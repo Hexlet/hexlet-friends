@@ -1,4 +1,4 @@
-from django.db.models import Count, F, Q, Sum  # noqa: WPS347
+from django.db.models import Count, F, Q, Sum
 from django.db.models.functions import Coalesce
 from django.views import generic
 

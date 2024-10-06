@@ -56,7 +56,7 @@ class IssuesFilter(django_filters.FilterSet):
         label='good first issue',
     )
 
-    class Meta:  # noqa: WPS306
+    class Meta:
         model = Contribution
         fields = [
             'info_title',
@@ -65,7 +65,7 @@ class IssuesFilter(django_filters.FilterSet):
             'info_state',
         ]
 
-    def get_good_first_issue(self, queryset, name, value):  # noqa: WPS110
+    def get_good_first_issue(self, queryset, name, value):
         """Filter issues by label 'good_first_issue'."""
         if value:  # Only apply filter if checkbox is checked
             good_first = ContributionLabel.objects.filter(
@@ -96,7 +96,7 @@ class DetailTablePeriodFilter(django_filters.FilterSet):
             datetime_now = timezone.now()
             date_eleven_months_ago = (
                 datetime_now - relativedelta.relativedelta(
-                    months=11, day=1,   # noqa: WPS432
+                    months=11, day=1,
                 )
             ).date()
             queryset = queryset.filter(

@@ -11,7 +11,7 @@ class OrgRepositoryList(repositories.ListView):
     template_name = (
         'contributors_sections/organizations/organization_details.html'
     )
-    sortable_fields = (  # noqa: WPS317
+    sortable_fields = (
         'name',
         'project',
         'pull_requests',
@@ -19,7 +19,7 @@ class OrgRepositoryList(repositories.ListView):
         ('contributors_count', _("Contributors")),
     )
 
-    def get_queryset(self):  # noqa: WPS615
+    def get_queryset(self):
         """Get a dataset."""
         self.organization = get_object_or_404(
             Organization,
