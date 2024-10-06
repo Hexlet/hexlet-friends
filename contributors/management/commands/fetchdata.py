@@ -158,7 +158,7 @@ class Command(management.base.BaseCommand):
                 if repo['name'] not in IGNORED_REPOSITORIES
             ]
             number_of_repos = len(repos_to_process)
-            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: WPS111
+            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: E501
                 repo, _ = misc.update_or_create_record(Repository, repo_data)
                 logger.info(f"{repo} ({i}/{number_of_repos})")
                 if repo_data['size'] == 0:

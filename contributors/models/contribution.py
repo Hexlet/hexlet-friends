@@ -88,8 +88,8 @@ class Contribution(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("contributor"),
     )
-    id = models.CharField(primary_key=True, max_length=ID_LENGTH)  # noqa: A003,WPS125
-    type = models.CharField(_("type"), choices=TYPES, max_length=TYPE_LENGTH)  # noqa: A003,WPS125
+    id = models.CharField(primary_key=True, max_length=ID_LENGTH)  # noqa: A003,E501
+    type = models.CharField(_("type"), choices=TYPES, max_length=TYPE_LENGTH)  # noqa: A003,E501
     html_url = models.URLField(_("URL"))
     created_at = models.DateTimeField(_("creation date"))
 

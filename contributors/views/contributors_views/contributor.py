@@ -46,7 +46,7 @@ class DetailView(
             self.object.contribution_set.for_year()
         )
         context['top_repository'] = repositories.annotate(
-            summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: WPS221
+            summary=F('commits') + F('pull_requests') + F('issues') + F('comments'),  # noqa: E501
         ).order_by('-summary').first()
 
         context['summary'] = Contribution.objects.filter(
