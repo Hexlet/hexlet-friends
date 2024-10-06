@@ -1,0 +1,45 @@
+{% extends './list_as_table.html' %}
+{% load i18n static mathfilters %}
+
+{% block tbody %}
+
+{% for item in finished %}
+<tr>
+  <td>
+    <img src= {% static item.img %}
+         data-toggle="tooltip"
+         width="50">
+  </td>
+  <td>
+    <div class="bg-primary">
+      <dl class=" p-2 fs-6 mb-0 x-vw ">
+        <dt>{{item.name}}</dt>
+        <dd class="mb-0">{{item.description}}</dd>
+      </dl>
+    </div>
+  </td>
+</tr>
+{% endfor %}
+
+<br>
+
+{% for item in unfinished %}
+
+<tr>
+  <td>
+    <img src= {% static item.img %}
+         data-toggle="tooltip"
+         width="50">
+  </td>
+  <td>
+    <div class=".bg-secondary.bg-gradient">
+      <dl class=" p-2 fs-6 mb-0 x-vw ">
+        <dt>{{item.name}}</dt>
+        <dd class="mb-0">{{item.description}}</dd>
+      </dl>
+    </div>
+  </td>
+</tr>
+{% endfor %}
+
+{% endblock %}

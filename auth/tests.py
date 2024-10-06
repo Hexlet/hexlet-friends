@@ -128,8 +128,8 @@ class AuthViewsTest(TestCase):
         """Create a test client."""
         self.client: Client = Client()
 
-    @patch('contributors.utils.github_lib.get_access_token', lambda *args: None)  # noqa: E501
-    @patch('contributors.utils.github_lib.get_data_of_token_holder', lambda *args: None)  # noqa: E501
+    @patch('contributors.utils.github_lib.get_access_token', lambda *args: None)
+    @patch('contributors.utils.github_lib.get_data_of_token_holder', lambda *args: None)
     @patch('auth.backends.GitHubBackend.authenticate', lambda *args: None)
     def test_github_auth_view(self):
         """Send a request without authentication and check the response."""

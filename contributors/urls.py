@@ -107,6 +107,11 @@ urlpatterns = [
         name='achievements',
     ),
     path(
+        'contributor_achievements/<slug:slug>',
+        views.contributor_achievements.ContributorAchievementListView.as_view(),
+        name='contributor_achievements',
+    ),
+    path(
         'landing/',
         views.landing.LandingView.as_view(),
         name='landing',

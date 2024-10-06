@@ -2,6 +2,10 @@
 {% load i18n static mathfilters %}
 
 {% block tbody %}
+
+<div>
+  {% trans "Total achievements" %} {{ closed }} / {{all_achievements}}
+</div>
 <tr>
   <td>
     <img src="{% static 'images/achievments_icons/friend.svg' %}"
@@ -12,10 +16,16 @@
   </td>
   <td>
 
-    {% with achievement_name="Hexlet friend" achievement_description="Make any contribution to Hexlet projects" achievement_made_count=contributors_with_any_contribution %}
+    {% with achievement_name="Hexlet friend" achievement_description="Make any contribution to Hexlet projects" achievement_made_count=contributors_with_any_contribution.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
 
+  </td>
+  <td>
+    {% if contributors_with_any_contribution.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 
@@ -29,9 +39,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Pull requests (equal to or more than 1)" achievement_description="Make pull requests in amount of equal to or more than 1" achievement_made_count=contributors_pull_requests_gte_1 %}
+    {% with achievement_name="Pull requests (equal to or more than 1)" achievement_description="Make pull requests in amount of equal to or more than 1" achievement_made_count=contributors_pull_requests_gte_1.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_pull_requests_gte_1.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -43,9 +59,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Pull requests (equal to or more than 10)" achievement_description="Make pull requests in amount of equal to or more than 10" achievement_made_count=contributors_pull_requests_gte_10 %}
+    {% with achievement_name="Pull requests (equal to or more than 10)" achievement_description="Make pull requests in amount of equal to or more than 10" achievement_made_count=contributors_pull_requests_gte_10.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_pull_requests_gte_10.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -57,9 +79,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Pull requests (equal to or more than 25)" achievement_description="Make pull requests in amount of equal to or more than 25" achievement_made_count=contributors_pull_requests_gte_25 %}
+    {% with achievement_name="Pull requests (equal to or more than 25)" achievement_description="Make pull requests in amount of equal to or more than 25" achievement_made_count=contributors_pull_requests_gte_25.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_pull_requests_gte_25.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -71,9 +99,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Pull requests (equal to or more than 50)" achievement_description="Make pull requests in amount of equal to or more than 50" achievement_made_count=contributors_pull_requests_gte_50 %}
+    {% with achievement_name="Pull requests (equal to or more than 50)" achievement_description="Make pull requests in amount of equal to or more than 50" achievement_made_count=contributors_pull_requests_gte_50.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_pull_requests_gte_50.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -85,9 +119,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Pull requests (equal to or more than 100)" achievement_description="Make pull requests in amount of equal to or more than 100" achievement_made_count=contributors_pull_requests_gte_100 %}
+    {% with achievement_name="Pull requests (equal to or more than 100)" achievement_description="Make pull requests in amount of equal to or more than 100" achievement_made_count=contributors_pull_requests_gte_100.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_pull_requests_gte_10.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 
@@ -101,9 +141,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Commits (equal to or more than 1)" achievement_description="Make commits in amount of equal to or more than 1" achievement_made_count=contributors_commits_gte_1 %}
+    {% with achievement_name="Commits (equal to or more than 1)" achievement_description="Make commits in amount of equal to or more than 1" achievement_made_count=contributors_commits_gte_1.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_commits_gte_1.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -115,9 +161,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Commits (equal to or more than 25)" achievement_description="Make commits in amount of equal to or more than 25" achievement_made_count=contributors_commits_gte_25 %}
+    {% with achievement_name="Commits (equal to or more than 25)" achievement_description="Make commits in amount of equal to or more than 25" achievement_made_count=contributors_commits_gte_25.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_commits_gte_25.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -129,9 +181,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Commits (equal to or more than 50)" achievement_description="Make commits in amount of equal to or more than 50" achievement_made_count=contributors_commits_gte_50 %}
+    {% with achievement_name="Commits (equal to or more than 50)" achievement_description="Make commits in amount of equal to or more than 50" achievement_made_count=contributors_commits_gte_50.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_commits_gte_50.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -143,9 +201,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Commits (equal to or more than 100)" achievement_description="Make commits in amount of equal to or more than 100" achievement_made_count=contributors_commits_gte_100 %}
+    {% with achievement_name="Commits (equal to or more than 100)" achievement_description="Make commits in amount of equal to or more than 100" achievement_made_count=contributors_commits_gte_100.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_commits_gte_100.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -157,9 +221,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Commits (equal to or more than 200)" achievement_description="Make commits in amount of equal to or more than 200" achievement_made_count=contributors_commits_gte_200 %}
+    {% with achievement_name="Commits (equal to or more than 200)" achievement_description="Make commits in amount of equal to or more than 200" achievement_made_count=contributors_commits_gte_200.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_commits_gte_200.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 
@@ -173,9 +243,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Issues (equal to or more than 1)" achievement_description="Make issues in amount of equal to or more than 1" achievement_made_count=contributors_issues_gte_1 %}
+    {% with achievement_name="Issues (equal to or more than 1)" achievement_description="Make issues in amount of equal to or more than 1" achievement_made_count=contributors_issues_gte_1.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_issues_gte_1.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -187,9 +263,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Issues (equal to or more than 5)" achievement_description="Make issues in amount of equal to or more than 5" achievement_made_count=contributors_issues_gte_5 %}
+    {% with achievement_name="Issues (equal to or more than 5)" achievement_description="Make issues in amount of equal to or more than 5" achievement_made_count=contributors_issues_gte_5.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_issues_gte_5.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -201,9 +283,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Issues (equal to or more than 10)" achievement_description="Make issues in amount of equal to or more than 10" achievement_made_count=contributors_issues_gte_10 %}
+    {% with achievement_name="Issues (equal to or more than 10)" achievement_description="Make issues in amount of equal to or more than 10" achievement_made_count=contributors_issues_gte_10.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_issues_gte_10.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -215,9 +303,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Issues (equal to or more than 25)" achievement_description="Make issues in amount of equal to or more than 25" achievement_made_count=contributors_issues_gte_25 %}
+    {% with achievement_name="Issues (equal to or more than 25)" achievement_description="Make issues in amount of equal to or more than 25" achievement_made_count=contributors_issues_gte_25.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_issues_gte_25.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -229,9 +323,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Issues (equal to or more than 50)" achievement_description="Make issues in amount of equal to or more than 50" achievement_made_count=contributors_issues_gte_50 %}
+    {% with achievement_name="Issues (equal to or more than 50)" achievement_description="Make issues in amount of equal to or more than 50" achievement_made_count=contributors_issues_gte_50.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_issues_gte_50.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 
@@ -245,9 +345,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Comments (equal to or more than 1)" achievement_description="Make comments in amount of equal to or more than 1" achievement_made_count=contributors_comments_gte_1 %}
+    {% with achievement_name="Comments (equal to or more than 1)" achievement_description="Make comments in amount of equal to or more than 1" achievement_made_count=contributors_comments_gte_1.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_comments_gte_1.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -259,9 +365,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Comments (equal to or more than 25)" achievement_description="Make comments in amount of equal to or more than 25" achievement_made_count=contributors_comments_gte_25 %}
+    {% with achievement_name="Comments (equal to or more than 25)" achievement_description="Make comments in amount of equal to or more than 25" achievement_made_count=contributors_comments_gte_25.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+    <td>  
+    {% if contributors_comments_gte_25.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -273,9 +385,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Comments (equal to or more than 50)" achievement_description="Make comments in amount of equal to or more than 50" achievement_made_count=contributors_comments_gte_50 %}
+    {% with achievement_name="Comments (equal to or more than 50)" achievement_description="Make comments in amount of equal to or more than 50" achievement_made_count=contributors_comments_gte_50.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_comments_gte_50.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -287,9 +405,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Comments (equal to or more than 100)" achievement_description="Make comments in amount of equal to or more than 100" achievement_made_count=contributors_comments_gte_100 %}
+    {% with achievement_name="Comments (equal to or more than 100)" achievement_description="Make comments in amount of equal to or more than 100" achievement_made_count=contributors_comments_gte_100.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_comments_gte_100.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -301,9 +425,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Comments (equal to or more than 200)" achievement_description="Make comments in amount of equal to or more than 200" achievement_made_count=contributors_comments_gte_200 %}
+    {% with achievement_name="Comments (equal to or more than 200)" achievement_description="Make comments in amount of equal to or more than 200" achievement_made_count=contributors_comments_gte_200.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_comments_gte_200.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 
@@ -316,9 +446,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Additions and deletions (equal to or more than 1)" achievement_description="Make additions and deletions in amount of equal to or more than 1" achievement_made_count=contributors_editions_gte_1 %}
+    {% with achievement_name="Additions and deletions (equal to or more than 1)" achievement_description="Make additions and deletions in amount of equal to or more than 1" achievement_made_count=contributors_editions_gte_1.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+  <td>  
+    {% if contributors_editions_gte_1.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -330,9 +466,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Additions and deletions (equal to or more than 100)" achievement_description="Make additions and deletions in amount of equal to or more than 100" achievement_made_count=contributors_editions_gte_100 %}
+    {% with achievement_name="Additions and deletions (equal to or more than 100)" achievement_description="Make additions and deletions in amount of equal to or more than 100" achievement_made_count=contributors_editions_gte_100.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+    <td>  
+    {% if contributors_editions_gte_100.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -344,9 +486,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Additions and deletions (equal to or more than 250)" achievement_description="Make additions and deletions in amount of equal to or more than 250" achievement_made_count=contributors_editions_gte_250 %}
+    {% with achievement_name="Additions and deletions (equal to or more than 250)" achievement_description="Make additions and deletions in amount of equal to or more than 250" achievement_made_count=contributors_editions_gte_250.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+    <td>  
+    {% if contributors_editions_gte_250.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -358,9 +506,15 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Additions and deletions (equal to or more than 500)" achievement_description="Make additions and deletions in amount of equal to or more than 500" achievement_made_count=contributors_editions_gte_500 %}
+    {% with achievement_name="Additions and deletions (equal to or more than 500)" achievement_description="Make additions and deletions in amount of equal to or more than 500" achievement_made_count=contributors_editions_gte_500.stat%}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
+  </td>
+    <td>  
+    {% if contributors_editions_gte_500.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
   </td>
 </tr>
 <tr>
@@ -372,9 +526,17 @@
          width="50">
   </td>
   <td>
-    {% with achievement_name="Additions and deletions (equal to or more than 1000)" achievement_description="Make additions and deletions in amount of equal to or more than 1000" achievement_made_count=contributors_editions_gte_1000 %}
+    {% with achievement_name="Additions and deletions (equal to or more than 1000)" achievement_description="Make additions and deletions in amount of equal to or more than 1000" achievement_made_count=contributors_editions_gte_1000.stat %}
       {% include './achievement_percentage_field.html' %}
     {% endwith %}
   </td>
+  <td>  
+    {% if contributors_editions_gte_1000.acomplished %}
+      <img src="{% static 'images/achievments_icons/done.svg' %}"
+      width="50">
+    {% endif %}
+  </td>
 </tr>
+
+
 {% endblock %}

@@ -200,3 +200,11 @@ a:not([class]) {
 a:not([class]):hover {
   text-decoration: underline;
 }
+
+.x-vw {
+    width: 50vw;
+}
+
+.x-h {
+    height: max-content;
+}

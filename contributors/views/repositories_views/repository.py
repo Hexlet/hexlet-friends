@@ -7,7 +7,7 @@ from contributors.views.contributors_views import contributors
 class RepoContributorList(contributors.ListView):
     """A repository's details."""
 
-    template_name = 'contributors_sections/repositories/repository_details.html'  # noqa: E501
+    template_name = 'contributors_sections/repositories/repository_details.html'
 
     def get_queryset(self):
         """Get a dataset."""
