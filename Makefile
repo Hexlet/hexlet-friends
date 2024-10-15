@@ -61,7 +61,10 @@ secretkey:
 
 setup: install
 	$(MAKE) migrate
-	poetry run python manage.py createsuperuser --noinput --username admin --email admin@mail.com
+	$(MAKE) updatesuperuser
+
+updatesuperuser:
+	poetry run python manage.py updatesuperuser --username admin --email admin@mail.com
 
 shell:
 	poetry run python manage.py shell_plus --plain
