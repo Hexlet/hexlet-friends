@@ -272,8 +272,12 @@ GRAPH_MODELS = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': 'memcached:11211',
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': os.environ.get('CACHE_LOCATION', '').split(','),
+        'OPTIONS': {
+            'username': os.environ.get('CACHE_USERNAME', ''),
+            'password': os.environ.get('CACHE_PASSWORD', '')
+        }
     }
 }
 

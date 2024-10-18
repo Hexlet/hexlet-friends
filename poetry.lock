@@ -528,6 +528,19 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-bmemcached"
+version = "0.3.0"
+description = "A Django cache backend to use bmemcached module which supports memcached binary protocol with authentication."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-bmemcached-0.3.0.tar.gz", hash = "sha256:4e4b7d97216dbae331c1de10e699ca22804b94ec3a90d2762dd5d146e6986a8a"},
+]
+
+[package.dependencies]
+python-binary-memcached = "*"
+
+[[package]]
 name = "django-crispy-forms"
 version = "1.14.0"
 description = "Best way to have Django DRY forms"
@@ -970,6 +983,21 @@ files = [
 diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
+name = "python-binary-memcached"
+version = "0.31.2"
+description = "A pure python module to access memcached via its binary protocol with SASL auth support"
+optional = false
+python-versions = "*"
+files = [
+    {file = "python-binary-memcached-0.31.2.tar.gz", hash = "sha256:290f70451e277df6a39aa0eea3cb6ca2eefcf5d601f957cf2ec1d353d7676c03"},
+    {file = "python_binary_memcached-0.31.2-py3-none-any.whl", hash = "sha256:e5b93d54429e835cab7d5b33988649f9748344aa49adaed8eed94b37e714d562"},
+]
+
+[package.dependencies]
+six = "*"
+uhashring = "*"
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 description = "Extensions to the standard Python datetime module"
@@ -1236,6 +1264,17 @@ tzdata = {version = "*", markers = "platform_system == \"Windows\""}
 devenv = ["check-manifest", "pytest (>=4.3)", "pytest-cov", "pytest-mock (>=3.3)", "zest.releaser"]
 
 [[package]]
+name = "uhashring"
+version = "2.3"
+description = "Full featured consistent hashing python library compatible with ketama."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "uhashring-2.3-py3-none-any.whl", hash = "sha256:7ee8a25ca495a97effad10bd563c83b4054a6d7606d9530757049a04edab9297"},
+    {file = "uhashring-2.3.tar.gz", hash = "sha256:9f76187e8d8e82f6e5519c995eef1f1bf44d4a5e0fc4fdd1219a044b10040612"},
+]
+
+[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1293,4 +1332,4 @@ psycopg2-binary = ["psycopg2-binary"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "fa2eb31c2c86c8bcfb756eec7b0a53b74ba92bdd6f2dd5423663a3e55687aeca"
+content-hash = "8b2447709bef7696d8c826ba385787e40fd2a9114198d45d3ec44b76bd78c83b"
