@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 import dj_database_url
 import sentry_sdk
@@ -85,6 +86,7 @@ if DEBUG:
 
     INTERNAL_IPS = [
         '127.0.0.1',
+        'localhost',
     ]
 
 ROOT_URLCONF = 'config.urls'
@@ -261,3 +263,24 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
+
+""" DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+} """
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': 'memcached:11211',
+    }
+}
+
+if 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }

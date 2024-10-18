@@ -22,34 +22,16 @@ class ContributorQuerySet(CTEQuerySet):
     def with_contributions(self):
         """Return a list of contributors annotated with contributions."""
         return self.annotate(
-            commits=models.Count(
-                'contribution', filter=models.Q(contribution__type='cit'),
-            ),
-            additions=Coalesce(
-                models.Sum('contribution__stats__additions'), 0,
-            ),
-            deletions=Coalesce(
-                models.Sum('contribution__stats__deletions'), 0,
-            ),
-            pull_requests=models.Count(
-                'contribution', filter=models.Q(contribution__type='pr'),
-            ),
-            issues=models.Count(
-                'contribution', filter=models.Q(contribution__type='iss'),
-            ),
-            comments=models.Count(
-                'contribution', filter=models.Q(contribution__type='cnt'),
-            ),
-            editions=(models.F('additions') + models.F('deletions')),
-            contribution_amount=sum(
-                (
-                    models.F('commits'),
-                    models.F('editions'),
-                    models.F('pull_requests'),
-                    models.F('issues'),
-                    models.F('comments'),
-                ),
-            ),
+            commits=models.Count('contribution', filter=models.Q(contribution__type='cit')),
+            additions=Coalesce(models.Sum('contribution__stats__additions'), 0),
+            deletions=Coalesce(models.Sum('contribution__stats__deletions'), 0),
+            pull_requests=models.Count('contribution', filter=models.Q(contribution__type='pr')),
+            issues=models.Count('contribution', filter=models.Q(contribution__type='iss')),
+            comments=models.Count('contribution', filter=models.Q(contribution__type='cnt')),
+        ).annotate(
+            editions=models.F('additions') + models.F('deletions'),
+            contribution_amount=models.F('commits') + models.F('editions')
+            + models.F('pull_requests') + models.F('issues') + models.F('comments')
         )
 
     def for_month(self):
