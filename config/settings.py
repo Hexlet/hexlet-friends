@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 import dj_database_url
 import sentry_sdk
@@ -275,3 +276,11 @@ CACHES = {
         'LOCATION': 'memcached:11211',
     }
 }
+
+if 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
