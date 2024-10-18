@@ -85,6 +85,7 @@ if DEBUG:
 
     INTERNAL_IPS = [
         '127.0.0.1',
+        'localhost',
     ]
 
 ROOT_URLCONF = 'config.urls'
@@ -260,4 +261,17 @@ sentry_sdk.init(
 GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
+}
+
+
+""" DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+} """
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': 'memcached:11211',
+    }
 }

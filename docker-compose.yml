@@ -8,6 +8,11 @@ services:
 
     ports:
       - 5433:5432
+  
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11211:11211"
 
   django:
     build:
@@ -26,6 +31,7 @@ services:
       - 8000:8000
     depends_on:
       - db
+      - memcached
 
 volumes:
   postgres_volume:
