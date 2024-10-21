@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'mathfilters',
     'django_filters',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -288,3 +289,5 @@ if 'test' in sys.argv:
             'LOCATION': 'unique-snowflake',
         }
     }
+
+SITE_ID = 1
