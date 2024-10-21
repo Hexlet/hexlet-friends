@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.staticfiles.views import serve
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
@@ -18,6 +19,7 @@ urlpatterns = [
     path('auth/', include('auth.urls')),
     path('', include('contributors.urls')),
     path('sentry-debug/', trigger_error),
+    path('robots.txt', serve, {'path': 'robots.txt'}),
 ]
 
 if settings.DEBUG:
