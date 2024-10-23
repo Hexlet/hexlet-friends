@@ -9,6 +9,11 @@ services:
     ports:
       - 5433:5432
 
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11211:11211"
+
   django:
     build:
       context: .
@@ -20,12 +25,16 @@ services:
       POSTGRES_HOST: db
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+      CACHE_LOCATION: memcached
+      CACHE_USERNAME:
+      CACHE_PASSWORD:
     volumes:
       - .:/usr/local/src/hexlet-friends
     ports:
       - 8000:8000
     depends_on:
       - db
+      - memcached
 
 volumes:
   postgres_volume:

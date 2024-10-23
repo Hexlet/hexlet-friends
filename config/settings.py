@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 import dj_database_url
 import sentry_sdk
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'mathfilters',
     'django_filters',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -85,6 +87,7 @@ if DEBUG:
 
     INTERNAL_IPS = [
         '127.0.0.1',
+        'localhost',
     ]
 
 ROOT_URLCONF = 'config.urls'
@@ -261,3 +264,30 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
+
+""" DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+} """
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': os.environ.get('CACHE_LOCATION', '').split(','),
+        'OPTIONS': {
+            'username': os.environ.get('CACHE_USERNAME', ''),
+            'password': os.environ.get('CACHE_PASSWORD', '')
+        }
+    }
+}
+
+if 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+
+SITE_ID = 1

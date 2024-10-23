@@ -60,7 +60,15 @@ class PaginationMixin(MultipleObjectMixin):
 
     def get_context_data(self, **kwargs):
         """Add context."""
-        paginator = Paginator(self.get_queryset(), self.paginate_by)
+        queryset = kwargs.pop('object_list', self.object_list)
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        # Убедимся, что queryset отсортирован
+        if not queryset.query.order_by:
+            queryset = queryset.order_by('id')
+
+        paginator = Paginator(queryset, self.paginate_by)
         page = paginator.get_page(self.request.GET.get('page'))
 
         page_slice = get_page_slice(
@@ -71,7 +79,7 @@ class PaginationMixin(MultipleObjectMixin):
             self.inner_visible_pages,
         )
 
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(object_list=queryset, **kwargs)
         context.update({
             'page': page,
             'page_range': paginator.page_range[page_slice],
