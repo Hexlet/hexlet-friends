@@ -41,8 +41,12 @@ class ContributorAchievementListView(generic.ListView):
             pull_requests=models.Count(
                 'contribution', filter=models.Q(contribution__type='pr'),
             ),
-            issues=models.Count('contribution', filter=models.Q(contribution__type='iss')),
-            comments=models.Count('contribution', filter=models.Q(contribution__type='cnt')),
+            issues=models.Count(
+                'contribution',
+                filter=models.Q(contribution__type='iss')),
+            comments=models.Count(
+                'contribution',
+                filter=models.Q(contribution__type='cnt')),
         ).order_by('organization', 'name')
 
         contributions = repositories.values().aggregate(
@@ -105,14 +109,17 @@ class ContributorAchievementListView(generic.ListView):
             a_data = {
                 'img': f'images/achievments_icons/pull_requests-{pr_num}.svg',
                 'name': f'Pull requests (equal to or more than {pr_num})',
-                'description': f"Make pull requests in amount of equal to or more than {pr_num}",
+                'description':
+                    f"Make pull requests in amount of equal to or more than {pr_num}",
                 'accomplished': 'yes',
             }
             if pr_num > (
-                0 if contributions['contributor_pull_requests'] is None else contributions['contributor_pull_requests']
+                0 if contributions['contributor_pull_requests'] is None
+                else contributions['contributor_pull_requests']
             ):
                 unfinished.append(a_data)
-                context[f'contributors_pull_requests_gte_{pr_num}']['acomplished'] = False
+                context[(f'contributors_pull_requests_gte_'
+                         f'{pr_num}')]['acomplished'] = False
             else:
                 finished.append(a_data)
 
@@ -127,10 +134,12 @@ class ContributorAchievementListView(generic.ListView):
             a_data = {
                 'img': f'images/achievments_icons/commits-{commit_num}.svg',
                 'name': f'Commits (equal to or more than {commit_num})',
-                'description': f"Make commits in amount of equal to or more than {commit_num}",
+                'description': f"Make commits in amount of equal to or more than "
+                               f"{commit_num}",
             }
             if commit_num > (
-                0 if contributions['contributor_commits'] is None else contributions['contributor_commits']
+                0 if contributions['contributor_commits'] is None
+                else contributions['contributor_commits']
             ):
                 unfinished.append(a_data)
                 context[f'contributors_commits_gte_{commit_num}']['acomplished'] = False
@@ -148,10 +157,12 @@ class ContributorAchievementListView(generic.ListView):
             a_data = {
                 'img': f'images/achievments_icons/issues-{issue_num}.svg',
                 'name': f'Issues (equal to or more than {issue_num})',
-                'description': f"Make issues in amount of equal to or more than {issue_num}",
+                'description': f"Make issues in amount of equal to or more than "
+                               f"{issue_num}",
             }
             if issue_num > (
-                0 if contributions['contributor_issues'] is None else contributions['contributor_issues']
+                0 if contributions['contributor_issues'] is None
+                else contributions['contributor_issues']
             ):
                 unfinished.append(a_data)
                 context[f'contributors_issues_gte_{issue_num}']['acomplished'] = False
@@ -169,13 +180,16 @@ class ContributorAchievementListView(generic.ListView):
             a_data = {
                 'img': f'images/achievments_icons/comments-{comment_num}.svg',
                 'name': f'Comments (equal to or more than {comment_num})',
-                'description': f"Make comments in amount of equal to or more than {comment_num}",
+                'description': f"Make comments in amount of equal to or more than "
+                               f"{comment_num}",
             }
             if comment_num > (
-                0 if contributions['contributor_comments'] is None else contributions['contributor_comments']
+                0 if contributions['contributor_comments'] is None
+                else contributions['contributor_comments']
             ):
                 unfinished.append(a_data)
-                context[f'contributors_comments_gte_{comment_num}']['acomplished'] = False
+                context[(f'contributors_comments_gte_'
+                         f'{comment_num}')]['acomplished'] = False
             else:
                 finished.append(a_data)
 
@@ -188,9 +202,12 @@ class ContributorAchievementListView(generic.ListView):
                 'acomplished': True,
             }
             a_data = {
-                'img': f'images/achievments_icons/code_editions-{ed_num}.svg',
+                'img':
+                    f'images/achievments_icons/code_editions-{ed_num}.svg',
                 'name': f'Additions and deletions (equal to or more than {ed_num})',
-                'description': f"Make additions and deletions in amount of equal to or more than {ed_num}",
+                'description':
+                    f"Make additions and"
+                    f" deletions in amount of equal to or more than {ed_num}",
             }
 
             if ed_num > editions:

@@ -154,5 +154,8 @@ class AchievementViewTestCase(TestCase):
 
     def test_get_context_data_contributor(self):
         for contributor in TEST_CONTRIBUTORS:
-            response = self.client.get(reverse('contributors:contributor_achievements', args=[contributor]))
+            response = self.client.get(reverse(
+                'contributors:contributor_achievements',
+                args=[contributor]),
+            )
             self.assertEqual(response.status_code, HTTPStatus.OK)
