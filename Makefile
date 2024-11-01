@@ -94,6 +94,8 @@ test:
 transcompile:
 	poetry run django-admin compilemessages
 
+load-dump:
+    psql -h $(DB_HOST) -U $(DB_USER) -d $(DB_NAME) -p $(DB_PORT) -f data/dump.sql
 # Need to have GNU gettext installed
 transprepare:
 	poetry run django-admin makemessages --locale ru --add-location file
