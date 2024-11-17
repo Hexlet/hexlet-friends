@@ -264,17 +264,16 @@ class ContributorAchievementListView(generic.ListView):
 
     def _calculate_editions(self, contributions):
         """Calculate total editions (additions + deletions)."""
-        return sum([
+        return sum(
             0 if edit is None else edit
             for edit in [
                 contributions['contributor_additions'],
                 contributions['contributor_deletions'],
-            ]
-        ])
+            ])
 
     def _calculate_total_actions(self, contributions):
         """Calculate total actions"""
-        return sum([
+        return sum(
             0 if action is None else action
             for action in [
                 contributions['contributor_commits'],
@@ -283,8 +282,7 @@ class ContributorAchievementListView(generic.ListView):
                 contributions['contributor_comments'],
                 contributions['contributor_additions'],
                 contributions['contributor_deletions'],
-            ]
-        ])
+            ])
 
     def _contributors_with_any_contribution(self, contributors):
         """Get the contributors with any contributions."""
