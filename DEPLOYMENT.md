@@ -68,7 +68,6 @@
     GITHUB_AUTH_CLIENT_ID=<Нужна для авторизации через GitHub>
     GITHUB_AUTH_CLIENT_SECRET=<Нужна для авторизации через GitHub>
     PYTHON_VERSION=<Желаемая версия Python>
-    POETRY_VERSION=<Желаемая версия Poetry>
     GITHUB_AUTH_TOKEN=<Токен личного доступа из настроек GitHub>
     GITHUB_WEBHOOK_TOKEN=<можно сгенерировать командой терминала make secretkey в каталоге проекта или создать самостоятельно>
     SECRET_KEY=<можно сгенерировать командой терминала make secretkey в каталоге проекта или создать самостоятельно>
@@ -94,7 +93,7 @@
 Выполните команду:
 
 ```bash
-poetry run python manage.py dumpdata --indent 2 > db_fixture.json
+uv run python manage.py dumpdata --indent 2 > db_fixture.json
 ```
 
 ### Применение фикстуры
@@ -103,5 +102,5 @@ poetry run python manage.py dumpdata --indent 2 > db_fixture.json
 Выполните команду:
 
 ```bash
-poetry run python manage.py loaddata db_fixture.json
+uv run python manage.py loaddata db_fixture.json
 ```

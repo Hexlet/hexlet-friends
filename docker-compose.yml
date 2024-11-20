@@ -17,7 +17,7 @@ services:
   django:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     command: "make start"
     env_file:
       - .env

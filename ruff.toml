@@ -1,0 +1,18 @@
+line-length = 89
+
+# Exclude some directories:
+exclude = [
+  ".git",
+  "__pycache__",
+  "migrations",
+  ".venv",
+]
+
+[lint.mccabe]
+# Flag errors (`C901`) whenever the complexity level exceeds 5.
+max-complexity = 5
+
+[lint.extend-per-file-ignores]
+"__init__.py" = ["F401"]
+"config/*.py manage.py" = ["S104"]
+".//contributors/**" = ["E501"]
