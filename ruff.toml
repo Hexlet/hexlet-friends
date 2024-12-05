@@ -6,11 +6,12 @@ exclude = [
   "__pycache__",
   "migrations",
   ".venv",
+  "settings.py"
 ]
 
-[lint.mccabe]
-# Flag errors (`C901`) whenever the complexity level exceeds 5.
-max-complexity = 5
+[lint]
+preview = true
+select = ["E", "F", "I", "C90"]
 
 [lint.extend-per-file-ignores]
 "__init__.py" = ["F401"]

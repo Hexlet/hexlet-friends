@@ -401,7 +401,6 @@ dependencies = [
     { name = "python-dateutil" },
     { name = "python-dotenv" },
     { name = "requests" },
-    { name = "ruff" },
     { name = "sentry-sdk" },
     { name = "whitenoise" },
 ]
@@ -413,6 +412,7 @@ dev = [
     { name = "pre-commit" },
     { name = "pydot" },
     { name = "pyparsing" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -436,7 +436,6 @@ requires-dist = [
     { name = "python-dateutil", specifier = ">=2.9.0.post0" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "requests", specifier = ">=2.32.3" },
-    { name = "ruff", specifier = ">=0.7.4" },
     { name = "sentry-sdk", specifier = ">=2.18.0" },
     { name = "whitenoise", specifier = ">=6.8.2" },
 ]
@@ -448,6 +447,7 @@ dev = [
     { name = "pre-commit", specifier = ">=4.0.1" },
     { name = "pydot", specifier = ">=3.0.2" },
     { name = "pyparsing", specifier = ">=3.2.0" },
+    { name = "ruff", specifier = ">=0.7.4" },
 ]
 
 [[package]]

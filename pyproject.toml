@@ -24,13 +24,13 @@ dependencies = [
     "python-dateutil>=2.9.0.post0",
     "python-dotenv>=1.0.1",
     "requests>=2.32.3",
-    "ruff>=0.7.4",
     "sentry-sdk>=2.18.0",
     "whitenoise>=6.8.2",
 ]
 
 [tool.uv]
 dev-dependencies = [
+    "ruff>=0.7.4",
     "coverage>=7.6.7",
     "faker>=33.0.0",
     "pre-commit>=4.0.1",
