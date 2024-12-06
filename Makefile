@@ -108,4 +108,4 @@ erd-in-png: erd-dot
 erd-in-pdf: erd-dot
 	dot -Tpdf erd.dot -o erd.pdf
 
-.PHONY: install setup shell lint test check start sync secretkey
+.PHONY: install setup shell lint test check start sync secretkey requirements.txt
