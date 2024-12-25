@@ -26,50 +26,56 @@ class ListView(
 
     def get_queryset(self):
         queryset = (
-            Repository.objects.select_related('organization', 'project').filter(
+            Repository.objects.select_related("organization", "project")
+            .filter(
                 is_visible=True,
-            ).distinct().annotate(
+            )
+            .distinct()
+            .annotate(
                 pull_requests=Count(
-                    'contribution',
-                    filter=Q(contribution__type='pr') & self.for_visible_contributor,
+                    "contribution",
+                    filter=Q(contribution__type="pr") & self.for_visible_contributor,
                 ),
                 issues=Count(
-                    'contribution',
-                    filter=Q(contribution__type='iss') & self.for_visible_contributor,
+                    "contribution",
+                    filter=Q(contribution__type="iss") & self.for_visible_contributor,
                 ),
                 contributors_count=Count(
-                    'contribution__contributor',
+                    "contribution__contributor",
                     filter=self.for_visible_contributor,
                     distinct=True,
                 ),
-            ).prefetch_related(
-                Prefetch('labels', queryset=Label.objects.only('name'))
             )
+            .prefetch_related(Prefetch("labels", queryset=Label.objects.only("name")))
         )
         return queryset
 
-    template_name = 'contributors_sections/repositories/repositories_list.html'
+    template_name = "contributors_sections/repositories/repositories_list.html"
     sortable_fields = (
-        'name',
-        'organization',
-        'project',
-        'pull_requests',
-        'issues',
-        ('contributors_count', _("Contributors")),
+        "name",
+        "organization",
+        "project",
+        "pull_requests",
+        "issues",
+        ("contributors_count", _("Contributors")),
     )
-    searchable_fields = ('name', 'organization__name', 'project__name')
+    searchable_fields = ("name", "organization__name", "project__name")
     ordering = sortable_fields[0]
 
     def get_context_data(self, **kwargs):
         """Add context."""
         context = super().get_context_data(**kwargs)
 
-        all_labels = Label.objects.only('name')
-        labels = Label.objects.filter(
-            repository__in=self.get_queryset(),
-        ).distinct().only('name')
+        all_labels = Label.objects.only("name")
+        labels = (
+            Label.objects.filter(
+                repository__in=self.get_queryset(),
+            )
+            .distinct()
+            .only("name")
+        )
 
-        context['all_labels'] = all_labels
-        context['labels'] = labels
+        context["all_labels"] = all_labels
+        context["labels"] = labels
 
         return context
