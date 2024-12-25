@@ -11,14 +11,14 @@ from contributors.models import (
 
 class StaticViewSitemap(Sitemap):
     priority = 0.5
-    changefreq = 'weekly'
+    changefreq = "monthly"
 
     def items(self):
         return [
-            'contributors:home',
-            'contributors:about',
-            'contributors:landing',
-            'contributors:achievements'
+            "contributors:home",
+            "contributors:about",
+            "contributors:landing",
+            "contributors:achievements",
         ]
 
     def location(self, item):
@@ -33,46 +33,46 @@ class OrganizationSitemap(Sitemap):
         return Organization.objects.all()
 
     def location(self, item):
-        return reverse('contributors:organization_details', args=[item.name])
+        return reverse("contributors:organization_details", args=[item.name])
 
 
 class RepositorySitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 0.7
 
     def items(self):
         return Repository.objects.all()
 
     def location(self, item):
-        return reverse('contributors:repository_details', args=[item.name])
+        return reverse("contributors:repository_details", args=[item.name])
 
 
 class ContributorSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 0.6
 
     def items(self):
         return Contributor.objects.all()
 
     def location(self, item):
-        return reverse('contributors:contributor_details', args=[item.login])
+        return reverse("contributors:contributor_details", args=[item.login])
 
 
 class ProjectSitemap(Sitemap):
-    changefreq = "weekly"
+    changefreq = "monthly"
     priority = 0.6
 
     def items(self):
         return Project.objects.all()
 
     def location(self, item):
-        return reverse('contributors:project_details', args=[item.pk])
+        return reverse("contributors:project_details", args=[item.pk])
 
 
 sitemaps = {
-    'static': StaticViewSitemap,
-    'organizations': OrganizationSitemap,
-    'repositories': RepositorySitemap,
-    'contributors': ContributorSitemap,
-    'projects': ProjectSitemap,
+    "static": StaticViewSitemap,
+    "organizations": OrganizationSitemap,
+    "repositories": RepositorySitemap,
+    "contributors": ContributorSitemap,
+    "projects": ProjectSitemap,
 }

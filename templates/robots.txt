@@ -11,4 +11,7 @@ Disallow: /*labels=
 Disallow: /admin/
 Crawl-delay: 10
 
+User-agent: Bytespider
+Disallow: /
+
 Sitemap: https://hexlet-friends.herokuapp.com/sitemap.xml
