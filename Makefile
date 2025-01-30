@@ -108,8 +108,10 @@ erd-in-png: erd-dot
 erd-in-pdf: erd-dot
 	dot -Tpdf erd.dot -o erd.pdf
 
+include .env
+export $(shell sed 's/=.*//' .env)
 load-db:
-	psql -U "пользователь" -d "ваша_БД" -f dump_data/dump-hexlet-friends.sql
+	psql -U $(POSTGRES_USER) -d $(POSTGRES_DB) -p $(POSTGRES_PORT) -f dump_data/dump-hexlet-friends.sql
 
 compose-load-db:
 	docker-compose exec db psql -U ваш_пользователь -d ваша_база_данных -f /app/dump_data/dump-hexlet-friends.sql
