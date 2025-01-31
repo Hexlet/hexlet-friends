@@ -108,12 +108,10 @@ erd-in-png: erd-dot
 erd-in-pdf: erd-dot
 	dot -Tpdf erd.dot -o erd.pdf
 
-include .env
-export $(shell sed 's/=.*//' .env)
 load-db:
-	psql -U $(POSTGRES_USER) -d $(POSTGRES_DB) -p $(POSTGRES_PORT) -f dump_data/dump-hexlet-friends.sql
+	uv run python manage.py dbshell < dump_data/dump-hexlet-friends.sql
 
 compose-load-db:
-	docker-compose exec db psql -U ваш_пользователь -d ваша_база_данных -f /app/dump_data/dump-hexlet-friends.sql
+	docker-compose exec db psql -U $POSTGRES_USER -d $POSTGRES_DB -f /app/dump_data/dump-hexlet-friends.sql
 
 .PHONY: install setup shell lint test check start sync secretkey requirements.txt
