@@ -108,4 +108,12 @@ erd-in-png: erd-dot
 erd-in-pdf: erd-dot
 	dot -Tpdf erd.dot -o erd.pdf
 
+load-db:
+	uv run python manage.py dbshell < dump_data/dump-hexlet-friends.sql
+
+compose-load-db:
+	docker-compose run --rm db make load-db
+
+compose-setup: compose-load-db
+
 .PHONY: install setup shell lint test check start sync secretkey requirements.txt
