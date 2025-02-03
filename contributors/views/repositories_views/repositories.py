@@ -48,6 +48,11 @@ class ListView(
             )
             .prefetch_related(Prefetch("labels", queryset=Label.objects.only("name")))
         )
+
+        filtered_labels = self.request.GET.get('labels')
+        if filtered_labels:
+            queryset = queryset.filter(
+                labels__name__lower__in=filtered_labels.split('.'))
         return queryset
 
     template_name = "contributors_sections/repositories/repositories_list.html"
@@ -75,7 +80,11 @@ class ListView(
             .only("name")
         )
 
-        context["all_labels"] = all_labels
-        context["labels"] = labels
+        filtered_labels = self.request.GET.get('labels')
+        if filtered_labels:
+            labels = labels.filter(name__lower__in=filtered_labels.split('.'))
+
+        context['all_labels'] = all_labels
+        context['labels'] = labels
 
         return context
