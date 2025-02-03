@@ -112,6 +112,8 @@ load-db:
 	uv run python manage.py dbshell < dump_data/dump-hexlet-friends.sql
 
 compose-load-db:
-	docker-compose exec db psql -U $POSTGRES_USER -d $POSTGRES_DB -f /app/dump_data/dump-hexlet-friends.sql
+	docker-compose run --rm db make load-db
+
+compose-setup: compose-load-db
 
 .PHONY: install setup shell lint test check start sync secretkey requirements.txt
