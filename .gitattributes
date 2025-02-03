@@ -1,0 +1,1 @@
+dump_data/dump-hexlet-friends.sql filter=lfs diff=lfs merge=lfs -text

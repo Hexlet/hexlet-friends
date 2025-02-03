@@ -1,18 +1,16 @@
 # Installing and running the app
 
-You can run the application using both Poetry and Docker.
+You can run the application using both uv and Docker.
 
-**Poetry** is setup by the commands:
+**uv** is setup by the commands:
 
 **Linux, macOS, Windows (WSL):**
 
 ```bash
-curl -sSL https://install.python-poetry.org | python3 -
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Details on installing and using the **Poetry** package are available in [official documentation](https://python-poetry.org/docs/).
-
-To install **Poetry** you need **Python 3.7+** use the information from the official website [python.org](https://www.python.org/downloads/)
+Details on installing and using the **uv** package are available in [official documentation](https://docs.astral.sh/uv/getting-started/installation/).
 
 To install **Docker**, use the information from the official website [docs.docker.com](https://docs.docker.com/engine/install/)
 
@@ -27,16 +25,10 @@ git clone https://github.com/Hexlet/hexlet-friends
 cd hexlet-friends
 ```
 
-Installing dependencies if you use **Poetry**
+Installing dependencies if you use **uv**
 
 ```bash
 make setup
-```
-
-Activate virtual environment
-
-```bash
-poetry shell
 ```
 
 Installing dependencies if you use **Docker**
@@ -97,7 +89,7 @@ You can get the data through the interface of the administration panel or by run
 
 ### **By organization name:**
 
-*With Poetry*
+*With uv*
 
 ```bash
 make sync ARGS='ORG [ORG ...]'
@@ -128,7 +120,7 @@ is related to a specific repository, you can upload data for a specific reposito
 
 **By full repository names:**
 
-*Poetry*
+*uv*
 
 ```bash
 make sync ARGS='--repo REPO [REPO ...]'
@@ -162,7 +154,7 @@ make sync
 
 ## 3. Running a server for development
 
-### Poetry
+### uv
 
 ```bash
 make start

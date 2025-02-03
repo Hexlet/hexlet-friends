@@ -1,9 +1,11 @@
 from django.conf import settings
-from django.contrib.staticfiles.views import serve
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
 from contributors.admin.custom import site
+from contributors.sitemap import sitemaps
+from contributors.views import robots
 
 
 def trigger_error(request):
@@ -19,7 +21,9 @@ urlpatterns = [
     path('auth/', include('auth.urls')),
     path('', include('contributors.urls')),
     path('sentry-debug/', trigger_error),
-    path('robots.txt', serve, {'path': 'robots.txt'}),
+    path('robots.txt', robots.RobotsTxtView.as_view(), name='robots_txt'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:

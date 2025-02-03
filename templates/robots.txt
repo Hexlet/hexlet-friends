@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /repositories/*?
+Disallow: /issues/*?
+Disallow: /organizations/*?
+Disallow: /leaderboard/*?
+Disallow: /contributors/*?
+Disallow: /projects/*?
+Disallow: /*page=
+Disallow: /*sort=
+Disallow: /*labels=
+Disallow: /admin/
+Crawl-delay: 10
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://hexlet-friends.herokuapp.com/sitemap.xml

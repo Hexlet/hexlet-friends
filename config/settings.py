@@ -4,9 +4,13 @@ import sys
 
 import dj_database_url
 import sentry_sdk
+from celery.schedules import crontab
 from sentry_sdk.integrations.django import DjangoIntegration
+from dotenv import load_dotenv
 
 from contributors.utils import misc
+
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -59,6 +63,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'mathfilters',
     'django_filters',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middlewares.GlobalHostRateLimitMiddleware'
 ]
 
 
@@ -288,3 +294,26 @@ if 'test' in sys.argv:
             'LOCATION': 'unique-snowflake',
         }
     }
+
+SITE_ID = 1
+
+# Just broker URL, no result backend needed
+CELERY_BROKER_URL = os.getenv('BROKER_URL', 'amqp://guest:guest@172.17.0.1:5672//')
+CELERY_RESULT_BACKEND = None
+CELERY_IGNORE_RESULT = True
+
+CELERY_BEAT_SCHEDULE = {
+    'sync-github-repositories': {
+        'task': 'contributors.tasks.sync_github_data',
+        'schedule': crontab(hour='*/6'),
+        'options': {
+            'expires': 3600,
+            'time_limit': 3600,
+        }
+    },
+}
+
+HOSTNAME_BLACKLIST = []
+
+RATELIMIT_REQUESTS = int(os.getenv('RATELIMIT_REQUESTS', 1000))
+RATELIMIT_TIMEFRAME = int(os.getenv('RATELIMIT_TIMEFRAME', 3600))
