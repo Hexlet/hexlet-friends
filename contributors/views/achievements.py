@@ -11,6 +11,7 @@ class AchievementListView(generic.ListView):
     contributors = Contributor.objects.with_contributions()
 
     pull_request_ranges_for_achievements = [100, 50, 25, 10, 1]
+
     commit_ranges_for_achievements = [200, 100, 50, 25, 1]
     issue_ranges_for_achievements = [50, 25, 10, 5, 1]
     comment_ranges_for_achievements = [200, 100, 50, 25, 1]
