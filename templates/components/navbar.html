@@ -67,7 +67,10 @@
               {% if user.contributor %}
                 <a class="dropdown-item" href="{% url 'contributors:user_settings' slug=user.contributor.login %}">{% trans "Settings" %}</a>
               {% endif %}
-              <a class="dropdown-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              <form class="dropdown-item" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">{% trans "Log out" %}</button>
+              </form>
             </div>
           </li>
         {% else %}

@@ -37,4 +37,5 @@ dev-dependencies = [
     "pre-commit>=4.0.1",
     "pydot>=3.0.2",
     "pyparsing>=3.2.0",
+    "locust>=2.32.5",
 ]

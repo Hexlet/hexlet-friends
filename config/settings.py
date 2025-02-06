@@ -76,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middlewares.GlobalHostRateLimitMiddleware'
 ]
 
 
@@ -311,3 +312,8 @@ CELERY_BEAT_SCHEDULE = {
         }
     },
 }
+
+HOSTNAME_BLACKLIST = []
+
+RATELIMIT_REQUESTS = int(os.getenv('RATELIMIT_REQUESTS', 1000))
+RATELIMIT_TIMEFRAME = int(os.getenv('RATELIMIT_TIMEFRAME', 3600))
