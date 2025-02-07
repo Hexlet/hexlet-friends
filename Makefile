@@ -94,7 +94,7 @@ transcompile:
 	uv run django-admin compilemessages
 
 load-dump:
-    psql -h $(DB_HOST) -U $(DB_USER) -d $(DB_NAME) -p $(DB_PORT) -f dump.sql
+	psql -h $(DB_HOST) -U $(DB_USER) -d $(DB_NAME) -p $(DB_PORT) -f dump.sql
 # Need to have GNU gettext installed
 transprepare:
 	uv run django-admin makemessages --locale ru --add-location file

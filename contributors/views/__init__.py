@@ -2,6 +2,7 @@ from contributors.views import (
     about,
     achievements,
     config,
+    contributor_achievements,
     contributor_compare,
     filters,
     home,
