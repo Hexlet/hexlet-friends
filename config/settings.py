@@ -1,11 +1,16 @@
 import logging
 import os
+import sys
 
 import dj_database_url
 import sentry_sdk
+from celery.schedules import crontab
 from sentry_sdk.integrations.django import DjangoIntegration
+from dotenv import load_dotenv
 
 from contributors.utils import misc
+
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -58,6 +63,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'mathfilters',
     'django_filters',
+    'django.contrib.sitemaps'
 ]
 
 MIDDLEWARE = [
@@ -70,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middlewares.GlobalHostRateLimitMiddleware'
 ]
 
 
@@ -85,6 +92,7 @@ if DEBUG:
 
     INTERNAL_IPS = [
         '127.0.0.1',
+        'localhost',
     ]
 
 ROOT_URLCONF = 'config.urls'
@@ -261,3 +269,51 @@ GRAPH_MODELS = {
     'all_applications': True,
     'group_models': True,
 }
+
+
+""" DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+} """
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_bmemcached.memcached.BMemcached',
+        'LOCATION': os.environ.get('CACHE_LOCATION', '').split(','),
+        'OPTIONS': {
+            'username': os.environ.get('CACHE_USERNAME', ''),
+            'password': os.environ.get('CACHE_PASSWORD', '')
+        }
+    }
+}
+
+if 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+
+SITE_ID = 1
+
+# Just broker URL, no result backend needed
+CELERY_BROKER_URL = os.getenv('BROKER_URL', 'amqp://guest:guest@172.17.0.1:5672//')
+CELERY_RESULT_BACKEND = None
+CELERY_IGNORE_RESULT = True
+
+CELERY_BEAT_SCHEDULE = {
+    'sync-github-repositories': {
+        'task': 'contributors.tasks.sync_github_data',
+        'schedule': crontab(hour='*/6'),
+        'options': {
+            'expires': 3600,
+            'time_limit': 3600,
+        }
+    },
+}
+
+HOSTNAME_BLACKLIST = []
+
+RATELIMIT_REQUESTS = int(os.getenv('RATELIMIT_REQUESTS', 1000))
+RATELIMIT_TIMEFRAME = int(os.getenv('RATELIMIT_TIMEFRAME', 3600))

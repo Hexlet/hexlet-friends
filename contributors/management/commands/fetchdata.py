@@ -3,6 +3,7 @@ import sys
 
 import requests
 from django.core import management
+from django.db import transaction
 from django.utils import dateparse
 
 from contributors.models import (
@@ -19,7 +20,7 @@ from contributors.utils import github_lib as github
 from contributors.utils import misc
 
 # Simultaneous logging to file and stdout
-logger = logging.getLogger('GitHub')
+logger = logging.getLogger("GitHub")
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
@@ -34,197 +35,333 @@ IGNORED_CONTRIBUTORS = tuple(
 session = requests.Session()
 
 
-def create_contributions(   # noqa: C901
-    repo, contrib_data, user_field=None, id_field=None, type_=None,
-):
-    """Create a contribution record."""
+@transaction.atomic
+def create_contributions(
+    repo, contrib_data, user_field="user", id_field="id", type_="iss"
+):  # noqa: C901
+    """
+    Создает записи о контрибуциях в базе данных.
+    """
+    contributors = {}
+    contributions = []
+    issue_infos = []
+    commit_stats = []
+    contribution_labels = []
+
     for contrib in contrib_data:
-        contrib_author = contrib[user_field]
-        if contrib_author is None or contrib_author['type'] == 'Bot':
-            continue
-        contrib_author_login = contrib_author['login']
-        if contrib_author_login in IGNORED_CONTRIBUTORS:
-            continue
+        logger.info(contrib)
+        contributor = None
+        if _is_valid_contributor(contrib, user_field):
+            login = contrib[user_field]["login"]
+            if login not in contributors:
+                contributor, _ = Contributor.objects.get_or_create(login=login)
+                contributors[login] = contributor
+            else:
+                contributor = contributors[login]
 
-        true_type = 'pr' if (
-            type_ == 'iss' and 'pull_request' in contrib
-        ) else type_
-
-        if true_type == 'cit':
-            datetime = contrib['commit']['author']['date']
-        else:
-            datetime = contrib['created_at']
-
-        contribution, created = Contribution.objects.get_or_create(
-            id=contrib[id_field],
-            defaults={
-                'repository': repo,
-                'contributor': misc.update_or_create_record(
-                    Contributor, misc.get_contributor_data(
-                        contrib_author_login, session,
-                    ),
-                )[0],
-                'type': true_type,
-                'html_url': contrib['html_url'],
-                'created_at': dateparse.parse_datetime(datetime),
-            },
-        )
-        if created and true_type == 'cit':
-            commit_data = github.get_commit_data(
-                repo.organization or repo.owner,
-                repo,
-                contribution.id,
-                session,
+        if contributor:
+            contribution = _create_contribution(
+                repo, contrib, contributor, id_field, type_
             )
-            commit_stats = commit_data['stats']
-            CommitStats.objects.create(
-                commit=contribution,
-                additions=commit_stats['additions'],
-                deletions=commit_stats['deletions'],
-            )
+            contributions.append(contribution)
 
-        if true_type in {'pr', 'iss'}:
-            state = 'merged' if true_type == 'pr' and github.is_pr_merged(
-                repo.organization or repo.owner,
-                repo,
-                contrib['number'],
-                session,
-            ) else contrib['state']
-
-            for label in contrib['labels']:
-                label_name, _ = ContributionLabel.objects.get_or_create(
-                    name=label["name"],
+            if type_ == "cit":
+                commit_stats.append(
+                    _create_commit_stats(repo, contribution, contrib, id_field)
                 )
-                contribution.labels.add(label_name)
+            elif type_ in {"pr", "iss"}:
+                issue_infos.append(
+                    _create_issue_info(repo, contribution, contrib, type_)
+                )
+                contribution_labels.extend(_create_contribution_labels(contrib))
 
-            IssueInfo.objects.update_or_create(
-                issue=contribution,
-                defaults={
-                    'title': contrib['title'],
-                    'state': state,
-                },
-            )
+    _bulk_create_records(contributions, commit_stats, issue_infos, contribution_labels)
+    _link_labels_to_contributions(contributions, contrib_data)
+
+
+def _is_valid_contributor(contrib, user_field):
+    """Проверяет, является ли контрибуция допустимой для обработки."""
+    contrib_author = contrib[user_field]
+    return (
+        contrib_author is not None
+        and contrib_author["type"] != "Bot"
+        and contrib_author["login"] not in IGNORED_CONTRIBUTORS
+    )
+
+
+def _create_contribution(repo, contrib, contributor, id_field, type_):
+    """Создает объект Contribution."""
+    true_type = "pr" if (type_ == "iss" and "pull_request" in contrib) else type_
+    datetime = (
+        contrib["commit"]["author"]["date"]
+        if true_type == "cit"
+        else contrib["created_at"]
+    )
+
+    return Contribution(
+        id=contrib[id_field],
+        repository=repo,
+        contributor=contributor,
+        type=true_type,
+        html_url=contrib["html_url"],
+        created_at=dateparse.parse_datetime(datetime),
+    )
+
+
+def _create_commit_stats(repo, contribution, contrib, id_field):
+    """Создает объект CommitStats для коммита."""
+    commit_data = github.get_commit_data(
+        repo.organization or repo.owner, repo, contrib[id_field], session
+    )
+    return CommitStats(
+        commit=contribution,
+        additions=commit_data["stats"]["additions"],
+        deletions=commit_data["stats"]["deletions"],
+    )
+
+
+def _create_issue_info(repo, contribution, contrib, type_):
+    """Создает объект IssueInfo для issue или pull request."""
+    state = (
+        "merged"
+        if type_ == "pr"
+        and github.is_pr_merged(
+            repo.organization or repo.owner, repo, contrib["number"], session
+        )
+        else contrib["state"]
+    )
+
+    return IssueInfo(
+        issue=contribution,
+        title=contrib["title"],
+        state=state,
+    )
+
+
+def _create_contribution_labels(contrib):
+    """Создает объекты ContributionLabel для вклада."""
+    return [ContributionLabel(name=label["name"]) for label in contrib["labels"]]
+
+
+def _bulk_create_records(contributions, commit_stats, issue_infos, contribution_labels):
+    """Выполняет массовое создание записей в базе данных."""
+    Contribution.objects.bulk_create(contributions, ignore_conflicts=True)
+    CommitStats.objects.bulk_create(commit_stats, ignore_conflicts=True)
+    IssueInfo.objects.bulk_create(issue_infos, ignore_conflicts=True)
+    ContributionLabel.objects.bulk_create(contribution_labels, ignore_conflicts=True)
+
+
+@transaction.atomic
+def _link_labels_to_contributions(contributions, contrib_data):
+    """Связывает метки с контрибуциями."""
+    all_label_names = set(label["name"] for c in contrib_data for label in c["labels"])
+    existing_labels = {
+        label.name: label for label in Label.objects.filter(name__in=all_label_names)
+    }
+    new_labels = [
+        Label(name=name) for name in all_label_names if name not in existing_labels
+    ]
+    Label.objects.bulk_create(new_labels, ignore_conflicts=True)
+
+    all_labels = existing_labels.copy()
+    all_labels.update({label.name: label for label in new_labels})
+
+    ContributionLabel = Contribution.labels.through
+    contribution_labels = []
+
+    for contribution, labels in zip(contributions, [c["labels"] for c in contrib_data]):
+        contribution_labels.extend(
+            [
+                ContributionLabel(
+                    contribution_id=contribution.id,
+                    label_id=all_labels[label["name"]].id,
+                )
+                for label in labels
+            ]
+        )
+
+    # Удаляем существующие связи
+    ContributionLabel.objects.filter(contribution__in=contributions).delete()
+
+    # Создаем новые связи
+    ContributionLabel.objects.bulk_create(contribution_labels, ignore_conflicts=True)
 
 
 class Command(management.base.BaseCommand):
-    """A management command for syncing with GitHub."""
+    """Команда управления для синхронизации с GitHub."""
 
-    help = "Saves data from GitHub to database"
+    help = "Сохраняет данные из GitHub в базу данных"
 
     def add_arguments(self, parser):
-        """Add arguments for the command."""
+        """Добавляет аргументы для команды."""
         parser.add_argument(
-            'owner',
-            nargs='*',
+            "owner",
+            nargs="*",
             default=ORGANIZATIONS,
-            help='a list of owner names',
+            help="список имен владельцев",
         )
         parser.add_argument(
-            '--repo', nargs='*', help='a list of repository full names',
+            "--repo",
+            nargs="*",
+            help="список полных имен репозиториев",
         )
 
-    def handle(  # noqa: C901
-        self, *args, **options,
-    ):
-        """Collect data from GitHub."""
-        logger.info("Data collection started")
+    def handle(self, *args, **options):
+        """Собирает данные из GitHub."""
+        logger.info("Начало сбора данных")
 
-        if options['repo']:
-            data_of_owners_and_repos = github.get_data_of_owners_and_repos(
-                repo_full_names=options['repo'],
+        try:
+            data_of_owners_and_repos = self._get_data_of_owners_and_repos(options)
+            self._process_owners_and_repos(data_of_owners_and_repos)
+        except Exception as e:
+            logger.error(f"Произошла ошибка при сборе данных: {str(e)}")
+        finally:
+            session.close()
+
+        logger.info(
+            self.style.SUCCESS(
+                "Данные получены из GitHub и сохранены в базу данных",
             )
-        elif options['owner']:
-            data_of_owners_and_repos = github.get_data_of_owners_and_repos(
-                owner_names=options['owner'],
+        )
+
+    def _get_data_of_owners_and_repos(self, options):
+        """Получает данные о владельцах и репозиториях."""
+        if options["repo"]:
+            return github.get_data_of_owners_and_repos(
+                repo_full_names=options["repo"],
+            )
+        elif options["owner"]:
+            return github.get_data_of_owners_and_repos(
+                owner_names=options["owner"],
             )
         else:
             raise management.base.CommandError(
-                "Provide a list of owners or repositories",
+                "Укажите список владельцев или репозиториев",
             )
 
+    def _process_owners_and_repos(self, data_of_owners_and_repos):
+        """Обрабатывает данные о владельцах и репозиториях."""
         for owner_data in data_of_owners_and_repos.values():
-            table = (
-                Contributor
-                if owner_data['details']['type'] == 'User'
-                else Organization
+            owner = self._process_owner(owner_data)
+            if isinstance(owner, Organization):
+                self._process_organization_repos(owner, owner_data)
+            else:
+                self._process_user_repos(owner)
+
+    def _process_owner(self, owner_data):
+        """Обрабатывает данные о владельце."""
+        owner_type = owner_data["details"]["type"]
+        table = Contributor if owner_type == "User" else Organization
+        owner, _ = misc.update_or_create_record(table, owner_data["details"])
+        logger.info(f"Обработка {owner_type}: {owner}")
+        return owner
+
+    def _process_organization_repos(self, organization, org_data):
+        """Обрабатывает репозитории организации."""
+        repos_data = org_data.get("repos", [])
+        number_of_repos = len(repos_data)
+        for i, repo_data in enumerate(repos_data, start=1):
+            self._process_repo(organization, repo_data, i, number_of_repos)
+
+    def _process_user_repos(self, user):
+        """Обрабатывает репозитории пользователя."""
+        repos_to_process = self._get_repos_to_process(user)
+        number_of_repos = len(repos_to_process)
+        for i, repo_data in enumerate(repos_to_process, start=1):
+            self._process_repo(user, repo_data, i, number_of_repos)
+
+    def _get_repos_to_process(self, owner):
+        """Получает список репозиториев для обработки."""
+        return (
+            Repository.objects.filter(owner=owner)
+            .exclude(name__in=IGNORED_REPOSITORIES)
+            .select_related("owner")
+            .prefetch_related("labels")
+        )
+
+    def _process_repo(self, owner, repo_data, i, number_of_repos):
+        """Обрабатывает отдельный репозиторий."""
+        repo, _ = misc.update_or_create_record(Repository, repo_data)
+        logger.info(f"Обработка репозитория: {repo} ({i}/{number_of_repos})")
+        if repo_data["size"] == 0:
+            logger.info("Пустой репозиторий, пропускаем")
+            return
+
+        self._process_repo_language(repo, repo_data)
+        self._process_repo_contributions(owner, repo)
+
+    def _process_repo_language(self, repo, repo_data):
+        """Обрабатывает язык репозитория."""
+        language = repo_data["language"]
+        if language:
+            label, _ = Label.objects.get_or_create(name=language)
+            repo.labels.add(label)
+
+    def _process_repo_contributions(self, owner, repo):
+        """Обрабатывает вклады в репозиторий."""
+        extra_info = {"owner": owner, "repo": repo}
+        self._process_issues_and_prs(owner, repo, extra_info)
+        self._process_commits(owner, repo, extra_info)
+        self._process_comments(owner, repo, extra_info)
+
+    def _process_issues_and_prs(self, owner, repo, extra_info):
+        """Обрабатывает issues и pull requests."""
+        logger.info("Обработка issues и pull requests")
+        try:
+            contrib_data = github.get_repo_issues(owner, repo, session)
+            logger.info(contrib_data)
+        except Exception as e:
+            logger.error(
+                extra=extra_info | {"ex": str(e)},
+                msg="Не удалось обработать issues и pull requests",
             )
-            owner, _ = misc.update_or_create_record(
-                table, owner_data['details'],
+            return
+        create_contributions(
+            repo,
+            contrib_data,
+            user_field="user",
+            id_field="id",
+            type_="iss",
+        )
+
+    def _process_commits(self, owner, repo, extra_info):
+        """Обрабатывает коммиты."""
+        logger.info("Обработка коммитов")
+        try:
+            contrib_data = github.get_repo_commits_except_merges(
+                owner,
+                repo,
+                session=session,
             )
-            logger.info(owner)
+        except Exception as e:
+            logger.error(
+                msg="Не удалось обработать коммиты",
+                extra=extra_info | {"ex": str(e)},
+            )
+            return
+        create_contributions(
+            repo,
+            contrib_data,
+            user_field="author",
+            id_field="sha",
+            type_="cit",
+        )
 
-            repos_to_process = [
-                repo for repo in owner_data['repos']
-                if repo['name'] not in IGNORED_REPOSITORIES
-            ]
-            number_of_repos = len(repos_to_process)
-            for i, repo_data in enumerate(repos_to_process, start=1):  # noqa: E501
-                repo, _ = misc.update_or_create_record(Repository, repo_data)
-                logger.info(f"{repo} ({i}/{number_of_repos})")
-                if repo_data['size'] == 0:
-                    logger.info("Empty repository")
-                    continue
-
-                language = repo_data['language']
-                if language:
-                    label, _ = Label.objects.get_or_create(name=language)
-                    repo.labels.add(label)
-                logger.info("Processing issues and pull requests")
-                extra_info = {
-                    'owner': owner,
-                    'repo': repo,
-                }
-
-                try:
-                    create_contributions(
-                        repo,
-                        github.get_repo_issues(owner, repo, session),
-                        user_field='user',
-                        id_field='id',
-                        type_='iss',
-                    )
-                except Exception as processing_issues_ex:
-                    logger.error(
-                        msg="Failed processing issues and pull requests",
-                        extra=extra_info | {'ex': processing_issues_ex},
-                    )
-                    continue
-
-                logger.info("Processing commits")
-                try:
-                    create_contributions(
-                        repo,
-                        github.get_repo_commits_except_merges(
-                            owner, repo, session=session,
-                        ),
-                        user_field='author',
-                        id_field='sha',
-                        type_='cit',
-                    )
-                except Exception as processing_commits_ex:
-                    logger.error(
-                        msg="Failed processing commits",
-                        extra=extra_info | {'ex': processing_commits_ex},
-                    )
-                    continue
-
-                logger.info("Processing comments")
-                try:
-                    create_contributions(
-                        repo,
-                        github.get_all_types_of_comments(owner, repo, session),
-                        user_field='user',
-                        id_field='id',
-                        type_='cnt',
-                    )
-                except Exception as processing_comments_ex:
-                    logger.error(
-                        msg="Failed comments",
-                        extra=extra_info | {'ex': processing_comments_ex},
-                    )
-
-        session.close()
-
-        logger.info(self.style.SUCCESS(
-            "Data fetched from GitHub and saved to the database",
-        ))
+    def _process_comments(self, owner, repo, extra_info):
+        """Обрабатывает комментарии."""
+        logger.info("Обработка комментариев")
+        try:
+            contrib_data = github.get_all_types_of_comments(owner, repo, session)
+        except Exception as e:
+            logger.error(
+                msg="Не удалось обработать комментарии",
+                extra=extra_info | {"ex": str(e)},
+            )
+            return
+        create_contributions(
+            repo,
+            contrib_data,
+            user_field="user",
+            id_field="id",
+            type_="cnt",
+        )
